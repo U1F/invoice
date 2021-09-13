@@ -11,7 +11,7 @@
  * @subpackage QInvoice/admin/partials
  * @author     qanuk.io <support@qanuk.io>
  * @license    License example.org
- * @link      https://www.qanuk.io/ 
+ * @link       https://www.qanuk.io/ 
  * @since      1.0.0
  */
 
@@ -300,7 +300,7 @@ td.invoiceItemsHeader
             <td style="text-align: center;font-size:14px; display:none"> </td>
             
             <td style="text-align: right;font-size:14px; padding-right:8px;">8 €</td>
-        </tr>	
+        </tr>
     
 
         

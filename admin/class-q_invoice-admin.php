@@ -14,7 +14,7 @@
  * @subpackage QInvoice/admin
  * @author     qanuk.io <support@qanuk.io>
  * @license    License example.org
- * @link      https://www.qanuk.io/
+ * @link       https://www.qanuk.io/
  * @since      1.0.0
  */
 
