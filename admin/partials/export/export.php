@@ -7,11 +7,11 @@
  * PHP version 5
  * 
  * @category   Export
- * @package    Q_Invoice
+ * @package    QInvoice
  * @subpackage Q_Invoice/admin/partials
- * @author     Display Name <username@example.com>
- * @license    Name link.de
- * @link       qanuk.io 
+ * @author     qanuk.io <support@qanuk.io>
+ * @license    License example.org
+ * @link      https://www.qanuk.io/ 
  * @since      1.0.0
  */
 

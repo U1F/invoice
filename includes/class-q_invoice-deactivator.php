@@ -13,8 +13,8 @@
  * send a note to license@php.net so we can mail you a copy immediately.
  *
  * @category   CategoryName
- * @package    PackageName
- * @author     Original Author <author@example.com>
+ * @package    QInvoice
+ * @author     qanuk.io <support@qanuk.io>
  * @author     Another Author <another@example.com>
  * @copyright  1997-2005 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
@@ -29,13 +29,13 @@
  * Fired during plugin deactivation
  *
  * @category  Category
- * @link       qanuk.io
+ * @link       https://www.qanuk.io/
  * @since      1.0.0
  *
- * @package    Mailing
+ * @package    QInvoice
  * @subpackage Mailing/includes
  * @since      1.0.0
- * @package    Mailing
+ * @package    QInvoice
  * @subpackage Mailing/includes
  * @author     qanuk.io <support@qanuk.io>
  */

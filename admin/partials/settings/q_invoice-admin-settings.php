@@ -5,9 +5,9 @@
  * PHP version 5
  * 
  * @category   View
- * @package    Invoice
- * @subpackage Invoice/admin
- * @author     Qanuk.io <support@qanuk.io>
+ * @package    QInvoice
+ * @subpackage QInvoice/admin
+ * @author     qanuk.io <support@qanuk.io>
  * @license    http://opensource.org/licenses/gpl-license.php GNU Public License 
  * @version    CVS: 
  * 

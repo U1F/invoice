@@ -10,11 +10,11 @@
  * 
  * @category Class
  * 
- * @package    Invoice
- * @subpackage Invoice/admin
- * @author     Qanuk.io <support@qanuk.io>
+ * @package    QInvoice
+ * @subpackage QInvoice/admin
+ * @author     qanuk.io <support@qanuk.io>
  * @license    License example.org
- * @link       qanuk.io
+ * @link      https://www.qanuk.io/
  * @since      1.0.0
  */
 
@@ -27,7 +27,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
      * 
      * @category Plugin
      * @package  QInvoice
-     * @author   Name <name@example.org>
+     * @author   qanuk.io <support@qanuk.io>
      * @license  License license.org
      * @link     example.org
      */

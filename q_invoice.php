@@ -10,10 +10,10 @@
  * PHP version 5
  * 
  * @category A
- * @package  Invoice
- * @author   Qanuk.io <name@email.de>
+ * @package  QInvoice
+ * @author   qanuk.io <support@qanuk.io>
  * @license  GPL-2.0+ http://www.gnu.org/licenses/gpl-2.0.txt
- * @link     qanuk.io
+ * @link    https://www.qanuk.io/
  * @since    1.0.0
  *
  * @wordpress-plugin

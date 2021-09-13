@@ -23,7 +23,7 @@ if (!class_exists('QI_Invoice_Activator')) {
      * @package  QI_Invoice/Activator
      * @author   qanuk.io <support@qanuk.io>
      * @license  License example.org
-     * @link     qanuk.io
+     * @link     https://www.qanuk.io/
      * 
      * @return void
      */

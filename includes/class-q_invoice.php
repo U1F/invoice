@@ -11,9 +11,9 @@
  * @category   Core_Plugin_Class
  * @package    Q_Invoice
  * @subpackage Q_Invoice/includes
- * @author     Name <name@example.org>
+ * @author     qanuk.io <support@qanuk.io>
  * @license    License example.org
- * @link       qanuk.io
+ * @link       https://www.qanuk.io/
  * @since      1.0.0
  */
 
@@ -30,10 +30,10 @@ if (!class_exists('QI_Invoice')) {
      * @category   Class
      * @package    Q_Invoice
      * @subpackage Q_Invoice/includes
-     * @author     Qanuk.io <support@qanuk.io>
+     * @author     qanuk.io <support@qanuk.io>
      *             - In cooperation with <deftcoders@gmail.com>
-     * @license    Name <example.org>
-     * @link       Qanuk.io
+     * @license    License example.org
+     * @link       https://www.qanuk.io/
      * @since      1.0.0
      */
     class QI_Invoice

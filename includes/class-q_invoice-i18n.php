@@ -6,11 +6,11 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       qanuk.io
+ * @link       https://www.qanuk.io/
  * @since      1.0.0
  *
- * @package    Mailing
- * @subpackage Mailing/includes
+ * @package    QInvoice
+ * @subpackage QInvoice/includes
  */
 
 /**
@@ -20,8 +20,8 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Mailing
- * @subpackage Mailing/includes
+ * @package    QInvoice
+ * @subpackage QInvoice/includes
  * @author     qanuk.io <support@qanuk.io>
  */
 

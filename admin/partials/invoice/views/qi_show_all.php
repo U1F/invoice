@@ -8,11 +8,11 @@
  * PHP version 5
  * 
  * @category   Class
- * @package    Invoice
- * @subpackage Invoice/admin
- * @author     Qanuk.io <support@qanuk.io>
+ * @package    QInvoice
+ * @subpackage QInvoice/admin
+ * @author     qanuk.io <support@qanuk.io>
  * @license    License example.org
- * @link       qanuk.io
+ * @link       https://www.qanuk.io/
  * @since      1.0.0
  */
 ?>

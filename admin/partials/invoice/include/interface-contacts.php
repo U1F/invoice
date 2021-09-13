@@ -7,9 +7,9 @@
  * PHP version 5
  * 
  * @category S
- * @package  Test
- * @author   Display Name <username@example.com>
- * @license  a.de a
+ * @package  QInvoice
+ * @author   qanuk.io <support@qanuk.io>
+ * @license  License example.org
  * @link     a.de 
  */
 
@@ -22,9 +22,9 @@
  * PHP version 5
  * 
  * @category S
- * @package  Test
- * @author   Display Name <username@example.com>
- * @license  a.de a
+ * @package  QInvoice
+ * @author   qanuk.io <support@qanuk.io>
+ * @license  License example.org
  * @link     a.de 
  */
 class Interface_Contacts

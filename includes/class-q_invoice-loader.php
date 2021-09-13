@@ -13,7 +13,7 @@
  * @subpackage Q_Invoice/Includes
  * @author     qanuk.io <support@qanuk.io>
  * @license    License example.org
- * @link       qanuk.io
+ * @link       https://www.qanuk.io/
  * @since      1.0.0
  */
 
@@ -26,7 +26,7 @@ if (!class_exists('QI_Q_Invoice_Loader')) {
      * @subpackage Q_Invoice/Includes
      * @author     qanuk.io <support@qanuk.io>
      * @license    License example.org
-     * @link       qanuk.io
+     * @link       https://www.qanuk.io/
      */
     class QI_Q_Invoice_Loader
     {
