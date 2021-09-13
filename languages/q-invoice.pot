@@ -1,0 +1,285 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: q-events\n"
+"POT-Creation-Date: 2021-02-08 11:16+0600\n"
+"PO-Revision-Date: 2020-12-26 23:42+0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.1\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_attr_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/class-events-admin.php:142 admin/class-events-admin.php:143
+msgid "Q Events"
+msgstr ""
+
+#: admin/class-events-admin.php:153 admin/class-events-admin.php:154
+msgid "Termine"
+msgstr ""
+
+#: admin/class-events-admin.php:162 admin/class-events-admin.php:163
+msgid "Upgrade to PRO"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:23
+msgid "Q EVENTS by qanuk.io"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:24
+msgid "Q"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:26
+msgid "Neues Event hinzufügen"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:32
+msgid "Aktuell"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:33
+msgid "Geplant"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:34
+msgid "Archiv"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:51
+#: admin/partials/events-admin-display.php:94
+#: admin/partials/events-admin-display.php:139
+msgid "Datum"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:52
+#: admin/partials/events-admin-display.php:95
+#: admin/partials/events-admin-display.php:140
+msgid "Event"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:53
+#: admin/partials/events-admin-display.php:96
+#: admin/partials/events-admin-display.php:141
+#: admin/partials/events-admin-display.php:239
+msgid "Location"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:54
+#: admin/partials/events-admin-display.php:97
+#: admin/partials/events-admin-display.php:142
+#: admin/partials/events-admin-display.php:225
+msgid "Uhrzeit"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:55
+#: admin/partials/events-admin-display.php:98
+#: admin/partials/events-admin-display.php:143
+#: admin/partials/events-admin-display.php:264
+msgid "VVK-Preis"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:56
+#: admin/partials/events-admin-display.php:99
+#: admin/partials/events-admin-display.php:144
+#: admin/partials/events-admin-display.php:304
+msgid "Status"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:57
+#: admin/partials/events-admin-display.php:100
+#: admin/partials/events-admin-display.php:145
+msgid "Bearbeiten"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:177
+msgid "Shortcode: [q_events]"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:204
+msgid "Event-Name"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:211
+msgid "Untertitel"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:218
+msgid "Termin"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:232
+msgid "Kommentar"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:246
+msgid "Stadt"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:253
+msgid "Foto"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:271
+msgid "VVK-System"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:279
+msgid "VVK-System 2"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:287
+#: admin/partials/events-admin-display.php:297
+msgid "Verlegt"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:315
+msgid "Eintragen"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:316
+msgid "Zurück"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:324
+msgid "Event aktualisieren"
+msgstr ""
+
+#: admin/partials/events-admin-display.php:326
+msgid "Event klonen"
+msgstr ""
+
+#: admin/partials/events-admin-upgrade.php:22
+msgid "Upgrade to Q Events Pro"
+msgstr ""
+
+#: admin/partials/events-admin-upgrade.php:26
+msgid "Schalte weitere Features frei!"
+msgstr ""
+
+#: admin/partials/events-admin-upgrade.php:27
+msgid ""
+"In der <em><a href=\"https://www.qanuk.io/plugins/\" target=\"_blanket"
+"\">Pro-Version</a></em> erhältst du viele weitere Möglichkeiten, deine "
+"Events <em>professionell zu planen, zu verwalten und nachzuhalten</em>!"
+msgstr ""
+
+#: admin/partials/events-admin-upgrade.php:39
+msgid "Event- & Terminplanung"
+msgstr ""
+
+#: admin/partials/events-admin-upgrade.php:44
+msgid ""
+"\n"
+"\t\t\t\t\t<ul>\n"
+"\t\t\t\t\t\t<li>Detaillierte Planung aller Termine</li>\n"
+"\t\t\t\t\t\t<li>Optimiertes Anlegen und einfaches Klonen von Terminen</li>\n"
+"\t\t\t\t\t\t<li>Drei verschiedne Layouts für deine Website</li>\n"
+"\t\t\t\t\t\t<li>Auffällige Darstellung von Terminen bei Verlegung und "
+"Änderungen</li>\n"
+"\t\t\t\t\t\t<li>Mehr Detaileinstellungen pro Termin</li>\n"
+"\t\t\t\t\t</ul>"
+msgstr ""
+
+#: admin/partials/events-admin-upgrade.php:54
+#: admin/partials/events-admin-upgrade.php:78
+#: admin/partials/events-admin-upgrade.php:101
+#: admin/partials/events-admin-upgrade.php:121
+#: admin/partials/events-admin-upgrade.php:154
+#: admin/partials/events-admin-upgrade.php:177
+msgid "Upgrade"
+msgstr ""
+
+#: admin/partials/events-admin-upgrade.php:63
+msgid "Künstlerplanung"
+msgstr ""
+
+#: admin/partials/events-admin-upgrade.php:67
+msgid ""
+"\n"
+"\t\t\t\t\t<ul>\n"
+"\t\t\t\t\t\t<li>Verwaltung aller Künstler und Konzerte an einem Ort</li>\n"
+"\t\t\t\t\t\t<li>Zuordnung von Agenturen zu den Künstlern</li>\n"
+"\t\t\t\t\t\t<li>Zentrale Verwaltung aller Termine und Termin-Optionen</li>\n"
+"\t\t\t\t\t\t<li>Anlegen von verschiedenen Programmen und Touren-Titeln</"
+"li>\n"
+"\t\t\t\t\t\t<li>Nutzung eines Veranstaltungsbildes pro Programm für mehrere "
+"Termine</li>\n"
+"\t\t\t\t\t\t<li>Sortierung der Künstler und Konzerte nach Genres und Typen</"
+"li>\n"
+"\t\t\t\t\t</ul>"
+msgstr ""
+
+#: admin/partials/events-admin-upgrade.php:89
+msgid "Location-Verwaltung"
+msgstr ""
+
+#: admin/partials/events-admin-upgrade.php:93
+msgid ""
+"\n"
+"\t\t\t\t\t<ul>\n"
+"\t\t\t\t\t\t<li>Verwaltung aller Locations in einer Übersicht</li>\n"
+"\t\t\t\t\t\t<li>Anlegen und Verwaltung der Räume und Kapazitäten pro "
+"Location</li>\n"
+"\t\t\t\t\t\t<li>Hinterlegung der Kontaktdaten für die Locations</li>\n"
+"\t\t\t\t\t</ul>"
+msgstr ""
+
+#: admin/partials/events-admin-upgrade.php:109
+msgid "Veranstalter-Verwaltung"
+msgstr ""
+
+#: admin/partials/events-admin-upgrade.php:113
+msgid ""
+"\n"
+"\t\t\t\t\t<ul>\n"
+"\t\t\t\t\t\t<li>Volle Kontrolle über alle Veranstalter</li>\n"
+"\t\t\t\t\t\t<li>Verwaltung der Kontaktdaten von Veranstaltern</li>\n"
+"\t\t\t\t\t\t<li>Zuordnung der Veranstalter zum Event</li>\n"
+"\t\t\t\t\t</ul>"
+msgstr ""
+
+#: admin/partials/events-admin-upgrade.php:135
+msgid "Front-End Layouts"
+msgstr ""
+
+#: admin/partials/events-admin-upgrade.php:140
+msgid ""
+"\n"
+"\t\t\t\t\t<ul>\n"
+"\t\t\t\t\t\t<li>3 verschiedene Layouts - je nach Anforderung</li>\n"
+"\t\t\t\t\t\t<ul>\n"
+"\t\t\t\t\t\t\t<li>Grid-Layout mit großem Foto</li>\n"
+"\t\t\t\t\t\t\t<li>Liste mit Fotos</li>\n"
+"\t\t\t\t\t\t\t<li>Liste ohne Fotos (ideal für Künstler und Bands)</li>\n"
+"\t\t\t\t\t\t</ul>\n"
+"\t\t\t\t\t\t<li>Störer für Verschiebungen / Absagen / Änderung der "
+"Locations </li>\n"
+"\t\t\t\t\t\t<li>Verlinkung zum Ticketshop</li>\n"
+"\t\t\t\t\t\t<li>Verlinkung zur FB Veranstaltung</li>\n"
+"\t\t\t\t\t</ul>"
+msgstr ""
+
+#: admin/partials/events-admin-upgrade.php:164
+msgid "Datenschutz"
+msgstr ""
+
+#: admin/partials/events-admin-upgrade.php:169
+msgid ""
+"\n"
+"\t\t\t\t\t<ul>\n"
+"\t\t\t\t\t\t<li>Der Datenschutz ist uns wichtig</li>\n"
+"\t\t\t\t\t\t<li>Verschlüsselung aller Daten auf der Datenbank</li>\n"
+"\t\t\t\t\t\t<li>Entschlüsselbar nur mit Verschlüsselungs-Key</li>\n"
+"\t\t\t\t\t</ul>"
+msgstr ""
+
+#: public/class-events-public.php:125
+msgid "Aktuell sind keine Events geplant"
+msgstr ""

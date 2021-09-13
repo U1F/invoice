@@ -1,0 +1,384 @@
+
+/* Div that frames the form*/
+
+.q-invoice-page div#edit-invoice {
+    margin-top: 112px;
+    margin-left: 215px;
+    margin-right: 45px;
+    margin-bottom: 45px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 12px;
+    border: 1px solid white;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.q-invoice-page div#heading-invoice h2 {
+    font-family: sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+
+.q-invoice-page h2#formHeaderCreate {
+    display: none;
+}
+
+.q-invoice-page h2#formHeaderEdit {
+    display: none;
+}
+
+
+/* Div that frames the Input Fields of the Invoice Form*/
+
+.q-invoice-page div#invoiceInputTables {
+    margin-left: 0px;
+    display: flex;
+}
+
+
+/* Div that frames the left input fields of the Invoice*/
+
+.q-invoice-page div#invoiceInputTableLeft {
+    width: 440px;
+}
+
+
+/* Styles for the left table, the labels and input fields*/
+
+.q-invoice-page table#invoiceFormInputsLeft {
+    font-family: sans-serif;
+    font-size: 14px;
+    /*border-spacing: 0 12px;*/
+}
+
+.q-invoice-page div#invoiceInputTables td {
+    padding-bottom: 12px;
+}
+
+.q-invoice-page tr#tableRowBank1 td {
+    padding-bottom: 6px;
+}
+
+.q-invoice-page td.labelsLeftTable {
+    width: 120px;
+    font-weight: bold;
+}
+
+.q-invoice-page td.inputsLeftTable {
+    width: 322px;
+}
+
+.q-invoice-page td.inputsLeftTable input {
+    width: 320px;
+}
+
+.q-invoice-page #input_container {
+    position: relative;
+    padding: 0;
+    margin: 0 0px;
+    background: #ddd;
+    width: 320px;
+}
+
+.q-invoice-page #firma {
+    height: 36px;
+    margin: 0;
+    padding-right: 30px;
+    width: 100%;
+}
+
+.q-invoice-page #inputDashiconCompanyRegister {
+    position: absolute;
+    bottom: 2px;
+    right: 5px;
+    width: 24px;
+    height: 24px;
+}
+
+.q-invoice-page td.inputsLeftTable input#firstname {
+    width: 152px;
+}
+
+.q-invoice-page td.inputsLeftTable input#lastname {
+    width: 152px;
+}
+
+.q-invoice-page td.inputsLeftTable input#zip {
+    width: 80px;
+}
+
+.q-invoice-page td.inputsLeftTable input#city {
+    width: 224px;
+}
+
+.q-invoice-page td.inputsLeftTable input#loc_id {
+    width: 60px;
+}
+
+
+/* Spacer between left and right table using flexbox-layout*/
+
+.q-invoice-page div#invoiceInputTableSpacer {
+    flex-grow: 1;
+}
+
+
+/* Styles for the right table, labels and input fields*/
+
+.q-invoice-page div#invoiceInputTableRight {
+    width: 260px;
+}
+
+.q-invoice-page table#invoiceFormInputsRight {
+    font-family: sans-serif;
+    font-size: 14px;
+    /*border-spacing: 0 12px;*/
+}
+
+.q-invoice-page td.labelsRightTable {
+    width: 120px;
+    font-weight: bold;
+}
+
+.q-invoice-page td.inputsRightTable {
+    width: 144px;
+}
+
+.q-invoice-page td.inputsRightTable input[type=text],
+[type=date] {
+    width: 140px;
+    height: 32px;
+}
+
+.q-invoice-page td.inputsRightTable input#invoice_id {
+    width: 60px;
+    height: 32px;
+}
+
+
+/* Separator between invoice header and invoice details*/
+
+.q-invoice-page hr {
+    margin: 5px 0px 25px 0px;
+}
+
+
+/* div that frames the table for the invoice details (items) */
+
+.q-invoice-page div.invoice-items {
+    margin-left: 0px;
+    border-radius: 8px;
+    border: 1px solid #c0c0c0;
+}
+
+.q-invoice-page table#items {
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    margin-top: 0px;
+    background-color: #F7F7F7;
+}
+
+.q-invoice-page table#items input {
+    border-radius: 4px;
+    padding-left: 14px;
+    height: 32px;
+}
+
+.q-invoice-page table#items input {
+    margin-left: 0px;
+    height: 32px;
+}
+
+.q-invoice-page tr#table-invoice-items-header {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+.q-invoice-page tr#table-invoice-items-header td {
+    font-weight: bold;
+}
+
+.q-invoice-page table#items td {
+    font-family: sans-serif;
+    font-size: 14px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.q-invoice-page tr#table-invoice-items-header td {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.q-invoice-page table#items input[type=number] {
+    width: 80px;
+    height: 32px;
+}
+
+.q-invoice-page table#items input.rng-line-rabatt-absolut {
+    width: 80px;
+    height: 32px;
+}
+
+.q-invoice-page table#items td.invoiceMoveButton {
+    width: 18px;
+}
+
+.q-invoice-page table#items td.invoiceItemsNo {
+    width: 14px;
+}
+
+.q-invoice-page table#items td.invoiceItemsAmount {
+    width: 60px;
+}
+
+.q-invoice-page table#items td.invoiceItemsAmount input[type=number][name='anzahl[]'] {
+    width: 60px;
+    height: 32px;
+}
+
+.q-invoice-page table#items td.invoiceItemsDescription {
+    width: 100%;
+}
+
+.q-invoice-page table#items td.invoiceItemsDescription input.itemDescription {
+    width: 100%;
+}
+
+.q-invoice-page table#items td.invoiceItemsPrice {
+    width: 100px;
+}
+
+.q-invoice-page table#items td.invoiceItemsDiscount {
+    width: 140px;
+}
+
+.q-invoice-page table#items td.invoiceItemsTax {
+    width: 80px;
+}
+
+.q-invoice-page table#items td.invoiceItemsTotal {
+    width: 80px;
+    text-align: right;
+}
+
+.q-invoice-page table#items td.invoiceItemsButtons {
+    width: 24px;
+}
+
+.q-invoice-page span#invoiceSortHandle {
+    width: 16px;
+    height: 24px;
+}
+
+.q-invoice-page tr.wp-list-table-rng-line {
+    border-bottom: 1px solid #c0c0c0;
+    background-color: white;
+}
+
+
+.q-invoice-page div#invoice-sums {
+    font-family: sans-serif;
+    font-size: 14px;
+    width: 420px;
+    margin-left: auto;
+    margin-right: 44px;
+    margin-top: 4px;
+    margin-bottom: 20px;
+    border: 1px solid #c0c0c0;
+    border-radius: 4px;
+}
+
+.q-invoice-page table#sums {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.q-invoice-page td.invoiceSumsAccounts {
+    width: 100px;
+    text-align: right;
+    padding-right: 28px;
+}
+
+.q-invoice-page td.invoiceSumsLabel {
+    width: 100px;
+    text-align: left;
+    /*background-color:white; */
+    padding-left: 28px;
+}
+
+.q-invoice-page table#sums tr#rng-total-gross {
+    font-weight: bold;
+    border-top: 1px solid #c0c0c0;
+}
+
+.q-invoice-page select#tax-multi {
+    border-radius: 4px !important;
+    height: 32px;
+    text-align: right;
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #3c434a;
+    border: 1px solid #c0c0c0;
+}
+
+.q-invoice-page .invoiceFormButton {
+    height: 36px;
+    border: 1px solid #c0c0c0;
+    border-radius: 4px;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: bold !important;
+    color: #3c434a;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+
+.q-invoice-page select.discountType {
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    height: 32px;
+    border-radius: 4px;
+    
+    margin-bottom: 2px;
+    
+}
+
+.q-invoice-page div#autocompleteCompany {
+    background-color: #fff;
+    width: 320px;
+    display: none;
+    z-index: 3;
+    position: absolute;
+    padding: 0px 0px 0px 0px;
+    margin-left: 0px;
+    margin-top: -3px;
+    border: solid 1px white;
+    border-radius: 5px;
+}
+
+.q-invoice-page div.autocompleteButton {
+    border: solid 0px white;
+    display: block;
+    height: 34px;
+    padding-left: 12px;
+    padding-top: 10px;
+}
+
+.q-invoice-page div.autocompleteButton:hover {
+    background-color: lightgray;
+}
+
+.q-invoice-page tr.contactRegisterRow:hover {
+    background-color: lightgray;
+    
+}

@@ -1,0 +1,82 @@
+/* General Settings */
+
+.q-invoice-page html {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI" "Helvetica Neue", Oxygen-Sans, Ubuntu, Roboto, Cantarell, sans-serif;
+}
+
+.q-invoice-page h1.headerline {
+    font-family: sans-serif;
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 40px;
+}
+
+.q-invoice-page .headerline > *{
+    vertical-align: middle;
+}
+
+.q-invoice-page a {
+    text-decoration: none;
+}
+
+
+.q-invoice-page #overlay {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    background-color: rgba(100, 100, 100, 0.3);
+    z-index: 2;
+    cursor: default;
+}
+
+
+
+/* Supress arrows on number inputs with decimals*/
+
+.q-invoice-page input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.q-invoice-page input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.q-invoice-page input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.q-invoice-page #successInvoiceSaved {
+    font-family: sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    position: absolute;
+    color: white;
+    /*vertical-align: middle;*/
+    /*text-align: center;*/
+    width: 800px;
+    height: 100px;
+    background-color: rgb(63 174 73);
+    margin-left: 100px;
+    margin-top: 50px;
+    border-radius: 8px;
+}
+
+
+
+
+/*Testing*/
+

@@ -1,0 +1,215 @@
+
+/**
+
+ SETTINGS PAGE
+
+*/
+
+.q-invoice-page form#qinvoiceSettings {
+    border: 1px solid #c0c0c0;
+    background-color: white;
+    padding: 40px 40px 40px 40px;
+    margin-left: 27px;
+}
+
+.q-invoice-page section#settingsTable {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0px 0px 0x 0px;
+    width: 100%;
+}
+
+.q-invoice-page .containerFirst {
+    height: 450px;
+}
+
+.q-invoice-page #firstColumn {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.q-invoice-page #firstColumn .container {
+    align-self: flex-start;
+}
+
+.q-invoice-page #secondColumn {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.q-invoice-page #secondColumn .container {
+    align-self: center;
+}
+
+.q-invoice-page #secondColumn .containerFirst {
+    margin-right: 20px;
+}
+
+.q-invoice-page #thirdColumn {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.q-invoice-page #thirdColumn .container {
+    align-self: flex-end;
+}
+
+.q-invoice-page section#settingsTable h2 {
+    margin-top: 0px;
+    font-family: sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.q-invoice-page section#settingsTable th {
+    vertical-align: middle;
+    font-family: sans-serif;
+    font-size: 14px;
+    width: 112px;
+    font-weight: bold;
+    padding: 0 0 12px 0;
+}
+
+.q-invoice-page section#settingsTable td {
+    vertical-align: middle;
+    padding: 0 0 12px 0;
+}
+
+.q-invoice-page section#settingsTable input {
+    font-family: sans-serif;
+    font-size: 14px;
+    height: 32px;
+}
+
+.q-invoice-page section#settingsTable input[type=text] {
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 1px solid #c0c0c0;
+    width: 240px;
+    height: 32px;
+    border-radius: 4px;
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #3c434a;
+}
+
+.q-invoice-page section#settingsTable input[type=email] {
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 1px solid #c0c0c0;
+    width: 240px;
+    height: 32px;
+    border-radius: 4px;
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #3c434a;
+}
+
+.q-invoice-page section#settingsTable input:invalid {
+    background-color: lightsalmon;
+}
+
+.q-invoice-page section#settingsTable input[type=number] {
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 1px solid #c0c0c0;
+    height: 32px;
+    border-radius: 4px;
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #3c434a;
+}
+
+.q-invoice-page section#settingsTable input[type=tel] {
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 1px solid #c0c0c0;
+    height: 32px;
+    border-radius: 4px;
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #3c434a;
+}
+
+.q-invoice-page section#settingsTable select {
+    border-radius: 4px;
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #3c434a;
+    border: 1px solid #c0c0c0;
+    height: 32px;
+}
+
+.q-invoice-page p.submit input#submit {
+    width: 360px;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.q-invoice-page section#settingsTable input#ZIP {
+    width: 60px;
+}
+
+.q-invoice-page section#settingsTable input#prefix {
+    width: 60px;
+}
+
+.q-invoice-page section#settingsTable input#noStart {
+    width: 60px;
+}
+
+section#settingsTable input[id^="tax"] {
+    width: 36px;
+}
+
+.q-invoice-page section#settingsTable input#currencySign {
+    width: 36px;
+}
+
+.q-invoice-page section#settingsTable input#unit {
+    width: 84px;
+}
+
+.q-invoice-page section#settingsTable input#phone {
+    width: 144px;
+}
+
+.q-invoice-page section#settingsTable input#reminder {
+    text-align: right;
+    width: 72px;
+}
+
+.q-invoice-page section#settingsTable input#dunning1 {
+    text-align: right;
+    width: 72px;
+}
+
+.q-invoice-page section#settingsTable input#dunning2 {
+    text-align: right;
+    width: 72px;
+}
+
+.q-invoice-page section#settingsTable input#IP {
+    width: 144px;
+}
+
+.q-invoice-page section#settingsTable input#user {
+    width: 144px;
+}
+
+.q-invoice-page section#settingsTable input#password {
+    width: 144px;
+}
+
+.q-invoice-page section#settingsTable input#port {
+    width: 72px;
+}
+
+.q-invoice-page section#settingsTable div.tableSpacer {
+    margin-bottom: 2px;
+}

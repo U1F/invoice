@@ -1,0 +1,77 @@
+
+.q-invoice-page td.column-edit span.edit {
+    cursor: pointer;
+}
+
+.q-invoice-page td.column-edit span.loschen {
+    cursor: pointer;
+}
+
+.q-invoice-page span.print {
+    cursor: pointer;
+}
+
+
+.q-invoice-page table#tableInvoices{
+    border-collapse: collapse;
+    width: 98%;
+}
+
+.q-invoice-page table#tableInvoices thead#tableInvoicesHeader tr th:first-child{
+    padding-left:20px;
+}
+
+.q-invoice-page table#tableInvoices tbody tr td:first-child {
+    padding-left:20px;
+}
+
+.q-invoice-page table#tableInvoices thead#tableInvoicesHeader{
+    /*background-color: #F7F7F7;*/
+    border-color:   #F7F7F7;
+}
+.q-invoice-page table#invtableInvoicesoices thead#tableInvoicesHeader td#openInvoices{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-weight: bold;
+    border-bottom: solid 1px #d4d4d4;;
+    
+}
+.q-invoice-page table#tableInvoices th
+{
+    padding-bottom: 15px;
+    padding-top: 15px;  
+}
+
+.q-invoice-page table#tableInvoices td
+{
+    padding-bottom: 12px;
+    padding-top: 15px;  
+    vertical-align: middle;
+}
+
+.q-invoice-page table#tableInvoices tbody tr
+{
+    cursor: pointer;
+    border-bottom: solid 1px lightgray;
+}
+.q-invoice-page table#tableInvoices tbody tr:hover
+{
+    background-color: lightgray;
+}
+
+
+.q-invoice-page table#tableInvoices .column-net{
+    text-align: right;
+}
+
+.q-invoice-page table#tableInvoices .column-total{
+    text-align: right;
+}
+
+.q-invoice-page table#tableInvoices .column-date{
+    text-align: right;
+}
+
+.q-invoice-page table#tableInvoices .column-edit{
+    text-align: center;
+}

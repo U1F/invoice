@@ -1,0 +1,87 @@
+.q-invoice-page table#head td {
+    border-bottom: 1px solid #0000001a;
+    vertical-align: middle;
+    font-size: 16px;
+}
+
+.q-invoice-page table#head td.width-labelling {
+    width: 9.5%;
+}
+
+.q-invoice-page table#head label {
+    font-weight: bold;
+}
+
+.q-invoice-page table#head input[type=text],
+[type=date] {
+    border-radius: 4px !Important;
+    height: 40px;
+    padding-left: 14px;
+}
+
+.q-invoice-page table#items input {
+    border-radius: 4px !Important;
+    height: 40px;
+    padding-left: 14px;
+    font-size: 15px;
+}
+
+.q-invoice-page table#items td {
+    border-bottom: 1px solid #0000001a;
+    vertical-align: middle;
+    font-size: 15px;
+}
+
+.q-invoice-page table#head input.first-row-long {
+    width: 50%;
+}
+
+.q-invoice-page table#head input.second-row-long {
+    width: 90%;
+}
+
+.q-invoice-page table#sums td {
+    font-size: 15px;
+}
+
+.q-invoice-page div#edit-invoice label {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -o-user-select: none;
+}
+
+.q-invoice-page select#tax-multi {
+    border-radius: 4px !Important;
+    height: 40px;
+    text-align: right;
+}
+
+
+/** 
+ * Testing
+ */
+
+ .q-invoice-page #overlay {
+    position: absolute;
+    /* Sit on top of the page content */
+    display: none;
+    /* Hidden by default */
+    width: 100%;
+    /* Full width (cover the whole page) */
+    height: 100%;
+    /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(210, 210, 210, 0.8);
+    /* Black background with opacity */
+    z-index: 2;
+    /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer;
+    /* Add a pointer on hover */
+}

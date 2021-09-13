@@ -1,0 +1,102 @@
+ 
+.q-invoice-page #overlay {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    background-color: rgba(100, 100, 100, 0.3);
+    z-index: 2;
+    cursor: default;
+}
+/* Div that frames the form - copied from invoices - make it class?*/
+.q-invoice-page #qiContactPopup{
+    display: inline-block;
+    margin-top: 112px;
+    margin-left: 215px;
+    margin-right: 45px;
+    margin-bottom: 45px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 12px;
+    border: 1px solid white;
+    background-color: white;
+    border-radius: 5px;
+}
+
+
+.q-invoice-page td {
+    padding-bottom: 12px;
+}
+
+.q-invoice-page td.qiContactTableLabel {
+    width: 120px;
+}
+
+.q-invoice-page input[type=text],
+[type=date] {
+    border-radius: 4px !Important;
+    height: 36px;
+    padding-left: 14px;
+}
+
+.q-invoice-page input.qiContactInput {
+    border-radius: 4px !Important;
+    height: 36px;
+    padding-left: 14px;
+    font-size: 14px;
+}
+
+
+.q-invoice-page table#contacts{
+    border-collapse: collapse;
+}
+
+.q-invoice-page table#contacts td.first{
+    
+    padding-left:20px;
+
+    
+}
+
+.q-invoice-page table#contacts td.last{
+    
+    padding-right:20px;
+    
+}
+
+.q-invoice-page table#contacts thead{
+    background-color: #F7F7F7;
+    border-color:   #F7F7F7;
+}
+.q-invoice-page table#contacts thead td{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-weight: bold;
+    border-bottom: solid 1px #d4d4d4;;
+    
+}
+
+.q-invoice-page table#contacts td
+ {
+    
+    padding-bottom: 15px;
+    padding-top: 15px;
+
+    
+}
+.q-invoice-page .qiContactFormButton {
+    height: 36px;
+    border: 1px solid #c0c0c0;
+    border-radius: 4px;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: bold !important;
+    color: #3c434a;
+    padding-left: 15px;
+    padding-right: 15px;
+}

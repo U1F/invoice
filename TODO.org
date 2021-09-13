@@ -1,0 +1,12 @@
+* Errors    
+Trying to get property 'vorname' 
+of non-object in 
+/var/www/wordpress/wp-content/plugins
+/q_invoice
+/admin/partials/
+q_invoice-admin-edit.php
+on line 626
+
+<?php //add_thickbox(); ?><!--a id="newInvoice" href="#TB_inline?&width=1000&height=1000&inlineId=my-content-id" class="thickbox">View my inline content!</a-->	
+
+ 
