@@ -37,13 +37,16 @@
                     <?php
                         settings_fields('pluginForm');
                         do_settings_sections('pluginPage'); 
+                        settings_fields('logoForm');
+                        do_settings_sections('logoPage'); 
                     ?>
-                    </div>
+                </div>
 
-                    <div class="container containerSecond">
+                <div class="container containerSecond">
                     <?php
                         settings_fields('invoiceForm');
                         do_settings_sections('invoicePage');
+
                     ?>
                 </div>
             </div>

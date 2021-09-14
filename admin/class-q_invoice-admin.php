@@ -86,9 +86,10 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             
             register_setting(
                 'pluginForm', 
-                'qi_settings'     
+                'qi_settings',
+                array( 'sanitize_callback' => array( $this, 'handleFileUploadForLogo' ))
             );
-            //array($this, 'handleFileUploadForLogo')
+            //
 
             add_settings_section(
                 'qi_pluginPage_section',
@@ -104,16 +105,17 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $this->addSettingsField("street", "text", "pluginPage", 1);
             $this->addSettingsField("ZIP", "number", "pluginPage", 1);
             $this->addSettingsField("city", "text", "pluginPage", 1);
-            $this->addSettingsField("logo", "file", "pluginPage");
-            /*
+            $this->addSettingsField("logo File Url", "text", "pluginPage");
+             
+            
             add_settings_field(
-                'qi_settingsLogo', 
-                'CompanyLogo', 
+                'qi_settingsLogoFile', 
+                'Logo', 
                 [$this, 'showInputForLogo'],
                 'pluginPage',
                 'qi_pluginPage_section'
             );
-            */
+            
 
             // SETTINGS SECTION INVOICE
             register_setting(
@@ -336,13 +338,16 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          */
         public function showInputForLogo()
         {
-            $options = get_option('qi_settings');
+            
             echo 
-                "<input id='logo' ".
-                "name='qi_settings[logo]' ".
-                "type='text' ".
-                "value='' />";
-                echo $options['logo'];
+                "<input ".
+                "id='logoFile' ".
+                "name='logoFile' ".
+                "type='file' ".
+                "value='".
+                
+                "' />";
+            
 
             
                 
@@ -357,50 +362,24 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          */
         public function handleFileUploadForLogo($option)
         {
-            return $option;
-            include_once ABSPATH . 'wp-admin/includes/file.php';
-            echo file_put_contents(
-                'error.txt', 
-                file_get_contents('error.txt'). 
-                "qi_settings qi_settingsCompanyLogo".
-                "print_r:".
-                //undef print_r($_FILES['qi_settings']).
-                //undef print_r($_FILES['qi_settings']["tmp_name"]).
-                //undef print_r($_FILES['qi_settingsCompanyLogo']).
-                //undef print_r($_FILES['qi_settingsCompanyLogo']["tmp_name"]).
-                //undef print_r($_FILES["logo"]["tmp_name"]).
-                //undef print_r($_FILES["logo"]).
-                print_r($_FILES).
-                "bare".
-                sizeof($_FILES).
-                var_dump($_FILES).
-                $_FILES["tmp_name"]['logo'].
-                //undef $_FILES['qi_settings']['logo'].
-                //undef $_FILES.
-                //undef $_FILES['qi_settings'].
-                //undef $_FILES['qi_settings']["tmp_name"].
-                //undef $_FILES['qi_settingsCompanyLogo'].
-                //undef $_FILES['qi_settingsCompanyLogo']["tmp_name"].
-                //undef $_FILES["logo"]["tmp_name"].
-                "\n"
-            );
+            //file_put_contents('error.txt', file_get_contents('error.txt').print_r($option, true));
 
-            /*
-            if (!empty($_FILES["logo"]["tmp_name"])) {
-                do_action('qm/debug', 'This happened!');
-                do_action('qm/debug', $_FILES);
+            
+            //file_put_contents('error.txt', file_get_contents('error.txt').print_r($_FILES, true));
+            
+            if (!empty($_FILES['logoFile']["tmp_name"])) {
                
                 $urls = wp_handle_upload(
-                    $_FILES["logo"], 
+                    $_FILES['logoFile'],
                     array('test_form' => false)
                 );
-                $temp = $urls["url"];
-                return $temp;  
+
+                //file_put_contents('error.txt', file_get_contents('error.txt').print_r($urls, true));
+
+                $option['logoFileUrl'] = $urls["url"];
+                
             }
-            */
-            do_action('qm/debug', 'This happened NOT!');
-            
-            
+
             return $option;
         }
 
@@ -1097,7 +1076,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
 
             } else {
                 echo "error: Nonce is not accepted!";
-                echo json_encode($_POST);
+                $response['success'] = false;
+                echo json_encode($response);
 
                 wp_die();
             } 
