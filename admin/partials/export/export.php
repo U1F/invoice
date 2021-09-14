@@ -129,6 +129,14 @@ td.invoiceItemsHeader {
                     
                     
                     <br>
+
+                    <p class="invoiceSender" id="senderName">
+                        <?php 
+                        echo 
+                            get_option('qi_settings')['firstName']. " ". 
+                            get_option('qi_settings')['lastName'];
+                        ?>
+                    </p>
                         
                     <p class="invoiceSender" id="senderAdditional">
                         <?php echo get_option('qi_settings')['additional'];?>
@@ -174,7 +182,9 @@ td.invoiceItemsHeader {
                     style="font-size:9px; vertical-align: bottom;">
                     <u>
                     <?php echo  
-                        get_option('qi_settings')['additional']. " | ". 
+                    
+                        get_option('qi_settings')['firstName']. " ". 
+                        get_option('qi_settings')['lastName']. " | ". 
                         get_option('qi_settings')['street']. " | ".  
                         get_option('qi_settings')['ZIP'] . " ". 
                         get_option('qi_settings')['city']; 
@@ -225,10 +235,10 @@ td.invoiceItemsHeader {
         >
             <?php 
             $heading=__("Rechnung", "ev");
-            $invoiceText ="Folgende Leistung stellen wir Ihnen in Rechnung: ";
+            $invoiceText = get_option('qi_settings')['invoiceTextIntro'];
             if ($invoiceType =="invoice") {
                 $heading=__("Rechnung", "ev");
-                $invoiceText ="Folgende Leistung stellen wir Ihnen in Rechnung: ";
+                $invoiceText = get_option('qi_settings')['invoiceTextIntro'];
             } else if ($invoiceType =="credit") {
                 $heading=__("Gutschrift", "ev");
                 $invoiceText ="Folgende Leistung schreiben wir Ihnen gut.";

@@ -104,7 +104,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $this->addSettingsField("street", "text", "pluginPage", 1);
             $this->addSettingsField("ZIP", "number", "pluginPage", 1);
             $this->addSettingsField("city", "text", "pluginPage", 1);
-            $this->addSettingsField("logo", "text", "pluginPage");
+            $this->addSettingsField("logo", "file", "pluginPage");
             /*
             add_settings_field(
                 'qi_settingsLogo', 

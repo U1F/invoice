@@ -10,8 +10,7 @@
  * @author     qanuk.io <support@qanuk.io>
  * @license    http://opensource.org/licenses/gpl-license.php GNU Public License 
  * @version    CVS: 
- * 
- * @link a.de
+ * @link       qanuk.io
  */
 
 $currencySymbol = "€";
