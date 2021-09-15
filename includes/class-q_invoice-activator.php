@@ -32,7 +32,7 @@ if (!class_exists('QI_Invoice_Activator')) {
         private $_TABLE_QI_CONTACTS;
         private $_table_i_header;
         private $_table_i_details;
-        private $_table_settings;
+        
 
         /**
          * Function activate
@@ -50,10 +50,70 @@ if (!class_exists('QI_Invoice_Activator')) {
             $this_object->_qInvoiceCreateDbInvoiceH();
             $this_object->_qInvoiceCreateDbInvoiceD();
             $this_object->_qInvoiceCreateDbContacts();
+            $this_object->_setDefaultSettings();
             // Daniel: 26.06. - hier müssen noch 
             // alle weiteren Tabellen erzeugt werden
             // $this_object->q_invoice_create_db_template();
-            $this_object->_qInvoiceCreateDbSettings();
+            
+           
+        }
+        /**
+         * Function _setDefaultSettings
+         *
+         * Set Default Settings
+         *
+         * @since 1.0.0
+         * 
+         * @return void
+         */
+        private function _setDefaultSettings()
+        {
+            $defaultOptions = array(
+                "company" => "test",
+                "additional" => "",
+                "firstName" => "",
+                "lastName" => "",
+                "street" => "",
+                "ZIP" => "",
+                "city" => "",
+                "logoFileUrl" => "",
+                "logoFileFile" => "",
+                "prefix" => "",
+                "noStart" => "",
+                "invoiceCurrency" => "",
+                "taxTypes" => 2,
+                "tax1" => "",
+                "tax2" => "",
+                "unit" => "",
+                "customFooter" => "",
+                "invoiceTextIntro" => "",
+                "invoiceTextOutro" => "",
+                "mail" => "",
+                "phone" => "",
+                "facebook" => "",
+                "instagram" => "",
+                "reminder" => "",
+                "dunning1" => "",
+                "dunning2" => "",
+                "IBAN1" => "",
+                "BIC1" => "",
+                "bankName1" => "",
+                "BankSpacer1" => "",
+                "IBAN2" => "",
+                "BIC2" => "",
+                "bankName2" => "",
+                "BankSpacer2" => "",
+                "PayPal.Me" => "",
+                "Name" => "",
+                "server" => "",
+                "IP" => "",
+                "port" => "",
+                "user" => "",
+                "password" => ""
+            
+            );
+            update_option('qi_settings', $defaultOptions);
+            
         }
 
         /**
@@ -202,61 +262,7 @@ if (!class_exists('QI_Invoice_Activator')) {
             dbDelta($sql);
         }
 
-        /**
-         * Function _qInvoiceCreateDbSettings
-         *
-         * Creates Invoice database tables
-         *
-         * @since 1.0.0
-         * 
-         * @return void
-         */
-        private function _qInvoiceCreateDbSettings()
-        {
-            global $wpdb;
-            $charset_collate = $wpdb->get_charset_collate();
-            $table_name = $this->_table_settings;
-                
-            $sql = "CREATE TABLE $table_name (
-                id int(12) NOT NULL AUTO_INCREMENT,
-                q_company varchar (128) NOT NULL,
-                q_addition varchar (128) NOT NULL,
-                q_firstname varchar (32) NOT NULL,
-                q_lastname varchar (64) NOT NULL,
-                q_address varchar (64) NOT NULL,
-                q_zip int (5) NOT NULL,
-                q_city varchar (64) NOT NULL,
-                company_logo varchar (256) NOT NULL,
-                facebook varchar (256) NOT NULL,
-                facebook_image varchar (256) NOT NULL,
-                instagram varchar (256) NOT NULL,
-                instagram_image varchar (256) NOT NULL,
-                mail varchar (128) NOT NULL,
-                mail_image varchar (256) NOT NULL,
-                phone varchar (16) NOT NULL,
-                phone_Image varchar (256) NOT NULL,
-                prefix varchar (10) NOT NULL,
-                startID int (12) NOT NULL,
-                q_IBAN1 int (32) NOT NULL,
-                q_BIC1 varchar (16) NOT NULL,
-                q_bankdetails1 varchar (128) NOT NULL,
-                q_IBAN2 int (12) NOT NULL,
-                q_BIC2 varchar (16) NOT NULL,
-                q_bankdetails2 varchar (128) NOT NULL,
-                host varchar (256) NOT NULL,
-                IP varchar (16) NOT NULL,
-                dunning_0 varchar (12) NOT NULL,
-                dunning_1 varchar (12) NOT NULL,
-                dunning_2 varchar (12) NOT NULL,
-                currency varchar (12) NOT NULL,
-                amount varchar (12) NOT NULL,
-                tax varchar (12) NOT NULL,		
-                PRIMARY KEY  (id)
-            ) $charset_collate;";
-            
-            include_once ABSPATH . 'wp-admin/includes/upgrade.php';
-            dbDelta($sql);
-        }
+        
 
         /** 
          * Function _mailingCreateDbSettings

@@ -98,16 +98,39 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 'pluginPage'
             );  
 
-            $this->addSettingsField("Company", "text", "pluginPage", 1);
+            $this->addSettingsField("company", "text", "pluginPage");
             $this->addSettingsField("additional", "text", "pluginPage");
             $this->addSettingsField("first Name", "text", "pluginPage");
             $this->addSettingsField("last Name", "text", "pluginPage");
             $this->addSettingsField("street", "text", "pluginPage", 1);
             $this->addSettingsField("ZIP", "number", "pluginPage", 1);
             $this->addSettingsField("city", "text", "pluginPage", 1);
-            $this->addSettingsField("logo File Url", "text", "pluginPage");
-             
             
+             
+            add_settings_field(
+                'qi_settings' ."logoFileUrl", 
+                null, 
+                [$this, 'hideInput'],
+                "pluginPage",
+                'qi_'.'pluginPage'.'_section',
+                $array = [
+                    "name" => "logo File Url",
+                    "type" => "text"
+                ]
+            );
+
+            add_settings_field(
+                'qi_settings' ."logoFileFile", 
+                null,
+                [$this, 'hideInput'],
+                "pluginPage",
+                'qi_'.'pluginPage'.'_section',
+                $array = [
+                    "name" => "logo File File",
+                    "type" => "text"
+                ]
+            );
+
             add_settings_field(
                 'qi_settingsLogoFile', 
                 'Logo', 
@@ -209,7 +232,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             
             add_settings_field(
                 'qi_settings' ."BankSpacer1", 
-                "", 
+                null, 
                 [$this, 'addSpacerForSetting'],
                 "bankPage",
                 'qi_'.'bankPage'.'_section',
@@ -288,6 +311,28 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
         }
 
+        /**
+         * Function hideInput
+         * 
+         * @param array $arguments 
+         * 
+         * @return void
+         */
+        public function hideInput(array $arguments)
+        {
+            
+            $options = get_option('qi_settings');
+            echo "<input "
+                ."id='".str_replace(' ', '', $arguments['name'])."'"
+                ."name='qi_settings[".str_replace(' ', '', $arguments['name'])."]'"
+                ."type='".$arguments['type']."'"
+                ."value='".$options[str_replace(' ', '', $arguments['name'])]."'"
+                ."class='' "
+                ."style='display:none'"
+                ."/>";
+                
+        }
+
 
         /**
          * Function showInputForSetting
@@ -340,13 +385,27 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         {
             
             echo 
-                "<input ".
-                "id='logoFile' ".
-                "name='logoFile' ".
-                "type='file' ".
-                "value='".
-                
-                "' />";
+
+                "<label ".
+                    "class='fileUpload'".
+                    "style='".
+                        "border:solid 1px #c0c0c0; ".
+                        "border-radius:4px; ".
+                        "padding:7px; ".
+                        "min-height:32px; ".
+                    "'".
+                ">".
+                    "<input ".
+                        "id='logoFile' ".
+                        "name='logoFile' ".
+                        "type='file' ".
+                        "style='display:none'".
+                        "value='".         
+                    "' />".
+
+                    "Upload".
+
+                "</label>";
             
 
             
@@ -377,6 +436,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 //file_put_contents('error.txt', file_get_contents('error.txt').print_r($urls, true));
 
                 $option['logoFileUrl'] = $urls["url"];
+                $option['logoFileFile'] = $urls["file"];
                 
             }
 
