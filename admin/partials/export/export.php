@@ -108,24 +108,15 @@ td.invoiceItemsHeader {
                     rowspan="3" 
                     style="width: 270px; text-align: right; font-size:12px;"
                 >
-                <?php if (get_option('qi_settings')['logo'] =="no") {
-                    ?> <img 
-                    src="http://127.0.0.1/wp-content/uploads/2021/09/empty_500.png" 
+               
+                    <img 
+                    src="<?php echo get_option('qi_settings')['logoFileUrl']?>" 
                     width="250" 
                     style="border:0px;"
-                > 
+                
                         
-                     <?php
-                } else {
-                    ?>
-                        <img 
-                            src="https://bierbachelor.com/hrsl_500.png" 
-                            width="250" 
-                            style="border:0px;"
-                        > 
-                    <?php
-                }
-                ?>
+                     
+                
                     
                     
                     <br>
