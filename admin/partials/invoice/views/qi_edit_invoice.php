@@ -385,7 +385,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
             <hr> <!-- ----------------------------------------------------------- -->
 
             <div class="invoice-items">
-                <table id="items" class="form-table rng-table">
+                <table id="items" class="form-table qInvc-table">
                     <tr id="table-invoice-items-header">
 
                         <td class="invoiceMoveButton">
@@ -426,7 +426,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                         </td>
                     </tr>
 
-                    <tr class="wp-list-table-rng-line">
+                    <tr class="wp-list-table-qInvcLine">
                         <td class="invoiceMoveButton">
                             <span 
                             class="sortHandle dashicons dashicons-menu"> 
@@ -436,7 +436,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                         </td>
                         <td class="invoiceItemsNo">
                             
-                            <span class="rng-pos">1</span>
+                            <span class="qInvc-pos">1</span>
                             <input 
                                 style="display:none"
                                 type="text" 
@@ -540,7 +540,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             
                             <nobr> 
                                 <span 
-                                    class="rng-line-total"> 
+                                    class="qInvcLine-total"> 
                                 </span>
                                 
                                 <?php echo $currencySymbol ?>
@@ -559,7 +559,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                         <td class="invoiceItemsButtons" style="text-align: center;">
 
                             <span 
-                                class="rng-delete-line dashicons dashicons-no-alt">
+                                class="qInvc-delete-line dashicons dashicons-no-alt">
                             </span>
                             
                         </td>
@@ -571,7 +571,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                 
                 <button 
                     type="button"               
-                    id="rng-add-line">
+                    id="qInvc-add-line">
                     <span style="vertical-align: middle;"> 
                         &#10010; 
                         <?php echo __('New Position', 'Ev'); ?>
@@ -583,13 +583,13 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                     <table id="sums" class="form-table">
                         <tr class="invoiceSums">
 
-                            <td class="rng-tota invoiceSumsLabel">
+                            <td class="qInvc-tota invoiceSumsLabel">
                                 <?php echo __('Net', 'Ev'); ?>
                             </td>
 
                             <td  
-                                class="rng-total invoiceSumsAccounts">
-                                    <span class="rng-total-summe"></span> 
+                                class="qInvc-total invoiceSumsAccounts">
+                                    <span class="qInvc-total-summe"></span> 
                                     <?php echo $currencySymbol ?>
                             </td>
                         </tr>
@@ -597,13 +597,13 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                         
                         
                         
-                        <tr class="invoiceSums" id="rng-total-gross">
-                            <td class="rng-total invoiceSumsLabel">
+                        <tr class="invoiceSums" id="qInvc-total-gross">
+                            <td class="qInvc-total invoiceSumsLabel">
                                 <?php echo __('Gross', 'Ev'); ?> 
                             </td>
                             
-                            <td class="rng-total invoiceSumsAccounts">
-                                <span class="rng-total-brutto-summe"></span> 
+                            <td class="qInvc-total invoiceSumsAccounts">
+                                <span class="qInvc-total-brutto-summe"></span> 
                                 <?php echo $currencySymbol ?>
                             </td>
                             

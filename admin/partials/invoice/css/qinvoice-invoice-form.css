@@ -221,7 +221,7 @@
     height: 32px;
 }
 
-.q-invoice-page table#items input.rng-line-rabatt-absolut {
+.q-invoice-page table#items input.qInvcLine-rabatt-absolut {
     width: 80px;
     height: 32px;
 }
@@ -277,7 +277,7 @@
     height: 24px;
 }
 
-.q-invoice-page tr.wp-list-table-rng-line {
+.q-invoice-page tr.wp-list-table-qInvcLine {
     border-bottom: 1px solid #c0c0c0;
     background-color: white;
 }
@@ -313,7 +313,7 @@
     padding-left: 28px;
 }
 
-.q-invoice-page table#sums tr#rng-total-gross {
+.q-invoice-page table#sums tr#qInvc-total-gross {
     font-weight: bold;
     border-top: 1px solid #c0c0c0;
 }
