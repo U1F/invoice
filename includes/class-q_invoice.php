@@ -213,7 +213,7 @@ if (!class_exists('QI_Invoice')) {
                 'updateContact',
                 'deleteContact',
                 'editContact', 
-                'fetchInvoiceTemplate',
+                
                 'printInvoiceTemplate',
             ];
 

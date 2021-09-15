@@ -443,25 +443,7 @@ jQuery(function($) {
         });
     }
 
-    function fetchInvoiceTemplate() {
-        jQuery.ajax({
-            type: 'POST',
-            url: q_invoice_ajaxObject.ajax_url,
-            data: {
-                action: 'fetchInvoiceTemplateServerSide',
-                _ajax_nonce: q_invoice_ajaxObject.nonce
-            },
-            success: function(response, textStatus, XMLHttpRequest) {
-                console.log("Response: " + response);
-                return response;
-
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert("Error: " +
-                    errorThrown);
-            }
-        });
-    }
+    
 
 
 

@@ -912,68 +912,9 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             wp_die();
         }
 
-        /**
-         * Function fetchInvoiceTemplateServerSide
-         * 
-         * @return void
-         *
-         * @since 1.0.0
-         */
-        public function fetchInvoiceTemplateServerSide()
-        {
-            check_ajax_referer($this->_plugin_name . "_nonce");
-            
-            ob_start();
-            include_once \QI_Invoice_Constants::PART_PATH_QI . 
-            "/admin/partials/export/export.php";               
-            $exportInv= ob_get_contents();
-            
-            ob_end_clean();
-            
+        
 
-            echo $exportInv;
-            wp_die();
-        }
-
-        /**
-         * Function printInvoiceTemplateServerSide
-         * 
-         * @return void
-         *
-         * @since 1.0.0
-         */
-        public function printInvoiceTemplateServerSide()
-        {
-            check_ajax_referer($this->_plugin_name . "_nonce");
-            
-            ob_start();
-            include_once \QI_Invoice_Constants::PART_PATH_QI . 
-            "/admin/partials/export/export.php";  
-            exportInovice($_POST['id'], "invoice");             
-            $exportInv= ob_get_contents();
-            
-            include  \QI_Invoice_Constants::PART_PATH_QI . 
-            '/admin/partials/export/html2pdf.class.php';
-            try {
-                $html2pdf = new HTML2PDF('P', 'A4', 'de');
-                $html2pdf->writeHTML($exportInv, isset($_GET['vuehtml']));
-                $html2pdf->Output(
-                    \QI_Invoice_Constants::PART_PATH_QI . 
-                    'pdf/'.
-                    "Invoice".
-                    $_POST['id'].
-                    '.pdf', 'F'
-                );
-            } catch (HTML2PDF_exception $e) {
-                echo $e;
-                exit;
-            }
-            ob_end_clean();
-
-            echo $exportInv;
-            wp_die();
-        }
-
+        
         /**
          * Function printInvoiceTemplate
          * 
@@ -992,7 +933,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             "/admin/partials/export/export.php";  
             exportInovice($invoiceID, "invoice");             
             $exportInv= ob_get_contents();
-            
+            ob_end_clean();
             include  \QI_Invoice_Constants::PART_PATH_QI . 
             '/admin/partials/export/html2pdf.class.php';
             try {
@@ -1009,7 +950,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 echo $e;
                 exit;
             }
-            ob_end_clean();
+            
 
             
             
