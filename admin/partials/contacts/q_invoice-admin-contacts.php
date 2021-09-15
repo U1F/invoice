@@ -23,7 +23,7 @@
 
 <div class="q-invoice-page invoice-page">
     <h1 class="headerline">
-        <img id="img_snowflake" 
+        <img id="imgSnowflake" 
             src="<?php echo esc_url(
                 plugins_url('../../img/qanuk_snowflake.png', __FILE__)
             );?>">

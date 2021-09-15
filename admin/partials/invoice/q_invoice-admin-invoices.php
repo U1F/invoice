@@ -29,7 +29,7 @@ function Invoice_list()
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 
     <h1 class="headerline">
-        <img id="img_snowflake" 
+        <img id="imgSnowflake" 
             src="<?php 
             $snow = '../../img/qanuk_snowflake.png';
             echo esc_url(plugins_url($snow, __FILE__));
