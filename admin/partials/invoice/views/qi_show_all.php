@@ -25,37 +25,37 @@
         <thead id="tableInvoicesHeader">
             <tr>
                 <th scope="col" id="id" 
-                    class="manage-column fifty_col column-id sortable asc ">
+                    class="manage-column fiftyCol column-id sortable asc ">
                     <?php _e('#', 'Ev'); ?>
                 </th>
 
                 <th scope="col" id="company" 
-                    class="manage-column twohundred_col column-company">
+                    class="manage-column twohundredCol column-company">
                     <?php _e('Company', 'Ev'); ?>
                 </th>
                 
                 <th scope="col" id="name" 
-                    class="manage-column hundred_col column-name">
+                    class="manage-column hundredCol column-name">
                     <?php _e('Name', 'Ev'); ?>
                 </th>
                 
                 <th scope="col" id="sumNet" 
-                    class="manage-column fifty_col column-net">
+                    class="manage-column fiftyCol column-net">
                     <?php _e('Net', 'Ev'); ?>
                 </th>
                 
                 <th scope="col" id="sumTotal" 
-                    class="manage-column eighty_col column-total ">
+                    class="manage-column eightyCol column-total ">
                     <?php _e('Total', 'Ev'); ?>
                 </th>
 
                 <th scope="col" id="paydate" 
-                    class="manage-column twohundred_col column-date">
+                    class="manage-column twohundredCol column-date">
                     <?php _e('Invoice Date', 'Ev'); ?>
                 </th>
                 
                 <th scope="col" id="sumbrutto" 
-                    class="manage-column eighty_col column-edit ">
+                    class="manage-column eightyCol column-edit ">
                     <?php _e('', 'Ev'); ?>
                 </th>
             </tr>
@@ -107,17 +107,17 @@ function showOpenInvoices()
         ?>
             <tr class="edit" id="edit-<?php echo $invoice_header->id; ?>">
                 <td 
-                    class="manage-column fifty_col column-id sortable asc">
+                    class="manage-column fiftyCol column-id sortable asc">
                     <?php echo esc_attr($count); ?>
                 </td>
 
                 <td id="q_invoice_contact_company_<?php echo $invoice_header->id; ?>"
-                    class="manage-column twohundred_col column-company">
+                    class="manage-column twohundredCol column-company">
                     <?php echo $invoice_header->company ?> 
                 </td>
 
                 <td id="q_invoice_contact_name_<?php echo $invoice_header->id; ?>"" 
-                    class="manage-column hundred_col column-name">
+                    class="manage-column hundredCol column-name">
                     <span id="q_invoice_contact_firstname_<?php echo $invoice_header->id; ?>">
                         <?php echo  $invoice_header->firstname ?>
                     </span>
@@ -127,26 +127,26 @@ function showOpenInvoices()
                     </span>
                 </td>
 
-                <td class="manage-column fifty_col column-net">
+                <td class="manage-column fiftyCol column-net">
                     <span id="q_invoice_detail_net_total_<?php echo $invoice_header->id; ?>">
                         <?php echo number_format($netSum, 2, ',', ' ') ." €" ?>
                     </span>
                     
                 </td>
 
-                <td class="manage-column fifty_col column-net">
+                <td class="manage-column fiftyCol column-net">
                 <span id="q_invoice_detail_total_<?php echo $invoice_header->id; ?>">
                         <?php echo number_format($totalSum, 2, ',', ' ')." €" ?>
                     </span>
                 </td>
 
-                <td class="manage-column fifty_col column-date"
+                <td class="manage-column fiftyCol column-date"
                     id="q_invoice_contact_date_<?php echo $invoice_header->id; ?>"
                 >
                 <?php echo date("d.m.Y", strtotime($invoice_header->invoice_date)); ?>
                 </td>
 
-                <td class="manage-column eighty_col column-edit">
+                <td class="manage-column eightyCol column-edit">
                     
                     <!--span style="font-size: 20px"
                         id="<?php echo "edit-".$invoice_header->id;?>"

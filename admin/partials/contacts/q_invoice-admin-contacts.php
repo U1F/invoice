@@ -71,16 +71,16 @@
                 </td>
 
                 <td 
-                    class="manage-column fifty_col column-edit">
+                    class="manage-column fiftyCol column-edit">
                     <?php echo esc_attr($count); ?>
                 </td>
 
                 <td id="q_invoice_contact_company_<?php echo $contact->id; ?>"
-                    class="manage-column twohundred_col column-edit">
+                    class="manage-column twohundredCol column-edit">
                     <?php echo $contact->company ?> 
                 </td>
 
-                <td class="manage-column hundred_col column-edit">
+                <td class="manage-column hundredCol column-edit">
                     
                     <span id="q_invoice_contact_firstname_<?php echo $contact->id; ?>">
                         <?php echo  $contact->firstname; ?>
@@ -106,10 +106,10 @@
                 </td>
 
                 <td id="q_invoice_contact_status_<?php echo $contact->id; ?>"
-                    class="manage-column fifty_col aktiv column-edit">
+                    class="manage-column fiftyCol aktiv column-edit">
                 </td>
 
-                <td class="manage-column eighty_col column-edit">
+                <td class="manage-column eightyCol column-edit">
                     
                     <span style="font-size: 20px"
                         id="<?php echo "edit-".$contact->id;?>"
