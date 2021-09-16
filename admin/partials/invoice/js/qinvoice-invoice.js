@@ -488,7 +488,7 @@ jQuery(function($) {
 
                 writeInvoiceHeadertoFormField('#invoice_id', "id");
                 writeInvoiceHeadertoFormField('#prefix ', "prefix");
-                writeInvoiceHeadertoFormField('#firma', "company");
+                writeInvoiceHeadertoFormField('#company', "company");
                 writeInvoiceHeadertoFormField('#additional', "additional");
                 writeInvoiceHeadertoFormField('#firstname', "firstname");
                 writeInvoiceHeadertoFormField('#lastname', "name");

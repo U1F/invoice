@@ -83,7 +83,7 @@
     width: 320px;
 }
 
-.q-invoice-page #firma {
+.q-invoice-page #company {
     height: 36px;
     margin: 0;
     padding-right: 30px;
@@ -362,10 +362,14 @@
     padding: 0px 0px 0px 0px;
     margin-left: 0px;
     margin-top: -3px;
-    border: solid 1px white;
+    border: 1px solid #c0c0c0;
+    /*border-top: 1px solid white;*/
     border-radius: 5px;
 }
 
+.q-invoice-page div#autocompleteCompany > * {
+    padding-left: 14px;
+}
 .q-invoice-page div.autocompleteButton {
     border: solid 0px white;
     display: block;

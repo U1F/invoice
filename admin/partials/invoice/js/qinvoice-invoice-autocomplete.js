@@ -1,6 +1,6 @@
 jQuery(function($) {
     customerFormFields= [
-        'firma',
+        'company',
         'additional',
         'firstname',
         'lastname',
@@ -12,7 +12,7 @@ jQuery(function($) {
 
     fetchContacts();
     
-    $("#firma").keyup(function() {
+    $("#company2").keyup(function() {
         console.log(contactData);
         companyNames = [];
         companyIDs = [];
@@ -49,8 +49,131 @@ jQuery(function($) {
         }
     });
 
+    $("#additional2").keyup(function() {
+        
+        additonalNames = [];
+        additionalIDs = [];
+        matching = false;
+        additionalNameCount = 0;
+        matchedNames = [];
+        matchedIDs = [];
+        if ($(this).val().length > 0) {
+            for (i = 0; i < contactData[0].length; i++) {
+                
+                additonalNames[i] = contactData[0][i].additional;
+                additionalIDs[i] = contactData[0][i].id;
+                if (additonalNames[i].toLowerCase().includes($(this).val().toLowerCase(), 0)) {
+                    matching = true;
+                    matchedNames[additionalNameCount] = additonalNames[i];
+                    matchedIDs[additionalNameCount] = additionalIDs[i];
+                    additionalNameCount++;
+
+                }
+            }
+        } else {
+
+            $('#autocompleteAdditional').css('display', 'none');
+        }
+        if (matching) {
+            $('#autocompleteAdditional').css('display', 'block');
+
+
+            showTextAreaForAutocompleteOfAdditionalNames(matchedNames, matchedIDs);
+        } else {
+            $('#autocompleteAdditional').css('display', 'none');
+        }
+    });
+    $("#invoiceFormInputsLeft").on("keyup", ".inputsLeftTable", function(event) {
+        //console.log($(event.target));
+        //console.log($(this).find("input"));
+        //console.log(contactData[0][0][$(event.target)[0].id]);
+        //if ($(event.target).is("input#street")){console.log($(event.target)[0].id)}
+        //console.log("bare: " );
+        //console.log($(event.target).val());
+        //console.log("[0] "); 
+        //console.log($(event.target)[0].id);
+        
+        nameCount = 0;
+        matchedNames = [];
+        matchedIDs = [];
+        if ($(event.target).val().length > 0) {
+            //console.log("You typed " + $(event.target).val() + " in field '" + $(event.target)[0].id +"'.");
+            for (i = 0; i < contactData[0].length; i++) {
+                
+                if (contactData[0][i][$(event.target)[0].id].toLowerCase().includes($(event.target).val().toLowerCase(), 0)) {
+                    //console.log(contactData[0][i][$(event.target)[0].id]);
+                    matchedNames[nameCount] = contactData[0][i].company;
+                    matchedIDs[nameCount] = contactData[0][i].id;
+                    nameCount++;
+                    
+                    
+                }
+            }
+        } else {
+            field= $(event.target)[0].id[0].toUpperCase()+$(event.target)[0].id.slice(1);
+            $('#autocomplete'+field).css('display', 'block');
+            //$('#autocomplete'+$(event.target)[0].id[0].toUpperCase() + $(event.target)[0].id.slice(1)).css('display', 'none');
+        }
+        if (nameCount) {
+            field= $(event.target)[0].id[0].toUpperCase()+$(event.target)[0].id.slice(1)
+            console.log("And it matched " +
+            $(event.target)[0].id[0].toUpperCase()+
+            $(event.target)[0].id.slice(1)
+            );
+            $('#autocomplete'+field).css('display', 'block');
+            showTextAreaForAutocompleteOfContactFields(matchedNames, matchedIDs, field);
+        } else {
+            $('#autocomplete'+field).css('display', 'none');
+        }
+    });
+
+    function showTextAreaForAutocompleteOfContactFields(matchedNames, matchedIDs, fieldName) {
+
+
+        htmlData = "<p><strong> Matching: </strong></p>";
+        for (i = 0; i < matchedNames.length; i++) {
+            htmlData +=
+                "<div " +
+                "class='autocompleteButton' " +
+
+                "id='" + matchedIDs[i] + "'" +
+                "name='" + fieldName + "'" +
+                "> " +
+                matchedNames[i] + 
+                "</div>";
+
+        }
+        $('div#autocomplete'+fieldName).html(htmlData);
+    }
+
+
     function showTextAreaForAutocompleteOfContactNames(matchedNames, matchedIDs) {
 
+
+        htmlData = "<p><strong> Matching: </strong></p>";
+        for (i = 0; i < matchedNames.length; i++) {
+            htmlData +=
+                "<div " +
+                "class='autocompleteButton' " +
+
+                "id='" + matchedIDs[i] + "'" +
+                "name='" + matchedNames[i] + "'" +
+                "> " +
+                matchedNames[i] + 
+                "</div>";
+
+        }
+        $('div#autocompleteCompany').html(htmlData);
+    }
+
+    function showTextAreaForAutocompleteOfAdditionalNames(matchedNames, matchedIDs) {
+        //DEBUG
+            console.log(
+                matchedNames + 
+                " + "
+                +matchedIDs + " " 
+            +    matchedNames.length);
+        //DEBUG_END
 
         htmlData = "<p><strong> Matching: </strong></p>";
         for (i = 0; i < matchedNames.length; i++) {
@@ -65,7 +188,7 @@ jQuery(function($) {
                 "</div>";
 
         }
-        $('div#autocompleteCompany').html(htmlData);
+        $('div#autocompleteAdditional').html(htmlData);
     }
 
     function storeContactData(Contacts) {
@@ -94,22 +217,24 @@ jQuery(function($) {
 
     }
 
-    $("#autocompleteCompany").on("click", "div.autocompleteButton", function() {
-
-        id = $(this).attr('id');
-        fillContactDataInInvoiceForm(id)
+    $("#invoiceFormInputsLeft").on("click", "div.autocompleteButton", function() {   
+        fillContactDataInInvoiceForm($(this).attr('id'))
         lockContactFieldInInvoiceForm();
         showLocker();
         $('div#autocompleteCompany').html("");
-        $('#autocompleteCompany').css('display', 'none');
+        $('#autocomplete'+$(this).attr('name')).css('display', 'none');
 
+    });
+
+    $("#invoiceFormInputsLeft").on("mouseover", "div.autocompleteButton", function() { 
+        fillContactDataInInvoiceForm($(this).attr('id'));
     });
 
     function fillContactDataInInvoiceForm(id){
         for (i = 0; i < contactData[0].length; i++) {
             if (id == contactData[0][i].id) {
                 
-                $('#firma').val(contactData[0][i].company);
+                $('#company').val(contactData[0][i].company);
                 $('#additional').val(contactData[0][i].additional);
                 $('#firstname').val(contactData[0][i].firstname);
                 $('#lastname').val(contactData[0][i].name);
