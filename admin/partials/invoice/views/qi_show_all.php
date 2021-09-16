@@ -29,7 +29,7 @@
                     <?php _e('#', 'Ev'); ?>
                 </th>
 
-                <th scope="col" id="company" 
+                <th scope="col" id="companyName" 
                     class="manage-column twohundredCol column-company">
                     <?php _e('Company', 'Ev'); ?>
                 </th>
