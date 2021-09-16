@@ -237,7 +237,7 @@ jQuery(function($) {
                 $('#company').val(contactData[0][i].company);
                 $('#additional').val(contactData[0][i].additional);
                 $('#firstname').val(contactData[0][i].firstname);
-                $('#lastname').val(contactData[0][i].name);
+                $('#lastname').val(contactData[0][i].lastname);
                 $('#street').val(contactData[0][i].street);
                 $('#zip').val(contactData[0][i].zip);
                 $('#city').val(contactData[0][i].city);

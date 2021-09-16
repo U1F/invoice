@@ -121,8 +121,8 @@ class Interface_Invoices
                 'company' => $invoice_array['company'],
                 'additional' => $invoice_array['additional'],
                 'firstname' =>  $invoice_array['firstname'],
-                'name' =>  $invoice_array['lastname'],
-                'street'  => $invoice_array['strasse'],
+                'lastname' =>  $invoice_array['lastname'],
+                'street'  => $invoice_array['street'],
                 'zip'  => $invoice_array['zip'],
                 'city'  => $invoice_array['city'],
                 'email'  => "",
@@ -140,14 +140,9 @@ class Interface_Invoices
             array ('id' => $invoice_array['invoice_id'])
         );
         
-        
-        
-        // Wie viele Einträge in den Details im Array nun sind
+    
         $arrayLength = count($invoice_array['itemDescription']);
-        echo "*** invoiceID = ". $invoice_array['invoice_id'];
-        echo "*** arrayLength = ". $arrayLength;
 
-        // Wie viele Einträge in der Datenbank gerade sind
         $rowcount = $GLOBALS['wpdb']->get_var(
             "SELECT COUNT(*) FROM ".
             $GLOBALS['wpdb']->prefix . 
@@ -201,6 +196,8 @@ class Interface_Invoices
      */
     static private function _copyFromArrayToDB($invoice_array)
     {
+        $GLOBALS['wpdb']->show_errors();
+        
         $GLOBALS['wpdb']->insert( 
             $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_HEADER,
             array(
@@ -212,8 +209,8 @@ class Interface_Invoices
                 'customerID' => $invoice_array['loc_id'],
                 'additional' => $invoice_array['additional'],
                 'firstname' =>  $invoice_array['firstname'],
-                'name' =>  $invoice_array['lastname'],
-                'street'  => $invoice_array['strasse'],
+                'lastname' =>  $invoice_array['lastname'],
+                'street'  => $invoice_array['street'],
                 'zip'  => $invoice_array['zip'],
                 'city'  => $invoice_array['city'],
                 'email'  => "",

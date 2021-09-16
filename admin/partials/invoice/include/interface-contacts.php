@@ -57,7 +57,7 @@ class Interface_Contacts
                 
                 'company'  => $contact_array['qiContactCompany'],
                 'additional' => $contact_array['qiContactAdditional'],
-                'name' => $contact_array['qiContactName'],
+                'lastname' => $contact_array['qiContactName'],
                 'firstname' => $contact_array['qiContactFirstname'],
                 'street'=> $contact_array['qiContactStreet'],
                 'zip' => $contact_array['qiContactZIP'],
@@ -156,7 +156,7 @@ class Interface_Contacts
             array(
                 'company'  => $contact_array['qiContactCompany'],
                 'additional' => $contact_array['qiContactAdditional'],
-                'name' => $contact_array['qiContactName'],
+                'lastname' => $contact_array['qiContactName'],
                 'firstname' => $contact_array['qiContactFirstname'],
                 'street'=> $contact_array['qiContactStreet'],
                 'zip' => $contact_array['qiContactZIP'],

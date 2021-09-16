@@ -66,7 +66,7 @@ jQuery(function($) {
                 $('#qiContactID').val(obj[0][0]["id"]);
                 $('#qiContactCompany ').val(obj[0][0]["company"]);
                 $('#qiContactAdditional').val(obj[0][0]["additional"]);
-                $('#qiContactName').val(obj[0][0]["name"]);
+                $('#qiContactName').val(obj[0][0]["lastname"]);
                 $('#qiContactFirstname').val(obj[0][0]["firstname"]);
                 $('#qiContactStreet').val(obj[0][0]["street"]);
                 $('#qiContactZIP').val(obj[0][0]["zip"]);

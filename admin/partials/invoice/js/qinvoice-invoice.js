@@ -491,7 +491,7 @@ jQuery(function($) {
                 writeInvoiceHeadertoFormField('#company', "company");
                 writeInvoiceHeadertoFormField('#additional', "additional");
                 writeInvoiceHeadertoFormField('#firstname', "firstname");
-                writeInvoiceHeadertoFormField('#lastname', "name");
+                writeInvoiceHeadertoFormField('#lastname', "lastname");
                 writeInvoiceHeadertoFormField('#street', "street");
                 writeInvoiceHeadertoFormField('#zip', "zip");
                 writeInvoiceHeadertoFormField('#city', "city");

@@ -200,7 +200,7 @@ td.invoiceItemsHeader {
                     <p class="receiverAddress" id=receiverAddressName>
                         <?php echo 
                             $invoiceData[0][0]->firstname." ". 
-                            $invoiceData[0][0]->name; 
+                            $invoiceData[0][0]->lastname; 
                         ?>
                     </p>
 

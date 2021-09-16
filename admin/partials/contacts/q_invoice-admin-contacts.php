@@ -56,7 +56,7 @@
             QI_Invoice_Constants::TABLE_QI_CONTACTS;
     
             $contacts = $GLOBALS['wpdb']->get_results(
-                "SELECT * FROM $table_name ORDER BY id, company, name DESC"
+                "SELECT * FROM $table_name ORDER BY id, company, lastname DESC"
             );
          
             $count = 0;
@@ -87,7 +87,7 @@
                     </span>
                     
                     <span id="q_invoice_contact_name_<?php echo $contact->id; ?>">
-                        <?php echo  $contact->name; ?>
+                        <?php echo  $contact->lastname; ?>
                     </span>
 
                 </td>

@@ -74,7 +74,7 @@ function showOpenInvoices()
     $table_name = $GLOBALS['wpdb']->prefix . QI_Invoice_Constants::TABLE_QI_HEADER;
     
     $invoice_headers = $GLOBALS['wpdb']->get_results(
-        "SELECT * FROM $table_name ORDER BY invoice_date, company, name DESC"
+        "SELECT * FROM $table_name ORDER BY invoice_date, company, lastname DESC"
     );
 
     $count = 0;
