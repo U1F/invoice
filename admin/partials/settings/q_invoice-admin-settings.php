@@ -58,12 +58,7 @@
                     ?>
                 </div>
 
-                <div class="container containerThird">
-                    <?php
-                        settings_fields('invoiceTextForm');
-                        do_settings_sections('invoiceTextPageLeft');
-                    ?>
-                </div>
+                
             </div>
 
             <div id="secondColumn">
@@ -81,12 +76,7 @@
                         do_settings_sections('dunningPage'); 
                     ?>
                     </div>
-                    <div class="container containerThird invisibleHeader">
-                        <?php
-                            settings_fields('invoiceTextForm');
-                            do_settings_sections('invoiceTextPageMiddle');
-                        ?>
-                    </div>
+                    
                 </div>
             </div>
             
@@ -104,12 +94,7 @@
                 do_settings_sections('mailPage');
                 ?>
                 </div>
-                <div class="container containerThird invisibleHeader">
-                    <?php
-                        settings_fields('invoiceTextForm');
-                        do_settings_sections('invoiceTextPageRight');
-                    ?>
-                </div>
+                
 
                 
             </div>
@@ -117,7 +102,13 @@
             
 
         </section>
-          
+        <div>
+                    <?php
+                        settings_fields('invoiceTextForm');
+                        do_settings_sections('invoiceTextPage');
+                        
+                    ?>
+                </div>  
         <?php 
            
         

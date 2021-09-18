@@ -284,31 +284,21 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
 
             add_settings_section(
-                'qi_invoiceTextPageLeft_section',
+                'qi_invoiceTextPage_section',
                 __('Invoice Text Details', 'ev'),
                 null,
-                'invoiceTextPageLeft'
+                'invoiceTextPage'
             );
-            $this->addSettingsField("custom Footer", "textarea", "invoiceTextPageLeft");
+            $this->addSettingsField("custom Footer", "textarea", "invoiceTextPage");
 
-            add_settings_section(
-                'qi_invoiceTextPageMiddle_section',
-                __('Invoice Text Details', 'ev'),
-                null,
-                'invoiceTextPageMiddle'
-            );
-            $this->addSettingsField("invoice Text Intro", "textarea", "invoiceTextPageMiddle");
+        
+            $this->addSettingsField("invoice Text Intro", "textarea", "invoiceTextPage");
 
-            add_settings_section(
-                'qi_invoiceTextPageRight_section',
-                __('Invoice Text Details', 'ev'),
-                null,
-                'invoiceTextPageRight'
-            );
+            
 
            
             
-            $this->addSettingsField("invoice Text Outro", "textarea", "invoiceTextPageRight");
+            $this->addSettingsField("invoice Text Outro", "textarea", "invoiceTextPage");
 
         }
 

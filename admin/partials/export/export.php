@@ -114,17 +114,20 @@ td.invoiceItemsHeader {
                     rowspan="3" 
                     style="width: 270px; text-align: right; font-size:12px;"
                 >
-               
-                    <img 
-                    src="<?php echo get_option('qi_settings')['logoFileUrl']?>" 
+                <?php 
+                $logoImageSource = plugin_dir_url(__FILE__).
+                "files/none_5002.png";
+                
+                if (get_option('qi_settings')['logoFileUrl']) {
+                    $logoImageSource = get_option('qi_settings')['logoFileUrl'];
+                }
+                ?>
+                
+                <img 
+                    src="<?php echo $logoImageSource;?>" 
                     width="250" 
-                    style="border:0px;"
-                
+                    style="border:0px;">
                         
-                     
-                
-                    
-                    
                     <br>
 
                     <p class="invoiceSender" id="senderName">
@@ -235,7 +238,12 @@ td.invoiceItemsHeader {
             $invoiceText = get_option('qi_settings')['invoiceTextIntro'];
             if ($invoiceType =="invoice") {
                 $heading=__("Rechnung", "ev");
-                $invoiceText = get_option('qi_settings')['invoiceTextIntro'];
+                if (get_option('qi_settings')['invoiceTextIntro']) {
+                    $invoiceText = get_option('qi_settings')['invoiceTextIntro'];   
+                } else {
+                    $invoiceText = "Folgende Leistung stellen wir Ihnen in Rechnung:";
+                }
+                
             } else if ($invoiceType =="credit") {
                 $heading=__("Gutschrift", "ev");
                 $invoiceText ="Folgende Leistung schreiben wir Ihnen gut.";
@@ -658,12 +666,18 @@ td.invoiceItemsHeader {
 
         <br><br><br>
         <?php if ($invoiceType=="invoice") {
-            ?>
-             <div style="font-size:12px">
-            Danke für die gute Zusammenarbeit!<br>
-            <br>Zahlungsziel: 10 Tage ohne Abzug.
-            </div>
-            <?php
+            if (get_option('qi_settings')['invoiceTextOutro']) {
+                echo '<div style="font-size:12px">';
+                echo get_option('qi_settings')['invoiceTextOutro'];
+                echo '</div>';
+            } else {
+                ?>
+                <div style="font-size:12px">
+                Danke für die gute Zusammenarbeit!<br>
+                <br>Zahlungsziel: 10 Tage ohne Abzug.
+                </div>
+                <?php
+            }
         }
         
         if ($invoiceType=="dunning") {
@@ -688,15 +702,17 @@ td.invoiceItemsHeader {
                 </div>
 
                 <div style="font-size:12px; text-align: center;"> 
-                <?php echo 
+                <?php 
+                echo 
                     __("Bankverbindung: ", "ev"). 
                     get_option('qi_settings')['bankName1'].' '.
-                    
                     'IBAN: '. get_option('qi_settings')['IBAN1']. ' - '.
+                    'BIC: '.  get_option('qi_settings')['BIC1']. '<br>';
                     
-                    'BIC: '.  get_option('qi_settings')['BIC1']. '<br>'.
-                    
-                    get_option('qi_settings')['customFooter'];
+                if (get_option('qi_settings')['customFooter']) {
+                    echo get_option('qi_settings')['customFooter'];
+                }
+    
                 ?>
                 </div>
             </div>
