@@ -41,8 +41,14 @@ function exportInovice($invoiceID, $invoiceType)
     for ($i=0;$i<$numberOfTaxTypes;$i++) {
 
         $taxSums[get_option('qi_settings')['tax'.strval($i+1)]] = 0;
+        
 
     }
+    $taxSums['none'] = 0;
+    
+    
+
+
     $separator =","
     
     ?>
@@ -438,7 +444,7 @@ td.invoiceItemsHeader {
 
             <?php 
             $totalNet = 0;
-            
+            $detailPosition= 0;
             foreach ($invoiceData[1] as $invoiceDetail) {
             
                 ?>
@@ -527,7 +533,8 @@ td.invoiceItemsHeader {
                 </tr>
                 <?php 
                 $totalNet += $invoiceDetail->sum;
-                $taxSums[$invoiceDetail->tax] += $invoiceDetail->sum;
+                $taxSums[strval($invoiceDetail->tax)] += $invoiceDetail->sum;
+                
             }
             ?>
             
@@ -591,7 +598,7 @@ td.invoiceItemsHeader {
         <?php 
         $taxTotal = 0;
         foreach (array_keys($taxSums) as $index=>$key) {
-            if (intval($taxSums[$key]) > 0) {
+            if (intval($taxSums[$key]) > 0 & $key!="none" ) {
                 ?>
                 <tr>
                     <td 

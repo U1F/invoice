@@ -183,11 +183,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             }
             
             $this->addSettingsField("unit", "text", "invoicePage");
-            $this->addSettingsField("custom Footer", "text", "invoicePage");
-            $this->addSettingsField("invoice Text Intro", "text", "invoicePage");
-
-            $this->addSettingsField("invoice Text Outro", "text", "invoicePage");
-
+            
+           
 
             // SETTINGS SECTION CONTACTS 
             register_setting('contactForm', 'qi_settings');
@@ -278,7 +275,40 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $this->addSettingsField("port", "number", "mailPage");
             $this->addSettingsField("user", "text", "mailPage");
             $this->addSettingsField("password", "password", "mailPage");
+
+
+            // SETTINGS SECTION INVOICE TEXTS 
+            register_setting(
+                'invoiceTextForm', 
+                'qi_settings'
+            );
+
+            add_settings_section(
+                'qi_invoiceTextPageLeft_section',
+                __('Invoice Text Details', 'ev'),
+                null,
+                'invoiceTextPageLeft'
+            );
+            $this->addSettingsField("custom Footer", "textarea", "invoiceTextPageLeft");
+
+            add_settings_section(
+                'qi_invoiceTextPageMiddle_section',
+                __('Invoice Text Details', 'ev'),
+                null,
+                'invoiceTextPageMiddle'
+            );
+            $this->addSettingsField("invoice Text Intro", "textarea", "invoiceTextPageMiddle");
+
+            add_settings_section(
+                'qi_invoiceTextPageRight_section',
+                __('Invoice Text Details', 'ev'),
+                null,
+                'invoiceTextPageRight'
+            );
+
+           
             
+            $this->addSettingsField("invoice Text Outro", "textarea", "invoiceTextPageRight");
 
         }
 
@@ -297,10 +327,14 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          */
         public function addSettingsField($name, $type, $page, $required=0)
         {
+            $callback = "showInputForSetting";
+            if ($type=="textarea") {
+                $callback = "showTextareaForSetting";
+            }
             add_settings_field(
                 'qi_settings' .$name, 
                 __(ucfirst($name), 'ev'), 
-                [$this, 'showInputForSetting'],
+                [$this, $callback],
                 $page,
                 'qi_'.$page.'_section',
                 $array = [
@@ -343,9 +377,11 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          */
         public function showInputForSetting(array $arguments)
         {
-            
+            $additionalInputAttributes = " ";
+
             $options = get_option('qi_settings');
             print "<input "
+                .$additionalInputAttributes
                 ."id='".str_replace(' ', '', $arguments['name'])."'"
                 ."name='qi_settings[".str_replace(' ', '', $arguments['name'])."]'"
                 ."type='".$arguments['type']."'"
@@ -359,6 +395,33 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         }
 
         /**
+         * Function showTextareaForSetting
+         * 
+         * @param array $arguments 
+         * 
+         * @return void
+         */
+        public function showTextareaForSetting(array $arguments)
+        {
+            $options = get_option('qi_settings');
+            
+           
+            print "<textarea "
+                
+                ."id='".str_replace(' ', '', $arguments['name'])."'"
+                ."name='qi_settings[".str_replace(' ', '', $arguments['name'])."]'"
+                ."value='".$options[str_replace(' ', '', $arguments['name'])]."'"
+                ."class='' ";
+            if ($arguments['required']) {
+                print " required ";
+            };
+            print ">".
+            $options[str_replace(' ', '', $arguments['name'])]
+            ."</textarea>";
+               
+        }
+
+        /**
          * Function addSpacerForSetting
          * 
          * @param array $arguments 
@@ -368,7 +431,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         public function addSpacerForSetting(array $arguments)
         {
             
-            $options = get_option('qi_settings');
+            
             print "<div class='tableSpacer'>"
                 ."<input type='hidden' value='emtpy'"
                 ." name='qi_settings[".str_replace(' ', '', $arguments['name'])."]'"

@@ -16,7 +16,7 @@
 
 .q-invoice-page div#heading-invoice h2 {
     font-family: sans-serif;
-    font-size: 24px;
+    font-size: 1.6em;
     font-weight: bold;
     margin-bottom: 16px;
 }
@@ -379,10 +379,10 @@
 }
 
 .q-invoice-page div.autocompleteButton:hover {
-    background-color: lightgray;
+    background: rgba(150, 150, 150, 0.1);
 }
 
 .q-invoice-page tr.contactRegisterRow:hover {
-    background-color: lightgray;
+    background: rgba(150, 150, 150, 0.1);
     
 }

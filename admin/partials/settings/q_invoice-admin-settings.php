@@ -16,10 +16,18 @@
 
 ?>
 
-<div class='wrap q-invoice-page invoice-page'>
-    <h1 class="headerline">
-        <?php _e("Settings", 'Ev'); ?>   
+<div class='q-invoice-page invoice-page'>
+<h1 class="headerline">
+        <img id="imgSnowflake" 
+            src="<?php echo esc_url(
+                plugins_url('../../img/qanuk_snowflake.png', __FILE__)
+            );?>">
+        <span id="qanuk_title"><?php _e('Q invoice by qanuk.io', 'Ev'); ?></span>
+        <span id="qanuk_title_media"><?php _e('Settings', 'Ev'); ?></span> 
+       
+        
     </h1>
+    
     <form 
         id='qinvoiceSettings' 
         action='options.php' 
@@ -30,7 +38,7 @@
    
 
 
-        <section id="settingsTable">
+        <section id="settingsTable" class="invoiceSettings">
             
             <div id="firstColumn">
                 <div class="container containerFirst">
@@ -49,6 +57,13 @@
 
                     ?>
                 </div>
+
+                <div class="container containerThird">
+                    <?php
+                        settings_fields('invoiceTextForm');
+                        do_settings_sections('invoiceTextPageLeft');
+                    ?>
+                </div>
             </div>
 
             <div id="secondColumn">
@@ -60,11 +75,17 @@
                     ?>
                     </div >
 
-                    <div>
+                    <div class="container containerSecond">
                     <?php
                         settings_fields('dunningForm');
                         do_settings_sections('dunningPage'); 
                     ?>
+                    </div>
+                    <div class="container containerThird invisibleHeader">
+                        <?php
+                            settings_fields('invoiceTextForm');
+                            do_settings_sections('invoiceTextPageMiddle');
+                        ?>
                     </div>
                 </div>
             </div>
@@ -83,12 +104,22 @@
                 do_settings_sections('mailPage');
                 ?>
                 </div>
+                <div class="container containerThird invisibleHeader">
+                    <?php
+                        settings_fields('invoiceTextForm');
+                        do_settings_sections('invoiceTextPageRight');
+                    ?>
+                </div>
+
+                
             </div>
+            
+            
 
         </section>
-           
+          
         <?php 
-        
+           
         
         submit_button(); 
         ?>

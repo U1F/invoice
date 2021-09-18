@@ -37,7 +37,7 @@ function Invoice_list()
         <span id="qanuk_title"><?php _e('Q invoice by qanuk.io', 'Ev'); ?></span>
         <!--span id="qanuk_title_media"><?php _e('Q', 'Ev'); ?></span-->
         
-        <span class="add_new_button">
+        <span class="addNewButton">
             <button 
                 class="button-primary" 
                 id="newInvoice"
@@ -67,7 +67,7 @@ function Invoice_list()
         /*
         include_once \QI_Invoice_Constants::PART_PATH_QI . 
         "/admin/partials/export/export.php";  
-        exportInovice(91, "invoice");          
+        exportInovice(97, "invoice");          
         */
     
 }

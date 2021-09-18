@@ -1,4 +1,8 @@
 /* General Settings */
+.invoice-page{
+    padding-left: 20px;
+    padding-right:40px;
+}
 .q-invoice-page td
 {
     box-sizing: content-box;    
@@ -9,20 +13,31 @@
 
 .q-invoice-page h1.headerline {
     font-family: sans-serif;
-    font-size: 36px;
+    font-size: 2em;
     font-weight: bold;
     margin-top: 20px;
     margin-bottom: 20px;
-    margin-left: 40px;
+    margin-left: 0px;
 }
 
-.q-invoice-page .headerline > *{
+.q-invoice-page h1.headerline > *{
     vertical-align: middle;
 }
 
+.q-invoice-page #imgSnowflake {
+    height: 30px;
+    width: 30px;
+}
+
+
+.q-invoice-page h2 {
+    font-size: 1.6em;
+}
 .q-invoice-page a {
     text-decoration: none;
+    color:black;
 }
+
 
 
 .q-invoice-page #overlay {
@@ -73,9 +88,15 @@
     width: 800px;
     height: 100px;
     background-color: rgb(63 174 73);
-    margin-left: 100px;
+    
+    margin-left: 200px;
+    
     margin-top: 50px;
     border-radius: 8px;
 }
 
+
+.q-invoice-page textarea {
+    overflow: auto;
+  }
 
