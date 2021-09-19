@@ -385,15 +385,7 @@ td.invoiceItemsHeader {
             $InvoiceDetailDescriptionWidth = "261";  
             
         }
-        if ($InvoiceHasAtLeastOneDiscount) {
-            //DEBUG echo "<br><p>There is at least one discount on this invoice</p><br>";
-        }
-        /* DEBUG
-        echo 
-            "<br><p>invoiceDetailDescriptionWidthHeader is set to".
-            $invoiceDetailDescriptionWidthHeader.
-            "</p><br>";
-        */
+        
         ?>
         
         <table width="100%" class="table_rg_content" style="padding:4px;">

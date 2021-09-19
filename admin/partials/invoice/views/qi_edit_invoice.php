@@ -123,6 +123,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                             id="firstname" 
                                             name="firstname" 
                                             value="" 
+                                            autocomplete="none"
                                             required
                                         >
                                         <div id='autocompleteFirstname' style="display:none;">
@@ -141,6 +142,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                             ?>"  
                                             id="lastname" 
                                             name="lastname"
+                                            autocomplete="none"
                                             value="" 
                                             required
                                         >
@@ -165,7 +167,8 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                     type="text" 
                                     placeholder="<?php echo __("Street", 'Ev');?>" 
                                     id="street" 
-                                    name="street" 
+                                    name="street"
+                                    autocomplete="none" 
                                     value=""
                                     required
                                 >
@@ -189,7 +192,8 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                             ?>" 
                                             type="text" 
                                             id="zip" 
-                                            name="zip" 
+                                            name="zip"
+                                            autocomplete="none" 
                                             value="" 
                                             required
                                         >
@@ -209,6 +213,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                             type="text" 
                                             id="city" 
                                             name="city" 
+                                            autocomplete="none"
                                             value="" 
                                             required
                                         >
