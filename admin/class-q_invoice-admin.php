@@ -205,7 +205,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
 
             add_settings_section(
                 'qi_dunningPage_section',
-                __('Dunning Status', 'ev'),
+                __('Dunning Fees', 'ev'),
                 [$this, 'qiSettingsSectionDunningCallback'],
                 'dunningPage'
             );
