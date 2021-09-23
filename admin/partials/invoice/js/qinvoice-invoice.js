@@ -2,7 +2,7 @@ jQuery(function($) {
     $("#newInvoice").click(function() {
         document.getElementById("overlay").style.display = "block";
         // reset form
-        $('#invoice-form')[0].reset();
+        $('#invoiceForm')[0].reset();
         $('.wp-list-table-qInvcLine:not(:first)').remove();
 
         // prepare form for Ajax Action "save"
@@ -37,7 +37,7 @@ jQuery(function($) {
         document.getElementById("overlay").style.display = "block";
 
         // reset form
-        $('#invoice-form')[0].reset();
+        $('#invoiceForm')[0].reset();
         $('.wp-list-table-qInvcLine:not(:first)').remove();
 
         // prepare form for Ajax Action "update"
@@ -414,6 +414,7 @@ jQuery(function($) {
                 _ajax_nonce: q_invoice_ajaxObject.nonce
             },
             success: function(response, textStatus, XMLHttpRequest) {
+                console.log("Fetched the last ID of invocies and it was :");
                 console.log(response);
                 $('input#invoice_id').val(response);
 
@@ -555,10 +556,10 @@ jQuery(function($) {
     
     
     jQuery(document).ready(function($) {
-        $('#invoice-form').ajaxForm({
+        $('#invoiceForm').ajaxForm({
             success: function(response) {
                 console.log(response);
-                $("#invoice-form").trigger('reset');
+                $("#invoiceForm").trigger('reset');
                 document.getElementById("overlay").style.display = "none";
 
                 // TODO Julian nach Success Meldung fragen

@@ -914,7 +914,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         public function fetchLastIDServerSide()
         {
             check_ajax_referer($this->_plugin_name . "_nonce");
-            echo Interface_Invoices::getLastID();
+            echo 1 + Interface_Invoices::getLastID();
+
             wp_die();
         }
 

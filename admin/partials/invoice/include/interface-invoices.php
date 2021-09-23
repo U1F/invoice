@@ -299,12 +299,14 @@ class Interface_Invoices
      */
     static private function _lookForLastID()
     {
-        $GLOBALS['wpdb']->get_var( 
+        return $GLOBALS['wpdb']->get_var( 
             'SELECT id FROM ' . 
             $GLOBALS['wpdb']->prefix.
             \QI_Invoice_Constants::TABLE_QI_HEADER . 
             ' ORDER BY id DESC LIMIT 1'
         );
+
+
 
     }
 }

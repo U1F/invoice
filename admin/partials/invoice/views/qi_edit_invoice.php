@@ -37,10 +37,10 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
             <h2 id="formHeaderEdit"><?php echo __('Edit Invoice', 'Ev'); ?></h2>
             <h2 id="formHeaderCreate"><?php echo __('New Invoice', 'Ev'); ?></h2>
         </div>
-        <form id="invoice-form"  
+        <form id="invoiceForm"  
             action="<?php echo admin_url('admin-ajax.php');?> "
             method="post" 
-            name="rechnung"
+            name="invoiceForm"
             class=""
             autocomplete="off"
             autocomplete="false"
