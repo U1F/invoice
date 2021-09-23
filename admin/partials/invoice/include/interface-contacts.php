@@ -38,7 +38,7 @@ class Interface_Contacts
      */
     static public function saveArrayToDB($contact_array)
     {
-        self::_copyFromArrayToDB($contact_array);           
+        return self::_copyFromArrayToDB($contact_array);           
     }
 
     /**
@@ -46,7 +46,7 @@ class Interface_Contacts
      * 
      * @param array $contact_array        
      * 
-     * @return void
+     * @return int 
      */
     static private function _copyFromArrayToDB($contact_array)
     {
@@ -69,6 +69,7 @@ class Interface_Contacts
                  
             )
         );
+        return $GLOBALS['wpdb']->insert_id;
     }
 
     /**

@@ -1113,10 +1113,12 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             //$this->_plugin_name.
             if (wp_verify_nonce($_POST['q_invoice_nonce'], $_POST['action'])) {
 
-                Interface_Contacts::saveArrayToDB($_POST);
+                $response['id'] = Interface_Contacts::saveArrayToDB($_POST);
 
                 // NOT TESTING
                 $response['success'] = true;
+                $response['type'] = "save";
+                $response['contactData'] = $_POST;
                 echo json_encode($response);   
 
                 wp_die();
@@ -1145,12 +1147,15 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 
                 
                 $response['success'] = true;
-                //$response['data'] = $_POST;
+                $response['type'] = "update";
+                $response['contactData'] = $_POST;
                 echo json_encode($response);
 
 
                 wp_die();
             }
+            $response['success'] = false;
+            echo json_encode($response);
             wp_die();
         }
 

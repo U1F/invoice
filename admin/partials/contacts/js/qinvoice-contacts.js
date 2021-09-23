@@ -12,7 +12,11 @@ jQuery(function($) {
         $("#updateContact").css("display", "none");
         $("#saveContact").css("display", "inline");
         $("input[name='action']").val("saveContactServerSide");
+        
+
+        $("#saveContactDIV").remove();
         $("#updateContactDIV").remove();
+        $("#nonceFields").append(saveContactDiv);
 
     });
 
@@ -23,8 +27,9 @@ jQuery(function($) {
     });
 
 
+    $("table#contacts > tbody").on( "click", ".editContact", function(event) {
 
-    $(".editContact").click(function(event) {
+   
 
         document.getElementById("overlay").style.display = "block";
 
@@ -33,8 +38,13 @@ jQuery(function($) {
 
         $("#updateContact").css("display", "inline");
         $("#saveContact").css("display", "none");
+
         $("input[name='action']").val("updateContactServerSide");
+        
+        
         $("#saveContactDIV").remove();
+        $("#updateContactDIV").remove();
+        $("#nonceFields").append(updateContactDiv);
 
         //fetch id from span attribute id="edit-n", where  n = id of invoice
         id = jQuery(this).attr("id").split('-');
@@ -80,11 +90,39 @@ jQuery(function($) {
 
     }
 
-function newRow (id)  {
+    function changeUpdatedContactRow (contact, id)  {
+        
+        $("table#contacts > tbody > tr[value="+contact['qiContactID']+"]").find("span.editContact").attr("id","edit-" + contact['qiContactID']);
+        //$("table#contacts > tbody > tr[value="+contact['qiContactID']+"]").find("td.columnRowID").text(1+parseInt(clone.find("td.columnRowID").text()));
+        $("table#contacts > tbody > tr[value="+contact['qiContactID']+"]").find("td.columnCompany").text(contact['qiContactCompany']);
+        $("table#contacts > tbody > tr[value="+contact['qiContactID']+"]").find("span.columnFirstName").text(contact['qiContactFirstname']);
+        $("table#contacts > tbody > tr[value="+contact['qiContactID']+"]").find("span.columnLastName").text(contact['qiContactName']);
+        $("table#contacts > tbody > tr[value="+contact['qiContactID']+"]").find("td.columnCity").text(contact['qiContactCity']);
+        $("table#contacts > tbody > tr[value="+contact['qiContactID']+"]").find("td.columnEmail").text(contact['qiContactEmail']);
+        
     
-}
 
-    $(".deleteContact").click(function(event) {
+    }
+    
+    function addNewContactRow (contact, id)  {
+        
+            clone = $("table#contacts > tbody").find("tr").last().clone();
+            
+            clone.find("td.columnRowID").text(1+parseInt(clone.find("td.columnRowID").text()));
+            clone.find("td.columnCompany").text(contact['qiContactCompany']);
+            clone.find("span.columnFirstName").text(contact['qiContactFirstname']);
+            clone.find("span.columnLastName").text(contact['qiContactName']);
+            clone.find("td.columnCity").text(contact['qiContactCity']);
+            clone.find("td.columnEmail").text(contact['qiContactEmail']);
+            
+            clone.find("span.editContact").attr("id","edit-" + id);
+            clone.find("span.deleteContact").attr("id", id);
+            $("table#contacts > tbody").append(clone);
+        
+
+    }
+    
+    $("table#contacts > tbody").on( "click", ".deleteContact", function(event) {
 
         $(this).closest('tr').remove();
         deleteContact(event.target.id);
@@ -102,9 +140,7 @@ function newRow (id)  {
                 id: contactId
             },
             success: function(data, textStatus, XMLHttpRequest) {
-                // Here we can measure success by own stanards
-                // For example a return from a DB uppdate   
-                // Also maybe here we can call a notice tu the user
+                
                 console.log(data);
 
 
@@ -120,6 +156,7 @@ function newRow (id)  {
 
         $('#qiContactForm').ajaxForm({
             success: function(response) {
+                console.log("response:");
                 console.log(response);
                 $("#qiContactForm").trigger('reset');
                 document.getElementById("overlay").style.display = "none";
@@ -129,10 +166,25 @@ function newRow (id)  {
                 prepend('<div id="successInvoiceSaved">' +
                     'Success: Invoice saved!' +
                     '</div>');
-
+                obj=JSON.parse(response);
                 $("#successInvoiceSaved").delay(5000).fadeOut(800);
+                if (obj['type'] =="save") {
+                    addNewContactRow(JSON.parse(response)["contactData"],JSON.parse(response)["id"]);
+                } 
+                else if (obj['type'] =="update") {
+                    changeUpdatedContactRow(JSON.parse(response)["contactData"],JSON.parse(response)["id"]);
+                }
+                
+                
+
+                
             }
         });
+
+        saveContactDiv = $("#saveContactDIV").clone();
+        updateContactDiv = $("#updateContactDIV").clone();
+
+
 
         
 

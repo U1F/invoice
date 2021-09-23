@@ -211,6 +211,7 @@ if (!class_exists('QI_Invoice')) {
                 'fetchContacts',
                 'fetchCurrency',
                 'updateContact',
+                
                 'deleteContact',
                 'editContact', 
                 

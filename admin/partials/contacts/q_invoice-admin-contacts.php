@@ -64,52 +64,46 @@
 
                 $count++;
                 ?>
-                <tr>
-                <td class="hidden" 
-                    id="q_invoice_contact_data_<?php echo $count; ?>">
-                    <?php echo "popup"?>
-                </td>
+                <tr value="<?php echo $contact->id;?>">
+               
 
-                <td 
-                    class="manage-column fiftyCol column-edit">
+                <td class="manage-column fiftyCol columnRowID">
                     <?php echo esc_attr($count); ?>
                 </td>
 
-                <td id="q_invoice_contact_company_<?php echo $contact->id; ?>"
-                    class="manage-column twohundredCol column-edit">
+                <td class="manage-column twohundredCol columnCompany">
                     <?php echo $contact->company ?> 
                 </td>
 
-                <td class="manage-column hundredCol column-edit">
+                <td class="manage-column hundredCol columnName">
                     
-                    <span id="q_invoice_contact_firstname_<?php echo $contact->id; ?>">
+                    <span class="columnFirstName">
                         <?php echo  $contact->firstname; ?>
                     </span>
                     
-                    <span id="q_invoice_contact_name_<?php echo $contact->id; ?>">
+                    <span class="columnLastName">
                         <?php echo  $contact->lastname; ?>
                     </span>
 
                 </td>
 
-                <td>
-                    <span id="q_invoice_detail_net_total_<?php echo $contact->id; ?>">
+                <td class="manage-column fiftyCol columnCity">
+                    <span>
                         <?php echo $contact->city; ?>
                     </span>
                     
                 </td>
 
-                <td>
-                <span id="q_invoice_detail_total_<?php echo $contact->id; ?>">
+                <td class="manage-column fiftyCol columnEmail">
+                <span>
                         <?php echo $contact->email; ?>
                     </span>
                 </td>
 
-                <td id="q_invoice_contact_status_<?php echo $contact->id; ?>"
-                    class="manage-column fiftyCol aktiv column-edit">
+                <td class="manage-column fiftyCol column-edit">
                 </td>
 
-                <td class="manage-column eightyCol column-edit">
+                <td class="manage-column eightyCol columnEdit">
                     
                     <span style="font-size: 20px"
                         id="<?php echo "edit-".$contact->id;?>"
