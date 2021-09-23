@@ -269,11 +269,9 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 'mailPage'
             );
             
-            $this->addSettingsField("Name", "text", "mailPage");
+            $this->addSettingsField("email", "text", "mailPage");
             $this->addSettingsField("server", "text", "mailPage");
-            $this->addSettingsField("IP", "text", "mailPage");
-            $this->addSettingsField("port", "number", "mailPage");
-            $this->addSettingsField("user", "text", "mailPage");
+            $this->addSettingsField("port", "number", "mailPage");       
             $this->addSettingsField("password", "password", "mailPage");
 
 
