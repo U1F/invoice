@@ -287,16 +287,10 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 null,
                 'invoiceTextPage'
             );
-            $this->addSettingsField("custom Footer", "textarea", "invoiceTextPage");
-
         
             $this->addSettingsField("invoice Text Intro", "textarea", "invoiceTextPage");
-
-            
-
-           
-            
             $this->addSettingsField("invoice Text Outro", "textarea", "invoiceTextPage");
+            $this->addSettingsField("custom Footer", "textarea", "invoiceTextPage");
 
         }
 
