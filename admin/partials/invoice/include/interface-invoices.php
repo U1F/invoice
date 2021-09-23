@@ -69,6 +69,38 @@ class Interface_Invoices
     }
 
     /**
+     * Function deactivateInvoice
+     * 
+     * TODO try and prepare
+     * TODO DETAILS
+     * 
+     * @param int $id 
+     * 
+     * @return bool
+     */
+    static public function deactivateInvoice(int $id)
+    {
+        
+
+        $GLOBALS['wpdb']->update( 
+            $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_HEADER,
+            array(
+                
+                
+                'date_changed'  => "2021-12-31",
+                
+                'cancellation'  => true,
+                'date_cancellation'  => "2021-12-31"
+                
+                
+            ),
+            array ('id' => $id)
+        );
+
+        return 0;
+    }
+
+    /**
      * Function getInvoiceData
      * 
      * @param int $invoiceID  

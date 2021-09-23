@@ -1071,8 +1071,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         {
             //check_ajax_referer($this->_plugin_name."_nonce");
 
-            
-            Interface_Invoices::deleteRowFromDB($_POST['id']);
+            Interface_Invoices::deactivateInvoice($_POST['id']);
+            //Interface_Invoices::deleteRowFromDB($_POST['id']);
             $response['success'] = true;
             echo json_encode($response);
             wp_die();

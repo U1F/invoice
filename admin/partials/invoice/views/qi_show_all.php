@@ -16,10 +16,30 @@
  * @since      1.0.0
  */
 ?>
-
-<div class="page_content">
+ <div class="page_content">
     <div class="tab_content_wrapper">
+<?php 
+
+/**
+ * Function showOpenInvoices
+ * 
+ * @param string $type 
+ * 
+ * @return void
+ */
+function showHeader($type)
+{
+    if ($type=="open") {
+        
+        $title = "OPEN";
+    }
+    if ($type=="cancelled") {
        
+        $title = "CANCELLED";
+    }
+    ?>
+   
+    <h3><?php echo $title; ?></h3>  
     <table id="tableInvoices" class="wp-list-table widefat">
 
         <thead id="tableInvoicesHeader">
@@ -67,22 +87,36 @@
                 
             </tr>
         </thead>
-<?php
+    <?php
+    showOpenInvoices("$type");
+}
 
-showOpenInvoices();
+
+showHeader("open");
+
+
+showHeader("cancelled");
+
 
 /**
  * Function showOpenInvoices
  * 
+ * @param string $type 
+ * 
  * @return void
  */
-function showOpenInvoices()
+function showOpenInvoices($type)
 {
     $table_name = $GLOBALS['wpdb']->prefix . QI_Invoice_Constants::TABLE_QI_HEADER;
-    
-    $invoice_headers = $GLOBALS['wpdb']->get_results(
-        "SELECT * FROM $table_name ORDER BY id DESC"
-    );
+    if ($type=="open") {
+        $query = "SELECT * FROM $table_name WHERE cancellation = false ORDER BY id DESC";
+        
+    }
+    if ($type=="cancelled") {
+        $query = "SELECT * FROM $table_name WHERE cancellation = true ORDER BY id DESC";
+       
+    }
+    $invoice_headers = $GLOBALS['wpdb']->get_results($query);
 
     $count = 0;
 
@@ -130,7 +164,7 @@ function showOpenInvoices()
                     </span>
                     
                     <span>
-                        <?php echo  $invoice_header->name ?>
+                        <?php echo  $invoice_header->lastname ?>
                     </span>
                 </td>
 
@@ -185,9 +219,13 @@ function showOpenInvoices()
 
                 </td>
             </tr>
+            
+            
             <?php 
     }
-
+    ?>
+</table>       
+    <?php
         
 
 }
@@ -196,6 +234,6 @@ function showOpenInvoices()
 ?>
         
 
-        </table>   
+        
     </div>
 </div>
