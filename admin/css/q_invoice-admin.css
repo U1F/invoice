@@ -104,3 +104,21 @@
     border-color:red;
     
 }
+
+
+.q-invoice-page td.fiftyCol, th.fiftyCol
+{
+    width:5%;
+}
+.q-invoice-page td.twohundredCol, th.twohundredCol
+{
+    width: 20%;
+}
+.q-invoice-page td.hundredCol, th.hundredCol
+{
+    width:10%;
+}
+.q-invoice-page td.eightyCol, th.eightyCol
+{
+    width:8%;
+}

@@ -25,39 +25,46 @@
         <thead id="tableInvoicesHeader">
             <tr>
                 <th scope="col" id="id" 
-                    class="manage-column fiftyCol column-id sortable asc ">
+                    class="manage-column fiftyCol columnId sortable asc ">
                     <?php _e('#', 'Ev'); ?>
                 </th>
 
                 <th scope="col" id="companyName" 
-                    class="manage-column twohundredCol column-company">
+                    class="manage-column twohundredCol columnCompany">
                     <?php _e('Company', 'Ev'); ?>
                 </th>
                 
                 <th scope="col" id="name" 
-                    class="manage-column hundredCol column-name">
+                    class="manage-column hundredCol columnName">
                     <?php _e('Name', 'Ev'); ?>
                 </th>
                 
                 <th scope="col" id="sumNet" 
-                    class="manage-column fiftyCol column-net">
+                    class="manage-column fiftyCol columnNet">
                     <?php _e('Net', 'Ev'); ?>
                 </th>
                 
                 <th scope="col" id="sumTotal" 
-                    class="manage-column eightyCol column-total ">
+                    class="manage-column fiftyCol columnTotal ">
                     <?php _e('Total', 'Ev'); ?>
                 </th>
 
                 <th scope="col" id="paydate" 
-                    class="manage-column twohundredCol column-date">
+                    class="manage-column fiftyCol columnDate">
                     <?php _e('Invoice Date', 'Ev'); ?>
                 </th>
-                
-                <th scope="col" id="sumbrutto" 
-                    class="manage-column eightyCol column-edit ">
+                <th scope="col" id="invoiceID" 
+                    class="manage-column fiftyCol columnInvoiceID">
+                    <?php _e('Invoice ID', 'Ev'); ?>
+                </th>
+
+                <th scope="col" id="invoiceStatus" 
+                    class="manage-column fiftyCol columnStatus ">
                     <?php _e('', 'Ev'); ?>
                 </th>
+
+                
+                
             </tr>
         </thead>
 <?php
@@ -107,53 +114,53 @@ function showOpenInvoices()
         ?>
             <tr class="edit" id="edit-<?php echo $invoice_header->id; ?>">
                 <td 
-                    class="manage-column fiftyCol column-id sortable asc">
+                    class="manage-column fiftyCol columnId sortable asc">
                     <?php echo esc_attr($count); ?>
                 </td>
 
-                <td id="q_invoice_contact_company_<?php echo $invoice_header->id; ?>"
-                    class="manage-column twohundredCol column-company">
+                <td
+                    class="manage-column twohundredCol columnCompany">
                     <?php echo $invoice_header->company ?> 
                 </td>
 
-                <td id="q_invoice_contact_name_<?php echo $invoice_header->id; ?>"" 
-                    class="manage-column hundredCol column-name">
-                    <span id="q_invoice_contact_firstname_<?php echo $invoice_header->id; ?>">
+                <td
+                    class="manage-column hundredCol columnName">
+                    <span>
                         <?php echo  $invoice_header->firstname ?>
                     </span>
                     
-                    <span id="q_invoice_contact_lastname_<?php echo $invoice_header->id; ?>">
+                    <span>
                         <?php echo  $invoice_header->name ?>
                     </span>
                 </td>
 
-                <td class="manage-column fiftyCol column-net">
-                    <span id="q_invoice_detail_net_total_<?php echo $invoice_header->id; ?>">
+                <td class="manage-column fiftyCol columnNet">
+                    <span>
                         <?php echo number_format($netSum, 2, ',', ' ') ." €" ?>
                     </span>
                     
                 </td>
 
-                <td class="manage-column fiftyCol column-net">
-                <span id="q_invoice_detail_total_<?php echo $invoice_header->id; ?>">
+                <td class="manage-column fiftyCol columnTotal">
+                <span>
                         <?php echo number_format($totalSum, 2, ',', ' ')." €" ?>
                     </span>
                 </td>
 
-                <td class="manage-column fiftyCol column-date"
-                    id="q_invoice_contact_date_<?php echo $invoice_header->id; ?>"
+                <td class="manage-column fiftyCol columnDate"
+                    
                 >
                 <?php echo date("d.m.Y", strtotime($invoice_header->invoice_date)); ?>
                 </td>
 
-                <td class="manage-column eightyCol column-edit">
-                    
-                    <!--span style="font-size: 20px"
-                        id="<?php echo "edit-".$invoice_header->id;?>"
-                        title="edit"
-                        class="edit dashicons dashicons-edit">
-                    </span-->
+                <td class="manage-column fiftyCol columnInvoiceID">
+                <span>
+                        <?php echo $invoice_header->id ?>
+                    </span>
+                </td>
 
+                <td class="manage-column eightyCol columnEdit">
+                    
                     <a 
                         style="font-size:20px; display:inline" 
                         target="_top"
@@ -171,7 +178,9 @@ function showOpenInvoices()
                     <span style="font-size: 20px"
                         id="<?php echo $invoice_header->id; //should be delete-ID-?>" 
                         title="delete"
-                        class="loschen dashicons dashicons-no">
+                        class="loschen dashicons dashicons-no"
+                        value="<?php echo $invoice_header->id;?>"
+                    >
                     </span>
 
                 </td>

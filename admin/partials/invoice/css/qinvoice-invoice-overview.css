@@ -58,18 +58,22 @@
 }
 
 
-.q-invoice-page table#tableInvoices .column-net{
+.q-invoice-page table#tableInvoices .columnNet{
     text-align: right;
 }
 
-.q-invoice-page table#tableInvoices .column-total{
+.q-invoice-page table#tableInvoices .columnTotal{
     text-align: right;
 }
 
-.q-invoice-page table#tableInvoices .column-date{
+.q-invoice-page table#tableInvoices .columnDate{
+    text-align: right;
+}
+.q-invoice-page table#tableInvoices .columnInvoiceID{
     text-align: right;
 }
 
-.q-invoice-page table#tableInvoices .column-edit{
-    text-align: center;
+
+.q-invoice-page table#tableInvoices .columnEdit{
+    text-align: right;
 }
