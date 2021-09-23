@@ -671,7 +671,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
 
                 <button 
                     type="button" 
-                    class="invoiceFormButton" 
+                    class="qInvoiceFormButton" 
                     id="cancelInvoiceEdit"
                     name="cancelInvoiceEdit">
                     <?php echo __('Cancel', 'Ev'); ?>
@@ -684,7 +684,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                     value="<?php echo __('Save', 'Ev'); ?>"
                     name="save"
                     id="saveInvoice"
-                    class="invoiceFormButton submitButton"
+                    class="qInvoiceFormButton submitButton"
                 />
 
                 <input 
@@ -693,7 +693,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                     value="<?php echo __('Update', 'Ev'); ?>"
                     name="update"
                     id="updateInvoice"
-                    class="invoiceFormButton submitButton"
+                    class="qInvoiceFormButton submitButton"
                 />
                 
                 

@@ -305,7 +305,7 @@
 
                 <button 
                     type="button" 
-                    class="qiContactFormButton" 
+                    class="qInvoiceFormButton" 
                     id="cancelContactEdit"
                     name="cancelContactEdit">
                     <?php echo __('Cancel', 'Ev'); ?>
@@ -318,7 +318,7 @@
                     value="<?php echo __('Save', 'Ev'); ?>"
                     name="save"
                     id="saveContact"
-                    class="qiContactFormButton submitButton"
+                    class="qInvoiceFormButton submitButton"
                 />
 
                 <input 
@@ -327,7 +327,7 @@
                     value="<?php echo __('Update', 'Ev'); ?>"
                     name="update"
                     id="updateContact"
-                    class="qiContactFormButton submitButton"
+                    class="qInvoiceFormButton submitButton"
                 />
                 
                 
