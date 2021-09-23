@@ -80,7 +80,9 @@ jQuery(function($) {
 
     }
 
-
+function newRow (id)  {
+    
+}
 
     $(".deleteContact").click(function(event) {
 
@@ -113,6 +115,31 @@ jQuery(function($) {
         });
 
     }
+    jQuery(document).ready(function($) {
+        
+
+        $('#qiContactForm').ajaxForm({
+            success: function(response) {
+                console.log(response);
+                $("#qiContactForm").trigger('reset');
+                document.getElementById("overlay").style.display = "none";
+
+                // TODO Julian nach Success Meldung fragen
+                jQuery('.q-invoice-page').
+                prepend('<div id="successInvoiceSaved">' +
+                    'Success: Invoice saved!' +
+                    '</div>');
+
+                $("#successInvoiceSaved").delay(5000).fadeOut(800);
+            }
+        });
+
+        
+
+        
+
+        
+    });
 
     
 
