@@ -102,13 +102,15 @@
             
 
         </section>
-        <div>
-                    <?php
-                        settings_fields('invoiceTextForm');
-                        do_settings_sections('invoiceTextPage');
-                        
-                    ?>
-                </div>  
+        <section class="invoiceSettings">
+        <div >
+            <?php
+                settings_fields('invoiceTextForm');
+                do_settings_sections('invoiceTextPage');
+                
+            ?>
+        </div>  
+        </section>
         <?php 
            
         
