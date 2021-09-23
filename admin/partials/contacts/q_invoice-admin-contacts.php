@@ -43,13 +43,13 @@
     <div id="show-contacts">
         <table class="wp-list-table widefat" id="contacts">
             <thead id="contactTabkeHeader"> 
-                <td>#</td>
-                <td>Company</td>
-                <td>Name</td>
-                <td>City</td>
-                <td>Email</td>
-                <td></td>  
-                <td></td>  
+                <td class="columnRowID fiftyCol">#</td>
+                <td class="columnCompany twohundredCol">Company</td>
+                <td class="columnName hundredCol">Name</td>
+                <td class="columnCity fiftyCol">City</td>
+                <td class="columnEmail fiftyCol">Email</td>
+                <td class="columnStatus fiftyCol"></td>  
+                <td class="columnEdit eightyCol"></td>  
             </thead>
             <?php
             $table_name = $GLOBALS['wpdb']->prefix . 
@@ -100,7 +100,7 @@
                     </span>
                 </td>
 
-                <td class="manage-column fiftyCol column-edit">
+                <td class="manage-column fiftyCol columnStatus">
                 </td>
 
                 <td class="manage-column eightyCol columnEdit">
@@ -168,6 +168,7 @@
                                     id="qiContactCompany"
                                     class="qiContactInput"
                                     type="text"
+                                    
                                     >
                             </td>
                             </tr>
@@ -196,7 +197,8 @@
                                     id="qiContactName"
                                     class="qiContactInput"
                                     type="text"
-                                    >
+                                    required
+                                    >   
                             </td>
                             </tr>
                         <tr>
@@ -224,6 +226,7 @@
                                     id="qiContactStreet"
                                     class="qiContactInput"
                                     type="text"
+                                    required
                                     >
                             </td>
                             </tr>
@@ -239,6 +242,7 @@
                                     class="qiContactInput"
                                     type="number"
                                     style="width: 90px" 
+                                    required
                                     >
                             </td>
                             </tr>
@@ -253,6 +257,7 @@
                                     id="qiContactCity"
                                     class="qiContactInput"
                                     type="text"
+                                    required
                                     >
                             </td>
                             </tr>

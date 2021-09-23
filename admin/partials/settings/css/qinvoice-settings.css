@@ -116,10 +116,7 @@
     color: #3c434a;
 }
 
-.q-invoice-page section.invoiceSettings input:invalid {
-    border-color:red;
-    
-}
+
 
 .q-invoice-page section.invoiceSettings input[type=number] {
     padding-left: 8px;

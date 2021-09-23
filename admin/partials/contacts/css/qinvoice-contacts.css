@@ -94,4 +94,52 @@
     
 }
 
+.q-invoice-page td.fiftyCol
+{
+    width:5%;
+}
+.q-invoice-page td.twohundredCol
+{
+    width: 20%;
+}
+.q-invoice-page td.hundredCol
+{
+    width:10%;
+}
+.q-invoice-page td.eightyCol
+{
+    width:8%;
+}
+
+.q-invoice-page td.columnRowID 
+{
+    padding-left: 20px;
+    width:1%;
+}
+.q-invoice-page td.columnCompany
+{
+
+}
+.q-invoice-page td.columnName
+{
+
+}
+.q-invoice-page td.columnCity
+{
+
+}
+.q-invoice-page td.columnEmail
+{
+
+}
+.q-invoice-page td.columnStatus
+{
+
+}
+.q-invoice-page td.columnEdit
+{
+    text-align: right;
+    padding-right: 20px;
+
+}
 
