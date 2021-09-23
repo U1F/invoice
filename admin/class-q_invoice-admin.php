@@ -197,6 +197,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
             $this->addSettingsField("mail", "email", "contactPage");
             $this->addSettingsField("phone", "tel", "contactPage");
+            $this->addSettingsField("website", "text", "contactPage");
             $this->addSettingsField("facebook", "text", "contactPage");
             $this->addSettingsField("instagram", "text", "contactPage");
 
