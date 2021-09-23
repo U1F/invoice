@@ -21,9 +21,9 @@
 .q-invoice-page #qiContactPopup{
     display: inline-block;
     margin-top: 112px;
-    margin-left: 215px;
-    margin-right: 45px;
-    margin-bottom: 45px;
+    margin-left:40%;
+    margin-right:40%;
+    width:20%;
     padding-left: 40px;
     padding-right: 40px;
     padding-top: 12px;
