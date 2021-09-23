@@ -152,8 +152,9 @@
     height: 32px;
 }
 
-.q-invoice-page p.submit input#submit {
+.q-invoice-page p.submit input#saveSettings {
     width: 360px;
+    height:36px;
     display: block;
     margin-right: auto;
     margin-left: auto;

@@ -112,7 +112,7 @@
         <?php 
            
         
-        submit_button(); 
+        submit_button($text = "Save Settings", $type = "primary", $name = "saveSettings"); 
         ?>
     
     </form>
