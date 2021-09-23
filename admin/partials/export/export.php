@@ -161,7 +161,7 @@ td.invoiceItemsHeader {
                     </p>
                     
                     <p class="invoiceSender" id="senderWebsite">
-                        <?php echo get_option('qi_settings')['facebook'];?>
+                        <?php echo get_option('qi_settings')['website'];?>
                     </p>                 
                         <?php 
                         if ($invoiceType=="dunning") {
