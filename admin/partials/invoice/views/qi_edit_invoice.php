@@ -246,43 +246,8 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                 </div>
 
                 <div id="invoiceInputTableSpacer">
-                    <span 
-                        style="font-size:20px;margin-top: 12px; display:none" 
-                        class="lockForContacts dashicons dashicons-lock">
-                    </span>
-                <!-- unlock -->
-                    <div 
-                        id="contactRegister" 
-                        style="
-                            display:none;
-                            background-color:white; 
-                            width: 480px; 
-                            border:solid 1px grey; 
-                            border-radius:4px;
-                            z-index: 20;
-                            position: absolute;
-                            margin-left: -60px;
-                            "
-                        >
-                        <table 
-                            id="contacts" 
-                            style="
-                                width:100%;
-                                padding-top: 20px;
-                                padding-bottom: 20px;
-                                
-                                "
-                            >
-                            <thead>
-                                <td class="first">Company</td>
-                                <td>Name</td>
-                                <td class="last">City</td>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                        </table>
-                    </div>
+                    
+                 
                 </div>
             
 

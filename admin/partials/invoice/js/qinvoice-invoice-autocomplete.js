@@ -84,42 +84,28 @@ jQuery(function($) {
         }
     });
     $("#invoiceFormInputsLeft").on("keyup", ".inputsLeftTable", function(event) {
-        //console.log($(event.target));
-        //console.log($(this).find("input"));
-        //console.log(contactData[0][0][$(event.target)[0].id]);
-        //if ($(event.target).is("input#street")){console.log($(event.target)[0].id)}
-        //console.log("bare: " );
-        //console.log($(event.target).val());
-        //console.log("[0] "); 
-        //console.log($(event.target)[0].id);
         
+        field= 
+            $(event.target)[0].id[0].toUpperCase() +
+            $(event.target)[0].id.slice(1);
+
         nameCount = 0;
         matchedNames = [];
         matchedIDs = [];
+
         if ($(event.target).val().length > 0) {
-            //console.log("You typed " + $(event.target).val() + " in field '" + $(event.target)[0].id +"'.");
+            
             for (i = 0; i < contactData[0].length; i++) {
                 
                 if (contactData[0][i][$(event.target)[0].id].toLowerCase().includes($(event.target).val().toLowerCase(), 0)) {
-                    //console.log(contactData[0][i][$(event.target)[0].id]);
+                    
                     matchedNames[nameCount] = contactData[0][i].company;
                     matchedIDs[nameCount] = contactData[0][i].id;
                     nameCount++;
-                    
-                    
                 }
             }
-        } else {
-            field= $(event.target)[0].id[0].toUpperCase()+$(event.target)[0].id.slice(1);
-            $('#autocomplete'+field).css('display', 'block');
-            //$('#autocomplete'+$(event.target)[0].id[0].toUpperCase() + $(event.target)[0].id.slice(1)).css('display', 'none');
-        }
+        } 
         if (nameCount) {
-            field= $(event.target)[0].id[0].toUpperCase()+$(event.target)[0].id.slice(1)
-            console.log("And it matched " +
-            $(event.target)[0].id[0].toUpperCase()+
-            $(event.target)[0].id.slice(1)
-            );
             $('#autocomplete'+field).css('display', 'block');
             showTextAreaForAutocompleteOfContactFields(matchedNames, matchedIDs, field);
         } else {
@@ -129,33 +115,27 @@ jQuery(function($) {
 
     function showTextAreaForAutocompleteOfContactFields(matchedNames, matchedIDs, fieldName) {
 
-
         htmlData = "<p><strong> Matching: </strong></p>";
         for (i = 0; i < matchedNames.length; i++) {
             htmlData +=
                 "<div " +
                 "class='autocompleteButton' " +
-
                 "id='" + matchedIDs[i] + "'" +
                 "name='" + fieldName + "'" +
                 "> " +
                 matchedNames[i] + 
                 "</div>";
-
         }
         $('div#autocomplete'+fieldName).html(htmlData);
     }
 
 
     function showTextAreaForAutocompleteOfContactNames(matchedNames, matchedIDs) {
-
-
         htmlData = "<p><strong> Matching: </strong></p>";
         for (i = 0; i < matchedNames.length; i++) {
             htmlData +=
                 "<div " +
                 "class='autocompleteButton' " +
-
                 "id='" + matchedIDs[i] + "'" +
                 "name='" + matchedNames[i] + "'" +
                 "> " +
@@ -219,8 +199,8 @@ jQuery(function($) {
 
     $("#invoiceFormInputsLeft").on("click", "div.autocompleteButton", function() {   
         fillContactDataInInvoiceForm($(this).attr('id'))
-        lockContactFieldInInvoiceForm();
-        showLocker();
+      
+     
         $('div#autocompleteCompany').html("");
         $('#autocomplete'+$(this).attr('name')).css('display', 'none');
 
@@ -248,43 +228,17 @@ jQuery(function($) {
     
         }
     }
-    function lockInputField(name){
-        $('#'+name).attr("readonly", true);
-    };
+   
 
-    function unlockInputField(name){
-        $('#'+name).attr("readonly", false);
-    };
+ 
     
-    function showLocker() {
-        $(".lockForContacts").css("display","block");
-    }
+    
 
-    function clearInputField(name){
-        $('#'+name).val("");
-    }
+   
 
-    function lockContactFieldInInvoiceForm () {
-        
-        customerFormFields.forEach(element => {
-            lockInputField (element);
-            console.log(element);
-        });
-        
-        
-    }
+   
 
-    function unlockContactFieldInInvoiceForm () {
-        customerFormFields.forEach(element => {
-            unlockInputField (element);
-            console.log(element);
-        });
-
-        customerFormFields.forEach(element => {
-            clearInputField (element);
-            console.log(element);
-        });
-    }
+    
 
     $("#edit-invoice").click(function(event) {
 
@@ -295,8 +249,8 @@ jQuery(function($) {
                 id= $(event.target).parent().attr('id');
                 console.log("ID:"+ id);
                 fillContactDataInInvoiceForm(id)
-                showLocker();
-                lockContactFieldInInvoiceForm();
+             
+               
                 $("#contactRegister").css("display", "none");
             }
         }
@@ -308,11 +262,7 @@ jQuery(function($) {
         }
     });
 
-    $(".lockForContacts").click(function(){
-
-        unlockContactFieldInInvoiceForm();
-        $(".lockForContacts").css("display","none");
-    });
+   
  
      $("#inputDashiconCompanyRegister").click(function(event) {
          $("#contacts > tbody").empty();
