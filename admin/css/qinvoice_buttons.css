@@ -61,7 +61,7 @@
 
 .q-invoice-page button.filterButton:hover
 {
-    box-shadow: 0 5px;
+    box-shadow: 0px -8px 0px 0 black;
 
 }
 
