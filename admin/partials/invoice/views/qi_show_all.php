@@ -138,7 +138,11 @@ function showOpenInvoices()
         }     
         
         ?>
-            <tr class="edit <?php echo $type?>" id="edit-<?php echo $invoice_header->id; ?>">
+            <tr 
+                class="edit <?php echo $type?>" 
+                id="edit-<?php echo $invoice_header->id;?>"
+                value="<?php echo $invoice_header->id;?>"
+            >
                 <td 
                     class="manage-column fiftyCol columnId sortable asc">
                     <?php echo esc_attr($count); ?>
@@ -151,11 +155,11 @@ function showOpenInvoices()
 
                 <td
                     class="manage-column hundredCol columnName">
-                    <span>
+                    <span class="firstnameSpan">
                         <?php echo  $invoice_header->firstname ?>
                     </span>
                     
-                    <span>
+                    <span class="lastnameSpan">
                         <?php echo  $invoice_header->lastname ?>
                     </span>
                 </td>
@@ -194,9 +198,10 @@ function showOpenInvoices()
                         <?php 
                         echo "'".plugins_url('q_invoice/pdf/Invoice'. $invoice_header->id.'.pdf')."'    "
                         ?>                        "
-                        id="<?php echo "'download-".$invoice_header->id."'";?>"
+                        id="<?php echo "download-".$invoice_header->id;?>"
                         title="Download Invoice"
                         class="download dashicons dashicons-download"
+                        value="<?php echo $invoice_header->id?>"
                         download
                     >
                     </a>

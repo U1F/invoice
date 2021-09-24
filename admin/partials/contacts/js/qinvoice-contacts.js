@@ -89,7 +89,6 @@ jQuery(function($) {
 
     function changeUpdatedContactRow (contact)  {
         //Change Infos in the right table row.
-        //$("table#contacts > tbody > tr[value="+contact['qiContactID']+"]").find("span.editContact").attr("id","edit-" + contact['qiContactID']);
         $("table#contacts > tbody > tr[value="+contact['qiContactID']+"]").find("td.columnCompany").text(contact['qiContactCompany']);
         $("table#contacts > tbody > tr[value="+contact['qiContactID']+"]").find("span.columnFirstName").text(contact['qiContactFirstname']);
         $("table#contacts > tbody > tr[value="+contact['qiContactID']+"]").find("span.columnLastName").text(contact['qiContactName']);

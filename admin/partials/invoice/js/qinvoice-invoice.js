@@ -28,11 +28,11 @@ jQuery(function($) {
 
    
     // Form Handling
+    $("table#tableInvoices").on("click",".edit", function (event) {
     
-    $(".edit").click(function(event) {
         if ($(event.target).is(".download")){return;}
         if ($(event.target).is(".loschen")){return;}
-        if ($(event.target).is(".column-edit")){return;}
+        
 
         document.getElementById("overlay").style.display = "block";
 
@@ -60,14 +60,58 @@ jQuery(function($) {
         editInvoice(id[1]);
     });
 
-    $(".print").click(function(event) {
-        event.preventDefault();
 
-        id = jQuery(this).attr("id").split('-');
-        console.log(id[1]);
+    function changeUpdatedInvoiceRow (invoice)  {
+        
+        //Find the right row
+        row = $("table#tableInvoices > tbody > tr[value="+invoice['invoice_id']+"]");
 
-        printInvoiceTemplate(id[1]);
-    });
+        //Change Infos in the right table row.  
+        row.find("td.columnCompany").text(invoice['company']);
+        row.find("td.columnName").text(invoice['firstname']+" "+invoice['lastname']);
+        row.find("td.columnNet").text($('.qInvc-total-summe').eq(0).text()+" "+currencySign);
+        row.find("td.columnTotal").text($('.qInvc-total-brutto-summe').eq(0).text()+" "+currencySign);
+        
+        date=invoice['dateOfInvoice'];
+        //change to german date format
+        formattedDate= date.slice(8, 10) + "." + date.slice(5, 7) + "." + date.slice(0, 4); 
+        row.find("td.columnDate").text(formattedDate);
+        
+ 
+
+    }
+    
+    function addNewContactRow (invoice, id)  {
+        
+            clone = $("table#tableInvoices > tbody").find("tr").first().clone();
+            clone.attr("id","edit-"+id);
+            clone.attr("value",id);
+            clone.find("td.columnRowID").text(1+parseInt(clone.find("td.columnRowID").text()));
+            clone.find("td.columnCompany").text(invoice['company']);
+            clone.find("span.firstnameSpan").text(invoice['firstname']);
+            clone.find("span.lastnameSpan").text(invoice['lastname']);
+            clone.find("td.columnNet").text($('.qInvc-total-summe').eq(0).text()+" "+currencySign);
+            clone.find("td.columnTotal").text($('.qInvc-total-brutto-summe').eq(0).text()+" "+currencySign);
+            
+            date=invoice['dateOfInvoice'];
+            //change to german date format
+            formattedDate= date.slice(8, 10) + "." + date.slice(5, 7) + "." + date.slice(0, 4); 
+            clone.find("td.columnDate").text(formattedDate);
+            
+            clone.find("td.columnInvoiceID span").text(id);
+
+            clone.find("a.download").attr("id", "download-"+id);
+            clone.find("a.download").attr("value", id);
+            
+            //clone.find("a.download").attr("href", "http://127.0.0.1/wp-content/plugins/q_invoice/pdf/Invoice" .id.".pdf");
+            
+            clone.find("span.loschen").attr("id", id);
+            clone.find("span.loschen").attr("value", id);
+
+            $("table#tableInvoices > tbody").prepend(clone);
+
+
+    }
 
     // UI
 
@@ -84,64 +128,60 @@ jQuery(function($) {
             
         }
     });
-    $('#edit-invoice').on("click", "#inputDashiconCompanyRegister", function() {
-        $("#contactRegister").css("display", "block");
-    });
-
    
     $("#cancelInvoiceEdit").click(function(event) {
         document.getElementById("overlay").style.display = "none";
     });
 
-        function setFilterButtonActive(target)
-        {
-            target.css("background-color","rgb(34, 113, 177)");
-            target.css("border","0px solid");
-            target.css("color","white");
-            target.attr("class","filterButton invoiceButton active");
+    function setFilterButtonActive(target)
+    {
+        target.css("background-color","rgb(34, 113, 177)");
+        target.css("border","0px solid");
+        target.css("color","white");
+        target.attr("class","filterButton invoiceButton active");
 
+    }
+    function setFilterButtonInactive(target)
+    {
+        target.css("background-color","rgb(239, 239, 239)");
+        target.css("border","1px solid rgb(192, 192, 192)");
+        target.css("color","#3c434a");
+        target.attr("class","filterButton invoiceButton inactive");
+        
+        
+
+    }
+
+    $("#filterButtons").on("click", ".inactive", function (event){
+        setFilterButtonActive($(event.target));
+        
+        if (event.target.id=="showOpenInvoices") {
+            $("tr.open").css("display","table-row");
         }
-        function setFilterButtonInactive(target)
-        {
-            target.css("background-color","rgb(239, 239, 239)");
-            target.css("border","1px solid rgb(192, 192, 192)");
-            target.css("color","#3c434a");
-            target.attr("class","filterButton invoiceButton inactive");
-            
-            
 
+        if (event.target.id=="showCancelledInvoices") {
+            $("tr.cancelled").css("display","table-row");
         }
 
-        $("#filterButtons").on("click", ".inactive", function (event){
-            setFilterButtonActive($(event.target));
-           
-            if (event.target.id=="showOpenInvoices") {
-             $("tr.open").css("display","table-row");
-            }
+        if (event.target.id=="showInvoicesWithDunning") {}
 
-            if (event.target.id=="showCancelledInvoices") {
-                $("tr.cancelled").css("display","table-row");
-            }
+    });
 
-            if (event.target.id=="showInvoicesWithDunning") {}
+    $("#filterButtons").on("click", ".active", function (event){
+        setFilterButtonInactive($(event.target));
 
-        });
+        if (event.target.id=="showOpenInvoices") {
+            $("tr.open").css("display","none");
+        }
 
-        $("#filterButtons").on("click", ".active", function (event){
-            setFilterButtonInactive($(event.target));
+        if (event.target.id=="showCancelledInvoices") {
+            $("tr.cancelled").css("display","none");
+        }
 
-            if (event.target.id=="showOpenInvoices") {
-                $("tr.open").css("display","none");
-            }
-   
-            if (event.target.id=="showCancelledInvoices") {
-                $("tr.cancelled").css("display","none");
-            }
-   
-            if (event.target.id=="showInvoicesWithDunning") {}
-            
-        });
-       
+        if (event.target.id=="showInvoicesWithDunning") {}
+        
+    });
+    
         
     
 
@@ -206,7 +246,7 @@ jQuery(function($) {
         var netSum = 0;
         var taxSum = 0.0;
         var totalSum = 0;
-
+        
         Array.from(document.querySelector("select.itemTax").options).forEach(function(option_element) {
             taxes.push([option_element.value, 0.0]);
         });
@@ -344,8 +384,10 @@ jQuery(function($) {
         var Clone = Row.clone();
 
         Clone.find('input:text').val('');
+        Clone.find('input').val('');
+        Clone.find("select.itemTax").val("0");
         Clone.find('.qInvcLine-total').text('0');
-        Clone.find('input.amountOfItems').val('1');
+        //Clone.find('input.amountOfItems').val('1');
         Clone.insertAfter(Row);
 
         recalcPos();
@@ -436,7 +478,7 @@ jQuery(function($) {
                 _ajax_nonce: q_invoice_ajaxObject.nonce,
                 id: invoiceId
             },
-            success: function(data, textStatus, XMLHttpRequest) {
+            success: function(data) {
                 // Here we can measure success by own stanards
                 // For example a return from a DB uppdate   
                 // Also maybe here we can call a notice tu the user
@@ -444,7 +486,7 @@ jQuery(function($) {
 
 
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function(errorThrown) {
                 console.log(errorThrown);
             }
         });
@@ -495,27 +537,6 @@ jQuery(function($) {
     
 
 
-
-    function printInvoiceTemplate(invoiceID) {
-        jQuery.ajax({
-            type: 'POST',
-            url: q_invoice_ajaxObject.ajax_url,
-            data: {
-                action: 'printInvoiceTemplateServerSide',
-                _ajax_nonce: q_invoice_ajaxObject.nonce,
-                id: invoiceID
-            },
-            success: function(response, textStatus, XMLHttpRequest) {
-                console.log("Response: " + response);
-                return response;
-
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Error: " +
-                    errorThrown);
-            }
-        });
-    }
 
     function editInvoice(invoiceId) {
         jQuery.ajax({
@@ -595,7 +616,7 @@ jQuery(function($) {
         $(inputName).val(obj[0][0][dataName]);
     }
 
-    $(".loschen").click(function(event) {
+    $("table#tableInvoices").on("click",".loschen", function (event) {
 
         $(this).closest('tr').remove();
         deleteInvoice(event.target.id);
@@ -606,10 +627,18 @@ jQuery(function($) {
     jQuery(document).ready(function($) {
         $('#invoiceForm').ajaxForm({
             success: function(response) {
-                console.log(response);
+                serverResponse=JSON.parse(response)["data"];
+                invoiceID=JSON.parse(response)["id"];
+                console.log(serverResponse);
+                if(serverResponse['action']=="updateInvoiceServerSide"){
+                    changeUpdatedInvoiceRow(serverResponse);
+                }
+                if(serverResponse['action']=="saveInvoiceServerSide"){
+                    addNewContactRow(serverResponse, invoiceID);
+                }
                 $("#invoiceForm").trigger('reset');
                 document.getElementById("overlay").style.display = "none";
-
+                
                 // TODO Julian nach Success Meldung fragen
                 jQuery('.q-invoice-page').
                 prepend('<div id="successInvoiceSaved">' +
@@ -617,22 +646,12 @@ jQuery(function($) {
                     '</div>');
 
                 $("#successInvoiceSaved").delay(5000).fadeOut(800);
+                
             }
         });
-
-       
 
         checkPrefixStatus();
         checkNoStartStatus();
         checkIfBanksHaveBeenSetupinSettings();
-
-        
-
-        
     });
-
-
-
-
-
 });

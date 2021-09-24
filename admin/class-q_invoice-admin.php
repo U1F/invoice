@@ -1017,15 +1017,19 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             //check_ajax_referer("q_invoice_nonce");
             //$this->_plugin_name.
             if (wp_verify_nonce($_POST['q_invoice_nonce'], $_POST['action'])) {
-
+                
                 $invoiceID = Interface_Invoices::saveArrayToDB($_POST);
 
                 $this->printInvoiceTemplate($invoiceID);
                 // NOT TESTING
                 $response['success'] = true;
+                $response['data'] = $_POST;
+                $response['id'] = $invoiceID;
+                //$response['type'] = $_POST['action'];
+                
                 echo json_encode($response);
-                // TEST:
-                // echo json_encode($_POST);
+                
+                
                 
                 wp_die();
             }
@@ -1054,6 +1058,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 wp_die();
             }
             $response['success'] = false;
+            $response['data'] = $_POST;
             echo json_encode($response);
             wp_die();
         }
