@@ -53,10 +53,11 @@ function Invoice_list()
         include_once \QI_Invoice_Constants::PART_PATH_QI . 
         "/admin/partials/invoice/views/qi_show_all.php";
 
-        showHeader("open");
+        showHeader();
 
-
-        showHeader("cancelled");
+        showOpenInvoices();
+        
+        closeTable();
         $showAll= ob_get_contents();
         ob_end_clean();
         echo $showAll;

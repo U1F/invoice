@@ -116,11 +116,11 @@ jQuery(function($) {
             setFilterButtonActive($(event.target));
            
             if (event.target.id=="showOpenInvoices") {
-             $("table.open").css("display","block");
+             $("tr.open").css("display","table-row");
             }
 
             if (event.target.id=="showCancelledInvoices") {
-                $("table.cancelled").css("display","block");
+                $("tr.cancelled").css("display","table-row");
             }
 
             if (event.target.id=="showInvoicesWithDunning") {}
@@ -131,11 +131,11 @@ jQuery(function($) {
             setFilterButtonInactive($(event.target));
 
             if (event.target.id=="showOpenInvoices") {
-                $("table.open").css("display","none");
+                $("tr.open").css("display","none");
             }
    
             if (event.target.id=="showCancelledInvoices") {
-                $("table.cancelled").css("display","none");
+                $("tr.cancelled").css("display","none");
             }
    
             if (event.target.id=="showInvoicesWithDunning") {}

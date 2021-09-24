@@ -1,4 +1,4 @@
-.q-invoice-page table.cancelled{
+.q-invoice-page tr.cancelled{
     display:none;
 }
 .q-invoice-page #newInvoice {

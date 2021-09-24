@@ -29,8 +29,6 @@ jQuery(function($) {
 
     $("table#contacts > tbody").on( "click", ".editContact", function(event) {
 
-   
-
         document.getElementById("overlay").style.display = "block";
 
         // reset form
@@ -40,7 +38,6 @@ jQuery(function($) {
         $("#saveContact").css("display", "none");
 
         $("input[name='action']").val("updateContactServerSide");
-        
         
         $("#saveContactDIV").remove();
         $("#updateContactDIV").remove();
@@ -90,10 +87,9 @@ jQuery(function($) {
 
     }
 
-    function changeUpdatedContactRow (contact, id)  {
-        
-        $("table#contacts > tbody > tr[value="+contact['qiContactID']+"]").find("span.editContact").attr("id","edit-" + contact['qiContactID']);
-        //$("table#contacts > tbody > tr[value="+contact['qiContactID']+"]").find("td.columnRowID").text(1+parseInt(clone.find("td.columnRowID").text()));
+    function changeUpdatedContactRow (contact)  {
+        //Change Infos in the right table row.
+        //$("table#contacts > tbody > tr[value="+contact['qiContactID']+"]").find("span.editContact").attr("id","edit-" + contact['qiContactID']);
         $("table#contacts > tbody > tr[value="+contact['qiContactID']+"]").find("td.columnCompany").text(contact['qiContactCompany']);
         $("table#contacts > tbody > tr[value="+contact['qiContactID']+"]").find("span.columnFirstName").text(contact['qiContactFirstname']);
         $("table#contacts > tbody > tr[value="+contact['qiContactID']+"]").find("span.columnLastName").text(contact['qiContactName']);

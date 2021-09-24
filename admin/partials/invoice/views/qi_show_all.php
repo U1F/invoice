@@ -28,26 +28,17 @@
 
 
 /**
- * Function showOpenInvoices
- * 
- * @param string $type 
+ * Function showOpenInvoice 
  * 
  * @return void
  */
-function showHeader($type)
+function showHeader()
 {
-    if ($type=="open") {
-        
-        $title = "OPEN";
-    }
-    if ($type=="cancelled") {
-       
-        $title = "CANCELLED";
-    }
+    
     ?>
    
-    <h3><?php echo $title; ?></h3>  
-    <table id="tableInvoices" class="wp-list-table widefat <?php echo $type; ?>">
+    
+    <table id="tableInvoices" class="wp-list-table widefat">
 
         <thead id="tableInvoicesHeader">
             <tr>
@@ -95,7 +86,7 @@ function showHeader($type)
             </tr>
         </thead>
     <?php
-    showOpenInvoices("$type");
+    
 }
 
 
@@ -104,30 +95,28 @@ function showHeader($type)
 /**
  * Function showOpenInvoices
  * 
- * @param string $type 
- * 
  * @return void
  */
-function showOpenInvoices($type)
+function showOpenInvoices()
 {
     $table_name = $GLOBALS['wpdb']->prefix . QI_Invoice_Constants::TABLE_QI_HEADER;
-    if ($type=="open") {
-        $query = "SELECT * FROM $table_name WHERE cancellation = false ORDER BY id DESC";
-        
-    }
-    if ($type=="cancelled") {
-        $query = "SELECT * FROM $table_name WHERE cancellation = true ORDER BY id DESC";
-       
-    }
+    $query = "SELECT * FROM $table_name ORDER BY id DESC";
     $invoice_headers = $GLOBALS['wpdb']->get_results($query);
 
     $count = 0;
 
     $netSum = 0;
 
+    
+    
+
     foreach ($invoice_headers as $invoice_header) {
 
         $count++;
+        $type="open";
+        if ($invoice_header->cancellation) {
+            $type="cancelled";
+        }
 
         $invoice_details = $GLOBALS['wpdb']->get_results(
             "SELECT * FROM ".
@@ -147,9 +136,9 @@ function showOpenInvoices($type)
                 ($invoice_detail->sum + 
                 ($invoice_detail->sum * $invoice_detail->tax / 100));
         }     
-
+        
         ?>
-            <tr class="edit" id="edit-<?php echo $invoice_header->id; ?>">
+            <tr class="edit <?php echo $type?>" id="edit-<?php echo $invoice_header->id; ?>">
                 <td 
                     class="manage-column fiftyCol columnId sortable asc">
                     <?php echo esc_attr($count); ?>
@@ -227,16 +216,24 @@ function showOpenInvoices($type)
             <?php 
     }
     ?>
-</table>       
+    
     <?php
         
 
 }
 
-
-?>
+/**
+ * Function showOpenInvoices
+ * 
+ * @return void
+ */
+function closeTable()
+{
+    ?>
         
 
-        
+            </table>   
+        </div>
     </div>
-</div>
+    <?php
+}
