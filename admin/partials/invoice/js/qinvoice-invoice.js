@@ -93,8 +93,56 @@ jQuery(function($) {
         document.getElementById("overlay").style.display = "none";
     });
 
-    
-    
+        function setFilterButtonActive(target)
+        {
+            target.css("background-color","rgb(34, 113, 177)");
+            target.css("border","0px solid");
+            target.css("color","white");
+            target.attr("class","filterButton invoiceButton active");
+
+        }
+        function setFilterButtonInactive(target)
+        {
+            target.css("background-color","rgb(239, 239, 239)");
+            target.css("border","1px solid rgb(192, 192, 192)");
+            target.css("color","#3c434a");
+            target.attr("class","filterButton invoiceButton inactive");
+            
+            
+
+        }
+
+        $("#filterButtons").on("click", ".inactive", function (event){
+            setFilterButtonActive($(event.target));
+           
+            if (event.target.id=="showOpenInvoices") {
+             $("table.open").css("display","block");
+            }
+
+            if (event.target.id=="showCancelledInvoices") {
+                $("table.cancelled").css("display","block");
+            }
+
+            if (event.target.id=="showInvoicesWithDunning") {}
+
+        });
+
+        $("#filterButtons").on("click", ".active", function (event){
+            setFilterButtonInactive($(event.target));
+
+            if (event.target.id=="showOpenInvoices") {
+                $("table.open").css("display","none");
+            }
+   
+            if (event.target.id=="showCancelledInvoices") {
+                $("table.cancelled").css("display","none");
+            }
+   
+            if (event.target.id=="showInvoicesWithDunning") {}
+            
+        });
+       
+        
     
 
     // INVOICE FORM

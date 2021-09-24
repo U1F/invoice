@@ -17,8 +17,15 @@
  */
 ?>
  <div class="page_content">
+     <div id="filterButtons">
+         <button class="filterButton invoiceButton   active" id="showOpenInvoices">open</button>
+         <button class="filterButton invoiceButton inactive" id="showCancelledInvoices">cancelled</button>
+         <button class="filterButton invoiceButton inactive" id="showInvoicesWithDunning">dunning</button>
+     </div>
     <div class="tab_content_wrapper">
 <?php 
+
+
 
 /**
  * Function showOpenInvoices
@@ -40,7 +47,7 @@ function showHeader($type)
     ?>
    
     <h3><?php echo $title; ?></h3>  
-    <table id="tableInvoices" class="wp-list-table widefat">
+    <table id="tableInvoices" class="wp-list-table widefat <?php echo $type; ?>">
 
         <thead id="tableInvoicesHeader">
             <tr>
@@ -92,10 +99,6 @@ function showHeader($type)
 }
 
 
-showHeader("open");
-
-
-showHeader("cancelled");
 
 
 /**

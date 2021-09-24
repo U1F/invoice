@@ -1,6 +1,11 @@
+.q-invoice-page table.cancelled{
+    display:none;
+}
 .q-invoice-page #newInvoice {
     float:right;
 }
+
+
 
 .q-invoice-page td.column-edit span.edit {
     cursor: pointer;

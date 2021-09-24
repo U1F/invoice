@@ -15,6 +15,7 @@
 
 .q-invoice-page input.submitButton {
     background-color: rgb(34, 113, 177);
+    border: 0px solid;
     color: white;
  
 }
@@ -30,3 +31,37 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+
+.q-invoice-page button.filterButton{
+    color: #3c434a;
+    border: 1px solid #c0c0c0;
+    
+   
+    
+    
+    height: 36px;
+    min-width: 96px;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: bold !important;
+    
+    padding-left: 15px;
+    padding-right: 15px;
+    
+}
+
+
+.q-invoice-page button.filterButton.active {
+  
+    background-color: rgb(34, 113, 177);
+    border: 0px solid;
+    color:white;
+}
+
+
+.q-invoice-page button.filterButton:hover
+{
+    box-shadow: 0 5px;
+
+}
+
