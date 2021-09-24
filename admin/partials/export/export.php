@@ -155,7 +155,8 @@ td.invoiceItemsHeader {
                     </p>
 
                     <p class="invoiceSender" id="senderPlaceholder1"></p>
-                    
+                    <br>
+                    <br>
                     <p class="invoiceSender" id="senderEmail">
                         <?php echo get_option('qi_settings')['mail'];?>
                     </p>
@@ -227,7 +228,7 @@ td.invoiceItemsHeader {
             </tr>
            
         </table>
-        <br><br>
+        <br><br><br><br><br><br>
 
         <div 
             id="invoiceHeader" 
@@ -265,9 +266,9 @@ td.invoiceItemsHeader {
 
         <div 
             id=invoiceText" 
-            style="font-size: 14px; height: 40px; vertical-align: middle"
+            style="font-size: 14px; height: 40px; vertical-align: middle; width: 640px;"
         >
-            <p class="invoiceText" id="invoiceTextRegular" style="display:inline"> 
+            <p class="invoiceText" id="invoiceTextRegular" style="display:inline;"> 
                 <?php echo $invoiceText;?>
             </p>
         </div>
@@ -484,7 +485,7 @@ td.invoiceItemsHeader {
                         style="text-align: right; font-size:12px;"> 
                         <?php 
                         echo
-                        number_format($invoiceDetail->amount_plan, 2, $separator, '') 
+                        number_format(floatval($invoiceDetail->amount_plan), 2, $separator, '') 
                         . " ".
                         $currencySign;
                         ?>
@@ -659,14 +660,16 @@ td.invoiceItemsHeader {
         <br><br><br>
         <?php if ($invoiceType=="invoice") {
             if (get_option('qi_settings')['invoiceTextOutro']) {
-                echo '<div style="font-size:12px">';
+                echo '<div style="font-size:14px;  width: 640px;">';
                 echo get_option('qi_settings')['invoiceTextOutro'];
+                echo '<br>'. get_option('qi_settings')['invoiceTextPaymentDeadline'];
                 echo '</div>';
             } else {
                 ?>
-                <div style="font-size:12px">
+                <div style="font-size:14px;  width: 640px;">
                 Danke für die gute Zusammenarbeit!<br>
-                <br>Zahlungsziel: 10 Tage ohne Abzug.
+                <br>
+                <?php echo get_option('qi_settings')['invoiceTextPaymentDeadline']; ?> 
                 </div>
                 <?php
             }
@@ -675,7 +678,7 @@ td.invoiceItemsHeader {
         if ($invoiceType=="dunning") {
             ?>
 
-        <div style="font-size:12px; display:none;">
+        <div style="font-size:12px; display:none; width: 640px;">
             Sollten Sie den offenen Betrag bereits beglichen haben, 
             betrachten Sie dieses Schreiben als gegenstandslos.
         </div>

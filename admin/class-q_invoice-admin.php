@@ -291,6 +291,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         
             $this->addSettingsField("invoice Text Intro", "textarea", "invoiceTextPage");
             $this->addSettingsField("invoice Text Outro", "textarea", "invoiceTextPage");
+            $this->addSettingsField("invoice Text Payment Deadline", "textarea", "invoiceTextPage");
             $this->addSettingsField("custom Footer", "textarea", "invoiceTextPage");
 
         }
