@@ -648,7 +648,7 @@ jQuery(function($) {
                     '<span> Invoice succesfully saved! </span>' +
                     '</div>');
 
-                $("#.messageSuccess").delay(5000).fadeOut(800);
+                $(".messageSuccess").delay(5000).fadeOut(800);
                 
             }
         });

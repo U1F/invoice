@@ -61,7 +61,9 @@
 {
     background: rgba(150, 150, 150, 0.1);
 }
-
+.q-invoice-page table#tableInvoices .columnInvoiceID{
+    text-align: left;
+}
 
 .q-invoice-page table#tableInvoices .columnNet{
     text-align: right;
@@ -74,9 +76,7 @@
 .q-invoice-page table#tableInvoices .columnDate{
     text-align: right;
 }
-.q-invoice-page table#tableInvoices .columnInvoiceID{
-    text-align: right;
-}
+
 
 
 .q-invoice-page table#tableInvoices .columnEdit{

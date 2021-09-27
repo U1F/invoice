@@ -42,9 +42,10 @@ function showHeader()
 
         <thead id="tableInvoicesHeader">
             <tr>
-                <th scope="col" id="id" 
-                    class="manage-column fiftyCol columnId sortable asc ">
-                    <?php _e('#', 'Ev'); ?>
+
+                <th scope="col" id="invoiceID" 
+                    class="manage-column fiftyCol columnInvoiceID sortable asc">
+                    <?php _e('Invoice ID', 'Ev'); ?>
                 </th>
 
                 <th scope="col" id="companyName" 
@@ -71,10 +72,7 @@ function showHeader()
                     class="manage-column fiftyCol columnDate">
                     <?php _e('Invoice Date', 'Ev'); ?>
                 </th>
-                <th scope="col" id="invoiceID" 
-                    class="manage-column fiftyCol columnInvoiceID">
-                    <?php _e('Invoice ID', 'Ev'); ?>
-                </th>
+                
 
                 <th scope="col" id="invoiceStatus" 
                     class="manage-column fiftyCol columnStatus ">
@@ -143,9 +141,12 @@ function showOpenInvoices()
                 id="edit-<?php echo $invoice_header->id;?>"
                 value="<?php echo $invoice_header->id;?>"
             >
-                <td 
-                    class="manage-column fiftyCol columnId sortable asc">
-                    <?php echo esc_attr($count); ?>
+                
+
+                <td class="manage-column fiftyCol columnInvoiceID sortable asc">
+                <span>
+                        <?php echo $invoice_header->id ?>
+                    </span>
                 </td>
 
                 <td
@@ -183,11 +184,7 @@ function showOpenInvoices()
                 <?php echo date("d.m.Y", strtotime($invoice_header->invoice_date)); ?>
                 </td>
 
-                <td class="manage-column fiftyCol columnInvoiceID">
-                <span>
-                        <?php echo $invoice_header->id ?>
-                    </span>
-                </td>
+               
 
                 <td class="manage-column eightyCol columnEdit">
                     
