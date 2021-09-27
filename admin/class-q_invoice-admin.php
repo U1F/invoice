@@ -182,7 +182,15 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 $this->addSettingsField("tax ".($iterator+1), "number", "invoicePage");
             }
             
-            $this->addSettingsField("unit", "text", "invoicePage");
+
+            add_settings_field(
+                'qi_settingsInvoiceUnit', 
+                'Unit', 
+                [$this, 'showInputForinvoiceUnit'],
+                'invoicePage',
+                'qi_invoicePage_section'
+            );
+         
             
            
 
@@ -536,6 +544,39 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 foreach ($items as $item) {
                 
                     $selected = ($options['invoiceCurrency']==$item) ? 'selected="selected"' : ''; 
+                    echo "<option value=".$item." ".$selected.">".$item."</option>";
+                }
+
+                echo "</select>";
+            }
+        }
+
+        /**
+         * Function showInputForinvoiceUnit
+         * 
+         * @return void
+         */
+        public function showInputForinvoiceUnit()
+        {
+            $options = get_option('qi_settings');
+            
+            if (empty($options['invoiceUnit'])) {
+                
+                echo "<select "
+                    ."id='qi_settings[invoiceUnit]'" 
+                    ."name='qi_settings[invoiceUnit]'>"
+                    ."<option value='Amount' selected='selected'>Amount</option>"  
+                    ."</select>";
+
+            } else {
+                $items = array("Amount", "Hours", "Liter");
+                echo "<select ".
+                    "id='qi_settings[invoiceUnit]'" .
+                    "name='qi_settings[invoiceUnit]'>";
+                
+                foreach ($items as $item) {
+                
+                    $selected = ($options['invoiceUnit']==$item) ? 'selected="selected"' : ''; 
                     echo "<option value=".$item." ".$selected.">".$item."</option>";
                 }
 

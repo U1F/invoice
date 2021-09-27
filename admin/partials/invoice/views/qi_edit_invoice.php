@@ -387,7 +387,29 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                         </td>
 
                         <td class="invoiceItemsAmount" > 
-                            <b><?php echo __('Amount', 'Ev'); ?></b> 
+                            <select 
+                                name="itemUnit[]" 
+                                class="itemUnit" 
+                                > 
+                                <?php 
+                                
+                                $invoiceUnits = ["Amount","Hours","Liter"];
+                                foreach ($invoiceUnits as $invoiceUnit) {
+
+                                    echo "<option value='".$invoiceUnit ."'"; 
+                                    if ($invoiceUnit == get_option('qi_settings')['invoiceUnit']) {
+                                        echo "selected";
+                                    }
+                                    echo "><b>";
+                                    echo $invoiceUnit;
+                                        
+                                    echo "</b></option>";
+                                }
+                                ?>
+                                
+                                
+
+                            </select>
                         </td>
 
                         <td class="invoiceItemsDescription"> 

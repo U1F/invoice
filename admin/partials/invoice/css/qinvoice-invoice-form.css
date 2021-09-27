@@ -235,7 +235,7 @@
 }
 
 .q-invoice-page table#items td.invoiceItemsAmount {
-    width: 60px;
+    width: 72px;
 }
 
 .q-invoice-page table#items td.invoiceItemsAmount input[type=number][name='anzahl[]'] {
