@@ -48,7 +48,6 @@ function exportInovice($invoiceID, $invoiceType)
     
     
 
-
     $separator =","
     
     ?>
@@ -174,11 +173,20 @@ td.invoiceItemsHeader {
                         ?>
                     </p>
 
+                    
                     <p class="invoiceSender" id="senderInstagram">
                         
                         <?php 
                         if (get_option('qi_settings')['instagram']) {
                             echo "www.instagram/".get_option('qi_settings')['instagram'];
+                        }
+                        ?>
+                    </p>
+                    <p class="invoiceSender" id="senderPaypal">
+                        
+                        <?php  
+                        if (get_option('qi_settings')['PayPal.Me']) {
+                            echo "paypal.me/".get_option('qi_settings')['PayPal.Me'];
                         }
                         ?>
                     </p>

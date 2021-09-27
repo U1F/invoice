@@ -71,6 +71,11 @@ function Invoice_list()
 
         //DEBUG TESTING
     if (get_option('wporg_setting_name')) {
+        echo "qi_settings:";
+        //$options = get_option('qi_settings');
+        echo '<pre>';
+        print_r(get_option('qi_settings'));
+        echo '</pre>';
         include_once \QI_Invoice_Constants::PART_PATH_QI . 
         "/admin/partials/export/export.php";  
         exportInovice(2, "invoice");          
