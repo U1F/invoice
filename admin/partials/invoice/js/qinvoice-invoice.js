@@ -643,12 +643,12 @@ jQuery(function($) {
                 document.getElementById("overlay").style.display = "none";
                 
                 // TODO Julian nach Success Meldung fragen
-                jQuery('.q-invoice-page').
-                prepend('<div id="successInvoiceSaved">' +
-                    'Success: Invoice saved!' +
+                $('#wpbody-content').
+                prepend('<div class="qinvoiceMessage messageSuccess">' +
+                    '<span> Invoice succesfully saved! </span>' +
                     '</div>');
 
-                $("#successInvoiceSaved").delay(5000).fadeOut(800);
+                $("#.messageSuccess").delay(5000).fadeOut(800);
                 
             }
         });

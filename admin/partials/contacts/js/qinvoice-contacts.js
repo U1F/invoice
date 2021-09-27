@@ -157,12 +157,14 @@ jQuery(function($) {
                 document.getElementById("overlay").style.display = "none";
 
                 // TODO Julian nach Success Meldung fragen
-                jQuery('.q-invoice-page').
-                prepend('<div id="successInvoiceSaved">' +
-                    'Success: Invoice saved!' +
+                $('#wpbody-content').
+                prepend('<div class="qinvoiceMessage messageSuccess">' +
+                    '<span>Contact successfully saved!</span>' +
                     '</div>');
+                
+                $(".messageSuccess").delay(5000).fadeOut(800);
+
                 obj=JSON.parse(response);
-                $("#successInvoiceSaved").delay(5000).fadeOut(800);
                 if (obj['type'] =="save") {
                     addNewContactRow(JSON.parse(response)["contactData"],JSON.parse(response)["id"]);
                 } 

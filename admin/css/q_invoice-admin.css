@@ -37,9 +37,7 @@
     text-decoration: none;
     color:black;
 }
-
-
-
+ 
 .q-invoice-page #overlay {
     position: fixed;
     display: none;
@@ -73,26 +71,29 @@
     -moz-appearance: textfield;
 }
 
-.q-invoice-page #successInvoiceSaved {
-    font-family: sans-serif;
-    font-weight: 900;
-    font-size: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 3;
-    position: absolute;
-    color: white;
-    /*vertical-align: middle;*/
-    /*text-align: center;*/
-    width: 800px;
-    height: 100px;
-    background-color: rgb(63 174 73);
+.qinvoiceMessage.messageSuccess
+{
+    margin-top:20px;
+  position: absolute;
+  width: 100%;
+  z-index: 99;
+}
+
+.qinvoiceMessage.messageSuccess span {
+    background: #4a9a5c;
+    border-radius: 5px;
+    color: #ffffff;
+    display: block;
+    font-size: 15px;
+    /*margin: 0 auto;*/
+    padding: 15px 30px;
+    text-align: center;
+    width: 50%;
+
+
+    margin-left: 25%;
+    margin-right: 25%;
     
-    margin-left: 200px;
-    
-    margin-top: 50px;
-    border-radius: 8px;
 }
 
 
