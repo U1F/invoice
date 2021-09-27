@@ -70,11 +70,11 @@ function Invoice_list()
         echo $editInv;
 
         //DEBUG TESTING
-        /*
+    if (get_option('wporg_setting_name')) {
         include_once \QI_Invoice_Constants::PART_PATH_QI . 
         "/admin/partials/export/export.php";  
-        exportInovice(97, "invoice");          
-        */
+        exportInovice(2, "invoice");          
+    }
     
 }
 ?>

@@ -163,7 +163,27 @@ td.invoiceItemsHeader {
                     
                     <p class="invoiceSender" id="senderWebsite">
                         <?php echo get_option('qi_settings')['website'];?>
-                    </p>                 
+                    </p>
+                    
+                    <p class="invoiceSender" id="senderFB">
+                        
+                        <?php 
+                        if (get_option('qi_settings')['facebook']) {
+                            echo "www.fb/".get_option('qi_settings')['facebook'];
+                        }
+                        ?>
+                    </p>
+
+                    <p class="invoiceSender" id="senderInstagram">
+                        
+                        <?php 
+                        if (get_option('qi_settings')['instagram']) {
+                            echo "www.instagram/".get_option('qi_settings')['instagram'];
+                        }
+                        ?>
+                    </p>
+
+                  
                         <?php 
                         if ($invoiceType=="dunning") {
                             ?>
@@ -400,7 +420,18 @@ td.invoiceItemsHeader {
                 <td 
                     class="invoiceItemsHeader" 
                     style="width:35px;  font-size:12px; text-align: right;">
-                    <?php echo __("Anzahl", "ev");?>
+                    <?php 
+                    if (get_option('qi_settings')['invoiceUnit'] == "Amount") {
+                        echo __("Anzahl", "ev");
+                    }
+                    if (get_option('qi_settings')['invoiceUnit'] == "Hours") {
+                        echo __("Stunden", "ev");
+                    }
+                    if (get_option('qi_settings')['invoiceUnit'] == "Liter") {
+                        echo __("Liter", "ev");
+                    }
+                    ?>
+
                 </td>
                 
                 <td 
@@ -445,7 +476,7 @@ td.invoiceItemsHeader {
 
             <?php 
             $totalNet = 0;
-            $detailPosition= 0;
+            
             foreach ($invoiceData[1] as $invoiceDetail) {
             
                 ?>
