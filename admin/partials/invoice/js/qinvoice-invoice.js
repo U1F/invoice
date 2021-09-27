@@ -342,6 +342,7 @@ jQuery(function($) {
             $(this).find('input.invoiceTax').attr('value', lineSum * lineTax / 100);
             $(this).find('.qInvcLine-total').text(currencyFormatDE(lineSum));
             $(this).find('input.invoiceTotal').attr('value', lineSum);
+            $(this).find('.invoiceItemsTotal nobr').css("display",  "inline");
 
         });
 
@@ -386,13 +387,15 @@ jQuery(function($) {
         Clone.find('input:text').val('');
         Clone.find('input').val('');
         Clone.find("select.itemTax").val("0");
-        Clone.find('.qInvcLine-total').text('0');
-        //Clone.find('input.amountOfItems').val('1');
+        //Clone.find('span.qInvcLine-total').text('');
+        //Clone.find('.invoiceItemsTotal nobr').html('<span class="qInvcLine-total"></span>');
+        Clone.find('.invoiceItemsTotal nobr').css("display","none")
         Clone.insertAfter(Row);
 
         recalcPos();
-        recalcLineSum();
-        recalcTotalSum();
+       
+        
+        
 
     });
 
