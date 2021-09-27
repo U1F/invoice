@@ -81,7 +81,7 @@ jQuery(function($) {
 
     }
     
-    function addNewContactRow (invoice, id)  {
+    function addNewInvoiceRow (invoice, id)  {
         
             clone = $("table#tableInvoices > tbody").find("tr").first().clone();
             clone.attr("id","edit-"+id);
@@ -268,7 +268,7 @@ jQuery(function($) {
                 });
             }
 
-            netSum = netSum + linePrice;
+            netSum = netSum + linePrice; 
 
         });
 
@@ -637,7 +637,7 @@ jQuery(function($) {
                     changeUpdatedInvoiceRow(serverResponse);
                 }
                 if(serverResponse['action']=="saveInvoiceServerSide"){
-                    addNewContactRow(serverResponse, invoiceID);
+                    addNewInvoiceRow(serverResponse, invoiceID);
                 }
                 $("#invoiceForm").trigger('reset');
                 document.getElementById("overlay").style.display = "none";
