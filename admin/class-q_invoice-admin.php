@@ -265,7 +265,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 ]
             );
 
-            $this->addSettingsField("PayPal.Me", "text", "bankPage");
+            $this->addSettingsField("PayPal", "text", "bankPage");
 
             
             // SETTINGS SECTION EMAIL 
@@ -566,6 +566,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                     ."id='qi_settings[invoiceUnit]'" 
                     ."name='qi_settings[invoiceUnit]'>"
                     ."<option value='Amount' selected='selected'>Amount</option>"  
+                    ."<option value='Hours'>Hours</option>"  
+                    ."<option value='Liter'>Liter</option>"  
                     ."</select>";
 
             } else {

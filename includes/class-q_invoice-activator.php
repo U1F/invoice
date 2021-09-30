@@ -32,7 +32,49 @@ if (!class_exists('QI_Invoice_Activator')) {
         private $_TABLE_QI_CONTACTS;
         private $_table_i_header;
         private $_table_i_details;
-        
+        public $defaultOptions = array(    
+            "company" => "testHoersaal",
+            "additional" => "testQanuk",
+            "firstName" => "testBob",
+            "lastName" => "testMüller",
+            "street" => "testStraße",
+            "ZIP" => "99999",
+            "city" => "testStadt",
+            "logoFileUrl" => "",
+            "logoFileFile" => "",
+            "prefix" => "test",
+            "noStart" => "1",
+            "invoiceCurrency" => "",
+            "invoiceUnit" => "Amount",
+            "taxTypes" => 2,
+            "tax1" => 19,
+            "tax2" => 7,
+            "mail" => "support@qanuk.io",
+            "phone" => "01719999999",
+            "website" => "testWebsite",
+            "facebook" => "testFacebook",
+            "instagram" => "testInsta",
+            "reminder" => 2,
+            "dunning1" => 8,
+            "dunning2" => 100,
+            "IBAN1" => "DE998888888887777777",
+            "BIC1" => "TESTBIC1XX",
+            "bankName1" => "testBank",
+            "BankSpacer1" => "",
+            "IBAN2" => "",
+            "BIC2" => "",
+            "bankName2" => "",
+            "BankSpacer2" => "",
+            "PayPal" => "testPp",
+            "server" => "testServer",
+            "port" => 42,
+            "email" => "testuser@testServer.org",
+            "password" => "testPasswort",
+            "customFooter" => "Steuernummer XXXXXXXX ST-ID XXXXXXXXX",
+            "invoiceTextIntro" => "Folgende Leistung stellen wir Ihnen in Rechnung:",
+            "invoiceTextOutro" => "Danke für die gute Zusammenarbeit!",
+            "invoiceTextPaymentDeadline" => "Zahlungsziel: 10 Tage ohne Abzug."
+        );
 
         /**
          * Function activate
@@ -51,6 +93,8 @@ if (!class_exists('QI_Invoice_Activator')) {
             $this_object->_qInvoiceCreateDbInvoiceD();
             $this_object->_qInvoiceCreateDbContacts();
             $this_object->_setDefaultSettings();
+
+            $this_object->_invoiceCreateDbSettings();
             // Daniel: 26.06. - hier müssen noch 
             // alle weiteren Tabellen erzeugt werden
             // $this_object->q_invoice_create_db_template();
@@ -68,53 +112,9 @@ if (!class_exists('QI_Invoice_Activator')) {
          */
         private function _setDefaultSettings()
         {
-            $defaultOptions = array(
-                "company" => "testHoersaal",
-                "additional" => "testQanuk",
-                "firstName" => "testBob",
-                "lastName" => "testMüller",
-                "street" => "testStraße",
-                "ZIP" => "99999",
-                "city" => "testStadt",
-                "logoFileUrl" => "",
-                "logoFileFile" => "",
-                "prefix" => "test",
-                "noStart" => "1",
-                "invoiceCurrency" => "",
-                "taxTypes" => 2,
-                "tax1" => 19,
-                "tax2" => 7,
-                "unit" => "",
-                "customFooter" => "",
-                "invoiceTextIntro" => "",
-                "invoiceTextOutro" => "",
-                "mail" => "support@qanuk.io",
-                "phone" => "01719999999",
-                "facebook" => "testFacebook",
-                "instagram" => "testInsta",
-                "reminder" => 2,
-                "dunning1" => 8,
-                "dunning2" => 100,
-                "IBAN1" => "DE998888888887777777",
-                "BIC1" => "TESTBIC1XX",
-                "bankName1" => "testBank",
-                "BankSpacer1" => "",
-                "IBAN2" => "",
-                "BIC2" => "",
-                "bankName2" => "",
-                "BankSpacer2" => "",
-                "PayPal.Me" => "testPp",
-                "Name" => "testName",
-                "server" => "testServer",
-                "IP" => "127.0.0.1",
-                "port" => 42,
-                "user" => "testuser@testServer.org",
-                "password" => "testPasswort",
-                "customFooter" => "Steuernummer XXXXXXXX ST-ID XXXXXXXXX",
-                "invoiceTextIntro" => "Folgende Leistung stellen wir Ihnen in Rechnung:",
-                "invoiceTextOutro" => "Danke für die gute Zusammenarbeit!",
-            );
-            update_option('qi_settings', $defaultOptions);
+            do_action('qm/debug', 'Activate happened!');
+            
+            update_option('qi_settings', $this->defaultOptions);
             
         }
 
@@ -177,7 +177,7 @@ if (!class_exists('QI_Invoice_Activator')) {
                 email varchar(256) NOT NULL,
                 date DATETIME DEFAULT CURRENT_TIMESTAMP,
                 status int(1),
-                PRIMARY KEY  (id)
+                PRIMARY KEY (id)
             ) $charset_collate;";
 
             include_once ABSPATH . 'wp-admin/includes/upgrade.php';
@@ -222,9 +222,9 @@ if (!class_exists('QI_Invoice_Activator')) {
                 cancellation int(1),
                 date_cancellation datetime,
                 paydate date,
-                PRIMARY KEY  (id)
+                PRIMARY KEY (id)
             ) $charset_collate;";
-                
+
             include_once ABSPATH . 'wp-admin/includes/upgrade.php';
             dbDelta($sql);
         }
@@ -256,7 +256,7 @@ if (!class_exists('QI_Invoice_Activator')) {
                 amount_actual varchar(10) NOT NULL,
                 tax varchar(8),
                 sum varchar(10),		
-                PRIMARY KEY  (id)
+                PRIMARY KEY (id)
             ) $charset_collate;";
                 
             
@@ -267,7 +267,7 @@ if (!class_exists('QI_Invoice_Activator')) {
         
 
         /** 
-         * Function _mailingCreateDbSettings
+         * Function _invoiceCreateDbSettings
          *
          * Creates Invoice database tables
          *
@@ -275,29 +275,82 @@ if (!class_exists('QI_Invoice_Activator')) {
          * 
          * @return void
          */
-        private function _mailingCreateDbSettings()
-        { 
-            /**
-             * Daniel 26.06.2021: muss nachträglich noch eingestellt werden
-             */
-
-            /*
+        private function _invoiceCreateDbSettings()
+        {  
             global $wpdb;
+            
             $charset_collate = $wpdb->get_charset_collate();
             $table_name = $this->_table_settings;
+            
+            $sql_delete = "DROP TABLE IF EXISTS $table_name";
+            
+            $wpdb->query($sql_delete);
 
+            // dbDelta($sql);
+            //
             $sql = "CREATE TABLE $table_name (
-                id int(12) NOT NULL AUTO_INCREMENT,
-                `field` varchar(64) NOT NULL,
-                value varchar(256) NOT NULL,
-                PRIMARY KEY  (id)
-            ) $charset_collate;";
+                settingsProfile varchar (64),
+                company varchar(64),
+                additional varchar(64), 
+                firstName varchar(64), 
+                lastName varchar(64), 
+                street varchar(64), 
+                ZIP int(6),
+                city varchar(64),
+                logoFileUrl varchar(256),
+                logoFileFile varchar(64),
+                prefix varchar(64),
+                noStart int(5),
+                invoiceCurrency varchar(64),
+                taxTypes varchar(64),
+                tax1 int(5),
+                tax2 int(5),
+                invoiceUnit varchar(64),
+                mail varchar(64),
+                phone varchar(64),
+                website varchar(64),
+                facebook varchar(64),
+                instagram varchar(64),
+                reminder int(5),
+                dunning1 int(5),
+                dunning2 int(5),
+                IBAN1 varchar(64),
+                BIC1 varchar(64),
+                bankName1 varchar(64),
+                BankSpacer1 varchar(8),
+                IBAN2 varchar(64),
+                BIC2 varchar(64),
+                bankName2 varchar(64),
+                BankSpacer2 varchar(8),
+                PayPal varchar(64),
+                email varchar(64),
+                server varchar(64),
+                port int(5),
+                password varchar(64),
+                invoiceTextIntro varchar(256),
+                invoiceTextOutro varchar(256),
+                invoiceTextPaymentDeadline varchar(256), 
+                customFooter varchar(256) 
                 
-            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+            ) $charset_collate;";
+            //PRIMARY KEY (settingsProfile)
+            //include_once ABSPATH . 'wp-admin/includes/upgrade.php';
+            $wpdb->query($sql);
+
             dbDelta($sql);
             
-            */
+            $GLOBALS['wpdb']->insert( 
+                $GLOBALS['wpdb']->$table_name,
+                array(
+                    
+                    'settingsProfile' => 'settings'
+                         
+                )
+            );
+            
         }
+
+    
         
         /** 
          * Function _mailingCreateDbSettings
