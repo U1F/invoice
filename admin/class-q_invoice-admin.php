@@ -300,7 +300,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $this->addSettingsField("invoice Text Intro", "textarea", "invoiceTextPage");
             $this->addSettingsField("invoice Text Outro", "textarea", "invoiceTextPage");
             $this->addSettingsField("invoice Text Payment Deadline", "textarea", "invoiceTextPage");
-            $this->addSettingsField("custom Footer", "textarea", "invoiceTextPage");
+            $this->addSettingsField("invoice Text Custom Footer", "textarea", "invoiceTextPage");
 
         }
 
@@ -320,12 +320,14 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         public function addSettingsField($name, $type, $page, $required=0)
         {
             $callback = "showInputForSetting";
+            $optionLabel = $name;
             if ($type=="textarea") {
                 $callback = "showTextareaForSetting";
+                $optionLabel=strstr(strstr($name, 'Text'), ' ');
             }
             add_settings_field(
                 'qi_settings' .$name, 
-                __(ucfirst($name), 'ev'), 
+                __(ucfirst($optionLabel), 'ev'), 
                 [$this, $callback],
                 $page,
                 'qi_'.$page.'_section',
@@ -462,8 +464,6 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
 
                 "</label>";
             
-
-            
                 
         } 
 
@@ -476,10 +476,6 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          */
         public function handleFileUploadForLogo($option)
         {
-            //file_put_contents('error.txt', file_get_contents('error.txt').print_r($option, true));
-
-            
-            //file_put_contents('error.txt', file_get_contents('error.txt').print_r($_FILES, true));
             
             if (!empty($_FILES['logoFile']["tmp_name"])) {
                
@@ -487,8 +483,6 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                     $_FILES['logoFile'],
                     array('test_form' => false)
                 );
-
-                //file_put_contents('error.txt', file_get_contents('error.txt').print_r($urls, true));
 
                 $option['logoFileUrl'] = $urls["url"];
                 $option['logoFileFile'] = $urls["file"];
@@ -509,7 +503,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          */
         public function handleInputForInvoiceSettings()
         {
-            echo "WE WERE HERE0";
+            
             $GLOBALS['wpdb']->query(
                 'ALTER TABLE '.
                 $GLOBALS['wpdb']->prefix.

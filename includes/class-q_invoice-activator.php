@@ -70,7 +70,7 @@ if (!class_exists('QI_Invoice_Activator')) {
             "port" => 42,
             "email" => "testuser@testServer.org",
             "password" => "testPasswort",
-            "customFooter" => "Steuernummer XXXXXXXX ST-ID XXXXXXXXX",
+            "invoiceTextCustomFooter" => "Steuernummer XXXXXXXX ST-ID XXXXXXXXX",
             "invoiceTextIntro" => "Folgende Leistung stellen wir Ihnen in Rechnung:",
             "invoiceTextOutro" => "Danke für die gute Zusammenarbeit!",
             "invoiceTextPaymentDeadline" => "Zahlungsziel: 10 Tage ohne Abzug."
@@ -330,7 +330,7 @@ if (!class_exists('QI_Invoice_Activator')) {
                 invoiceTextIntro varchar(256),
                 invoiceTextOutro varchar(256),
                 invoiceTextPaymentDeadline varchar(256), 
-                customFooter varchar(256) 
+                invoiceTextCustomFooter varchar(256) 
                 
             ) $charset_collate;";
             //PRIMARY KEY (settingsProfile)
