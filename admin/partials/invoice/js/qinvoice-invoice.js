@@ -147,41 +147,82 @@ jQuery(function($) {
     function setFilterButtonActive(target)
     {
         target.css("background-color","rgb(34, 113, 177)");
-        target.css("border","0px solid");
-        target.css("color","white");
-        target.attr("class","filterButton invoiceButton active");
+        target.find("button").css("background-color","rgb(34, 113, 177)");
+        target.css("border","1px solid #c0c0c0;");
+        target.find("button").css("color","white");
+        target.attr("class","filterButton active");
 
     }
     function setFilterButtonInactive(target)
     {
-        target.css("background-color","rgb(239, 239, 239)");
-        target.css("border","1px solid rgb(192, 192, 192)");
-        target.css("color","#3c434a");
-        target.attr("class","filterButton invoiceButton inactive");
+        target.css("background-color","white");
+        target.find("button").css("background-color","white");
+        target.css("border","1px solid #c0c0c0;");
+        target.find("button").css("color","#3c434a");
+        target.attr("class","filterButton inactive");
         
         
 
     }
 
-    $("#filterButtons").on("click", ".inactive", function (event){
-        setFilterButtonInactive($("#filterButtons").find(".invoiceButton"));
-        setFilterButtonActive($(event.target));
+    $("#filterButtons").on("click", "div.inactive", function (event){
+        setFilterButtonInactive($("#filterButtons").find("div.active"));
+        console.log($(event.target).parent());
+        setFilterButtonActive($(event.target).parent());
         
-        if (event.target.id=="showOpenInvoices") {
+        if ($(event.target).parent().attr("id")=="showOpenInvoices") {
             $("tr.open").css("display","table-row");
             $("tr.cancelled").css("display","none");
         }
 
-        if (event.target.id=="showCancelledInvoices") {
+        if ($(event.target).parent().attr("id")=="showCancelledInvoices") {
             $("tr.cancelled").css("display","table-row");
             $("tr.open").css("display","none");
         }
 
-        if (event.target.id=="showInvoicesWithDunning") {}
+        if ($(event.target).parent().attr("id")=="showInvoicesWithDunning") {
+            $("tr.cancelled").css("display","none");
+            $("tr.open").css("display","none");
+        }
+
+        if ($(event.target).parent().attr("id")=="showAllInvoices") {
+            $("tr.cancelled").css("display","table-row");
+            $("tr.open").css("display","table-row");
+        }
+
+        
+
+        
+        
 
     });
 
-   
+    $("#filterButtons").on("click", "input", function (event){
+       
+        //$("tr.cancelled").css("display","none");
+        //$("tr.open").css("display","none");
+       
+    });
+
+    $("#filterButtons").on("keyup", "input", function (event){
+       console.log($(this).val().toLowerCase());
+
+       //if (additonalNames[i].toLowerCase().includes($(this).val().toLowerCase(), 0)) {
+        //if ($("tr").value()==){$(this).closest("tr").css("display","table-row");}
+        searchPattern = $(this).val();
+        
+        $("table#tableInvoices tbody").find("tr").each(function( index ) {
+            console.log(index);
+        console.log($( this ).find("td.columnCompany").text() );
+        if ($( this ).find("td").text().includes(searchPattern.toLowerCase()) && searchPattern){
+            console.log($(this));
+            $(this).css("display","table-row");
+        }
+        else {
+            $(this).css("display","none");
+        }
+      });
+    });
     
         
     

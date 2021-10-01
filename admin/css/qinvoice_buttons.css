@@ -20,6 +20,7 @@
  
 }
 .q-invoice-page .qInvoiceFormButton {
+    margin-bottom:-1px;
     height: 36px;
     min-width: 96px;
     border: 1px solid #c0c0c0;
@@ -31,37 +32,64 @@
     padding-left: 15px;
     padding-right: 15px;
 }
-
-.q-invoice-page button.filterButton{
-    color: #3c434a;
-    border: 1px solid #c0c0c0;
+.q-invoice-page div#filterButtons {
+    margin-bottom:-2px;
+    display: flex;
+    flex-direction: row;
+   
+    justify-content:space-between;
     
    
+}
+.q-invoice-page div.filterButton{
     
-    
+    flex: 0 1 auto;
+    min-width:19%;
+    width:20%;
+    color: #3c434a;
+    border: 1px solid #c0c0c0;
+    background-color: white;
     height: 36px;
-    min-width: 96px;
+    padding:0px;
+    margin:0px;
     font-family: sans-serif;
     font-size: 14px;
     font-weight: bold !important;
     
-    padding-left: 15px;
-    padding-right: 15px;
+    text-align:center;
+    padding-left: 0px;
+    padding-right: 0px;
     
 }
 
 
-.q-invoice-page button.filterButton.active {
+
+
+
+.q-invoice-page div#filterButtons div.active button.invoiceButton  {
+
+    background-color: rgb(34, 113, 177);
+    color:white;
+    
+}
+
+.q-invoice-page div#filterButtons div.filterButton button{
+    height: 34px;
+    border: 0px solid;
+    background-color: white;
+    width: 100%;
+}
+.q-invoice-page div.filterButton.active {
   
     background-color: rgb(34, 113, 177);
-    border: 0px solid;
+    border: 1px solid #c0c0c0;
     color:white;
 }
 
 
 .q-invoice-page button.filterButton:hover
 {
-    box-shadow: 0px -8px 0px 0 black;
+    box-shadow: 1px 1px 0 1px blue;
 
 }
 

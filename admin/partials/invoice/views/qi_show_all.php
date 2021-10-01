@@ -18,9 +18,37 @@
 ?>
  <div class="page_content">
      <div id="filterButtons">
-         <button class="filterButton invoiceButton   active" id="showOpenInvoices">open</button>
-         <button class="filterButton invoiceButton inactive" id="showCancelledInvoices">cancelled</button>
-         <button class="filterButton invoiceButton inactive" id="showInvoicesWithDunning">dunning</button>
+        
+        <div class="filterButton active" id="showOpenInvoices">
+            <button class="invoiceButton">
+                Open
+            </button>
+        </div>
+
+        <div class="filterButton inactive" id="showCancelledInvoices">
+            <button class="invoiceButton">
+                Cancelled
+            </button>
+        </div>
+        
+        <div class="filterButton inactive" id="showInvoicesWithDunning">
+            <button class="invoiceButton">
+                Dunning
+            </button>
+        </div>
+        
+        <div class="filterButton inactive" id="showAllInvoices">
+            <button class="invoiceButton">
+                All
+            </button>
+        </div>
+        
+        <div class="filterButton" id="searchInvoices">
+            <input type=text>
+            </input>
+            <span class="dashicons dashicons-search"></span>
+        </div>
+
      </div>
     <div class="tab_content_wrapper">
 <?php 
@@ -38,7 +66,7 @@ function showHeader()
     ?>
    
     
-    <table id="tableInvoices" class="wp-list-table widefat">
+    <table id="tableInvoices" class="wp-list-table fixed widefat">
 
         <thead id="tableInvoicesHeader">
             <tr>
