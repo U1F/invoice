@@ -129,10 +129,10 @@ function showOpenInvoices()
         $totalSum= 0;
         foreach ($invoice_details as $invoice_detail) {
         
-            $netSum = $netSum + $invoice_detail->sum;
+            $netSum = $netSum + intval($invoice_detail->sum);
             $totalSum = $totalSum + 
-                ($invoice_detail->sum + 
-                ($invoice_detail->sum * $invoice_detail->tax / 100));
+                (intval($invoice_detail->sum) + 
+                (intval($invoice_detail->sum) * intval($invoice_detail->tax) / 100));
         }     
         
         ?>

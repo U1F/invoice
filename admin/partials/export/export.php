@@ -185,8 +185,8 @@ td.invoiceItemsHeader {
                     <p class="invoiceSender" id="senderPaypal">
                         
                         <?php  
-                        if (get_option('qi_settings')['PayPal.Me']) {
-                            echo "paypal.me/".get_option('qi_settings')['PayPal.Me'];
+                        if (get_option('qi_settings')['PayPal']) {
+                            echo "paypal.me/".get_option('qi_settings')['PayPal'];
                         }
                         ?>
                     </p>

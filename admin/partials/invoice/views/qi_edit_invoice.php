@@ -362,7 +362,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                 <input type="text" 
                                     id="paypal_me" name="paypal_me"
                                     value="<?php echo (
-                                    get_option('qi_settings')['PayPal.Me']
+                                    get_option('qi_settings')['PayPal']
                                 );?>"
                                 >       
                             </td>
