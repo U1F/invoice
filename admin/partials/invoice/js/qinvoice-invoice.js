@@ -164,6 +164,7 @@ jQuery(function($) {
     }
 
     $("#filterButtons").on("click", ".inactive", function (event){
+        setFilterButtonInactive($("#filterButtons").find(".invoiceButton"));
         setFilterButtonActive($(event.target));
         
         if (event.target.id=="showOpenInvoices") {
@@ -180,20 +181,7 @@ jQuery(function($) {
 
     });
 
-    $("#filterButtons").on("click", ".active", function (event){
-        setFilterButtonInactive($(event.target));
-
-        if (event.target.id=="showOpenInvoices") {
-            $("tr.open").css("display","none");
-        }
-
-        if (event.target.id=="showCancelledInvoices") {
-            $("tr.cancelled").css("display","none");
-        }
-
-        if (event.target.id=="showInvoicesWithDunning") {}
-        
-    });
+   
     
         
     
