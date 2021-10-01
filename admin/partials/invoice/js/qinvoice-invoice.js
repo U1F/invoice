@@ -621,15 +621,26 @@ jQuery(function($) {
 
     $("table#tableInvoices").on("click",".loschen", function (event) {
 
-        $(this).closest('tr').remove();
-        deleteInvoice(event.target.id);
+        $("div#archiveInvoice").css("display","block");
+        lastInvoiceIDtoDelete = event.target.id;
 
+    });
+    $("div#archiveInvoice").on("click","#cancelRemoveInvoice",function(){
+        $("div#archiveInvoice").css("display","none");
+
+    });
+    $("div#archiveInvoice").on("click","#confirmRemoveInvoice",function(event){  
+
+        $("tr.edit" + "[value="+lastInvoiceIDtoDelete+"]").attr("class","cancelled edit"); 
+
+        deleteInvoice(lastInvoiceIDtoDelete);  
     });
     
     
     jQuery(document).ready(function($) {
         $('#invoiceForm').ajaxForm({
             success: function(response) {
+                console.log(response);
                 serverResponse=JSON.parse(response)["data"];
                 invoiceID=JSON.parse(response)["id"];
                 console.log(serverResponse);

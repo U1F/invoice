@@ -82,3 +82,20 @@
 .q-invoice-page table#tableInvoices .columnEdit{
     text-align: right;
 }
+
+.q-invoice-page div.confirmationBox
+{
+    /*height: auto;*/
+    scrollbar-width: none; 
+    width: 20%;
+    position: relative;
+    /*overflow-y: scroll;*/
+    border: none;         
+    padding:10px;  
+    background-color:white;
+    border-radius:5px; 
+    margin-top: 70px;
+    
+    margin-left: 40%;
+    margin-right: 40%;
+}

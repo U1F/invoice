@@ -27,6 +27,21 @@ function Invoice_list()
     ?>
 <div class="q-invoice-page invoice-page" style="overflow: auto;">
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
+<div id="archiveInvoice" class="overlay">
+        <div class="confirmationBox">
+            <div style="padding-top:20px; padding-left:40px; padding-right:40px; padding-bottom:20px; ">
+                <h3>Move Invoice to Archive?</h3>
+                <p>This will not delete the invoice. It will be stored in the archive. </p>
+                <button class="qInvoiceFormButton" id="cancelRemoveInvoice">
+                    Cancel
+                </button>
+                <button class="qInvoiceFormButton submitButton" id="confirmRemoveInvoice" style=float:right;>
+                    Remove
+                </button>
+            </div>
+        </div>
+        
+    </div>
 
     <h1 class="headerline">
         <img id="imgSnowflake" 
@@ -45,6 +60,7 @@ function Invoice_list()
             </button>  
         </span>
     </h1>
+    
         
         
         

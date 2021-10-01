@@ -13,10 +13,10 @@
     margin-left: 12px;
 }
 
-.q-invoice-page input.submitButton {
+.q-invoice-page .submitButton {
     background-color: rgb(34, 113, 177);
     border: 0px solid;
-    color: white;
+    color: white !important;
  
 }
 .q-invoice-page .qInvoiceFormButton {
