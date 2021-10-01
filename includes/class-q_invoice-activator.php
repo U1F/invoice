@@ -29,9 +29,11 @@ if (!class_exists('QI_Invoice_Activator')) {
      */
     class QI_Invoice_Activator
     {
+        //-TODO- variablenames
         private $_TABLE_QI_CONTACTS;
         private $_table_i_header;
         private $_table_i_details;
+        
         public $defaultOptions = array(    
             "company" => "testHoersaal",
             "additional" => "testQanuk",
@@ -42,8 +44,8 @@ if (!class_exists('QI_Invoice_Activator')) {
             "city" => "testStadt",
             "logoFileUrl" => "",
             "logoFileFile" => "",
-            "prefix" => "test",
-            "noStart" => "1",
+            //"prefix" => "test",
+            //"noStart" => "1",
             "invoiceCurrency" => "",
             "invoiceUnit" => "Amount",
             "taxTypes" => 2,
@@ -92,8 +94,7 @@ if (!class_exists('QI_Invoice_Activator')) {
             $this_object->_qInvoiceCreateDbInvoiceH();
             $this_object->_qInvoiceCreateDbInvoiceD();
             $this_object->_qInvoiceCreateDbContacts();
-            $this_object->_setDefaultSettings();
-
+            //$this_object->_setDefaultSettings();
             $this_object->_invoiceCreateDbSettings();
             // Daniel: 26.06. - hier müssen noch 
             // alle weiteren Tabellen erzeugt werden
