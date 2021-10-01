@@ -533,6 +533,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                     ."id='qi_settings[invoiceCurrency]'" 
                     ."name='qi_settings[invoiceCurrency]'>"
                     ."<option value='Euro' selected='selected'>Euro</option>"  
+                    ."<option value='Dollar'>Dollar</option>"  
+                    ."<option value='Other'>Other</option>"  
                     ."</select>";
 
             } else {
@@ -822,10 +824,6 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                     $developmentMode
                 );
             }
-            
-            
-
-            
 
             // Obsolete, but may be used later instead of root css
             /*
@@ -1003,9 +1001,6 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             wp_die();
         }
 
-        
-
-        
         /**
          * Function printInvoiceTemplate
          * 
@@ -1017,8 +1012,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          */
         public function printInvoiceTemplate($invoiceID)
         {
-            
-            
+
             ob_start();
             include_once \QI_Invoice_Constants::PART_PATH_QI . 
             "/admin/partials/export/export.php";  
@@ -1041,9 +1035,6 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 echo $e;
                 exit;
             }
-            
-
-            
             
         }
         
@@ -1314,11 +1305,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 'partials/invoice/q_invoice-admin-invoices.php';
 
             invoice_list(); 
-            
+
         }
-
-
-
 
         /**
          * Function loadContactsPage
