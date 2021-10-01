@@ -634,6 +634,7 @@ jQuery(function($) {
         $("tr.edit" + "[value="+lastInvoiceIDtoDelete+"]").attr("class","cancelled edit"); 
 
         deleteInvoice(lastInvoiceIDtoDelete);  
+        $("div#archiveInvoice").css("display","none");
     });
     
     
