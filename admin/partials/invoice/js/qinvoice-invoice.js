@@ -1,6 +1,6 @@
 jQuery(function($) {
     $("#newInvoice").click(function() {
-        document.getElementById("overlay").style.display = "block";
+        $("#invoiceOverlay").css("display", "block");
         // reset form
         $('#invoiceForm')[0].reset();
         $('.wp-list-table-qInvcLine:not(:first)').remove();
@@ -34,7 +34,7 @@ jQuery(function($) {
         if ($(event.target).is(".loschen")){return;}
         
 
-        document.getElementById("overlay").style.display = "block";
+        $("#invoiceOverlay").css("display", "block");
 
         // reset form
         $('#invoiceForm')[0].reset();
@@ -117,20 +117,31 @@ jQuery(function($) {
 
     $(document).keydown(function(e) {
         if (e.keyCode == 27) {
-            document.getElementById("overlay").style.display = "none";
+            if  ($(".dialogOverlay").css("display") == "block"){
+                $(".dialogOverlay").css("display","none");    
+            }else {
+            $("#invoiceOverlay").css("display","none");}
         }
     });
 
-    $("#overlay").click(function(event) {
+    $("#invoiceOverlay").click(function(event) {
         
-        if ($(event.target).is("#overlay") ){
-            $("#overlay").css("display", "none");
+        if ($(event.target).is(".overlay") ){
+            $("#invoiceOverlay").css("display", "none");
+            
+        }
+    });
+
+    $(".dialogOverlay").click(function(event) {
+        
+        if ($(event.target).is(".overlay") ){
+            $(".dialogOverlay").css("display", "none");
             
         }
     });
    
     $("#cancelInvoiceEdit").click(function(event) {
-        document.getElementById("overlay").style.display = "none";
+        $("#invoiceOverlay").css("display", "none");
     });
 
     function setFilterButtonActive(target)
@@ -157,10 +168,12 @@ jQuery(function($) {
         
         if (event.target.id=="showOpenInvoices") {
             $("tr.open").css("display","table-row");
+            $("tr.cancelled").css("display","none");
         }
 
         if (event.target.id=="showCancelledInvoices") {
             $("tr.cancelled").css("display","table-row");
+            $("tr.open").css("display","none");
         }
 
         if (event.target.id=="showInvoicesWithDunning") {}
@@ -554,8 +567,7 @@ jQuery(function($) {
 
                 console.log(response);
 
-                document.getElementById("overlay").style.display = "block";
-
+                $("#invoiceOverlay").css("display", "block");
                 obj = JSON.parse(response);
 
 
@@ -652,7 +664,7 @@ jQuery(function($) {
                     addNewInvoiceRow(serverResponse, invoiceID);
                 }
                 $("#invoiceForm").trigger('reset');
-                document.getElementById("overlay").style.display = "none";
+                $("#invoiceOverlay").css("display", "none");
                 
                 // TODO Julian nach Success Meldung fragen
                 $('#wpbody-content').

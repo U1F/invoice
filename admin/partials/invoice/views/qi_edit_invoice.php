@@ -29,7 +29,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
 }
 ?>
 
-<div id="overlay">
+<div id="invoiceOverlay" class="overlay">
     
     <div id="edit-invoice"> 
 
