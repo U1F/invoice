@@ -1309,25 +1309,11 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          */
         public function loadInvoicePage()
         {
-            $invoice_adminurl = admin_url() . '?page=q_invoice';
 
             include_once plugin_dir_path(__FILE__) .
                 'partials/invoice/q_invoice-admin-invoices.php';
 
-
-            if (isset($_GET['action'])) {
-                if ($_POST && ($_GET["action"]) == "new") {
-                    // process the posted data and display summary page 
-                    //- not pretty :(
-                    //q_invoice_contact_save($_POST);
-                } else if ($_POST && ($_GET["action"]) == "q_invoice_final") {
-
-                    //q_invoice_send($_POST);
-                }
-            }
-            
-            invoice_list();
-                
+            invoice_list(); 
             
         }
 
