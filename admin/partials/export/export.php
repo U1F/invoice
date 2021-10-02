@@ -310,22 +310,24 @@ td.invoiceItemsHeader {
                 <?php echo $invoiceText;?>
             </p>
         </div>
+
+
         <?php 
         $deliveryDate = date_parse_from_format(
             "Y-m-d", 
             $invoiceData[0][0]->delivery_date
         );
-
+        
         $deliveryDateIsSet = 0;
         $tableWidthOfInvoiceHead = 180;
         
         if (checkdate(
+            $deliveryDate['month'],
             $deliveryDate['day'], 
-            $deliveryDate['month'], 
             $deliveryDate['year']
         )
         ) {
-            //DEBUG echo "Date ".$invoiceData[0][0]->delivery_date." is ok";
+            
             $deliveryDateIsSet = 1;
             $tableWidthOfInvoiceHead = 127;
         }
