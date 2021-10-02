@@ -31,6 +31,7 @@
     color: #3c434a;
     padding-left: 15px;
     padding-right: 15px;
+    cursor: pointer;
 }
 
 .q-invoice-page .qInvoiceFormButton.cancelButton{
