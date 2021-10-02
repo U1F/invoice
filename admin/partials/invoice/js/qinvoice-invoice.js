@@ -12,8 +12,12 @@ jQuery(function($) {
         $("#updateInvoice").css("display", "none");
         $("#saveInvoice").css("display", "inline");
         $("input[name='action']").val("saveInvoiceServerSide");
-        $("#updateInvoiceDIV").remove();
-
+        
+        // Only the nonce for saving is needed so we empty the DIV and fill it with the saved nonce
+        $("div#nonceFields").html("");
+        $("div#nonceFields").prepend(nonceFieldForSaving);
+        
+       
         fetchLastInvoiceID();
         fetchInvoiceCurrency();
 
@@ -48,7 +52,11 @@ jQuery(function($) {
         $("#updateInvoice").css("display", "inline");
         $("#saveInvoice").css("display", "none");
         $("input[name='action']").val("updateInvoiceServerSide");
-        $("#saveInvoiceDIV").remove();
+        
+        // Only the nonce for saving is needed so we empty the DIV and fill it with the saved nonce
+        $("div#nonceFields").html("");
+        $("div#nonceFields").prepend(nonceFieldForUpdating);
+       
 
         //fetch id from span attribute id="edit-n", where  n = id of invoice
         id = jQuery(this).attr("id").split('-');
@@ -677,6 +685,13 @@ jQuery(function($) {
         deleteInvoice(lastInvoiceIDtoDelete);  
         $("div#archiveInvoice").css("display","none");
     });
+
+    function saveInvoiceNonces(){
+       
+        nonceFieldForSaving = $("div#saveInvoiceDIV").clone();
+        nonceFieldForUpdating = $("div#updateInvoiceDIV").clone();
+    
+    }
     
     
     jQuery(document).ready(function($) {
@@ -705,6 +720,8 @@ jQuery(function($) {
                 
             }
         });
+        saveInvoiceNonces();
+        
 
         checkPrefixStatus();
         checkNoStartStatus();
