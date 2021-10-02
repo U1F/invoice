@@ -128,6 +128,9 @@ td.invoiceItemsHeader {
                     style="border:0px;">
                         
                     <br>
+                    <p class="invoiceSender" id="senderCompany">
+                        <?php echo get_option('qi_settings')['company'];?>
+                    </p>
 
                     <p class="invoiceSender" id="senderName">
                         <?php 
@@ -210,10 +213,17 @@ td.invoiceItemsHeader {
                     id="small" 
                     style="font-size:9px; vertical-align: bottom;">
                     <u>
-                    <?php echo  
-                    
-                        get_option('qi_settings')['firstName']. " ". 
-                        get_option('qi_settings')['lastName']. " | ". 
+                    <?php 
+                    if (get_option('qi_settings')['company']) {
+                        echo get_option('qi_settings')['company'] . " | " ;
+                    } else {
+                        echo get_option('qi_settings')['firstName']. " "; 
+                        echo get_option('qi_settings')['lastName']. " | ";
+                    }
+
+                    echo  
+                        
+                         
                         get_option('qi_settings')['street']. " | ".  
                         get_option('qi_settings')['ZIP'] . " ". 
                         get_option('qi_settings')['city']; 
@@ -563,7 +573,7 @@ td.invoiceItemsHeader {
 
                         <?php 
                             echo
-                            number_format($invoiceDetail->sum, 2, $separator, ''). 
+                            number_format(floatval($invoiceDetail->sum), 2, $separator, ''). 
                             " ".
                             $currencySign;
                         ?>
@@ -573,7 +583,9 @@ td.invoiceItemsHeader {
                 </tr>
                 <?php 
                 $totalNet += $invoiceDetail->sum;
-                $taxSums[strval($invoiceDetail->tax)] += $invoiceDetail->sum;
+                $taxSums[strval($invoiceDetail->tax)] += intval($invoiceDetail->sum);
+                
+                
                 
             }
             ?>
@@ -743,8 +755,8 @@ td.invoiceItemsHeader {
                     'IBAN: '. get_option('qi_settings')['IBAN1']. ' - '.
                     'BIC: '.  get_option('qi_settings')['BIC1']. '<br>';
                     
-                if (get_option('qi_settings')['customFooter']) {
-                    echo get_option('qi_settings')['customFooter'];
+                if (get_option('qi_settings')['invoiceTextCustomFooter']) {
+                    echo get_option('qi_settings')['invoiceTextCustomFooter'];
                 }
     
                 ?>
