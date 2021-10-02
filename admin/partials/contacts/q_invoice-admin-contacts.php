@@ -304,7 +304,7 @@
 
                 <button 
                     type="button" 
-                    class="qInvoiceFormButton" 
+                    class="qInvoiceFormButton cancelButton" 
                     id="cancelContactEdit"
                     name="cancelContactEdit">
                     <?php echo __('Cancel', 'Ev'); ?>

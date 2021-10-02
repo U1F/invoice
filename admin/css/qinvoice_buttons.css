@@ -15,7 +15,7 @@
 
 .q-invoice-page .submitButton {
     background-color: rgb(34, 113, 177);
-    border: 0px solid;
+    border: 0px solid rgb(34, 113, 177);
     color: white !important;
  
 }
@@ -23,7 +23,7 @@
     margin-bottom:-1px;
     height: 36px;
     min-width: 96px;
-    border: 1px solid #c0c0c0;
+    
     border-radius: 4px;
     font-family: sans-serif;
     font-size: 14px;
@@ -32,6 +32,14 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+
+.q-invoice-page .qInvoiceFormButton.cancelButton{
+border: 1px solid #c0c0c0;
+}
+
+
+
+
 .q-invoice-page div#filterButtons {
     margin-bottom:-2px;
     display: flex;

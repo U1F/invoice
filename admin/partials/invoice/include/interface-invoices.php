@@ -109,6 +109,7 @@ class Interface_Invoices
      */
     static public function getInvoiceData($invoiceID)
     {
+
         $data[] = $invoice_headers = $GLOBALS['wpdb']->get_results(
             "SELECT * FROM ".
             $GLOBALS['wpdb']->prefix . 

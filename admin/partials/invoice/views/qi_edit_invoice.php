@@ -658,7 +658,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
 
                 <button 
                     type="button" 
-                    class="qInvoiceFormButton" 
+                    class="qInvoiceFormButton cancelButton" 
                     id="cancelInvoiceEdit"
                     name="cancelInvoiceEdit">
                     <?php echo __('Cancel', 'Ev'); ?>

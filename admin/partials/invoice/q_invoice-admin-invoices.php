@@ -32,7 +32,7 @@ function Invoice_list()
             <div style="padding-top:20px; padding-left:40px; padding-right:40px; padding-bottom:20px; ">
                 <h3>Move Invoice to Archive?</h3>
                 <p>This will not delete the invoice. It will be stored in the archive. </p>
-                <button class="qInvoiceFormButton" id="cancelRemoveInvoice">
+                <button class="qInvoiceFormButton cancelButton" id="cancelRemoveInvoice">
                     Cancel
                 </button>
                 <button class="qInvoiceFormButton submitButton" id="confirmRemoveInvoice" style=float:right;>
