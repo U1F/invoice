@@ -297,10 +297,35 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 'invoiceTextPage'
             );
         
-            $this->addSettingsField("invoice Text Intro", "textarea", "invoiceTextPage");
-            $this->addSettingsField("invoice Text Outro", "textarea", "invoiceTextPage");
-            $this->addSettingsField("invoice Text Payment Deadline", "textarea", "invoiceTextPage");
-            $this->addSettingsField("invoice Text Custom Footer", "textarea", "invoiceTextPage");
+            $this->addSettingsField(
+                "invoice Text Intro", 
+                "textarea", 
+                "invoiceTextPage",
+                0,
+                "Your text will show above invoice details."
+            );
+
+            $this->addSettingsField(
+                "invoice Text Outro", 
+                "textarea", 
+                "invoiceTextPage",
+                0,
+                "This text will show after invoice details."
+            );
+            $this->addSettingsField(
+                "invoice Text Payment Deadline", 
+                "textarea", 
+                "invoiceTextPage",
+                0,
+                "You can announce how many days you will wait for payment."
+            );
+            $this->addSettingsField(
+                "invoice Text Custom Footer", 
+                "textarea", 
+                "invoiceTextPage",
+                0,
+                "You can add details like your tax ID."
+            );
 
         }
 
@@ -317,7 +342,13 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          * 
          * @return void
          */
-        public function addSettingsField($name, $type, $page, $required=0)
+        public function addSettingsField(
+            $name, 
+            $type, 
+            $page, 
+            $required=0,
+            $placeholder=""
+        )
         {
             $callback = "showInputForSetting";
             $optionLabel = $name;
@@ -331,9 +362,10 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 [$this, $callback],
                 $page,
                 'qi_'.$page.'_section',
-                $array = [
+                [
                     "name" => $name,
                     "type" => $type,
+                    "placeholder" => $placeholder,
                     "required" => $required,
                 ]
             );
@@ -371,16 +403,16 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          */
         public function showInputForSetting(array $arguments)
         {
-            $additionalInputAttributes = " ";
+            
 
             $options = get_option('qi_settings');
             print "<input "
-                .$additionalInputAttributes
                 ."id='".str_replace(' ', '', $arguments['name'])."'"
                 ."name='qi_settings[".str_replace(' ', '', $arguments['name'])."]'"
                 ."type='".$arguments['type']."'"
                 ."value='".$options[str_replace(' ', '', $arguments['name'])]."'"
-                ."class='' ";
+                ."class='' "
+                ."placeholder='".$arguments['placeholder']."'";
             if ($arguments['required']) {
                 print " required ";
             };
@@ -405,7 +437,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 ."id='".str_replace(' ', '', $arguments['name'])."'"
                 ."name='qi_settings[".str_replace(' ', '', $arguments['name'])."]'"
                 ."value='".$options[str_replace(' ', '', $arguments['name'])]."'"
-                ."class='' ";
+                ."class='' "
+                ."placeholder='".$arguments['placeholder']."'";
             if ($arguments['required']) {
                 print " required ";
             };
