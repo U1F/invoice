@@ -1,125 +1,5 @@
 jQuery(function($) {
-    $("#newInvoice").click(function() {
-        $("#invoiceOverlay").css("display", "block");
-        // reset form
-        $('#invoiceForm')[0].reset();
-        $('.wp-list-table-qInvcLine:not(:first)').remove();
-
-        // prepare form for Ajax Action "save"
-        $("h2#formHeaderEdit").css("display", "none");
-        $("h2#formHeaderCreate").css("display", "block");
-        $('#loc_id').prop('readonly', false);
-        $("#updateInvoice").css("display", "none");
-        $("#saveInvoice").css("display", "inline");
-        $("input[name='action']").val("saveInvoiceServerSide");
-        
-        // Only the nonce for saving is needed so we empty the DIV and fill it with the saved nonce
-        $("div#nonceFields").html("");
-        $("div#nonceFields").prepend(nonceFieldForSaving);
-        
-       
-        fetchLastInvoiceID();
-        fetchInvoiceCurrency();
-
-
-        recalcPos();
-        recalcLineSum();
-        recalcTotalSum();
-
-        //checkIfBanksHaveBeenSetupinSettings();
-
-    });
-
-   
-    // Form Handling
-    $("table#tableInvoices").on("click",".edit", function (event) {
     
-        if ($(event.target).is(".download")){return;}
-        if ($(event.target).is(".loschen")){return;}
-        
-
-        $("#invoiceOverlay").css("display", "block");
-
-        // reset form
-        $('#invoiceForm')[0].reset();
-        $('.wp-list-table-qInvcLine:not(:first)').remove();
-
-        // prepare form for Ajax Action "update"
-        $("h2#formHeaderEdit").css("display", "block");
-        $("h2#formHeaderCreate").css("display", "none");
-        $('#loc_id').prop('readonly', true);
-
-        $("#updateInvoice").css("display", "inline");
-        $("#saveInvoice").css("display", "none");
-        $("input[name='action']").val("updateInvoiceServerSide");
-        
-        // Only the nonce for saving is needed so we empty the DIV and fill it with the saved nonce
-        $("div#nonceFields").html("");
-        $("div#nonceFields").prepend(nonceFieldForUpdating);
-       
-
-        //fetch id from span attribute id="edit-n", where  n = id of invoice
-        id = jQuery(this).attr("id").split('-');
-
-        // Ajax Call for Invoice Data
-        currencySign = "€"
-        fetchInvoiceCurrency();
-
-        editInvoice(id[1]);
-    });
-
-
-    function changeUpdatedInvoiceRow (invoice)  {
-        
-        //Find the right row
-        row = $("table#tableInvoices > tbody > tr[value="+invoice['invoice_id']+"]");
-
-        //Change Infos in the right table row.  
-        row.find("td.columnCompany").text(invoice['company']);
-        row.find("td.columnName").text(invoice['firstname']+" "+invoice['lastname']);
-        row.find("td.columnNet").text($('.qInvc-total-summe').eq(0).text()+" "+currencySign);
-        row.find("td.columnTotal").text($('.qInvc-total-brutto-summe').eq(0).text()+" "+currencySign);
-        
-        date=invoice['dateOfInvoice'];
-        //change to german date format
-        formattedDate= date.slice(8, 10) + "." + date.slice(5, 7) + "." + date.slice(0, 4); 
-        row.find("td.columnDate").text(formattedDate);
-        
- 
-
-    }
-    
-    function addNewInvoiceRow (invoice, id)  {
-        
-            clone = $("table#tableInvoices > tbody").find("tr").first().clone();
-            clone.attr("id","edit-"+id);
-            clone.attr("value",id);
-            clone.find("td.columnRowID").text(1+parseInt(clone.find("td.columnRowID").text()));
-            clone.find("td.columnCompany").text(invoice['company']);
-            clone.find("span.firstnameSpan").text(invoice['firstname']);
-            clone.find("span.lastnameSpan").text(invoice['lastname']);
-            clone.find("td.columnNet").text($('.qInvc-total-summe').eq(0).text()+" "+currencySign);
-            clone.find("td.columnTotal").text($('.qInvc-total-brutto-summe').eq(0).text()+" "+currencySign);
-            
-            date=invoice['dateOfInvoice'];
-            //change to german date format
-            formattedDate= date.slice(8, 10) + "." + date.slice(5, 7) + "." + date.slice(0, 4); 
-            clone.find("td.columnDate").text(formattedDate);
-            
-            clone.find("td.columnInvoiceID span").text(id);
-
-            clone.find("a.download").attr("id", "download-"+id);
-            clone.find("a.download").attr("value", id);
-            
-            //clone.find("a.download").attr("href", "http://127.0.0.1/wp-content/plugins/q_invoice/pdf/Invoice" .id.".pdf");
-            
-            clone.find("span.loschen").attr("id", id);
-            clone.find("span.loschen").attr("value", id);
-
-            $("table#tableInvoices > tbody").prepend(clone);
-
-
-    }
 
     // UI
 
@@ -205,12 +85,7 @@ jQuery(function($) {
 
     });
 
-    $("#filterButtons").on("click", "input", function (event){
-       
-        //$("tr.cancelled").css("display","none");
-        //$("tr.open").css("display","none");
-       
-    });
+    
 
     $("#filterButtons").on("keyup", "input", function (event){
        console.log($(this).val().toLowerCase());
@@ -516,7 +391,7 @@ jQuery(function($) {
         return /[^a-zA-Z0-9]/g.test(stringPattern);
     }
 
-    // ContactForm
+ 
 
 
 
@@ -591,6 +466,85 @@ jQuery(function($) {
 
 
 
+    
+
+    
+
+    $("table#tableInvoices").on("click",".deleteRow", function (event) {
+
+        $("div#archiveInvoice").css("display","block");
+        lastInvoiceIDtoDelete = event.target.id;
+
+    });
+
+    $("div#archiveInvoice").on("click","#cancelRemoveInvoice",function(){
+        $("div#archiveInvoice").css("display","none");
+
+    });
+
+    $("div#archiveInvoice").on("click","#confirmRemoveInvoice",function(event){  
+
+        $("tr.edit" + "[value="+lastInvoiceIDtoDelete+"]").attr("class","cancelled edit"); 
+        if ($("#showOpenInvoices").hasClass("active")) {
+            $("tr.edit" + "[value="+lastInvoiceIDtoDelete+"]").css("display","none");
+            deleteInvoice(lastInvoiceIDtoDelete);      
+        }
+        $("div#archiveInvoice").css("display","none");
+    });
+
+
+
+    function writeInvoiceDetailstoFormField(inputName, dataName, position) {
+        $("tr.wp-list-table-qInvcLine").eq(position).find(inputName).val(obj[1][position][dataName]);
+    }
+
+
+    function writeInvoiceHeadertoFormField(inputName, dataName) {
+        $(inputName).val(obj[0][0][dataName]);
+    }
+
+
+
+    function saveInvoiceNonces(){
+       
+        nonceFieldForSaving = $("div#saveInvoiceDIV").clone();
+        nonceFieldForUpdating = $("div#updateInvoiceDIV").clone();
+    
+    }
+
+
+
+    $("#newInvoice").click(function() {
+        $("#invoiceOverlay").css("display", "block");
+        // reset form
+        $('#invoiceForm')[0].reset();
+        $('.wp-list-table-qInvcLine:not(:first)').remove();
+
+        // prepare form for Ajax Action "save"
+        $("h2#formHeaderEdit").css("display", "none");
+        $("h2#formHeaderCreate").css("display", "block");
+        $('#loc_id').prop('readonly', false);
+        $("#updateInvoice").css("display", "none");
+        $("#saveInvoice").css("display", "inline");
+        $("input[name='action']").val("saveInvoiceServerSide");
+        
+        // Only the nonce for saving is needed so we empty the DIV and fill it with the saved nonce
+        $("div#nonceFields").html("");
+        $("div#nonceFields").prepend(nonceFieldForSaving);
+        
+       
+        fetchLastInvoiceID();
+        fetchInvoiceCurrency();
+
+
+        recalcPos();
+        recalcLineSum();
+        recalcTotalSum();
+
+        //checkIfBanksHaveBeenSetupinSettings();
+
+    });
+
     function editInvoice(invoiceId) {
         jQuery.ajax({
             type: 'POST',
@@ -659,40 +613,96 @@ jQuery(function($) {
         });
     }
 
-    function writeInvoiceDetailstoFormField(inputName, dataName, position) {
-        $("tr.wp-list-table-qInvcLine").eq(position).find(inputName).val(obj[1][position][dataName]);
-    }
+   
+    // Form Handling
+    $("table#tableInvoices").on("click",".edit", function (event) {
+    
+        if ($(event.target).is(".download")){return;}
+        if ($(event.target).is(".deleteRow")){return;}
+        
 
+        $("#invoiceOverlay").css("display", "block");
 
-    function writeInvoiceHeadertoFormField(inputName, dataName) {
-        $(inputName).val(obj[0][0][dataName]);
-    }
+        // reset form
+        $('#invoiceForm')[0].reset();
+        $('.wp-list-table-qInvcLine:not(:first)').remove();
 
-    $("table#tableInvoices").on("click",".loschen", function (event) {
+        // prepare form for Ajax Action "update"
+        $("h2#formHeaderEdit").css("display", "block");
+        $("h2#formHeaderCreate").css("display", "none");
+        $('#loc_id').prop('readonly', true);
 
-        $("div#archiveInvoice").css("display","block");
-        lastInvoiceIDtoDelete = event.target.id;
-
-    });
-    $("div#archiveInvoice").on("click","#cancelRemoveInvoice",function(){
-        $("div#archiveInvoice").css("display","none");
-
-    });
-    $("div#archiveInvoice").on("click","#confirmRemoveInvoice",function(event){  
-
-        $("tr.edit" + "[value="+lastInvoiceIDtoDelete+"]").attr("class","cancelled edit"); 
-
-        deleteInvoice(lastInvoiceIDtoDelete);  
-        $("div#archiveInvoice").css("display","none");
-    });
-
-    function saveInvoiceNonces(){
+        $("#updateInvoice").css("display", "inline");
+        $("#saveInvoice").css("display", "none");
+        $("input[name='action']").val("updateInvoiceServerSide");
+        
+        // Only the nonce for saving is needed so we empty the DIV and fill it with the saved nonce
+        $("div#nonceFields").html("");
+        $("div#nonceFields").prepend(nonceFieldForUpdating);
        
-        nonceFieldForSaving = $("div#saveInvoiceDIV").clone();
-        nonceFieldForUpdating = $("div#updateInvoiceDIV").clone();
-    
+
+        //fetch id from span attribute id="edit-n", where  n = id of invoice
+        id = jQuery(this).attr("id").split('-');
+
+        // Ajax Call for Invoice Data
+        currencySign = "€"
+        fetchInvoiceCurrency();
+
+        editInvoice(id[1]);
+    });
+
+
+    function changeUpdatedInvoiceRow (invoice)  {
+        
+        //Find the right row
+        row = $("table#tableInvoices > tbody > tr[value="+invoice['invoice_id']+"]");
+        row.attr("class"," edit open")
+        //Change Infos in the right table row.  
+        row.find("td.columnCompany").text(invoice['company']);
+        row.find("td.columnName").text(invoice['firstname']+" "+invoice['lastname']);
+        row.find("td.columnNet").text($('.qInvc-total-summe').eq(0).text()+" "+currencySign);
+        row.find("td.columnTotal").text($('.qInvc-total-brutto-summe').eq(0).text()+" "+currencySign);
+        
+        date=invoice['dateOfInvoice'];
+        //change to german date format
+        formattedDate= date.slice(8, 10) + "." + date.slice(5, 7) + "." + date.slice(0, 4); 
+        row.find("td.columnDate").text(formattedDate);
+        row.attr("class","edit open"); 
+ 
+
     }
     
+    function addNewInvoiceRow (invoice, id)  {
+        
+            clone = $("table#tableInvoices > tbody").find("tr").first().clone();
+            clone.attr("id","edit-"+id);
+            clone.attr("value",id);
+            clone.find("td.columnRowID").text(1+parseInt(clone.find("td.columnRowID").text()));
+            clone.find("td.columnCompany").text(invoice['company']);
+            clone.find("span.firstnameSpan").text(invoice['firstname']);
+            clone.find("span.lastnameSpan").text(invoice['lastname']);
+            clone.find("td.columnNet").text($('.qInvc-total-summe').eq(0).text()+" "+currencySign);
+            clone.find("td.columnTotal").text($('.qInvc-total-brutto-summe').eq(0).text()+" "+currencySign);
+            
+            date=invoice['dateOfInvoice'];
+            //change to german date format
+            formattedDate= date.slice(8, 10) + "." + date.slice(5, 7) + "." + date.slice(0, 4); 
+            clone.find("td.columnDate").text(formattedDate);
+            
+            clone.find("td.columnInvoiceID span").text(id);
+
+            clone.find("a.download").attr("id", "download-"+id);
+            clone.find("a.download").attr("value", id);
+            
+            //clone.find("a.download").attr("href", "http://127.0.0.1/wp-content/plugins/q_invoice/pdf/Invoice" .id.".pdf");
+            
+            clone.find("span.deleteRow").attr("id", id);
+            clone.find("span.deleteRow").attr("value", id);
+
+            $("table#tableInvoices > tbody").prepend(clone);
+
+
+    }
     
     jQuery(document).ready(function($) {
         $('#invoiceForm').ajaxForm({

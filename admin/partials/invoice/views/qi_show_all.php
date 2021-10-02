@@ -234,7 +234,7 @@ function showOpenInvoices()
                     <span style="font-size: 20px"
                         id="<?php echo $invoice_header->id; //should be delete-ID-?>" 
                         title="delete"
-                        class="loschen dashicons dashicons-no"
+                        class="deleteRow dashicons dashicons-no"
                         value="<?php echo $invoice_header->id;?>"
                     >
                     </span>

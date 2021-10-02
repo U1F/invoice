@@ -11,7 +11,7 @@
     cursor: pointer;
 }
 
-.q-invoice-page td.column-edit span.loschen {
+.q-invoice-page td.column-edit span.deleteRow {
     cursor: pointer;
 }
 
