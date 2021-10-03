@@ -7,6 +7,7 @@ jQuery(function ($) {
   let nonceFieldForSaving = ''
   let nonceFieldForUpdating = ''
   let obj = []
+  const inputs = document.querySelectorAll('input, select, textarea')
 
   //    .........................................................................
   //    .........................................................................
@@ -641,5 +642,19 @@ jQuery(function ($) {
     checkNoStartStatus()
 
     checkIfBanksHaveBeenSetupinSettings()
+
+    inputs.forEach(input => {
+      input.addEventListener(
+        'invalid',
+        event => {
+          input.classList.add('error')
+        },
+        false
+      )
+    })
+
+    $('input[type=text], input[type=number], input[type=email], input[type=password]').focus(function (e) {
+      $(this).attr('autocomplete', 'new-password')
+    })
   })
 })
