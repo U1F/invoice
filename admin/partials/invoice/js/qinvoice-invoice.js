@@ -596,7 +596,7 @@ jQuery(function ($) {
     clone.find('a.download').attr('id', 'download-' + id)
     clone.find('a.download').attr('value', id)
 
-    // clone.find("a.download").attr("href", "http://127.0.0.1/wp-content/plugins/q_invoice/pdf/Invoice" .id.".pdf");
+    clone.find('a.download').attr('href', 'http://127.0.0.1/wp-content/plugins/q_invoice/pdf/Invoice' + id + '.pdf')
 
     clone.find('span.deleteRow').attr('id', id)
     clone.find('span.deleteRow').attr('value', id)
@@ -608,19 +608,23 @@ jQuery(function ($) {
     $('#invoiceForm').ajaxForm({
       success: function (response) {
         // console.log(response)
+
         const serverResponse = JSON.parse(response).data
         const invoiceID = JSON.parse(response).id
+
         // console.log(serverResponse)
+
         if (serverResponse.action === 'updateInvoiceServerSide') {
           changeUpdatedInvoiceRow(serverResponse)
         }
         if (serverResponse.action === 'saveInvoiceServerSide') {
           addNewInvoiceRow(serverResponse, invoiceID)
         }
+
         $('#invoiceForm').trigger('reset')
+
         $('#invoiceOverlay').css('display', 'none')
 
-        // TODO Julian nach Success Meldung fragen
         $('#wpbody-content')
           .prepend('<div class="qinvoiceMessage messageSuccess">' +
                     '<span> Invoice succesfully saved! </span>' +
