@@ -235,6 +235,11 @@ section.invoiceSettings input[id^="tax"] {
     resize: none;
 }
 
-div.invisibleHeader > h2 {
+.q-invoice-page div.invisibleHeader > h2 {
     color: white;
+}
+
+
+.q-invoice-page #currencySign {
+    vertical-align: middle;
 }

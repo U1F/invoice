@@ -410,11 +410,10 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 'invoicePage',
                 'qi_invoicePage_section'
             );
-            $options = get_option('qi_settings');
-
-            if ($options["invoiceCurrency"] == "Other") {
-                $this->addSettingsField("currency Sign", "text", "invoicePage", 1);
-            }
+            
+            
+            $this->addSettingsField("currency Sign", "text", "invoicePage", 1);
+            
             //$this->addSettingsField("tax Types", "number", "invoicePage");
             add_settings_field(
                 'qi_settingsTaxTypes', 
@@ -488,7 +487,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 [$this, 'addSpacerForSetting'],
                 "bankPage",
                 'qi_'.'bankPage'.'_section',
-                $array = [
+                [
                     "name" => "BankSpacer1",
                     "type" => "hidden"
                 ]
@@ -505,7 +504,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 [$this, 'addSpacerForSetting'],
                 "bankPage",
                 'qi_'.'bankPage'.'_section',
-                $array = [
+                [
                     "name" => "BankSpacer2",
                     "type" => "hidden"
                 ]
@@ -803,7 +802,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             if (empty($options['invoiceCurrency'])) {
                 
                 echo "<select "
-                    ."id='qi_settings[invoiceCurrency]'" 
+                    ."id='invoiceCurrency'" 
                     ."name='qi_settings[invoiceCurrency]'>"
                     ."<option value='Euro' selected='selected'>Euro</option>"  
                     ."<option value='Dollar'>Dollar</option>"  
@@ -813,7 +812,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             } else {
                 $items = array("Euro", "Dollar", "Other");
                 echo "<select ".
-                    "id='qi_settings[invoiceCurrency]'" .
+                    "id='invoiceCurrency'". 
                     "name='qi_settings[invoiceCurrency]'>";
                 
                 foreach ($items as $item) {
