@@ -42,9 +42,8 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
             method="post" 
             name="invoiceForm"
             class=""
-            autocomplete="off"
             autocomplete="false"
-            autocomplete="chrome-off"
+            
             >
             <div id="invoiceInputTables">
                 <div id="invoiceInputTableLeft">
@@ -55,7 +54,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             </td>
 
                             <td class="inputsLeftTable">
-                                <div id="input_container">
+                                <div id="input_container"> <input name="company" style="display:none">
                                     <input 
                                         type="text" 
                                         id="company" 
@@ -63,7 +62,8 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                         placeholder="<?php 
                                             echo __('Company Name', 'Ev')?>" 
                                         value=""
-                                        autocomplete="none"
+                                        
+                                        autocomplete="new-password"
                                         
                                     >
                                     
@@ -75,7 +75,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                 
                                 
 
-                                <div id='autocompleteCompany' style="display:none;">
+                                <div id='autocompleteCompany' class='autocompleteDIV' style="display:none;">
                                     <strong>Matching Contacts</strong>
                                 </div>
 
@@ -101,7 +101,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                     value=""
                                     autocomplete="none"
                                 >
-                                <div id='autocompleteAdditional' style="display:none;">
+                                <div id='autocompleteAdditional' class='autocompleteDIV' style="display:none;">
                                     <strong>Matching Contacts</strong>
                                 </div>
                             </td>
@@ -126,9 +126,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                             autocomplete="none"
                                             required
                                         >
-                                        <div id='autocompleteFirstname' style="display:none;">
-                                        <strong>Matching Contacts</strong>
-                                        </div>
+                                
 
                                     </div>
 
@@ -146,7 +144,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                             value="" 
                                             required
                                         >
-                                        <div id='autocompleteLastname' style="display:none;">
+                                        <div id='autocompleteLastname'  class='autocompleteDIV' style="display:none;">
                                         <strong>Matching Contacts</strong>
                                         </div>
                                     </div>
@@ -172,9 +170,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                     value=""
                                     required
                                 >
-                                <div id='autocompleteStreet' style="display:none;">
-                                        <strong>Matching Contacts</strong>
-                                        </div>
+                                
                             </td>
                         </tr>
 
@@ -197,9 +193,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                             value="" 
                                             required
                                         >
-                                        <div id='autocompleteZip' style="display:none;">
-                                        <strong>Matching Contacts</strong>
-                                        </div>
+                                        
                                     </div>
 
                                     <div style="flex-grow: 1"></div>
@@ -217,9 +211,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                             value="" 
                                             required
                                         >
-                                        <div id='autocompleteCity' style="display:none;">
-                                        <strong>Matching Contacts</strong>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </td>
