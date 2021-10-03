@@ -139,3 +139,27 @@
 {
     width:8%;
 }
+
+input.error,
+select.error,
+textarea.error {
+  outline: none;
+  border-color: red;
+  border-width: 1px;
+  border-style: solid;
+}
+
+input.error:valid {
+    border-style: auto;
+    border-color: inherit;
+  }
+select.error:valid {
+    border-style: auto;
+    border-color: inherit;
+  }
+textarea.error:valid {
+    border-style: auto;
+    border-color: inherit;
+  }
+
+
