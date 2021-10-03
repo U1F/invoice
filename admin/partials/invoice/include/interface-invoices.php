@@ -213,13 +213,8 @@ class Interface_Invoices
                 )
             );
         }
-       
-        
-        
     }
-
   
-
     /**
      * Function _copyFromArrayToDB
      * 
