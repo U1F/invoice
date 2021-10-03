@@ -596,7 +596,7 @@ jQuery(function ($) {
     clone.find('a.download').attr('id', 'download-' + id)
     clone.find('a.download').attr('value', id)
 
-    clone.find('a.download').attr('href', 'http://127.0.0.1/wp-content/plugins/q_invoice/pdf/Invoice' + id + '.pdf')
+    clone.find('a.download').attr('href', '/wp-content/plugins/q_invoice/pdf/Invoice' + id + '.pdf')
 
     clone.find('span.deleteRow').attr('id', id)
     clone.find('span.deleteRow').attr('value', id)
