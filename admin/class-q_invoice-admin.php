@@ -74,6 +74,252 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 "interface-contacts.php";
         }
 
+          /**
+         * Function qiOptionsPage TESTING SETTINGS
+         * 
+         * @param string $fileName        !
+         * @param string $partialName     !
+         * @param bool   $developmentMode ?
+         * 
+         * @return void
+         * 
+         * @since 1.0.0
+         */
+        public function enqueuePartialCss($fileName, $partialName, $developmentMode = false)
+        {
+            if ($developmentMode) {
+                wp_enqueue_style(
+                
+                    $this->_plugin_name . '_' . $fileName .'_css',
+                    plugin_dir_url(__FILE__) .
+                        'partials/'. $partialName .'/css/qinvoice-' . $fileName .'.css',
+                    array(),
+                    filemtime(
+                        plugin_dir_path(__FILE__) .
+                            'partials/'. $partialName .'/css/qinvoice-' . $fileName .'.css'
+                    ),
+                    'all'
+                );
+                
+            } else {
+                wp_enqueue_style( 
+                    $this->_plugin_name . '_' . $fileName .'_css',
+                    plugin_dir_url(__FILE__) .
+                        'partials/'. $partialName .'/css/qinvoice-' . $fileName .'.css',
+                    array(),
+                    $this->_version, 
+                    'all'
+                );
+
+            }
+        }
+
+
+        /**
+         * Register the stylesheets for the admin area.
+         * 
+         * @return void
+         *
+         * @since 1.0.0
+         */
+        public function enqueueStyles()
+        {
+            wp_enqueue_style(
+                'q-jquery-ui',
+                plugin_dir_url(__FILE__) . 'css/jquery-ui/jquery-ui.css',
+                array(),
+                $this->_version,
+                'all'
+            );
+
+            wp_enqueue_style(
+                'q-mtimepicker',
+                plugin_dir_url(__FILE__) . 'css/timepicker/mtimepicker.css',
+                array(),
+                $this->_version,
+                'all'
+            );
+
+            wp_enqueue_style(
+                $this->_plugin_name . 'q_invoice-admin.css',
+                plugin_dir_url(__FILE__) .
+                    'css/q_invoice-admin.css',
+                array(),
+                filemtime(
+                    plugin_dir_path(__FILE__) .
+                        'css/q_invoice-admin.css'
+                ),
+                //$this->_version, 
+                'all'
+            );
+
+            wp_enqueue_style(
+                $this->_plugin_name . 'qinvoice_buttons.css',
+                plugin_dir_url(__FILE__) .
+                    'css/qinvoice_buttons.css',
+                array(),
+                filemtime(
+                    plugin_dir_path(__FILE__) .
+                        'css/qinvoice_buttons.css'
+                ),
+                //$this->_version, 
+                'all'
+            );
+
+            $developmentMode = true;
+
+            $partialStyles = [
+                ["name" => "invoice", "partial" => "invoice"],
+                ["name" => "invoice-overview", "partial" => "invoice"],
+                ["name" => "invoice-form", "partial" => "invoice"],
+                ["name" => "settings","partial" => "settings"],
+                ["name" => "export",  "partial" => "export"],
+                ["name" => "contacts",  "partial" => "contacts"]
+                ];
+            
+            foreach ($partialStyles as $partStyle) {
+                $this->enqueuePartialCss(
+                    $partStyle['name'], 
+                    $partStyle["partial"], 
+                    $developmentMode
+                );
+            }
+
+            // Obsolete, but may be used later instead of root css
+            /*
+            wp_enqueue_style(
+                $this->_plugin_name.'-qi_admin.css', 
+                plugin_dir_url(__FILE__) . 
+                'partials/invoice/css/qi_admin.css', 
+                array(), 
+                filemtime(
+                    plugin_dir_path(__FILE__) . 
+                    'partials/invoice/css/qi_admin.css'
+                ),
+                //$this->_version, 
+                'all'
+            );
+            */
+            wp_enqueue_style('wp-jquery-ui-dialog');
+        }
+        /**
+         * Register the JavaScript for the admin area.
+         * 
+         * @param string $scriptName      obligatory 
+         * @param string $partialName     obligatory 
+         * @param array  $dependencies    optional default = []  
+         * @param book   $developmentMode optional default:false 
+         * 
+         * @return void
+         *
+         * @since 1.0.0
+         */
+        public function enqueuePartialJS(
+            $scriptName, 
+            $partialName, 
+            $dependencies = [], 
+            $developmentMode = false
+        ) {
+            if ($developmentMode) {
+                wp_enqueue_script(
+                    $this->_plugin_name .
+                        $scriptName,
+                    plugin_dir_url(__FILE__) .
+                        'partials/'. $partialName .'/js/qinvoice-'.$scriptName.'.js',
+                    $dependencies,
+                    filemtime(
+                        plugin_dir_path(__FILE__) .
+                        'partials/'. $partialName .'/js/qinvoice-'.$scriptName.'.js'
+                    ),
+                    false
+                );
+
+            } else {
+                wp_enqueue_script(
+                    $this->_plugin_name .
+                        $scriptName,
+                    plugin_dir_url(__FILE__) .
+                        'partials/'. $partialName .'/js/qinvoice-'.$scriptName.'.js',
+                    $dependencies,
+                    $this->_version,
+                    false
+                );
+            }
+            
+        }
+        /**
+         * Register the JavaScript for the admin area.
+         * 
+         * @return void
+         *
+         * @since 1.0.0
+         */
+        public function enqueueScripts()
+        {
+            wp_enqueue_script('jquery-ui-datepicker');
+            wp_enqueue_script('jquery-form');
+            wp_enqueue_script('jquery-ui-dialog'); 
+            wp_enqueue_script('jquery-ui-core');
+
+            $partialScripts =[
+                ["name" => "invoice", "partial" => "invoice", "dependencies" => []],
+                ["name" => "invoice-autocomplete", "partial" => "invoice", "dependencies" => []],
+                ["name" => "contacts", "partial" => "contacts", "dependencies" => []],
+                ["name" => "settings", "partial" => "settings", "dependencies" => []],
+                ["name" => "export", "partial" => "export", "dependencies" => []],
+                
+            ];
+            foreach ($partialScripts as $partialScript) {
+                $this->enqueuePartialJS(
+                    $partialScript['name'], 
+                    $partialScript['partial'], 
+                    $partialScript['dependencies'], 
+                    true
+                );
+            }
+            
+            
+            wp_enqueue_script(
+                $this->_plugin_name .
+                    "_adminAjax",
+                plugin_dir_url(__FILE__) .
+                    'js/q_invoice-admin-ajax.js',
+                array('jquery'),
+                filemtime(
+                    plugin_dir_path(__FILE__) .
+                        'js/q_invoice-admin-ajax.js'
+                ),
+                //$this->_version, 
+                false
+            );
+            
+            wp_localize_script(
+                $this->_plugin_name .
+                    "_adminAjax",
+                $this->_plugin_name .
+                    '_ajaxObject',
+                [
+                    'ajax_url' => admin_url('admin-ajax.php'),
+                    'nonce'    => wp_create_nonce($this->_plugin_name . "_nonce")
+                ]
+            );
+
+            wp_enqueue_media();
+        }
+
+
+
+// ............................................................................................
+// ............................................................................................
+// .............####...######..######..######..######..##..##...####....####...................
+// ............##......##........##......##......##....###.##..##......##......................
+// .............####...####......##......##......##....##.###..##.###...####...................
+// ................##..##........##......##......##....##..##..##..##......##..................
+// .............####...######....##......##....######..##..##...####....####...................
+// ............................................................................................
+// ............................................................................................
+
+
         /**
          * Function qiSettingsInit TESTING SETTINGS
          * 
@@ -727,6 +973,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             // echo __('Fill in details of your Mail Account ..', 'ev');
         }
 
+
         /**
          * Function qiOptionsPage TESTING SETTINGS
          * 
@@ -740,239 +987,20 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 'partials/settings/q_invoice-admin-settings.php';
         }
         
-        
-        /**
-         * Function qiOptionsPage TESTING SETTINGS
-         * 
-         * @param string $fileName        !
-         * @param string $partialName     !
-         * @param bool   $developmentMode ?
-         * 
-         * @return void
-         * 
-         * @since 1.0.0
-         */
-        public function enqueuePartialCss($fileName, $partialName, $developmentMode = false)
-        {
-            if ($developmentMode) {
-                wp_enqueue_style(
-                
-                    $this->_plugin_name . '_' . $fileName .'_css',
-                    plugin_dir_url(__FILE__) .
-                        'partials/'. $partialName .'/css/qinvoice-' . $fileName .'.css',
-                    array(),
-                    filemtime(
-                        plugin_dir_path(__FILE__) .
-                            'partials/'. $partialName .'/css/qinvoice-' . $fileName .'.css'
-                    ),
-                    'all'
-                );
-                
-            } else {
-                wp_enqueue_style( 
-                    $this->_plugin_name . '_' . $fileName .'_css',
-                    plugin_dir_url(__FILE__) .
-                        'partials/'. $partialName .'/css/qinvoice-' . $fileName .'.css',
-                    array(),
-                    $this->_version, 
-                    'all'
-                );
+      
 
-            }
-        }
+// ............................................................................
+// ............................................................................
+// ........................####...######...####...##..##.......................
+// .......................##..##......##..##..##...####........................
+// .......######..######..######......##..######....##....######..######.......
+// .......................##..##..##..##..##..##...####........................
+// .......................##..##...####...##..##..##..##.......................
+// ............................................................................
+// ............................................................................
+// ............................................................................
 
 
-        /**
-         * Register the stylesheets for the admin area.
-         * 
-         * @return void
-         *
-         * @since 1.0.0
-         */
-        public function enqueueStyles()
-        {
-            wp_enqueue_style(
-                'q-jquery-ui',
-                plugin_dir_url(__FILE__) . 'css/jquery-ui/jquery-ui.css',
-                array(),
-                $this->_version,
-                'all'
-            );
-
-            wp_enqueue_style(
-                'q-mtimepicker',
-                plugin_dir_url(__FILE__) . 'css/timepicker/mtimepicker.css',
-                array(),
-                $this->_version,
-                'all'
-            );
-
-            wp_enqueue_style(
-                $this->_plugin_name . 'q_invoice-admin.css',
-                plugin_dir_url(__FILE__) .
-                    'css/q_invoice-admin.css',
-                array(),
-                filemtime(
-                    plugin_dir_path(__FILE__) .
-                        'css/q_invoice-admin.css'
-                ),
-                //$this->_version, 
-                'all'
-            );
-
-            wp_enqueue_style(
-                $this->_plugin_name . 'qinvoice_buttons.css',
-                plugin_dir_url(__FILE__) .
-                    'css/qinvoice_buttons.css',
-                array(),
-                filemtime(
-                    plugin_dir_path(__FILE__) .
-                        'css/qinvoice_buttons.css'
-                ),
-                //$this->_version, 
-                'all'
-            );
-
-            $developmentMode = true;
-
-            $partialStyles = [
-                ["name" => "invoice", "partial" => "invoice"],
-                ["name" => "invoice-overview", "partial" => "invoice"],
-                ["name" => "invoice-form", "partial" => "invoice"],
-                ["name" => "settings","partial" => "settings"],
-                ["name" => "export",  "partial" => "export"],
-                ["name" => "contacts",  "partial" => "contacts"]
-                ];
-            
-            foreach ($partialStyles as $partStyle) {
-                $this->enqueuePartialCss(
-                    $partStyle['name'], 
-                    $partStyle["partial"], 
-                    $developmentMode
-                );
-            }
-
-            // Obsolete, but may be used later instead of root css
-            /*
-            wp_enqueue_style(
-                $this->_plugin_name.'-qi_admin.css', 
-                plugin_dir_url(__FILE__) . 
-                'partials/invoice/css/qi_admin.css', 
-                array(), 
-                filemtime(
-                    plugin_dir_path(__FILE__) . 
-                    'partials/invoice/css/qi_admin.css'
-                ),
-                //$this->_version, 
-                'all'
-            );
-            */
-            wp_enqueue_style('wp-jquery-ui-dialog');
-        }
-        /**
-         * Register the JavaScript for the admin area.
-         * 
-         * @param string $scriptName      obligatory 
-         * @param string $partialName     obligatory 
-         * @param array  $dependencies    optional default = []  
-         * @param book   $developmentMode optional default:false 
-         * 
-         * @return void
-         *
-         * @since 1.0.0
-         */
-        public function enqueuePartialJS(
-            $scriptName, 
-            $partialName, 
-            $dependencies = [], 
-            $developmentMode = false
-        ) {
-            if ($developmentMode) {
-                wp_enqueue_script(
-                    $this->_plugin_name .
-                        $scriptName,
-                    plugin_dir_url(__FILE__) .
-                        'partials/'. $partialName .'/js/qinvoice-'.$scriptName.'.js',
-                    $dependencies,
-                    filemtime(
-                        plugin_dir_path(__FILE__) .
-                        'partials/'. $partialName .'/js/qinvoice-'.$scriptName.'.js'
-                    ),
-                    false
-                );
-
-            } else {
-                wp_enqueue_script(
-                    $this->_plugin_name .
-                        $scriptName,
-                    plugin_dir_url(__FILE__) .
-                        'partials/'. $partialName .'/js/qinvoice-'.$scriptName.'.js',
-                    $dependencies,
-                    $this->_version,
-                    false
-                );
-            }
-            
-        }
-        /**
-         * Register the JavaScript for the admin area.
-         * 
-         * @return void
-         *
-         * @since 1.0.0
-         */
-        public function enqueueScripts()
-        {
-            wp_enqueue_script('jquery-ui-datepicker');
-            wp_enqueue_script('jquery-form');
-            wp_enqueue_script('jquery-ui-dialog'); 
-            wp_enqueue_script('jquery-ui-core');
-
-            $partialScripts =[
-                ["name" => "invoice", "partial" => "invoice", "dependencies" => []],
-                ["name" => "invoice-autocomplete", "partial" => "invoice", "dependencies" => []],
-                ["name" => "contacts", "partial" => "contacts", "dependencies" => []],
-                ["name" => "settings", "partial" => "settings", "dependencies" => []],
-                ["name" => "export", "partial" => "export", "dependencies" => []],
-                
-            ];
-            foreach ($partialScripts as $partialScript) {
-                $this->enqueuePartialJS(
-                    $partialScript['name'], 
-                    $partialScript['partial'], 
-                    $partialScript['dependencies'], 
-                    true
-                );
-            }
-            
-            
-            wp_enqueue_script(
-                $this->_plugin_name .
-                    "_adminAjax",
-                plugin_dir_url(__FILE__) .
-                    'js/q_invoice-admin-ajax.js',
-                array('jquery'),
-                filemtime(
-                    plugin_dir_path(__FILE__) .
-                        'js/q_invoice-admin-ajax.js'
-                ),
-                //$this->_version, 
-                false
-            );
-            
-            wp_localize_script(
-                $this->_plugin_name .
-                    "_adminAjax",
-                $this->_plugin_name .
-                    '_ajaxObject',
-                [
-                    'ajax_url' => admin_url('admin-ajax.php'),
-                    'nonce'    => wp_create_nonce($this->_plugin_name . "_nonce")
-                ]
-            );
-
-            wp_enqueue_media();
-        }
         /**
          * TESTIG Register the Ajax for the admin area.
          * 
@@ -1270,6 +1298,19 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             wp_die();
         }
         
+
+// .............................................................................
+// .............................................................................
+// .......................##...##..######..##..##..##..##.......................
+// .......................###.###..##......###.##..##..##.......................
+// .......######..######..##.#.##..####....##.###..##..##..######..######.......
+// .......................##...##..##......##..##..##..##.......................
+// .......................##...##..######..##..##...####........................
+// .............................................................................
+// .............................................................................
+// .............................................................................
+
+
         /**
          * Function addQInvoiceAdminMenus
          * 
