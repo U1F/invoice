@@ -243,3 +243,47 @@ section.invoiceSettings input[id^="tax"] {
 .q-invoice-page #currencySign {
     vertical-align: middle;
 }
+
+div#popupLogoImage {
+    background-color: white;
+    position: absolute;
+    top:300px;
+    left:260px;
+    
+    display:none; 
+    z-index:2;
+    
+    border:1px solid #3c434a;
+}
+
+div#popupLogoImage img {
+        padding: 40px;
+        max-height: 400px;
+}
+
+
+
+
+button#showLogoButton { 
+    margin-top: -1px;
+    font-family: sans-serif;
+    font-size: 14px;
+    height: 33px;
+    background-color: white;
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 1px solid #c0c0c0;
+    border-radius: 4px;
+    vertical-align: middle;
+    color: #3c434a;
+   
+   
+   
+    cursor: pointer;
+    
+}
+
+span.dashicons-format-image {
+    vertical-align: middle;
+    color: rgb(34, 113, 177);
+}

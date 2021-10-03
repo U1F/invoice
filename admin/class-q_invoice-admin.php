@@ -741,7 +741,21 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                     "Upload".
 
                 "</label>";
-            
+                
+                
+                $logoImageSource = plugin_dir_url(__FILE__).
+                "/files/none_5002.png";
+                
+                if (get_option('qi_settings')['logoFileUrl']) {
+                    $logoImageSource = get_option('qi_settings')['logoFileUrl'];
+                }
+                ?>
+                <button id='showLogoButton' type='button'> Show Logo <span class="dashicons dashicons-format-image"></span></button>
+                <div id="popupLogoImage">
+                    <img src="<?php echo $logoImageSource;?>">
+                </div> 
+                
+                <?php
                 
         } 
 

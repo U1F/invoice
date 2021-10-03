@@ -17,6 +17,20 @@ jQuery(function ($) {
       $('#currencySign').css('display', 'none')
     }
   })
+  $('button#showLogoButton').click(function () {
+    console.log('mouse was over')
+    $('div#popupLogoImage').css('display', 'inline-block')
+  })
+
+  $('#qinvoiceSettings').on('click', function (event) {
+    if (!(
+      $(event.target).is('img') ||
+      $(event.target).is('#popupLogoImage') ||
+      $(event.target).is('span.dashicons-format-image') ||
+      $(event.target).is('button#showLogoButton'))) {
+      $('div#popupLogoImage').css('display', 'none')
+    }
+  })
 
   jQuery(document).ready(function ($) {
     const currencySignInput = $('#currencySign').clone()
