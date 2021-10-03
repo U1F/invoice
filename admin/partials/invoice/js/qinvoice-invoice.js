@@ -1,156 +1,29 @@
+'use strict';
 jQuery(function($) {
-    
 
-    // UI
+//    .........................................................
+//    .........................................................
+//    .##..##..##..##..##...##..#####...######..#####....####..
+//    .###.##..##..##..###.###..##..##..##......##..##..##.....
+//    .##.###..##..##..##.#.##..#####...####....#####....####..
+//    .##..##..##..##..##...##..##..##..##......##..##......##.
+//    .##..##...####...##...##..#####...######..##..##...####..
+//    .........................................................
+//    .........................................................
 
-    $(document).keydown(function(e) {
-        if (e.keyCode == 27) {
-            if  ($(".dialogOverlay").css("display") == "block"){
-                $(".dialogOverlay").css("display","none");    
-            }else {
-            $("#invoiceOverlay").css("display","none");}
-        }
-    });
-
-    $("#invoiceOverlay").click(function(event) {
-        
-        if ($(event.target).is(".overlay") ){
-            $("#invoiceOverlay").css("display", "none");
-            
-        }
-    });
-
-    $(".dialogOverlay").click(function(event) {
-        
-        if ($(event.target).is(".overlay") ){
-            $(".dialogOverlay").css("display", "none");
-            
-        }
-    });
-   
-    $("#cancelInvoiceEdit").click(function(event) {
-        $("#invoiceOverlay").css("display", "none");
-    });
-
-    function setFilterButtonActive(target)
-    {
-        target.css("background-color","rgb(34, 113, 177)");
-        target.find("button").css("background-color","rgb(34, 113, 177)");
-        target.css("border","1px solid #c0c0c0;");
-        target.find("button").css("color","white");
-        target.attr("class","filterButton active");
-
-    }
-    function setFilterButtonInactive(target)
-    {
-        target.css("background-color","white");
-        target.find("button").css("background-color","white");
-        target.css("border","1px solid #c0c0c0;");
-        target.find("button").css("color","#3c434a");
-        target.attr("class","filterButton inactive");
-        
-        
-
-    }
-
-    $("#filterButtons").on("click", "div.inactive", function (event){
-        setFilterButtonInactive($("#filterButtons").find("div.active"));
-        console.log($(event.target).parent());
-        setFilterButtonActive($(event.target).parent());
-        
-        if ($(event.target).parent().attr("id")=="showOpenInvoices") {
-            $("tr.open").css("display","table-row");
-            $("tr.cancelled").css("display","none");
-        }
-
-        if ($(event.target).parent().attr("id")=="showCancelledInvoices") {
-            $("tr.cancelled").css("display","table-row");
-            $("tr.open").css("display","none");
-        }
-
-        if ($(event.target).parent().attr("id")=="showInvoicesWithDunning") {
-            $("tr.cancelled").css("display","none");
-            $("tr.open").css("display","none");
-        }
-
-        if ($(event.target).parent().attr("id")=="showAllInvoices") {
-            $("tr.cancelled").css("display","table-row");
-            $("tr.open").css("display","table-row");
-        }
-
-        
-
-        
-        
-
-    });
-
-    
-
-    $("#filterButtons").on("keyup", "input", function (event){
-       console.log($(this).val().toLowerCase());
-
-       //if (additonalNames[i].toLowerCase().includes($(this).val().toLowerCase(), 0)) {
-        //if ($("tr").value()==){$(this).closest("tr").css("display","table-row");}
-        searchPattern = $(this).val();
-        
-        $("table#tableInvoices tbody").find("tr").each(function( index ) {
-            console.log(index);
-        console.log($( this ).find("td.columnCompany").text() );
-        if ($( this ).find("td").text().includes(searchPattern.toLowerCase()) && searchPattern){
-            console.log($(this));
-            $(this).css("display","table-row");
-        }
-        else {
-            $(this).css("display","none");
-        }
-      });
-    });
-    
-        
-    
-
-    // INVOICE FORM
-
-    $('#items').on("click", ".discountTypeSwitch", function() {
-        if ($(this).val() == "Euro") {
-            $(this).val("Percent");
-            $(this).html("%");
-        } else if ($(this).val() == "Percent") {
-            $(this).val("Euro");
-            $(this).html(currencySign);
-        }
-
-
-    });
-
-    $('#items').on('change', "input.itemDiscount", function() {
-
-        number = $(this).val();
-        $(this).val(parseFloat(number).toFixed(2));
-    });
-
-
-    $('#items').on('change', "input.itemPrice", function() {
-
-        number = $(this).val();
-        $(this).val(parseFloat(number).toFixed(2));
-    });
-
-    //Number Crunching
 
     function addPointToThousands(num) {
-        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
     }
 
     function addKommaToThousands(num) {
-        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     }
 
 
     /**
-     * 
-     * @param {*} num 
+     *
+     * @param {*} num
      * @returns num
      */
     function currencyFormatDE(num) {
@@ -171,7 +44,7 @@ jQuery(function($) {
         var netSum = 0;
         var taxSum = 0.0;
         var totalSum = 0;
-        
+
         Array.from(document.querySelector("select.itemTax").options).forEach(function(option_element) {
             taxes.push([option_element.value, 0.0]);
         });
@@ -193,7 +66,7 @@ jQuery(function($) {
                 });
             }
 
-            netSum = netSum + linePrice; 
+            netSum = netSum + linePrice;
 
         });
 
@@ -274,10 +147,148 @@ jQuery(function($) {
     }
 
 
+//............................................................................................................................
+//............................................................................................................................
+//......##..##...####...######..#####...........######..##..##..######..######..#####...######...####....####...######........
+//......##..##..##......##......##..##............##....###.##....##....##......##..##..##......##..##..##..##..##............
+//......##..##...####...####....#####.............##....##.###....##....####....#####...####....######..##......####..........
+//......##..##......##..##......##..##............##....##..##....##....##......##..##..##......##..##..##..##..##............
+//.......####....####...######..##..##..........######..##..##....##....######..##..##..##......##..##...####...######........
+//............................................................................................................................
+//............................................................................................................................
 
 
+    $(document).keydown(function(e) {
+        if (e.keyCode == 27) {
+            if  ($(".dialogOverlay").css("display") == "block"){
+                $(".dialogOverlay").css("display","none");    
+            }else {
+            $("#invoiceOverlay").css("display","none");}
+        }
+    });
 
-    //Updater
+
+    $("#invoiceOverlay").click(function(event) {
+        
+        if ($(event.target).is(".overlay") ){
+            $("#invoiceOverlay").css("display", "none");
+            
+        }
+    });
+
+
+    $(".dialogOverlay").click(function(event) {
+        
+        if ($(event.target).is(".overlay") ){
+            $(".dialogOverlay").css("display", "none");
+            
+        }
+    });
+   
+
+    $("#cancelInvoiceEdit").click(function(event) {
+        $("#invoiceOverlay").css("display", "none");
+    });
+
+
+    function setFilterButtonActive(target)
+    {
+        target.css("background-color","rgb(34, 113, 177)");
+        target.find("button").css("background-color","rgb(34, 113, 177)");
+        target.css("border","1px solid #c0c0c0;");
+        target.find("button").css("color","white");
+        target.attr("class","filterButton active");
+
+    }
+
+
+    function setFilterButtonInactive(target)
+    {
+        target.css("background-color","white");
+        target.find("button").css("background-color","white");
+        target.css("border","1px solid #c0c0c0;");
+        target.find("button").css("color","#3c434a");
+        target.attr("class","filterButton inactive");
+        
+        
+
+    }
+
+
+    $("#filterButtons").on("click", "div.inactive", function (event){
+        setFilterButtonInactive($("#filterButtons").find("div.active"));
+        console.log($(event.target).parent());
+        setFilterButtonActive($(event.target).parent());
+        
+        if ($(event.target).parent().attr("id")=="showOpenInvoices") {
+            $("tr.open").css("display","table-row");
+            $("tr.cancelled").css("display","none");
+        }
+
+        if ($(event.target).parent().attr("id")=="showCancelledInvoices") {
+            $("tr.cancelled").css("display","table-row");
+            $("tr.open").css("display","none");
+        }
+
+        if ($(event.target).parent().attr("id")=="showInvoicesWithDunning") {
+            $("tr.cancelled").css("display","none");
+            $("tr.open").css("display","none");
+        }
+
+        if ($(event.target).parent().attr("id")=="showAllInvoices") {
+            $("tr.cancelled").css("display","table-row");
+            $("tr.open").css("display","table-row");
+        }
+    });
+    
+
+    $("#filterButtons").on("keyup", "input", function (event){
+       console.log($(this).val().toLowerCase());
+
+       //if (additonalNames[i].toLowerCase().includes($(this).val().toLowerCase(), 0)) {
+        //if ($("tr").value()==){$(this).closest("tr").css("display","table-row");}
+        searchPattern = $(this).val();
+        
+        $("table#tableInvoices tbody").find("tr").each(function( index ) {
+            console.log(index);
+        console.log($( this ).find("td.columnCompany").text() );
+        if ($( this ).find("td").text().includes(searchPattern.toLowerCase()) && searchPattern){
+            console.log($(this));
+            $(this).css("display","table-row");
+        }
+        else {
+            $(this).css("display","none");
+        }
+      });
+    });
+    
+        
+
+    $('#items').on("click", ".discountTypeSwitch", function() {
+        if ($(this).val() == "Euro") {
+            $(this).val("Percent");
+            $(this).html("%");
+        } else if ($(this).val() == "Percent") {
+            $(this).val("Euro");
+            $(this).html(currencySign);
+        }
+
+
+    });
+
+    $('#items').on('change', "input.itemDiscount", function() {
+
+        number = $(this).val();
+        $(this).val(parseFloat(number).toFixed(2));
+    });
+
+
+    $('#items').on('change', "input.itemPrice", function() {
+
+        number = $(this).val();
+        $(this).val(parseFloat(number).toFixed(2));
+    });
+
 
     $('.qInvc-table').eq(0).on('change', 'select.itemTax, select.discountType', function() {
 
@@ -346,8 +357,6 @@ jQuery(function($) {
         }
     });
 
-    $(".qInvc-table").eq(0).disableSelection();
-
     function checkIfBanksHaveBeenSetupinSettings() {
         if (checkIfStringIsEmpty($('tr#tableRowBank2 > td.inputsRightTable > input#bank2').val())) {
             $('tr#tableRowBank2').css("display", "none");
@@ -391,11 +400,22 @@ jQuery(function($) {
         return /[^a-zA-Z0-9]/g.test(stringPattern);
     }
 
+
+    
+
  
 
+//............................................... 
+//............................................... 
+//........####...######...####...##..##..........
+//.......##..##......##..##..##...####...........
+//.......######......##..######....##............
+//.......##..##..##..##..##..##...####...........
+//.......##..##...####...##..##..##..##..........
+//...............................................
+//............................................... 
 
-
-    // AJAX
+    
     function deleteInvoice(invoiceId) {
         jQuery.ajax({
             type: 'POST',
