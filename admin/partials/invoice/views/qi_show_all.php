@@ -49,6 +49,7 @@
             <span class="dashicons dashicons-search"></span>
         </div>
 
+
      </div>
     <div class="tab_content_wrapper">
 <?php 
@@ -239,7 +240,15 @@ function showOpenInvoices()
                     >
                     </span>
 
-                </td>
+                    <span style="font-size: 20px; display:none;"
+                        id="<?php echo $invoice_header->id;?>" 
+                        title="reactivate"
+                        class="reactivate dashicons dashicons-undo"
+                        value="<?php echo $invoice_header->id;?>"
+                    >
+                    </span>
+
+                    
             </tr>
             
             
