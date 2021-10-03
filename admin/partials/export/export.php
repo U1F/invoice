@@ -739,7 +739,7 @@ td.invoiceItemsHeader {
         }
         ?>
         
-
+        </div>
         <page_footer>
             <div class="footer" style=" margin-left:70px; margin-right:70px;">
                 <div 
@@ -765,7 +765,7 @@ td.invoiceItemsHeader {
                 </div>
             </div>
         </page_footer>
-    </div>
+    
 </page>
     <?php
 }
