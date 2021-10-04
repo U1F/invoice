@@ -163,3 +163,15 @@ textarea.error:valid {
   }
 
 
+  .circle
+  {
+    display:none;
+    width: 20px;
+    height: 20px;
+    margin-left:4px;
+    margin-right:4px;
+    border-radius: 50%;
+    border: 0px solid;
+    background-color: #ff0000;
+    opacity: 0.8;
+  }

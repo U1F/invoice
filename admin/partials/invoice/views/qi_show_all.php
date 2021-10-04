@@ -104,7 +104,7 @@ function showHeader()
                 
 
                 <th scope="col" id="invoiceStatus" 
-                    class="manage-column fiftyCol columnStatus ">
+                    class="manage-column fiftyCol columnEdit ">
                     <?php _e('', 'Ev'); ?>
                 </th>
 
@@ -216,7 +216,12 @@ function showOpenInvoices()
                
 
                 <td class="manage-column eightyCol columnEdit">
+
+              
                     
+                    <div class="circle">
+    </div>
+
                     <a 
                         style="font-size:20px; display:inline" 
                         target="_top"
@@ -247,6 +252,15 @@ function showOpenInvoices()
                         value="<?php echo $invoice_header->id;?>"
                     >
                     </span>
+                    <span style="font-size: 20px; display:none;"
+                        id="<?php echo $invoice_header->id;?>" 
+                        title="invoicePaid"
+                        class="invoicePaid dashicons dashicons-money-alt"
+                        value="<?php echo $invoice_header->id;?>"
+                    >
+                    </span>
+
+                
 
                     
             </tr>
