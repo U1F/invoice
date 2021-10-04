@@ -211,9 +211,7 @@ jQuery(function ($) {
   })
 
   $('#filterButtons').on('keyup', 'input', function (event) {
-    let searchPattern = ''
-
-    searchPattern = $(this).val()
+    const searchPattern = $(this).val()
 
     $('table#tableInvoices tbody').find('tr').each(function (index) {
       if ($(this).find('td').text().includes(searchPattern.toLowerCase()) && searchPattern) {
@@ -601,12 +599,8 @@ jQuery(function ($) {
   jQuery(document).ready(function ($) {
     $('#invoiceForm').ajaxForm({
       success: function (response) {
-        // console.log(response)
-
         const serverResponse = JSON.parse(response).data
         const invoiceID = JSON.parse(response).id
-
-        // console.log(serverResponse)
 
         if (serverResponse.action === 'updateInvoiceServerSide') {
           changeUpdatedInvoiceRow(serverResponse)
@@ -619,6 +613,7 @@ jQuery(function ($) {
 
         $('#invoiceOverlay').css('display', 'none')
 
+        // DIE MELDUNG ALS FUNKTION?
         $('#wpbody-content')
           .prepend('<div class="qinvoiceMessage messageSuccess">' +
                     '<span> Invoice succesfully saved! </span>' +
@@ -636,6 +631,7 @@ jQuery(function ($) {
 
     checkIfBanksHaveBeenSetupinSettings()
 
+    // After submit add error class to invalid input fields
     inputs.forEach(input => {
       input.addEventListener(
         'invalid',
@@ -646,6 +642,7 @@ jQuery(function ($) {
       )
     })
 
+    // Prevent chrome to autofill&autocomplete
     $('input[type=text], input[type=number], input[type=email], input[type=password]').focus(function (e) {
       $(this).attr('autocomplete', 'new-password')
     })
