@@ -212,17 +212,11 @@ jQuery(function ($) {
 
   $('#filterButtons').on('keyup', 'input', function (event) {
     let searchPattern = ''
-    // console.log($(this).val().toLowerCase())
 
-    // if (additonalNames[i].toLowerCase().includes($(this).val().toLowerCase(), 0)) {
-    // if ($("tr").value()==){$(this).closest("tr").css("display","table-row");}
     searchPattern = $(this).val()
 
     $('table#tableInvoices tbody').find('tr').each(function (index) {
-      // console.log(index)
-      // console.log($(this).find('td.columnCompany').text())
       if ($(this).find('td').text().includes(searchPattern.toLowerCase()) && searchPattern) {
-        // console.log($(this))
         $(this).css('display', 'table-row')
       } else {
         $(this).css('display', 'none')
@@ -257,8 +251,6 @@ jQuery(function ($) {
     recalcLineSum()
     recalcTotalSum()
   })
-
-  // Manage Invoice Detail Form Fields
 
   function recalcPos () {
     $('.wp-list-table-qInvcLine').each(function (index) {
@@ -332,7 +324,6 @@ jQuery(function ($) {
   }
 
   function checkIfStringIsEmpty (stringPattern) {
-    // console.log(stringPattern)
     return /[^a-zA-Z0-9]/g.test(stringPattern)
   }
 
@@ -531,6 +522,8 @@ jQuery(function ($) {
   $('table#tableInvoices').on('click', '.edit', function (event) {
     if ($(event.target).is('.download')) { return }
     if ($(event.target).is('.deleteRow')) { return }
+    if ($(event.target).is('.switch')) { return }
+    if ($(event.target).is('.switch > *')) { return }
 
     $('#invoiceOverlay').css('display', 'block')
 
