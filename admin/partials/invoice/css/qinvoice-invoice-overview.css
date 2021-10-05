@@ -121,7 +121,7 @@
     
    
 }
-
+td.manage-column.columnEdit > * {vertical-align: middle;}
 
 .q-invoice-page div#filterButtons div.filterButton span {
     vertical-align: middle;
@@ -129,4 +129,8 @@
 .q-invoice-page div#filterButtons div.filterButton input[type=text]:focus {
     border: 0px;
     box-shadow: 0 0 0 0px;
+}
+
+dashicons-download {
+    vertical-align: middle;
 }

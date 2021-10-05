@@ -18,8 +18,13 @@
 ?>
  <div class="page_content">
      <div id="filterButtons">
-        
-        <div class="filterButton active" id="showOpenInvoices">
+        <div class="filterButton active" id="showAllInvoices">
+            <button class="invoiceButton">
+                All
+            </button>
+        </div>
+
+        <div class="filterButton inactive" id="showOpenInvoices">
             <button class="invoiceButton">
                 Open
             </button>
@@ -37,18 +42,12 @@
             </button>
         </div>
         
-        <div class="filterButton inactive" id="showAllInvoices">
-            <button class="invoiceButton">
-                All
-            </button>
-        </div>
-        
         <div class="filterButton" id="searchInvoices">
             <input type=text>
             </input>
             <span class="dashicons dashicons-search"></span>
         </div>
-
+        
 
      </div>
     <div class="tab_content_wrapper">
@@ -78,7 +77,7 @@ function showHeader()
                 </th>
 
                 <th scope="col" id="companyName" 
-                    class="manage-column twohundredCol columnCompany">
+                    class="manage-column hundredCol columnCompany">
                     <?php _e('Company', 'Ev'); ?>
                 </th>
                 
@@ -104,7 +103,7 @@ function showHeader()
                 
 
                 <th scope="col" id="invoiceStatus" 
-                    class="manage-column fiftyCol columnEdit ">
+                    class="manage-column hundredCol columnEdit ">
                     <?php _e('', 'Ev'); ?>
                 </th>
 
@@ -179,7 +178,7 @@ function showOpenInvoices()
                 </td>
 
                 <td
-                    class="manage-column twohundredCol columnCompany">
+                    class="manage-column hundredCol columnCompany">
                     <?php echo $invoice_header->company ?> 
                 </td>
 
@@ -215,12 +214,12 @@ function showOpenInvoices()
 
                
 
-                <td class="manage-column eightyCol columnEdit">
+                <td class="manage-column hundredCol columnEdit">
 
               
                     
                     <div class="circle">
-    </div>
+                    </div>
 
                     <a 
                         style="font-size:20px; display:inline" 
@@ -231,7 +230,7 @@ function showOpenInvoices()
                         ?>                        "
                         id="<?php echo "download-".$invoice_header->id;?>"
                         title="Download Invoice"
-                        class="download dashicons dashicons-download"
+                        class="downloadInvoice download dashicons dashicons-download"
                         value="<?php echo $invoice_header->id?>"
                         download
                     >
@@ -239,26 +238,44 @@ function showOpenInvoices()
 
                     <span style="font-size: 20px"
                         id="<?php echo $invoice_header->id; //should be delete-ID-?>" 
-                        title="delete"
-                        class="deleteRow dashicons dashicons-no"
+                        title="Cancel Invoice"
+                        class="deleteRow delete dashicons dashicons-no"
                         value="<?php echo $invoice_header->id;?>"
                     >
                     </span>
 
-                    <span style="font-size: 20px; display:none;"
+                    <span style="font-size: 20px;"
                         id="<?php echo $invoice_header->id;?>" 
-                        title="reactivate"
-                        class="reactivate dashicons dashicons-undo"
+                        title="Reactivate Invoice"
+                        class="reactivateInvoice reactivate dashicons dashicons-undo"
                         value="<?php echo $invoice_header->id;?>"
                     >
                     </span>
-                    <span style="font-size: 20px; display:none;"
+                    <span style="font-size: 20px;"
                         id="<?php echo $invoice_header->id;?>" 
-                        title="invoicePaid"
-                        class="invoicePaid dashicons dashicons-money-alt"
+                        title="Archive/Canelled"
+                        class="archiveSwitchLabel dashicons dashicons-archive"
                         value="<?php echo $invoice_header->id;?>"
                     >
                     </span>
+
+                    <label class="switch">
+                    <input type="checkbox">
+                    <span class="sliderForCancellation slider round"></span>
+                    </label>
+
+                    <span style="font-size: 20px;"
+                        id="<?php echo $invoice_header->id;?>" 
+                        title="Mark As Paid"
+                        class="invoicePaid markAsPaid dashicons dashicons-money-alt"
+                        value="<?php echo $invoice_header->id;?>"
+                    >
+                    </span>
+
+                    <label class="switch">
+                    <input type="checkbox">
+                    <span class="sliderForPayment slider round"></span>
+                    </label>
 
                 
 

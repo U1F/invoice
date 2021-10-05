@@ -140,7 +140,7 @@
     width:8%;
 }
 
-input.error,
+.q-invoice-page input.error,
 select.error,
 textarea.error {
   outline: none;
@@ -149,23 +149,22 @@ textarea.error {
   border-style: solid;
 }
 
-input.error:valid {
+.q-invoice-page input.error:valid {
     border-style: auto;
     border-color: inherit;
   }
-select.error:valid {
+  .q-invoice-page select.error:valid {
     border-style: auto;
     border-color: inherit;
   }
-textarea.error:valid {
+  .q-invoice-page textarea.error:valid {
     border-style: auto;
     border-color: inherit;
   }
 
 
-  .circle
+  .q-invoice-page .circle
   {
-    display:none;
     width: 20px;
     height: 20px;
     margin-left:4px;
@@ -174,4 +173,6 @@ textarea.error:valid {
     border: 0px solid;
     background-color: #ff0000;
     opacity: 0.8;
+    
+    display: inline-block;
   }

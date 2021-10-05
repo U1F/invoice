@@ -188,25 +188,48 @@ jQuery(function ($) {
     setFilterButtonInactive($('#filterButtons').find('div.active'))
     // console.log($(event.target).parent())
     setFilterButtonActive($(event.target).parent())
+    if ($(event.target).parent().attr('id') === 'showAllInvoices') {
+      $('tr.cancelled').css('display', 'table-row')
+      $('tr.open').css('display', 'table-row')
+      // BOILER-PLATE CODE AHEAD
+      $('.deleteRow').css('display', 'none')
+      $('.reactivateInvoice').css('display', 'none')
+      $('.dashicons-archive').css('display', 'inline-block  ')
+      $('.switch').css('display', 'inline-block')
+      $('.invoicePaid').css('display', 'inline-block')
+    }
 
     if ($(event.target).parent().attr('id') === 'showOpenInvoices') {
       $('tr.open').css('display', 'table-row')
       $('tr.cancelled').css('display', 'none')
+
+      $('.deleteRow').css('display', 'inline-block')
+      $('.reactivateInvoice').css('display', 'none')
+      $('.dashicons-archive').css('display', 'none')
+      $('.switch').css('display', 'none')
+      $('.invoicePaid').css('display', 'inline-block')
     }
 
     if ($(event.target).parent().attr('id') === 'showCancelledInvoices') {
       $('tr.cancelled').css('display', 'table-row')
       $('tr.open').css('display', 'none')
+
+      $('.deleteRow').css('display', 'none')
+      $('.reactivateInvoice').css('display', 'inline-block')
+      $('.dashicons-archive').css('display', 'none')
+      $('.switch').css('display', 'none')
+      $('.invoicePaid').css('display', 'none')
     }
 
     if ($(event.target).parent().attr('id') === 'showInvoicesWithDunning') {
       $('tr.cancelled').css('display', 'none')
       $('tr.open').css('display', 'none')
-    }
 
-    if ($(event.target).parent().attr('id') === 'showAllInvoices') {
-      $('tr.cancelled').css('display', 'table-row')
-      $('tr.open').css('display', 'table-row')
+      $('.deleteRow').css('display', 'none')
+      $('.reactivateInvoice').css('display', 'none')
+      $('.dashicons-archive').css('display', 'none')
+      $('.switch').css('display', 'none')
+      $('.invoicePaid').css('display', 'inline-block')
     }
   })
 
@@ -630,6 +653,9 @@ jQuery(function ($) {
     checkNoStartStatus()
 
     checkIfBanksHaveBeenSetupinSettings()
+
+    $('.deleteRow').css('display', 'none')
+    $('.reactivateInvoice').css('display', 'none')
 
     // After submit add error class to invalid input fields
     inputs.forEach(input => {
