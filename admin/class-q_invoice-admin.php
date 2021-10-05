@@ -1207,6 +1207,25 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             wp_die();
         }
 
+        /**
+         * Function checkInvoiceServerSide
+         * 
+         * @return void
+         *
+         * @since 1.0.0
+         */
+        public function checkInvoiceServerSide()
+        {
+            check_ajax_referer($this->_plugin_name . "_nonce");
+
+            $response = Interface_Invoices::getInvoiceData($_POST["id"]);
+            
+            //echo json_encode($response[$_POST['item']]);
+            //echo json_encode($_POST['item']);
+            echo json_encode($response[0][$_POST['item']]);
+
+            wp_die();
+        }
 
         /**
          * Function saveContactServerSide.

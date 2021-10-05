@@ -260,7 +260,7 @@ function showOpenInvoices()
                     </span>
 
                     <label class="switch">
-                    <input type="checkbox">
+                    <input type="checkbox"  class="checkboxForCancellation">
                     <span class="sliderForCancellation slider round"></span>
                     </label>
 
@@ -273,7 +273,7 @@ function showOpenInvoices()
                     </span>
 
                     <label class="switch">
-                    <input type="checkbox">
+                    <input type="checkbox" class="checkboxForPayment">
                     <span class="sliderForPayment slider round"></span>
                     </label>
 

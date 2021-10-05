@@ -141,6 +141,44 @@ jQuery(function ($) {
   // .......####....####...######..##..##..........######..##..##....##....######..##..##..##......##..##...####...######........
   // ............................................................................................................................
   // ............................................................................................................................
+  $('.columnEdit').on('click', '.sliderForPayment', function (event) {
+    console.log($(event.target).parent().find('input').prop('checked'))
+    // <label class="switch">
+    // <input type="checkbox">
+    // <span class="sliderForCancellation slider round"></span>
+    // </label>
+  })
+  $('.columnEdit').on('click', '.sliderForCancellation', function (event) {
+    console.log($(event.target).parent().find('input').prop('checked'))
+    // <label class="switch">
+    // <input type="checkbox">
+    // <span class="sliderForCancellation slider round"></span>
+    // </label>
+  })
+  $('.columnEdit').on('click', '.markAsPaid', function (event) {
+    // console.log($(event.target).closest('tr').attr('value'))
+    // console.log($(event.target).parent().find('input').prop('checked'))
+    $(event.target).closest('tr').find('.sliderForPayment').click()
+    // checkboxForCancellation sliderForCancellation
+    // Payment
+    // $(event.target).parent().find('input').prop('checked')
+    // <label class="switch">
+    // <input type="checkbox">
+    // <span class="sliderForCancellation slider round"></span>
+    // </label>
+  })
+  $('.columnEdit').on('click', '.archiveSwitchLabel', function (event) {
+    // console.log($(event.target).closest('tr').attr('value'))
+    // console.log($(event.target).parent().find('input').prop('checked'))
+    $(event.target).closest('tr').find('.sliderForCancellation').click()
+    // checkboxForCancellation sliderForCancellation
+    // Payment
+    // $(event.target).parent().find('input').prop('checked')
+    // <label class="switch">
+    // <input type="checkbox">
+    // <span class="sliderForCancellation slider round"></span>
+    // </label>
+  })
 
   $(document).keydown(function (e) {
     if (e.keyCode === 27) {
@@ -162,10 +200,6 @@ jQuery(function ($) {
     if ($(event.target).is('.overlay')) {
       $('.dialogOverlay').css('display', 'none')
     }
-  })
-
-  $('#cancelInvoiceEdit').click(function (event) {
-    $('#invoiceOverlay').css('display', 'none')
   })
 
   function setFilterButtonActive (target) {
@@ -380,6 +414,25 @@ jQuery(function ($) {
       }
     })
   }
+  checkInvoice(33, 'invoice_date')
+  function checkInvoice (invoiceId, item) {
+    jQuery.ajax({
+      type: 'POST',
+      url: q_invoice_ajaxObject.ajax_url,
+      data: {
+        action: 'checkInvoiceServerSide',
+        _ajax_nonce: q_invoice_ajaxObject.nonce,
+        id: invoiceId,
+        item: item
+      },
+      success: function (response) {
+        console.log(JSON.parse(response))
+      },
+      error: function (errorThrown) {
+        console.log(errorThrown)
+      }
+    })
+  }
 
   function fetchLastInvoiceID () {
     jQuery.ajax({
@@ -534,18 +587,16 @@ jQuery(function ($) {
         })
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
-        // console.log(errorThrown)
+        console.log(errorThrown)
       }
     })
   }
 
-  // Form Handling
   $('table#tableInvoices').on('click', '.edit', function (event) {
-    if ($(event.target).is('.download')) { return }
-    if ($(event.target).is('.deleteRow')) { return }
     if ($(event.target).is('.switch')) { return }
     if ($(event.target).is('.switch > *')) { return }
-
+    if ($(event.target).is('.columnEdit')) { return }
+    if ($(event.target).is('.columnEdit > *')) { return }
     $('#invoiceOverlay').css('display', 'block')
 
     // reset form
@@ -565,9 +616,6 @@ jQuery(function ($) {
     $('div#nonceFields').html('')
     $('div#nonceFields').prepend(nonceFieldForUpdating)
 
-    // Ajax Call for Invoice Data
-    currencySign = '€'
-    fetchInvoiceCurrency()
     // fetch id from span attribute id="edit-n", where  n = id of invoice
     editInvoice(jQuery(this).attr('id').split('-')[1])
   })
@@ -653,6 +701,10 @@ jQuery(function ($) {
     checkNoStartStatus()
 
     checkIfBanksHaveBeenSetupinSettings()
+
+    // Ajax Call for Invoice Data
+    currencySign = '€'
+    fetchInvoiceCurrency()
 
     $('.deleteRow').css('display', 'none')
     $('.reactivateInvoice').css('display', 'none')
