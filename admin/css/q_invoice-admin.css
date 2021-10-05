@@ -121,7 +121,10 @@
     border-color:red;
     
 }
-
+.q-invoice-page td.fiftyCol, th.twentyCol
+{
+    width:2%;
+}
 
 .q-invoice-page td.fiftyCol, th.fiftyCol
 {
@@ -163,16 +166,3 @@ textarea.error {
   }
 
 
-  .q-invoice-page .circle
-  {
-    width: 20px;
-    height: 20px;
-    margin-left:4px;
-    margin-right:4px;
-    border-radius: 50%;
-    border: 0px solid;
-    background-color: #ff0000;
-    opacity: 0.8;
-    
-    display: inline-block;
-  }

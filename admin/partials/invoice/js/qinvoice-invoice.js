@@ -141,44 +141,78 @@ jQuery(function ($) {
   // .......####....####...######..##..##..........######..##..##....##....######..##..##..##......##..##...####...######........
   // ............................................................................................................................
   // ............................................................................................................................
+
+  function markInvoice (invoiceID, data) {
+    updateInvoiceHeaderItem(invoiceID, data)
+  }
+
+  function unmarkInvoice (invoiceID, data) {
+    updateInvoiceHeaderItem(invoiceID, data)
+  }
+
   $('.columnEdit').on('click', '.sliderForPayment', function (event) {
-    console.log($(event.target).parent().find('input').prop('checked'))
-    // <label class="switch">
-    // <input type="checkbox">
-    // <span class="sliderForCancellation slider round"></span>
-    // </label>
+    // COLOR and CLASS
+    // IS ARCHIVED OR PAID MORE IMPORTANT OR SAME TIME
+    const sliderBox = $(event.target).parent()
+    const invoiceRow = sliderBox.parent().parent()
+    if (!sliderBox.find('input').prop('checked')) {
+      const data = { paydate: formatDate(new Date()) }
+      markInvoice(getRowNumber(event.target), data)
+      // invoiceRow.find('.invoiceStatusIcon').css('background-color', 'green')
+      invoiceRow.find('.invoiceStatusIcon').addClass('paid')
+      invoiceRow.find('.invoiceStatusIcon').removeClass('open')
+      invoiceRow.addClass('paid')
+      invoiceRow.removeClass('open')
+    } else {
+      const data = { paydate: '' }
+      unmarkInvoice(getRowNumber(event.target), data)
+      // invoiceRow.find('.invoiceStatusIcon').css('background-color', 'yellow')
+      invoiceRow.find('.invoiceStatusIcon').removeClass('paid')
+      invoiceRow.find('.invoiceStatusIcon').addClass('open')
+      invoiceRow.removeClass('paid')
+      invoiceRow.addClass('open')
+    }
   })
+
   $('.columnEdit').on('click', '.sliderForCancellation', function (event) {
-    console.log($(event.target).parent().find('input').prop('checked'))
-    // <label class="switch">
-    // <input type="checkbox">
-    // <span class="sliderForCancellation slider round"></span>
-    // </label>
+    const sliderBox = $(event.target).parent()
+    const invoiceRow = sliderBox.parent().parent()
+
+    if (!sliderBox.find('input').prop('checked')) {
+      const isCancelled = { cancellation: 1 }
+      markInvoice(getRowNumber(event.target), isCancelled)
+
+      const dateCancelled = { cancellation_date: formatDate(new Date()) }
+      markInvoice(getRowNumber(event.target), dateCancelled)
+      invoiceRow.find('.invoiceStatusIcon').addClass('cancelled')
+      invoiceRow.find('.invoiceStatusIcon').removeClass('active')
+      invoiceRow.addClass('cancelled')
+      invoiceRow.removeClass('active')
+    } else {
+      const isCancelled = { cancellation: 0 }
+      markInvoice(getRowNumber(event.target), isCancelled)
+
+      const dateCancelled = { cancellation_date: '' }
+      markInvoice(getRowNumber(event.target), dateCancelled)
+      invoiceRow.find('.invoiceStatusIcon').removeClass('cancelled')
+      invoiceRow.find('.invoiceStatusIcon').addClass('active')
+      invoiceRow.removeClass('cancelled')
+      invoiceRow.addClass('active')
+      // invoiceRow.find('.invoiceStatusIcon').css('background-color', 'green')
+    }
   })
+
   $('.columnEdit').on('click', '.markAsPaid', function (event) {
-    // console.log($(event.target).closest('tr').attr('value'))
-    // console.log($(event.target).parent().find('input').prop('checked'))
     $(event.target).closest('tr').find('.sliderForPayment').click()
-    // checkboxForCancellation sliderForCancellation
-    // Payment
-    // $(event.target).parent().find('input').prop('checked')
-    // <label class="switch">
-    // <input type="checkbox">
-    // <span class="sliderForCancellation slider round"></span>
-    // </label>
   })
+
   $('.columnEdit').on('click', '.archiveSwitchLabel', function (event) {
-    // console.log($(event.target).closest('tr').attr('value'))
-    // console.log($(event.target).parent().find('input').prop('checked'))
     $(event.target).closest('tr').find('.sliderForCancellation').click()
-    // checkboxForCancellation sliderForCancellation
-    // Payment
-    // $(event.target).parent().find('input').prop('checked')
-    // <label class="switch">
-    // <input type="checkbox">
-    // <span class="sliderForCancellation slider round"></span>
-    // </label>
   })
+
+  function getRowNumber (eventsOriginalTarget) {
+    return $(eventsOriginalTarget).closest('tr').attr('value')
+  }
 
   $(document).keydown(function (e) {
     if (e.keyCode === 27) {
@@ -225,6 +259,8 @@ jQuery(function ($) {
     if ($(event.target).parent().attr('id') === 'showAllInvoices') {
       $('tr.cancelled').css('display', 'table-row')
       $('tr.open').css('display', 'table-row')
+      $('tr.dunning').css('display', 'table-row')
+      $('tr.paid').css('display', 'table-row')
       // BOILER-PLATE CODE AHEAD
       $('.deleteRow').css('display', 'none')
       $('.reactivateInvoice').css('display', 'none')
@@ -236,6 +272,8 @@ jQuery(function ($) {
     if ($(event.target).parent().attr('id') === 'showOpenInvoices') {
       $('tr.open').css('display', 'table-row')
       $('tr.cancelled').css('display', 'none')
+      $('tr.dunning').css('display', 'table-row')
+      $('tr.paid').css('display', 'none')
 
       $('.deleteRow').css('display', 'inline-block')
       $('.reactivateInvoice').css('display', 'none')
@@ -246,7 +284,7 @@ jQuery(function ($) {
 
     if ($(event.target).parent().attr('id') === 'showCancelledInvoices') {
       $('tr.cancelled').css('display', 'table-row')
-      $('tr.open').css('display', 'none')
+      $('tr.active').css('display', 'none')
 
       $('.deleteRow').css('display', 'none')
       $('.reactivateInvoice').css('display', 'inline-block')
@@ -258,12 +296,27 @@ jQuery(function ($) {
     if ($(event.target).parent().attr('id') === 'showInvoicesWithDunning') {
       $('tr.cancelled').css('display', 'none')
       $('tr.open').css('display', 'none')
+      $('tr.dunning').css('display', 'table-row')
+      $('tr.paid').css('display', 'none')
 
       $('.deleteRow').css('display', 'none')
       $('.reactivateInvoice').css('display', 'none')
       $('.dashicons-archive').css('display', 'none')
       $('.switch').css('display', 'none')
       $('.invoicePaid').css('display', 'inline-block')
+    }
+
+    if ($(event.target).parent().attr('id') === 'showInvoicesPaid') {
+      $('tr.cancelled').css('display', 'none')
+      $('tr.open').css('display', 'none')
+      $('tr.dunning').css('display', 'none')
+      $('tr.paid').css('display', 'table-row')
+
+      $('.deleteRow').css('display', 'inline-block')
+      $('.reactivateInvoice').css('display', 'none')
+      $('.dashicons-archive').css('display', 'none')
+      $('.switch').css('display', 'none')
+      $('.invoicePaid').css('display', 'none')
     }
   })
 
@@ -414,7 +467,7 @@ jQuery(function ($) {
       }
     })
   }
-  checkInvoice(33, 'invoice_date')
+
   function checkInvoice (invoiceId, item) {
     jQuery.ajax({
       type: 'POST',
@@ -426,7 +479,26 @@ jQuery(function ($) {
         item: item
       },
       success: function (response) {
-        console.log(JSON.parse(response))
+        console.log(response)
+      },
+      error: function (errorThrown) {
+        console.log(errorThrown)
+      }
+    })
+  }
+
+  function updateInvoiceHeaderItem (invoiceId, data) {
+    jQuery.ajax({
+      type: 'POST',
+      url: q_invoice_ajaxObject.ajax_url,
+      data: {
+        action: 'updateInvoiceHeaderServerSide',
+        _ajax_nonce: q_invoice_ajaxObject.nonce,
+        id: invoiceId,
+        data: data
+      },
+      success: function (response) {
+        console.log(response)
       },
       error: function (errorThrown) {
         console.log(errorThrown)
@@ -636,6 +708,27 @@ jQuery(function ($) {
     const formattedDate = date.slice(8, 10) + '.' + date.slice(5, 7) + '.' + date.slice(0, 4)
     row.find('td.columnDate').text(formattedDate)
     row.attr('class', 'edit open')
+  }
+
+  function formatDate (date) {
+    const unformattedDate = new Date(date)
+    const year = unformattedDate.getFullYear()
+    let month = '0'
+    let day = '0'
+
+    if (parseInt(unformattedDate.getMonth()) < 10) {
+      month = '0' + unformattedDate.getMonth()
+    } else {
+      month = unformattedDate.getMonth()
+    }
+
+    if (parseInt(unformattedDate.getDate()) < 10) {
+      day = '0' + unformattedDate.getDate()
+    } else {
+      day = unformattedDate.getMonth()
+    }
+
+    return year + '-' + month + '-' + day
   }
 
   function addNewInvoiceRow (invoice, id) {

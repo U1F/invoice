@@ -53,8 +53,8 @@ border: 1px solid #c0c0c0;
 .q-invoice-page div.filterButton{
     
     flex: 0 1 auto;
-    min-width:19%;
-    width:20%;
+    min-width:16%;
+    width:17%;
     color: #3c434a;
     border: 1px solid #c0c0c0;
     background-color: white;

@@ -1,6 +1,3 @@
-.q-invoice-page tr.cancelled{
-    display:none;
-}
 .q-invoice-page #newInvoice {
     float:right;
 }
@@ -28,10 +25,10 @@
     padding-left:20px;
 }
 
-.q-invoice-page table#tableInvoices thead#tableInvoicesHeader{
-    
+.q-invoice-page table#tableInvoices thead#tableInvoicesHeader {    
     border-color:   #F7F7F7;
 }
+
 .q-invoice-page table#invtableInvoicesoices thead#tableInvoicesHeader td#openInvoices{
     padding-top: 5px;
     padding-bottom: 5px;
@@ -134,3 +131,49 @@ td.manage-column.columnEdit > * {vertical-align: middle;}
 dashicons-download {
     vertical-align: middle;
 }
+
+.q-invoice-page .circle
+{
+  width: 20px;
+  height: 20px;
+  margin-left:4px;
+  margin-right:4px;
+  border-radius: 50%;
+  border: 0px solid;
+  background-color: #ff0000;
+  opacity: 0.8;
+  
+  display: inline-block;
+}
+
+.q-invoice-page .circle.paid.active {
+    background-color: green;
+}
+
+.q-invoice-page .circle.paid.active {
+    background-color: green;
+}
+
+.q-invoice-page .circle.paid.cancelled {
+  background-color: lightgreen;
+}
+
+.q-invoice-page .circle.cancelled {
+  background-color: grey;
+}
+
+.q-invoice-page .circle.dunning {
+    background-color: red;
+}
+
+.q-invoice-page .circle.dunning.cancelled {
+    background-color: lightsalmon;
+}
+
+.q-invoice-page .circle.open {
+    background-color: yellow;
+}
+.q-invoice-page .circle.open.cancelled {
+    background-color: gray;
+}
+

@@ -41,7 +41,12 @@
                 Dunning
             </button>
         </div>
-        
+        <div class="filterButton inactive" id="showInvoicesPaid">
+            <button class="invoiceButton">
+                Paid
+            </button>
+        </div>
+
         <div class="filterButton" id="searchInvoices">
             <input type=text>
             </input>
@@ -72,8 +77,13 @@ function showHeader()
             <tr>
 
                 <th scope="col" id="invoiceID" 
-                    class="manage-column fiftyCol columnInvoiceID sortable asc">
-                    <?php _e('Invoice ID', 'Ev'); ?>
+                    class="manage-column twentyCol columnInvoiceID sortable asc">
+                    <?php _e('ID', 'Ev'); ?>
+                </th>
+
+                <th scope="col" id="invoiceStatus" 
+                    class="manage-column twentyCol columnStatus">
+                    <?php _e('Status', 'Ev'); ?>
                 </th>
 
                 <th scope="col" id="companyName" 
@@ -96,13 +106,13 @@ function showHeader()
                     <?php _e('Total', 'Ev'); ?>
                 </th>
 
-                <th scope="col" id="paydate" 
+                <th scope="col" id="invoiceDate" 
                     class="manage-column fiftyCol columnDate">
                     <?php _e('Invoice Date', 'Ev'); ?>
                 </th>
                 
 
-                <th scope="col" id="invoiceStatus" 
+                <th scope="col" id="invoiceEdit" 
                     class="manage-column hundredCol columnEdit ">
                     <?php _e('', 'Ev'); ?>
                 </th>
@@ -137,12 +147,10 @@ function showOpenInvoices()
     
 
     foreach ($invoice_headers as $invoice_header) {
-
-        $count++;
+        $paid = 0;
+        $dunning = false;
+        $cancelled = false;
         $type="open";
-        if ($invoice_header->cancellation) {
-            $type="cancelled";
-        }
 
         $invoice_details = $GLOBALS['wpdb']->get_results(
             "SELECT * FROM ".
@@ -153,8 +161,27 @@ function showOpenInvoices()
             "ORDER BY position ASC"
         );
         
+        $paymentDate = date_parse_from_format(
+            "Y-m-d", 
+            $invoice_header->paydate
+        );
+
+        if (checkdate($paymentDate['month'],$paymentDate['day'], $paymentDate['year'])) {
+            $paid=1;
+
+        }
+        
+
+        $count++;
+        
+        if ($invoice_header->cancellation) {
+            $type="cancelled";
+            $cancelled=true;
+        }
+
         $netSum = 0;
         $totalSum= 0;
+
         foreach ($invoice_details as $invoice_detail) {
         
             $netSum = $netSum + intval($invoice_detail->sum);
@@ -165,22 +192,65 @@ function showOpenInvoices()
         
         ?>
             <tr 
-                class="edit <?php echo $type?>" 
+                class="edit<?php
+         
+                    if ($paid) {
+                        echo ' paid ';
+                    } else if ($dunning) {
+                        echo ' dunning ';
+                    } else {
+                        echo ' open ';
+                    } 
+
+                    if ($cancelled) {
+                        echo ' cancelled ';
+                    }
+                    else {
+                        echo ' active ';
+                    } 
+                         
+                ?>" 
                 id="edit-<?php echo $invoice_header->id;?>"
                 value="<?php echo $invoice_header->id;?>"
-            >
-                
+            >    
 
-                <td class="manage-column fiftyCol columnInvoiceID sortable asc">
+            <td class="manage-column twentyCol columnInvoiceID sortable asc">
                 <span>
                         <?php echo $invoice_header->id ?>
-                    </span>
-                </td>
+                </span>
+            </td>
+            
+            <td class="manage-column twentyCol columnStatus">
+                <div class="circle invoiceStatusIcon<?php 
+                         if ($paid) {
+                            echo ' paid ';
+                        } else if ($dunning) {
+                            echo ' dunning ';
+                        } else {
+                            echo ' open ';
+                        } 
+    
+                        if ($cancelled) {
+                            echo ' cancelled ';
+                        }
+                        else {
+                            echo ' active ';
+                        } 
+                    ?> 
+                ">
+                </div>
+                <div style="display:hidden">
+                    <?php
+                        echo $paymentDate['year']; 
+                    ?>
+                </div>
+            </td>
+                
 
-                <td
-                    class="manage-column hundredCol columnCompany">
-                    <?php echo $invoice_header->company ?> 
-                </td>
+            <td
+                class="manage-column hundredCol columnCompany">
+                <?php echo $invoice_header->company ?> 
+            </td>
 
                 <td
                     class="manage-column hundredCol columnName">
@@ -209,17 +279,14 @@ function showOpenInvoices()
                 <td class="manage-column fiftyCol columnDate"
                     
                 >
-                <?php echo date("d.m.Y", strtotime($invoice_header->invoice_date)); ?>
+                <?php 
+                    echo date("d.m.Y", strtotime($invoice_header->invoice_date)) 
+                ?>
                 </td>
 
                
 
                 <td class="manage-column hundredCol columnEdit">
-
-              
-                    
-                    <div class="circle">
-                    </div>
 
                     <a 
                         style="font-size:20px; display:inline" 
@@ -260,7 +327,16 @@ function showOpenInvoices()
                     </span>
 
                     <label class="switch">
-                    <input type="checkbox"  class="checkboxForCancellation">
+                    <input type="checkbox"  class="checkboxForCancellation"
+                        <?php          
+                            
+                            if ($invoice_header->cancellation)
+                            {
+                                echo "checked";
+            
+                            }
+                        ?>
+                    >
                     <span class="sliderForCancellation slider round"></span>
                     </label>
 
@@ -273,13 +349,26 @@ function showOpenInvoices()
                     </span>
 
                     <label class="switch">
-                    <input type="checkbox" class="checkboxForPayment">
+                    <input type="checkbox" class="checkboxForPayment" 
+                        <?php          
+                            $paymentDate = date_parse_from_format(
+                                "Y-m-d", 
+                                $invoice_header->paydate
+                            );
+        
+                            if (checkdate(
+                                $paymentDate['month'],
+                                $paymentDate['day'], 
+                                $paymentDate['year']
+                            )
+                            ) {
+                                echo "checked";
+            
+                            }
+                        ?>
+                    >
                     <span class="sliderForPayment slider round"></span>
                     </label>
-
-                
-
-                    
             </tr>
             
             

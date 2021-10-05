@@ -206,13 +206,13 @@ if (!class_exists('QI_Invoice')) {
                 'deleteInvoice',
                 'editInvoice',
                 'checkInvoice',
+                'updateInvoiceHeader',
                 'fetchLastID',                
                 'fetchCurrency',
                 'saveContact',                
                 'fetchContacts',
                 'fetchCurrency',
                 'updateContact',
-                
                 'deleteContact',
                 'editContact', 
                 

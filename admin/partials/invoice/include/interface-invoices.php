@@ -80,26 +80,37 @@ class Interface_Invoices
      */
     static public function deactivateInvoice(int $id)
     {
-        
-
         $GLOBALS['wpdb']->update( 
             $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_HEADER,
             array(
-                
-                
-                'date_changed'  => "2021-12-31",
-                
+                'date_changed'  => date("Y-d-m"),
                 'cancellation'  => true,
-                'date_cancellation'  => "2021-12-31"
-                
-                
+                'date_cancellation'  => date("Y-d-m")           
             ),
             array ('id' => $id)
         );
-
         return 0;
     }
-
+    /**
+     * Function updateInvoiceHeaderItem
+     * 
+     * TODO try and prepare
+     * TODO DETAILS
+     * 
+     * @param int $id 
+     * @param array $data
+     * 
+     * @return bool
+     */
+    static public function updateInvoiceHeaderItem(int $id, array $data)
+    {
+        $GLOBALS['wpdb']->update( 
+            $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_HEADER,
+            $data,
+            array ('id' => $id)
+        );
+        return 0;
+    }
     /**
      * Function getInvoiceData
      * 
@@ -127,6 +138,27 @@ class Interface_Invoices
         );
 
         return $data;
+
+    }
+
+    /**
+     * Function getInvoiceDataItem
+     * 
+     * @param int $invoiceID
+     * @param string $invoiceItem
+     * 
+     * @return Object
+     */
+    static public function getInvoiceDataItem($invoiceID, $invoiceItem)
+    {
+        $data = $GLOBALS['wpdb']->get_results(
+            "SELECT ".$invoiceItem." FROM ".
+            $GLOBALS['wpdb']->prefix . 
+            \QI_Invoice_Constants::TABLE_QI_HEADER.
+            " WHERE id = ".$invoiceID
+        );
+        
+        return get_object_vars($data[0]);
 
     }
 
