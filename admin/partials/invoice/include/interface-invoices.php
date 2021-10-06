@@ -256,6 +256,16 @@ class Interface_Invoices
      */
     static private function _copyFromArrayToDB($invoice_array)
     {
+        $numberOfExistingRows = $GLOBALS['wpdb']->get_var("SELECT COUNT(id) FROM ". $GLOBALS['wpdb']->prefix . QI_Invoice_Constants::TABLE_QI_HEADER . ";");
+        if($numberOfExistingRows == 0){
+
+            $GLOBALS['wpdb']->query(
+                'ALTER TABLE '.
+                $GLOBALS['wpdb']->prefix.
+                \QI_Invoice_Constants::TABLE_QI_HEADER.
+                ' AUTO_INCREMENT = '. $invoice_array['invoice_id']
+            );
+        }
         $GLOBALS['wpdb']->show_errors();
         
         $GLOBALS['wpdb']->insert( 

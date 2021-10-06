@@ -32,7 +32,7 @@
 
         <div class="filterButton inactive" id="showCancelledInvoices">
             <button class="invoiceButton">
-                Cancelled
+                Archiv / Cancelled
             </button>
         </div>
         
@@ -320,7 +320,7 @@ function showOpenInvoices()
                     </span>
                     <span style="font-size: 20px;"
                         id="<?php echo $invoice_header->id;?>" 
-                        title="Archive/Canelled"
+                        title="Archive/Cancelled"
                         class="archiveSwitchLabel dashicons dashicons-archive"
                         value="<?php echo $invoice_header->id;?>"
                     >

@@ -598,6 +598,10 @@ jQuery(function ($) {
     recalcPos()
     recalcLineSum()
     recalcTotalSum()
+    if($('#q-invoice-new-readonly-dummy').text() == "0"){
+      $('#prefix').attr('readonly', false);
+      $('#invoice_id').attr('readonly', false);
+    }
   })
 
   function editInvoice (invoiceId) {
@@ -783,7 +787,7 @@ jQuery(function ($) {
                     '<span> Invoice succesfully saved! </span>' +
                     '</div>')
 
-        $('.messageSuccess').delay(5000).fadeOut(800)
+        $('.messageSuccess').delay(1000).fadeOut(800)
       }
     })
 

@@ -23,10 +23,18 @@
                 plugins_url('../../img/qanuk_snowflake.png', __FILE__)
             );?>">
         <span id="qanuk_title"><?php _e('Q invoice by qanuk.io', 'Ev'); ?></span>
-        <span id="qanuk_title_media"><?php _e('Settings', 'Ev'); ?></span> 
+        <span id="qanuk_title_media"><?php _e('Settings', 'Ev'); ?></span>
+        <?php
+            //When Rows in database make prefix and id readonly
+            $empty = $GLOBALS['wpdb']->get_var("SELECT COUNT(id) FROM ".
+            $GLOBALS['wpdb']->prefix . 
+            QI_Invoice_Constants::TABLE_QI_HEADER . ";");
+        ?>
+        <p id="q-invoice-readonly-dummy" style="display: none"><?php echo $empty;?></p> 
        
         
     </h1>
+
     
     <form 
         id='qinvoiceSettings' 
