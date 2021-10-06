@@ -83,7 +83,7 @@ function showHeader()
 
                 <th scope="col" id="invoiceStatus" 
                     class="manage-column twentyCol columnStatus">
-                    <?php _e('Status', 'Ev'); ?>
+                    <?php _e('', 'Ev'); ?>
                 </th>
 
                 <th scope="col" id="companyName" 
@@ -94,6 +94,11 @@ function showHeader()
                 <th scope="col" id="name" 
                     class="manage-column hundredCol columnName">
                     <?php _e('Name', 'Ev'); ?>
+                </th>
+
+                <th scope="col" id="invoiceDate" 
+                    class="manage-column fiftyCol columnDate">
+                    <?php _e('Invoice Date', 'Ev'); ?>
                 </th>
                 
                 <th scope="col" id="sumNet" 
@@ -106,15 +111,19 @@ function showHeader()
                     <?php _e('Total', 'Ev'); ?>
                 </th>
 
-                <th scope="col" id="invoiceDate" 
-                    class="manage-column fiftyCol columnDate">
-                    <?php _e('Invoice Date', 'Ev'); ?>
+                <th scope="col" id="invoiceDunning" 
+                    class="manage-column fiftyCol columnDunning">
+                    <?php _e('Dunning', 'Ev'); ?>
                 </th>
-                
+
+                <th scope="col" id="invoiceStatusPaid" 
+                    class="manage-column fiftyCol columnStatusPaid">
+                    <?php _e('Status', 'Ev'); ?>
+                </th>
 
                 <th scope="col" id="invoiceEdit" 
-                    class="manage-column hundredCol columnEdit ">
-                    <?php _e('', 'Ev'); ?>
+                    class="manage-column fiftyCol columnEdit ">
+                    <?php _e('Edit', 'Ev'); ?>
                 </th>
 
                 
@@ -239,11 +248,7 @@ function showOpenInvoices()
                     ?> 
                 ">
                 </div>
-                <div style="display:hidden">
-                    <?php
-                        echo $paymentDate['year']; 
-                    ?>
-                </div>
+                
             </td>
                 
 
@@ -263,6 +268,14 @@ function showOpenInvoices()
                     </span>
                 </td>
 
+                <td class="manage-column fiftyCol columnDate"
+                    
+                >
+                <?php 
+                    echo date("d.m.Y", strtotime($invoice_header->invoice_date)) 
+                ?>
+                </td>
+
                 <td class="manage-column fiftyCol columnNet">
                     <span>
                         <?php echo number_format($netSum, 2, ',', ' ') ." €" ?>
@@ -276,71 +289,14 @@ function showOpenInvoices()
                     </span>
                 </td>
 
-                <td class="manage-column fiftyCol columnDate"
-                    
-                >
-                <?php 
-                    echo date("d.m.Y", strtotime($invoice_header->invoice_date)) 
-                ?>
+                <td class="manage-column fiftyCol columnDunning">
+                <span>
+                        <?php echo number_format("999,99", 2, ',', ' ')." €" ?>
+                    </span>
                 </td>
 
-               
-
-                <td class="manage-column hundredCol columnEdit">
-
-                    <a 
-                        style="font-size:20px; display:inline" 
-                        target="_top"
-                        href=
-                        <?php 
-                        echo "'".plugins_url('q_invoice/pdf/Invoice'. $invoice_header->id.'.pdf')."'    "
-                        ?>                        "
-                        id="<?php echo "download-".$invoice_header->id;?>"
-                        title="Download Invoice"
-                        class="downloadInvoice download dashicons dashicons-download"
-                        value="<?php echo $invoice_header->id?>"
-                        download
-                    >
-                    </a>
-
-                    <span style="font-size: 20px"
-                        id="<?php echo $invoice_header->id; //should be delete-ID-?>" 
-                        title="Cancel Invoice"
-                        class="deleteRow delete dashicons dashicons-no"
-                        value="<?php echo $invoice_header->id;?>"
-                    >
-                    </span>
-
-                    <span style="font-size: 20px;"
-                        id="<?php echo $invoice_header->id;?>" 
-                        title="Reactivate Invoice"
-                        class="reactivateInvoice reactivate dashicons dashicons-undo"
-                        value="<?php echo $invoice_header->id;?>"
-                    >
-                    </span>
-                    <span style="font-size: 20px;"
-                        id="<?php echo $invoice_header->id;?>" 
-                        title="Archive/Canelled"
-                        class="archiveSwitchLabel dashicons dashicons-archive"
-                        value="<?php echo $invoice_header->id;?>"
-                    >
-                    </span>
-
-                    <label class="switch">
-                    <input type="checkbox"  class="checkboxForCancellation"
-                        <?php          
-                            
-                            if ($invoice_header->cancellation)
-                            {
-                                echo "checked";
-            
-                            }
-                        ?>
-                    >
-                    <span class="sliderForCancellation slider round"></span>
-                    </label>
-
-                    <span style="font-size: 20px;"
+                <td class="manage-column fiftyCol columnStatusPaid">
+                <span style="font-size: 20px;"
                         id="<?php echo $invoice_header->id;?>" 
                         title="Mark As Paid"
                         class="invoicePaid markAsPaid dashicons dashicons-money-alt"
@@ -369,6 +325,48 @@ function showOpenInvoices()
                     >
                     <span class="sliderForPayment slider round"></span>
                     </label>
+                
+                </td>
+
+                
+
+               
+
+                <td class="manage-column fiftyCol columnEdit">
+
+                    <a 
+                        style="font-size:20px; display:inline" 
+                        target="_top"
+                        href=
+                        <?php 
+                        echo "'".plugins_url('q_invoice/pdf/Invoice'. $invoice_header->id.'.pdf')."'    "
+                        ?>                        "
+                        id="<?php echo "download-".$invoice_header->id;?>"
+                        title="Download Invoice"
+                        class="downloadInvoice download dashicons dashicons-download"
+                        value="<?php echo $invoice_header->id?>"
+                        download
+                    >
+                    </a>
+                    
+
+                    <span style="font-size: 20px"
+                        id="<?php echo $invoice_header->id; //should be delete-ID-?>" 
+                        title="Cancel Invoice"
+                        class="deleteRow delete dashicons dashicons-no"
+                        value="<?php echo $invoice_header->id;?>"
+                    >
+                    </span>
+
+                    <span style="font-size: 20px;"
+                        id="<?php echo $invoice_header->id;?>" 
+                        title="Reactivate Invoice"
+                        class="reactivateInvoice reactivate dashicons dashicons-undo"
+                        value="<?php echo $invoice_header->id;?>"
+                    >
+                    </span>
+
+                    
             </tr>
             
             

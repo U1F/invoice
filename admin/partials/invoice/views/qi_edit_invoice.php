@@ -452,7 +452,8 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             <input type="number"  
                             name="amountOfItems[]" 
                             class="amountOfItems"
-                            value="">
+                            value=""
+                            required>
                         </td>
 
                         <td class="invoiceItemsDescription">
@@ -461,6 +462,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                 name="itemDescription[]" 
                                 class="itemDescription"
                                 value=""
+                                required
                             >
                         </td>
 
@@ -472,6 +474,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                     name="itemPrice[]" 
                                     value="" 
                                     step="0.01"
+                                    required
                                 >
                                 <span><?php echo $currencySymbol ?></span>
                             </nobr>     
@@ -513,6 +516,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             <select 
                                 name="itemTax[]" 
                                 class="itemTax" 
+                                required
                                 > 
                                 <?php 
                                 for ($iterator = 0; $iterator < $taxTypes; $iterator++) {

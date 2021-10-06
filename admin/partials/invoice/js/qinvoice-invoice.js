@@ -43,29 +43,31 @@ jQuery(function ($) {
     let netSum = 0
     let taxSum = 0.0
     let totalSum = 0
-
+    // Generate an associative Array with the tax values as indexes
     Array.from(document.querySelector('select.itemTax').options).forEach(function (optionElement) {
-      taxes.push([optionElement.value, 0.0])
+      taxes.push([parseInt(optionElement.value), 0.0])
     })
 
+    // For each line in the form do:
     $('.wp-list-table-qInvcLine').each(function () {
+      // Get the selected tax type
       const taxType = parseInt($(this).find('select.itemTax option:selected').val())
-
+      // Get the computed product of discounted items
       const linePrice = parseFloat($(this).find('.qInvcLine-total').text())
 
-      if (linePrice && taxType) {
+      // Save the Sum of taxes for each tax type and the sum of all taxTypes as well as the sum without taxation
+      if ($.isNumeric(linePrice) && $.isNumeric(taxType)) {
         taxes.forEach(function (item) {
-          if (item[0] === taxType) {
+          if ($.isNumeric(item[0]) && item[0] === taxType) {
             item[1] = item[1] + (linePrice * taxType / 100)
           }
         })
       }
-
       netSum = netSum + linePrice
     })
-
+    // Remove obsolete tax lines
     $('tr.invoiceTaxSums').remove()
-
+    // add a Tax line for each tax type
     taxes.forEach(function (item) {
       if (item[1]) {
         taxSum = taxSum + item[1]
@@ -89,7 +91,7 @@ jQuery(function ($) {
       }
     })
     totalSum = netSum + taxSum
-
+    // Write formatted Sums to the form
     $('.qInvc-total-summe').eq(0).text(addPointToThousands(currencyFormatDE(netSum)))
     $('.qInvc-total-brutto-summe').eq(0).text(addPointToThousands(currencyFormatDE(totalSum)))
   }
@@ -150,65 +152,39 @@ jQuery(function ($) {
     updateInvoiceHeaderItem(invoiceID, data)
   }
 
-  $('.columnEdit').on('click', '.sliderForPayment', function (event) {
-    // COLOR and CLASS
+  $('.columnStatusPaid').on('click', '.sliderForPayment', function (event) {
     // IS ARCHIVED OR PAID MORE IMPORTANT OR SAME TIME
     const sliderBox = $(event.target).parent()
     const invoiceRow = sliderBox.parent().parent()
+
     if (!sliderBox.find('input').prop('checked')) {
       const data = { paydate: formatDate(new Date()) }
       markInvoice(getRowNumber(event.target), data)
-      // invoiceRow.find('.invoiceStatusIcon').css('background-color', 'green')
+
       invoiceRow.find('.invoiceStatusIcon').addClass('paid')
       invoiceRow.find('.invoiceStatusIcon').removeClass('open')
       invoiceRow.addClass('paid')
       invoiceRow.removeClass('open')
+      //invoiceRow.find('.columnEdit').find('.delete').css('color', 'lightgrey')
+      //invoiceRow.find('.columnEdit').find('.delete').removeClass('deleteRow')
     } else {
       const data = { paydate: '' }
       unmarkInvoice(getRowNumber(event.target), data)
-      // invoiceRow.find('.invoiceStatusIcon').css('background-color', 'yellow')
+
       invoiceRow.find('.invoiceStatusIcon').removeClass('paid')
       invoiceRow.find('.invoiceStatusIcon').addClass('open')
       invoiceRow.removeClass('paid')
       invoiceRow.addClass('open')
+      //invoiceRow.find('.columnEdit').find('.delete').css('color', 'black')
+      //invoiceRow.find('.columnEdit').find('.delete').addClass('deleteRow')
     }
   })
 
-  $('.columnEdit').on('click', '.sliderForCancellation', function (event) {
-    const sliderBox = $(event.target).parent()
-    const invoiceRow = sliderBox.parent().parent()
 
-    if (!sliderBox.find('input').prop('checked')) {
-      const isCancelled = { cancellation: 1 }
-      markInvoice(getRowNumber(event.target), isCancelled)
-
-      const dateCancelled = { cancellation_date: formatDate(new Date()) }
-      markInvoice(getRowNumber(event.target), dateCancelled)
-      invoiceRow.find('.invoiceStatusIcon').addClass('cancelled')
-      invoiceRow.find('.invoiceStatusIcon').removeClass('active')
-      invoiceRow.addClass('cancelled')
-      invoiceRow.removeClass('active')
-    } else {
-      const isCancelled = { cancellation: 0 }
-      markInvoice(getRowNumber(event.target), isCancelled)
-
-      const dateCancelled = { cancellation_date: '' }
-      markInvoice(getRowNumber(event.target), dateCancelled)
-      invoiceRow.find('.invoiceStatusIcon').removeClass('cancelled')
-      invoiceRow.find('.invoiceStatusIcon').addClass('active')
-      invoiceRow.removeClass('cancelled')
-      invoiceRow.addClass('active')
-      // invoiceRow.find('.invoiceStatusIcon').css('background-color', 'green')
-    }
-  })
-
-  $('.columnEdit').on('click', '.markAsPaid', function (event) {
+  $('.columnStatusPaid').on('click', '.markAsPaid', function (event) {
     $(event.target).closest('tr').find('.sliderForPayment').click()
   })
 
-  $('.columnEdit').on('click', '.archiveSwitchLabel', function (event) {
-    $(event.target).closest('tr').find('.sliderForCancellation').click()
-  })
 
   function getRowNumber (eventsOriginalTarget) {
     return $(eventsOriginalTarget).closest('tr').attr('value')
@@ -226,6 +202,9 @@ jQuery(function ($) {
 
   $('#invoiceOverlay').click(function (event) {
     if ($(event.target).is('.overlay')) {
+      $('#invoiceOverlay').css('display', 'none')
+    }
+    if ($(event.target).is('.cancelButton')) {
       $('#invoiceOverlay').css('display', 'none')
     }
   })
@@ -257,14 +236,15 @@ jQuery(function ($) {
     // console.log($(event.target).parent())
     setFilterButtonActive($(event.target).parent())
     if ($(event.target).parent().attr('id') === 'showAllInvoices') {
+      // BOILER-PLATE CODE AHEAD
       $('tr.cancelled').css('display', 'table-row')
       $('tr.open').css('display', 'table-row')
       $('tr.dunning').css('display', 'table-row')
       $('tr.paid').css('display', 'table-row')
-      // BOILER-PLATE CODE AHEAD
-      $('.deleteRow').css('display', 'none')
+      // Only show relevant Invoices
+      $('.deleteRow').css('display', 'inline-block')
       $('.reactivateInvoice').css('display', 'none')
-      $('.dashicons-archive').css('display', 'inline-block  ')
+      // $('.dashicons-archive').css('display', 'inline-block  ')
       $('.switch').css('display', 'inline-block')
       $('.invoicePaid').css('display', 'inline-block')
     }
@@ -277,7 +257,7 @@ jQuery(function ($) {
 
       $('.deleteRow').css('display', 'inline-block')
       $('.reactivateInvoice').css('display', 'none')
-      $('.dashicons-archive').css('display', 'none')
+      // $('.dashicons-archive').css('display', 'none')
       $('.switch').css('display', 'none')
       $('.invoicePaid').css('display', 'inline-block')
     }
@@ -288,7 +268,7 @@ jQuery(function ($) {
 
       $('.deleteRow').css('display', 'none')
       $('.reactivateInvoice').css('display', 'inline-block')
-      $('.dashicons-archive').css('display', 'none')
+      // $('.dashicons-archive').css('display', 'none')
       $('.switch').css('display', 'none')
       $('.invoicePaid').css('display', 'none')
     }
@@ -301,7 +281,7 @@ jQuery(function ($) {
 
       $('.deleteRow').css('display', 'none')
       $('.reactivateInvoice').css('display', 'none')
-      $('.dashicons-archive').css('display', 'none')
+      // $('.dashicons-archive').css('display', 'none')
       $('.switch').css('display', 'none')
       $('.invoicePaid').css('display', 'inline-block')
     }
@@ -312,9 +292,9 @@ jQuery(function ($) {
       $('tr.dunning').css('display', 'none')
       $('tr.paid').css('display', 'table-row')
 
-      $('.deleteRow').css('display', 'inline-block')
+      $('.deleteRow').css('display', 'none')
       $('.reactivateInvoice').css('display', 'none')
-      $('.dashicons-archive').css('display', 'none')
+      // $('.dashicons-archive').css('display', 'none')
       $('.switch').css('display', 'none')
       $('.invoicePaid').css('display', 'none')
     }
@@ -376,6 +356,7 @@ jQuery(function ($) {
     Clone.find('input:text').val('')
     Clone.find('input').val('')
     Clone.find('select.itemTax').val('0')
+    Clone.find('input.invoicepositionHidden').val(Clone.find('.invoiceItemsNo > span').text())
     // Clone.find('span.qInvcLine-total').text('');
     // Clone.find('.invoiceItemsTotal nobr').html('<span class="qInvcLine-total"></span>');
     Clone.find('.invoiceItemsTotal nobr').css('display', 'none')
@@ -575,10 +556,7 @@ jQuery(function ($) {
   }
 
   $('#newInvoice').click(function () {
-    $('#invoiceOverlay').css('display', 'block')
-    // reset form
-    $('#invoiceForm')[0].reset()
-    $('.wp-list-table-qInvcLine:not(:first)').remove()
+    reopenInvoiceForm()
 
     // prepare form for Ajax Action "save"
     $('h2#formHeaderEdit').css('display', 'none')
@@ -610,10 +588,8 @@ jQuery(function ($) {
         id: invoiceId
       },
       success: function (response, textStatus, XMLHttpRequest) {
-        // console.log(response)
-
-        $('#invoiceOverlay').css('display', 'block')
         obj = JSON.parse(response)
+        console.log(obj)
 
         writeInvoiceHeadertoFormField('#invoice_id', 'id')
         writeInvoiceHeadertoFormField('#prefix ', 'prefix')
@@ -664,30 +640,42 @@ jQuery(function ($) {
     })
   }
 
+  function reopenInvoiceForm () {
+    // Remove error class from previously invalid form input fields
+    $('input').removeClass('error')
+    // Reset Form Data
+    $('#invoiceForm')[0].reset()
+    // Remove old form details from previously edited Invoices
+    $('.wp-list-table-qInvcLine:not(:first)').remove()
+    // Show the Form
+    $('#invoiceOverlay').css('display', 'block')
+    // Set Customer ID to readonly
+    $('#loc_id').prop('readonly', true)
+    // Empty nonce fields to update them according to Edit/New Invoice function
+    $('div#nonceFields').html('')
+  }
+
   $('table#tableInvoices').on('click', '.edit', function (event) {
+    // Do nothing if clicking on specific UI Elements
     if ($(event.target).is('.switch')) { return }
     if ($(event.target).is('.switch > *')) { return }
     if ($(event.target).is('.columnEdit')) { return }
     if ($(event.target).is('.columnEdit > *')) { return }
-    $('#invoiceOverlay').css('display', 'block')
+    if ($(event.target).is('.columnStatusPaid')) { return }
+    if ($(event.target).is('.columnStatusPaid > *')) { return }
+    // Common Task for openning the invoice form
+    reopenInvoiceForm()
 
-    // reset form
-    $('#invoiceForm')[0].reset()
-    $('.wp-list-table-qInvcLine:not(:first)').remove()
-
-    // prepare form for Ajax Action "update"
+    // Show the header for Editing only
     $('h2#formHeaderEdit').css('display', 'block')
     $('h2#formHeaderCreate').css('display', 'none')
-    $('#loc_id').prop('readonly', true)
-
+    // Show the button for Editing only
     $('#updateInvoice').css('display', 'inline')
     $('#saveInvoice').css('display', 'none')
+    // Prepare AJAX Function
     $("input[name='action']").val('updateInvoiceServerSide')
-
-    // Only the nonce for saving is needed so we empty the DIV and fill it with the saved nonce
-    $('div#nonceFields').html('')
+    // Only the nonce for saving is needed
     $('div#nonceFields').prepend(nonceFieldForUpdating)
-
     // fetch id from span attribute id="edit-n", where  n = id of invoice
     editInvoice(jQuery(this).attr('id').split('-')[1])
   })
@@ -764,6 +752,7 @@ jQuery(function ($) {
     $('#invoiceForm').ajaxForm({
       success: function (response) {
         const serverResponse = JSON.parse(response).data
+        console.log(serverResponse)
         const invoiceID = JSON.parse(response).id
 
         if (serverResponse.action === 'updateInvoiceServerSide') {
@@ -773,7 +762,7 @@ jQuery(function ($) {
           addNewInvoiceRow(serverResponse, invoiceID)
         }
 
-        $('#invoiceForm').trigger('reset')
+        // $('#invoiceForm').trigger('reset')
 
         $('#invoiceOverlay').css('display', 'none')
 
@@ -799,7 +788,7 @@ jQuery(function ($) {
     currencySign = '€'
     fetchInvoiceCurrency()
 
-    $('.deleteRow').css('display', 'none')
+    $('.deleteRow').css('display', 'inline-block')
     $('.reactivateInvoice').css('display', 'none')
 
     // After submit add error class to invalid input fields
@@ -812,6 +801,8 @@ jQuery(function ($) {
         false
       )
     })
+
+    checkInvoice(1, 'zip')
 
     // Prevent chrome to autofill&autocomplete
     $('input[type=text], input[type=number], input[type=email], input[type=password]').focus(function (e) {

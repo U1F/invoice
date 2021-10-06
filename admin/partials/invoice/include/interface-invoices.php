@@ -206,8 +206,7 @@ class Interface_Invoices
         );
         
     
-        $arrayLength = count($invoice_array['itemDescription']);
-
+        // Delete old details after looking for their count
         $rowcount = $GLOBALS['wpdb']->get_var(
             "SELECT COUNT(*) FROM ".
             $GLOBALS['wpdb']->prefix . 
@@ -226,6 +225,9 @@ class Interface_Invoices
             );
         }
 
+        // Look for the count of new invoice details
+        $arrayLength = count($invoice_array['itemDescription']);
+
         for ($i = 0; $i < $arrayLength; $i++) {
             
             
@@ -233,7 +235,7 @@ class Interface_Invoices
                 $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_DETAILS,
                 array(
                     'invoice_id' => $invoice_array['invoice_id'],
-                    'position' => $invoice_array['position'][$i],
+                    'position' => $i+1,
                     'description' => $invoice_array['itemDescription'][$i],
                     'amount' => $invoice_array['amountOfItems'][$i],
                     'amount_plan' => $invoice_array['itemPrice'][$i],

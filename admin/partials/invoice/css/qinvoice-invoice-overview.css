@@ -62,6 +62,13 @@
     text-align: left;
 }
 
+.q-invoice-page table#tableInvoices .columnStatus{
+    text-align: center;
+}
+.q-invoice-page table#tableInvoices .columnDate{
+    text-align: right;
+}
+
 .q-invoice-page table#tableInvoices .columnNet{
     text-align: right;
 }
@@ -70,14 +77,18 @@
     text-align: right;
 }
 
-.q-invoice-page table#tableInvoices .columnDate{
+.q-invoice-page table#tableInvoices .columnDunning{
     text-align: right;
 }
 
 
+.q-invoice-page table#tableInvoices .columnStatusPaid{
+    text-align: right;
+}
 
 .q-invoice-page table#tableInvoices .columnEdit{
     text-align: right;
+    
 }
 
 .q-invoice-page div.confirmationBox
