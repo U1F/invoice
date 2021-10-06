@@ -289,8 +289,17 @@ function showOpenInvoices()
 
                 <td class="manage-column fiftyCol columnDunning">
                 <span>
-                        <?php if(intVal($invoice_detail->dunning) > 0)
-                        echo number_format($invoice_detail->dunning, 2, ',', '.')." €" ?>
+                        <?php 
+                        $dunningFee1 = intVal(get_option('qi_settings')['dunning1']);
+                        $dunningFee2 = intVal(get_option('qi_settings')['dunning2']);
+                            if(intVal($invoice_header->dunning1)){
+                                if(intVal($invoice_header->dunning2)){
+                                    echo number_format($dunningFee1 + $dunningFee2, 2, ',', '.')." €";
+                                } else {
+                                    echo number_format($dunningFee1, 2, ',', '.')." €";
+                                }
+                            }
+                         ?>
                     </span>
                 </td>
 

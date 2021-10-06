@@ -302,7 +302,7 @@ jQuery(function ($) {
     const searchPattern = $(this).val()
 
     $('table#tableInvoices tbody').find('tr').each(function (index) {
-      if ($(this).find('td').text().includes(searchPattern.toLowerCase()) && searchPattern) {
+      if ($(this).find('td').text().toLowerCase().includes(searchPattern.toLowerCase()) && searchPattern) {
         $(this).css('display', 'table-row')
       } else {
         $(this).css('display', 'none')
@@ -796,6 +796,11 @@ jQuery(function ($) {
         false
       )
     })
+
+    // Does not work as intended
+    // inputs.forEach(input => {
+    //   $(input)[0].setCustomValidity('')
+    // })
 
     checkInvoice(1, 'zip')
 
