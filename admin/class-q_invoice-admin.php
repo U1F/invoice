@@ -611,7 +611,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                     "name" => $name,
                     "type" => $type,
                     "placeholder" => $placeholder,
-                    "required" => $required,
+                    "required" => $required
                 ]
             );
         }
