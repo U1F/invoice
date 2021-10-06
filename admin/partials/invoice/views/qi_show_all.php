@@ -117,12 +117,12 @@ function showHeader()
                 </th>
 
                 <th scope="col" id="invoiceStatusPaid" 
-                    class="manage-column fiftyCol columnStatusPaid">
-                    <?php _e('Status', 'Ev'); ?>
+                    class="manage-column twentyCol columnStatusPaid">
+                    <?php _e('Paid', 'Ev'); ?>
                 </th>
 
                 <th scope="col" id="invoiceEdit" 
-                    class="manage-column fiftyCol columnEdit ">
+                    class="manage-column twentyCol columnEdit ">
                     <?php _e('Edit', 'Ev'); ?>
                 </th>
 
@@ -159,7 +159,6 @@ function showOpenInvoices()
         $paid = 0;
         $dunning = false;
         $cancelled = false;
-        $type="open";
 
         $invoice_details = $GLOBALS['wpdb']->get_results(
             "SELECT * FROM ".
@@ -184,7 +183,6 @@ function showOpenInvoices()
         $count++;
         
         if ($invoice_header->cancellation) {
-            $type="cancelled";
             $cancelled=true;
         }
 
@@ -278,24 +276,25 @@ function showOpenInvoices()
 
                 <td class="manage-column fiftyCol columnNet">
                     <span>
-                        <?php echo number_format($netSum, 2, ',', ' ') ." €" ?>
+                        <?php echo number_format($netSum, 2, ',', '.') ." €" ?>
                     </span>
                     
                 </td>
 
                 <td class="manage-column fiftyCol columnTotal">
                 <span>
-                        <?php echo number_format($totalSum, 2, ',', ' ')." €" ?>
+                        <?php echo number_format($totalSum, 2, ',', '.')." €" ?>
                     </span>
                 </td>
 
                 <td class="manage-column fiftyCol columnDunning">
                 <span>
-                        <?php echo number_format("999,99", 2, ',', ' ')." €" ?>
+                        <?php if(intVal($invoice_detail->dunning) > 0)
+                        echo number_format($invoice_detail->dunning, 2, ',', '.')." €" ?>
                     </span>
                 </td>
 
-                <td class="manage-column fiftyCol columnStatusPaid">
+                <td class="manage-column twentyCol columnStatusPaid">
                 <span style="font-size: 20px;"
                         id="<?php echo $invoice_header->id;?>" 
                         title="Mark As Paid"
@@ -332,7 +331,7 @@ function showOpenInvoices()
 
                
 
-                <td class="manage-column fiftyCol columnEdit">
+                <td class="manage-column twentyCol columnEdit">
 
                     <a 
                         style="font-size:20px; display:inline" 
@@ -350,10 +349,14 @@ function showOpenInvoices()
                     </a>
                     
 
-                    <span style="font-size: 20px"
-                        id="<?php echo $invoice_header->id; //should be delete-ID-?>" 
+                    <span style="font-size: 20px; <?php
+                        if ($paid){echo 'color: lightgrey;';}
+                        ?>"
+                        id="<?php echo $invoice_header->id;?>" 
                         title="Cancel Invoice"
-                        class="deleteRow delete dashicons dashicons-no"
+                        class="delete <?php
+                        if (!$paid){echo 'deleteRow';}
+                        ?> dashicons dashicons-no"
                         value="<?php echo $invoice_header->id;?>"
                     >
                     </span>

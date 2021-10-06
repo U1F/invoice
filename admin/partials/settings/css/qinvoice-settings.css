@@ -158,7 +158,7 @@
 }
 
 .q-invoice-page section.invoiceSettings input#ZIP {
-    width: 60px;
+    width: 48px;
 }
 
 .q-invoice-page section.invoiceSettings input#prefix {
@@ -174,6 +174,7 @@ section.invoiceSettings input[id^="tax"] {
 }
 
 .q-invoice-page section.invoiceSettings input#currencySign {
+    display:none;
     width: 36px;
 }
 
@@ -219,8 +220,6 @@ section.invoiceSettings input[id^="tax"] {
 .q-invoice-page section.invoiceSettings div.tableSpacer {
     margin-bottom: 2px;
 }
-
-
 
 .q-invoice-page  textarea {
     padding-left: 8px;
@@ -276,9 +275,6 @@ button#showLogoButton {
     border-radius: 4px;
     vertical-align: middle;
     color: #3c434a;
-   
-   
-   
     cursor: pointer;
     
 }

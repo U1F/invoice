@@ -314,7 +314,10 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                 );?>  
                             </td>
 
-                            <td class="inputsRightTable">
+                            <td 
+                                class="inputsRightTable"
+                            >
+                            <label class="container">
                                 <input 
                                     type="radio" 
                                     id="bank1" 
@@ -323,26 +326,35 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                     get_option('qi_settings')['bankName1']
                                 );?> " 
                                     checked="checked"
+                                    style="display:inline-block"
                                 >
+                                <span class="checkmark"></span>
+                                </label>
+                                
                             </td>
                         </tr>
 
                         <tr id="tableRowBank2">
-                            <td class="labelsRightTable">
-                                <?php echo (
-                                    get_option('qi_settings')['bankName2']
-                                );?>
-                            </td>
+                            <td 
+                                class="labelsRightTable" 
+                            ><?php
+                                echo get_option('qi_settings')['bankName2']; 
+                            ?></td>
 
                             <td class="inputsRightTable">
+                                <label class="container">
                                 <input 
                                     type="radio" 
                                     id="bank2" 
                                     name="bank" 
-                                    value="<?php echo (
-                                    get_option('qi_settings')['bankName2']
-                                );?> "
+                                    value="<?php 
+                                    echo get_option('qi_settings')['bankName2'];
+                                    ?>"
+                                    style="display:inline-block"
                                 >
+                                <span class="checkmark"></span>
+                                </label>
+                                
                             </td>
                         </tr>
                         <tr>

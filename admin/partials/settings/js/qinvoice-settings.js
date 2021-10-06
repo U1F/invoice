@@ -36,5 +36,8 @@ jQuery(function ($) {
     const currencySignInput = $('#currencySign').clone()
     $('#currencySign').parent().parent().remove()
     $('select#invoiceCurrency').parent().append(currencySignInput)
+    if ($('select#invoiceCurrency').val() === 'Other') {
+      $('#currencySign').css('display', 'inline-block')
+    }
   })
 })

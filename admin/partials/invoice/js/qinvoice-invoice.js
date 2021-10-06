@@ -165,8 +165,8 @@ jQuery(function ($) {
       invoiceRow.find('.invoiceStatusIcon').removeClass('open')
       invoiceRow.addClass('paid')
       invoiceRow.removeClass('open')
-      //invoiceRow.find('.columnEdit').find('.delete').css('color', 'lightgrey')
-      //invoiceRow.find('.columnEdit').find('.delete').removeClass('deleteRow')
+      invoiceRow.find('.columnEdit').find('.delete').css('color', 'lightgrey')
+      invoiceRow.find('.columnEdit').find('.delete').removeClass('deleteRow')
     } else {
       const data = { paydate: '' }
       unmarkInvoice(getRowNumber(event.target), data)
@@ -175,16 +175,14 @@ jQuery(function ($) {
       invoiceRow.find('.invoiceStatusIcon').addClass('open')
       invoiceRow.removeClass('paid')
       invoiceRow.addClass('open')
-      //invoiceRow.find('.columnEdit').find('.delete').css('color', 'black')
-      //invoiceRow.find('.columnEdit').find('.delete').addClass('deleteRow')
+      invoiceRow.find('.columnEdit').find('.delete').css('color', 'black')
+      invoiceRow.find('.columnEdit').find('.delete').addClass('deleteRow')
     }
   })
-
 
   $('.columnStatusPaid').on('click', '.markAsPaid', function (event) {
     $(event.target).closest('tr').find('.sliderForPayment').click()
   })
-
 
   function getRowNumber (eventsOriginalTarget) {
     return $(eventsOriginalTarget).closest('tr').attr('value')
@@ -242,11 +240,11 @@ jQuery(function ($) {
       $('tr.dunning').css('display', 'table-row')
       $('tr.paid').css('display', 'table-row')
       // Only show relevant Invoices
-      $('.deleteRow').css('display', 'inline-block')
+      $('.delete').css('display', 'inline-block')
       $('.reactivateInvoice').css('display', 'none')
       // $('.dashicons-archive').css('display', 'inline-block  ')
       $('.switch').css('display', 'inline-block')
-      $('.invoicePaid').css('display', 'inline-block')
+      $('.invoicePaid').css('display', 'none')
     }
 
     if ($(event.target).parent().attr('id') === 'showOpenInvoices') {
@@ -255,18 +253,18 @@ jQuery(function ($) {
       $('tr.dunning').css('display', 'table-row')
       $('tr.paid').css('display', 'none')
 
-      $('.deleteRow').css('display', 'inline-block')
+      $('.delete').css('display', 'inline-block')
       $('.reactivateInvoice').css('display', 'none')
       // $('.dashicons-archive').css('display', 'none')
-      $('.switch').css('display', 'none')
-      $('.invoicePaid').css('display', 'inline-block')
+      $('.switch').css('display', 'inline-block')
+      $('.invoicePaid').css('display', 'none')
     }
 
     if ($(event.target).parent().attr('id') === 'showCancelledInvoices') {
       $('tr.cancelled').css('display', 'table-row')
       $('tr.active').css('display', 'none')
 
-      $('.deleteRow').css('display', 'none')
+      $('.delete').css('display', 'none')
       $('.reactivateInvoice').css('display', 'inline-block')
       // $('.dashicons-archive').css('display', 'none')
       $('.switch').css('display', 'none')
@@ -279,7 +277,7 @@ jQuery(function ($) {
       $('tr.dunning').css('display', 'table-row')
       $('tr.paid').css('display', 'none')
 
-      $('.deleteRow').css('display', 'none')
+      $('.delete').css('display', 'none')
       $('.reactivateInvoice').css('display', 'none')
       // $('.dashicons-archive').css('display', 'none')
       $('.switch').css('display', 'none')
@@ -292,7 +290,7 @@ jQuery(function ($) {
       $('tr.dunning').css('display', 'none')
       $('tr.paid').css('display', 'table-row')
 
-      $('.deleteRow').css('display', 'none')
+      $('.delete').css('display', 'none')
       $('.reactivateInvoice').css('display', 'none')
       // $('.dashicons-archive').css('display', 'none')
       $('.switch').css('display', 'none')
@@ -387,12 +385,12 @@ jQuery(function ($) {
   })
 
   function checkIfBanksHaveBeenSetupinSettings () {
-    if (checkIfStringIsEmpty($('tr#tableRowBank2 > td.inputsRightTable > input#bank2').val())) {
-      $('tr#tableRowBank2').css('display', 'none')
-      $('tr#tableRowBank1').css('display', 'none')
+    if ($('tr#tableRowBank2 input#bank2').val()) {
+      $('tr#tableRowBank2').css('display', 'table-row')
+      $('tr#tableRowBank1').css('display', 'table-row')
     } else {
-      $('tr#tableRowBank1').css('display', 'block')
-      $('tr#tableRowBank2').css('display', 'block')
+      $('tr#tableRowBank1').css('display', 'none')
+      $('tr#tableRowBank2').css('display', 'none')
     }
   }
 
@@ -410,10 +408,6 @@ jQuery(function ($) {
     } else {
       $('input#noStart').prop('readonly', false)
     }
-  }
-
-  function checkIfStringIsEmpty (stringPattern) {
-    return /[^a-zA-Z0-9]/g.test(stringPattern)
   }
 
   // ...............................................
@@ -790,6 +784,7 @@ jQuery(function ($) {
 
     $('.deleteRow').css('display', 'inline-block')
     $('.reactivateInvoice').css('display', 'none')
+    $('.invoicePaid').css('display', 'none')
 
     // After submit add error class to invalid input fields
     inputs.forEach(input => {
