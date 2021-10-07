@@ -26,18 +26,20 @@ function Invoice_list()
     
     ?>
 <div class="q-invoice-page invoice-page" style="overflow: auto;">
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
-<div id="archiveInvoice" class="overlay dialogOverlay">
+    <!-- This file should primarily consist of HTML with a little bit of PHP. -->
+    <div id="archiveInvoice" class="overlay dialogOverlay">
         <div class="confirmationBox">
-            <div style="padding-top:20px; padding-left:40px; padding-right:40px; padding-bottom:20px; ">
-                <h3>Move Invoice to Archive?</h3>
+            <div style="margin: 1.5em 0 1em 0; text-align: center;">
+                <h3 style="color:red;" >Move Invoice to Archive?</h3>
                 <p>This will not delete the invoice. It will be stored in the archive. </p>
-                <button class="qInvoiceFormButton cancelButton" id="cancelRemoveInvoice">
-                    Cancel
-                </button>
-                <button class="qInvoiceFormButton submitButton" id="confirmRemoveInvoice" style=float:right;>
-                    Remove
-                </button>
+                <div style="text-align: center; margin: 1em 0;">
+                    <button class="qInvoiceFormButton cancelButton" id="cancelRemoveInvoice">
+                        Cancel
+                    </button>
+                    <button class="qInvoiceFormButton submitButton" id="confirmRemoveInvoice">
+                        Remove
+                    </button>
+                </div>
             </div>
         </div>
         
@@ -60,6 +62,14 @@ function Invoice_list()
             </button>  
         </span>
     </h1>
+
+    <?php
+        //When Rows in database make prefix and id readonly
+        $empty = $GLOBALS['wpdb']->get_var("SELECT COUNT(id) FROM ".
+        $GLOBALS['wpdb']->prefix . 
+        QI_Invoice_Constants::TABLE_QI_HEADER . ";");
+    ?>
+    <p id="q-invoice-new-readonly-dummy" style="display: none"><?php echo $empty;?></p> 
     
         
         

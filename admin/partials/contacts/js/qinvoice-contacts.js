@@ -162,7 +162,7 @@ jQuery(function($) {
                     '<span>Contact successfully saved!</span>' +
                     '</div>');
                 
-                $(".messageSuccess").delay(5000).fadeOut(800);
+                $(".messageSuccess").delay(1000).fadeOut(800);
 
                 obj=JSON.parse(response);
                 if (obj['type'] =="save") {

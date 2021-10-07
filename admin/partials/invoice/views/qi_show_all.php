@@ -32,7 +32,7 @@
 
         <div class="filterButton inactive" id="showCancelledInvoices">
             <button class="invoiceButton">
-                Cancelled
+                Archiv / Cancelled
             </button>
         </div>
         
@@ -378,6 +378,37 @@ function showOpenInvoices()
                     >
                     </span>
 
+                    <?php // Start ToDo: einmal checken ob du das wirklich brauchst ?>
+                    <span style="font-size: 20px;"
+                        id="<?php echo $invoice_header->id;?>" 
+                        title="Archive/Cancelled"
+                        class="archiveSwitchLabel dashicons dashicons-archive"
+                        value="<?php echo $invoice_header->id;?>"
+                    >
+                    </span>
+
+                    <label class="switch">
+                    <input type="checkbox"  class="checkboxForCancellation"
+                        <?php          
+                            
+                            if ($invoice_header->cancellation)
+                            {
+                                echo "checked";
+            
+                            }
+                        ?>
+                    >
+                    <span class="sliderForCancellation slider round"></span>
+                    </label>
+
+                    <span style="font-size: 20px;"
+                        id="<?php echo $invoice_header->id;?>" 
+                        title="Mark As Paid"
+                        class="invoicePaid markAsPaid dashicons dashicons-money-alt"
+                        value="<?php echo $invoice_header->id;?>"
+                    >
+                    </span>
+                    <?php // End TODO?>
                     
             </tr>
             
