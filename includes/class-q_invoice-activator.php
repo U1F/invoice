@@ -35,47 +35,45 @@ if (!class_exists('QI_Invoice_Activator')) {
         private $_table_i_details;
         
         public $defaultOptions = array(    
-            "company" => "testHoersaal",
-            "additional" => "testQanuk",
-            "firstName" => "testBob",
-            "lastName" => "testMüller",
-            "street" => "testStraße",
-            "ZIP" => "99999",
-            "city" => "testStadt",
+            "company" => "",
+            "additional" => "",
+            "firstName" => "",
+            "lastName" => "",
+            "street" => "",
+            "ZIP" => "",
+            "city" => "",
             "logoFileUrl" => "",
             "logoFileFile" => "",
-            //"prefix" => "test",
-            //"noStart" => "1",
             "invoiceCurrency" => "",
-            "invoiceUnit" => "Amount",
+            "invoiceUnit" => "",
             "taxTypes" => 2,
             "tax1" => 19,
             "tax2" => 7,
-            "mail" => "support@qanuk.io",
-            "phone" => "01719999999",
-            "website" => "testWebsite",
-            "facebook" => "testFacebook",
-            "instagram" => "testInsta",
+            "mail" => "",
+            "phone" => "",
+            "website" => "",
+            "facebook" => "",
+            "instagram" => "",
             "reminder" => 2,
             "dunning1" => 8,
-            "dunning2" => 100,
-            "IBAN1" => "DE998888888887777777",
-            "BIC1" => "TESTBIC1XX",
-            "bankName1" => "testBank",
+            "dunning2" => 10,
+            "IBAN1" => "",
+            "BIC1" => "",
+            "bankName1" => "",
             "BankSpacer1" => "",
             "IBAN2" => "",
             "BIC2" => "",
             "bankName2" => "",
             "BankSpacer2" => "",
-            "PayPal" => "testPp",
-            "server" => "testServer",
-            "port" => 42,
-            "email" => "testuser@testServer.org",
-            "password" => "testPasswort",
-            "invoiceTextCustomFooter" => "Steuernummer XXXXXXXX ST-ID XXXXXXXXX",
-            "invoiceTextIntro" => "Folgende Leistung stellen wir Ihnen in Rechnung:",
-            "invoiceTextOutro" => "Danke für die gute Zusammenarbeit!",
-            "invoiceTextPaymentDeadline" => "Zahlungsziel: 10 Tage ohne Abzug."
+            "PayPal" => "",
+            "server" => "",
+            "port" => 0,
+            "email" => "",
+            "password" => "",
+            "invoiceTextCustomFooter" => "",
+            "invoiceTextIntro" => "",
+            "invoiceTextOutro" => "",
+            "invoiceTextPaymentDeadline" => ""
         );
 
         /**
@@ -94,12 +92,8 @@ if (!class_exists('QI_Invoice_Activator')) {
             $this_object->_qInvoiceCreateDbInvoiceH();
             $this_object->_qInvoiceCreateDbInvoiceD();
             $this_object->_qInvoiceCreateDbContacts();
-            //$this_object->_setDefaultSettings();
+            $this_object->_setDefaultSettings();
             $this_object->_invoiceCreateDbSettings();
-            // Daniel: 26.06. - hier müssen noch 
-            // alle weiteren Tabellen erzeugt werden
-            // $this_object->q_invoice_create_db_template();
-            
            
         }
         /**
@@ -113,9 +107,15 @@ if (!class_exists('QI_Invoice_Activator')) {
          */
         private function _setDefaultSettings()
         {
-            do_action('qm/debug', 'Activate happened!');
+            $options = get_option('qi_settings');
             
-            update_option('qi_settings', $this->defaultOptions);
+            //update_option('qi_settings', $this->defaultOptions);
+            
+            foreach ($options as $key => $value ) {
+                if (!$value) {
+                    update_option("qi_settings{$key}", '');
+                }
+            }
             
         }
 
@@ -147,8 +147,6 @@ if (!class_exists('QI_Invoice_Activator')) {
             $this->_table_settings = $wpdb->prefix . 
                 QI_Invoice_Constants::TABLE_SETTINGS;
             
-            // Daniel: 26.06. - hier müssen noch 
-            // alle weiteren Tabellen erzeugt werden
         }
 
         /**

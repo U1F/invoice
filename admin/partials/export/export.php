@@ -751,14 +751,15 @@ td.invoiceItemsHeader {
 
                 <div style="font-size:12px; text-align: center;"> 
                 <?php 
-                echo __("Bankverbindung: ", "ev"). $invoiceData[0][0]->bank. "<br>";
-                /*
+                
+                //echo __("Bankverbindung: ", "ev"). $invoiceData[0][0]->bank. "<br>";
+                $bankNumber = $invoiceData[0][0]->bank;
                 echo 
                     __("Bankverbindung: ", "ev"). 
-                    get_option('qi_settings')['bankName1'].' '.
-                    'IBAN: '. get_option('qi_settings')['IBAN1']. ' - '.
-                    'BIC: '.  get_option('qi_settings')['BIC1']. '<br>';
-                */  
+                    get_option('qi_settings')["bankName{$bankNumber}"].' '.
+                    'IBAN: '. get_option('qi_settings')["IBAN{$bankNumber}"]. ' - '.
+                    'BIC: '.  get_option('qi_settings')["BIC{$bankNumber}"]. '<br>';
+                
                 if (get_option('qi_settings')['invoiceTextCustomFooter']) {
                     echo get_option('qi_settings')['invoiceTextCustomFooter'];
                 }

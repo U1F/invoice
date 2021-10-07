@@ -83,14 +83,14 @@
     width: 320px;
 }
 
-.q-invoice-page #company {
+.q-invoice-page #invoiceForm #company {
     height: 36px;
     margin: 0;
     padding-right: 30px;
     width: 100%;
 }
 
-.q-invoice-page #inputDashiconCompanyRegister {
+.q-invoice-page #invoiceForm #inputDashiconCompanyRegister {
     position: absolute;
     bottom: 2px;
     right: 5px;
@@ -98,62 +98,62 @@
     height: 24px;
 }
 
-.q-invoice-page td.inputsLeftTable input#firstname {
+.q-invoice-page #invoiceForm td.inputsLeftTable input#firstname {
     width: 152px;
 }
 
-.q-invoice-page td.inputsLeftTable input#lastname {
+.q-invoice-page #invoiceForm td.inputsLeftTable input#lastname {
     width: 152px;
 }
 
-.q-invoice-page td.inputsLeftTable input#zip {
+.q-invoice-page #invoiceForm td.inputsLeftTable input#zip {
     width: 80px;
 }
 
-.q-invoice-page td.inputsLeftTable input#city {
+.q-invoice-page #invoiceForm td.inputsLeftTable input#city {
     width: 224px;
 }
 
-.q-invoice-page td.inputsLeftTable input#loc_id {
+.q-invoice-page #invoiceForm td.inputsLeftTable input#loc_id {
     width: 60px;
 }
 
 
 /* Spacer between left and right table using flexbox-layout*/
 
-.q-invoice-page div#invoiceInputTableSpacer {
+.q-invoice-page #invoiceForm div#invoiceInputTableSpacer {
     flex-grow: 1;
 }
 
 
 /* Styles for the right table, labels and input fields*/
 
-.q-invoice-page div#invoiceInputTableRight {
+.q-invoice-page #invoiceForm div#invoiceInputTableRight {
     width: 260px;
 }
 
-.q-invoice-page table#invoiceFormInputsRight {
+.q-invoice-page #invoiceForm table#invoiceFormInputsRight {
     font-family: sans-serif;
     font-size: 14px;
     /*border-spacing: 0 12px;*/
 }
 
-.q-invoice-page td.labelsRightTable {
+.q-invoice-page #invoiceForm td.labelsRightTable {
     width: 120px;
     font-weight: bold;
 }
 
-.q-invoice-page td.inputsRightTable {
+.q-invoice-page #invoiceForm td.inputsRightTable {
     width: 144px;
 }
 
-.q-invoice-page td.inputsRightTable input[type=text],
+.q-invoice-page #invoiceForm td.inputsRightTable input[type=text],
 [type=date] {
     width: 140px;
     height: 32px;
 }
 
-.q-invoice-page td.inputsRightTable input#invoice_id {
+.q-invoice-page #invoiceForm td.inputsRightTable input#invoice_id {
     width: 60px;
     height: 32px;
 }
@@ -161,20 +161,20 @@
 
 /* Separator between invoice header and invoice details*/
 
-.q-invoice-page hr {
+.q-invoice-page #invoiceForm hr {
     margin: 5px 0px 25px 0px;
 }
 
 
 /* div that frames the table for the invoice details (items) */
 
-.q-invoice-page div.invoice-items {
+.q-invoice-page #invoiceForm div.invoice-items {
     margin-left: 0px;
     border-radius: 8px;
     border: 1px solid #c0c0c0;
 }
 
-.q-invoice-page table#items {
+.q-invoice-page #invoiceForm table#items {
     table-layout: fixed;
     border-collapse: collapse;
     border-top-left-radius: 8px;
@@ -183,45 +183,45 @@
     background-color: #F7F7F7;
 }
 
-.q-invoice-page table#items input {
+.q-invoice-page #invoiceForm table#items input {
     border-radius: 4px;
     padding-left: 14px;
     height: 32px;
 }
 
-.q-invoice-page table#items input {
+.q-invoice-page #invoiceForm table#items input {
     margin-left: 0px;
     height: 32px;
 }
 
-.q-invoice-page tr#table-invoice-items-header {
+.q-invoice-page #invoiceForm tr#table-invoice-items-header {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     border-bottom: 1px solid #c0c0c0;
 }
 
-.q-invoice-page tr#table-invoice-items-header td {
+.q-invoice-page #invoiceForm tr#table-invoice-items-header td {
     font-weight: bold;
 }
 
-.q-invoice-page table#items td {
+.q-invoice-page #invoiceForm table#items td {
     font-family: sans-serif;
     font-size: 14px;
     padding-right: 15px;
     padding-left: 15px;
 }
 
-.q-invoice-page tr#table-invoice-items-header td {
+.q-invoice-page #invoiceForm tr#table-invoice-items-header td {
     padding-top: 25px;
     padding-bottom: 25px;
 }
 
-.q-invoice-page table#items input[type=number] {
+.q-invoice-page #invoiceForm table#items input[type=number] {
     width: 80px;
     height: 32px;
 }
 
-.q-invoice-page table#items input.qInvcLine-rabatt-absolut {
+.q-invoice-page #invoiceForm table#items input.qInvcLine-rabatt-absolut {
     width: 80px;
     height: 32px;
 }
@@ -230,60 +230,60 @@
     width: 18px;
 }
 
-.q-invoice-page table#items td.invoiceItemsNo {
+.q-invoice-page #invoiceForm table#items td.invoiceItemsNo {
     width: 14px;
 }
 
-.q-invoice-page table#items td.invoiceItemsAmount {
+.q-invoice-page #invoiceForm table#items td.invoiceItemsAmount {
     width: 72px;
 }
 
-.q-invoice-page table#items td.invoiceItemsAmount input[type=number][name='anzahl[]'] {
+.q-invoice-page #invoiceForm table#items td.invoiceItemsAmount input[type=number][name='anzahl[]'] {
     width: 60px;
     height: 32px;
 }
 
-.q-invoice-page table#items td.invoiceItemsDescription {
+.q-invoice-page #invoiceForm table#items td.invoiceItemsDescription {
     width: 100%;
 }
 
-.q-invoice-page table#items td.invoiceItemsDescription input.itemDescription {
+.q-invoice-page #invoiceForm table#items td.invoiceItemsDescription input.itemDescription {
     width: 100%;
 }
 
-.q-invoice-page table#items td.invoiceItemsPrice {
+.q-invoice-page #invoiceForm table#items td.invoiceItemsPrice {
     width: 100px;
 }
 
-.q-invoice-page table#items td.invoiceItemsDiscount {
+.q-invoice-page #invoiceForm table#items td.invoiceItemsDiscount {
     width: 140px;
 }
 
-.q-invoice-page table#items td.invoiceItemsTax {
+.q-invoice-page #invoiceForm table#items td.invoiceItemsTax {
     width: 80px;
 }
 
-.q-invoice-page table#items td.invoiceItemsTotal {
+.q-invoice-page #invoiceForm table#items td.invoiceItemsTotal {
     width: 80px;
     text-align: right;
 }
 
-.q-invoice-page table#items td.invoiceItemsButtons {
+.q-invoice-page #invoiceForm table#items td.invoiceItemsButtons {
     width: 24px;
 }
 
-.q-invoice-page span#invoiceSortHandle {
+.q-invoice-page #invoiceForm span#invoiceSortHandle {
     width: 16px;
     height: 24px;
 }
 
-.q-invoice-page tr.wp-list-table-qInvcLine {
+.q-invoice-page #invoiceForm tr.wp-list-table-qInvcLine {
     border-bottom: 1px solid #c0c0c0;
     background-color: white;
 }
 
 
-.q-invoice-page div#invoice-sums {
+.q-invoice-page #invoiceForm div#invoice-sums {
     font-family: sans-serif;
     font-size: 14px;
     width: 420px;
@@ -295,30 +295,30 @@
     border-radius: 4px;
 }
 
-.q-invoice-page table#sums {
+.q-invoice-page #invoiceForm table#sums {
     margin-left: auto;
     margin-right: auto;
 }
 
-.q-invoice-page td.invoiceSumsAccounts {
+.q-invoice-page #invoiceForm td.invoiceSumsAccounts {
     width: 100px;
     text-align: right;
     padding-right: 28px;
 }
 
-.q-invoice-page td.invoiceSumsLabel {
+.q-invoice-page #invoiceForm td.invoiceSumsLabel {
     width: 100px;
     text-align: left;
     /*background-color:white; */
     padding-left: 28px;
 }
 
-.q-invoice-page table#sums tr#qInvc-total-gross {
+.q-invoice-page #invoiceForm table#sums tr#qInvc-total-gross {
     font-weight: bold;
     border-top: 1px solid #c0c0c0;
 }
 
-.q-invoice-page select#tax-multi {
+.q-invoice-page #invoiceForm select#tax-multi {
     border-radius: 4px !important;
     height: 32px;
     text-align: right;
@@ -332,7 +332,7 @@
 
 
 
-.q-invoice-page select.discountType {
+.q-invoice-page #invoiceForm select.discountType {
     font-family: sans-serif;
     font-size: 14px;
     font-weight: bold;
@@ -343,7 +343,7 @@
     
 }
 
-.q-invoice-page div#autocompleteCompany {
+.q-invoice-page #invoiceForm div#autocompleteCompany {
     background-color: #fff;
     width: 320px;
     display: none;
@@ -357,10 +357,10 @@
     border-radius: 5px;
 }
 
-.q-invoice-page div#autocompleteCompany > * {
+.q-invoice-page #invoiceForm div#autocompleteCompany > * {
     padding-left: 14px;
 }
-.q-invoice-page div.autocompleteButton {
+.q-invoice-page #invoiceForm div.autocompleteButton {
     border: solid 0px white;
     display: block;
     height: 34px;
@@ -368,11 +368,11 @@
     padding-top: 10px;
 }
 
-.q-invoice-page div.autocompleteButton:hover {
+.q-invoice-page #invoiceForm div.autocompleteButton:hover {
     background: rgba(150, 150, 150, 0.1);
 }
 
-.q-invoice-page tr.contactRegisterRow:hover {
+.q-invoice-page #invoiceForm tr.contactRegisterRow:hover {
     background: rgba(150, 150, 150, 0.1);
     
 }

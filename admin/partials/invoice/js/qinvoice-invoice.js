@@ -161,6 +161,8 @@ jQuery(function ($) {
       const data = { paydate: formatDate(new Date()) }
       markInvoice(getRowNumber(event.target), data)
 
+      invoiceRow.removeClass('open edit')
+      invoiceRow.addClass('paid')
       invoiceRow.find('.invoiceStatusIcon').addClass('paid')
       invoiceRow.find('.invoiceStatusIcon').removeClass('open')
       invoiceRow.addClass('paid')
@@ -170,7 +172,8 @@ jQuery(function ($) {
     } else {
       const data = { paydate: '' }
       unmarkInvoice(getRowNumber(event.target), data)
-
+      invoiceRow.removeClass('paid')
+      invoiceRow.addClass('open edit')
       invoiceRow.find('.invoiceStatusIcon').removeClass('paid')
       invoiceRow.find('.invoiceStatusIcon').addClass('open')
       invoiceRow.removeClass('paid')
@@ -394,22 +397,6 @@ jQuery(function ($) {
     }
   }
 
-  function checkPrefixStatus () {
-    if ($('input#prefix').val()) {
-      $('input#prefix').prop('readonly', true)
-    } else {
-      $('input#prefix').prop('readonly', false)
-    }
-  }
-
-  function checkNoStartStatus () {
-    if ($('input#noStart').val()) {
-      $('input#noStart').prop('readonly', true)
-    } else {
-      $('input#noStart').prop('readonly', false)
-    }
-  }
-
   // ...............................................
   // ...............................................
   // ........####...######...####...##..##..........
@@ -593,7 +580,7 @@ jQuery(function ($) {
     recalcPos()
     recalcLineSum()
     recalcTotalSum()
-    //MMh.. Funtion draus machen? In document ready?
+    // MMh.. Funtion draus machen? In document ready?
     if ($('#q-invoice-new-readonly-dummy').text() === '0') {
       $('#prefix').attr('readonly', false)
       $('#invoice_id').attr('readonly', false)
@@ -811,9 +798,9 @@ jQuery(function ($) {
 
     saveInvoiceNonces()
 
-    //checkPrefixStatus()
+    // checkPrefixStatus()
 
-    //checkNoStartStatus()
+    // checkNoStartStatus()
 
     checkIfBanksHaveBeenSetupinSettings()
 
@@ -821,7 +808,6 @@ jQuery(function ($) {
     currencySign = '€'
     fetchInvoiceCurrency()
 
-   
     $('.invoicePaid').css('display', 'none')
 
     // After submit add error class to invalid input fields

@@ -322,10 +322,11 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                     type="radio" 
                                     id="bank1" 
                                     name="bank" 
-                                    value="<?php 
-                                         echo get_option('qi_settings')['bankName1'] . " IBAN: ";
-                                         echo get_option('qi_settings')['IBAN1']. " - BIC: ";
-                                         echo get_option('qi_settings')['BIC1'];?> " 
+                                    value="1"
+                                    <?php 
+                                         //echo get_option('qi_settings')['bankName1'] . " IBAN: ";
+                                         //echo get_option('qi_settings')['IBAN1']. " - BIC: ";
+                                         //echo get_option('qi_settings')['BIC1'];?>
                                     checked="checked"
                                    
                                 >
@@ -347,12 +348,12 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                     type="radio" 
                                     id="bank2" 
                                     name="bank" 
-                                    value="<?php 
-                                    echo get_option('qi_settings')['bankName2']  . " IBAN: ";
-                                    echo get_option('qi_settings')['IBAN2']. " - BIC: ";
-                                    echo get_option('qi_settings')['BIC2'];
+                                    value="2"<?php 
+                                    //echo get_option('qi_settings')['bankName2']  . " IBAN: ";
+                                    //echo get_option('qi_settings')['IBAN2']. " - BIC: ";
+                                    //echo get_option('qi_settings')['BIC2'];
                                    
-                                    ?>"
+                                    ?>
                                     
                                 >
                                

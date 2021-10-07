@@ -143,6 +143,15 @@ jQuery(function ($) {
     if (e.keyCode === 27) { $('#contactOverlay').css('display', 'none') }
   })
 
+  $('#contactOverlay').click(function (event) {
+    if ($(event.target).is('.overlay')) {
+      $('#contactOverlay').css('display', 'none')
+    }
+    if ($(event.target).is('.cancelButton')) {
+      $('#contactOverlay').css('display', 'none')
+    }
+  })
+
   function deleteContact (contactId) {
     jQuery.ajax({
       type: 'POST',
