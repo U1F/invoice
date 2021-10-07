@@ -150,7 +150,7 @@
     
    
 }
-td.manage-column.columnEdit > * {vertical-align: middle;}
+.q-invoice-page td.manage-column.columnEdit > * {vertical-align: middle;}
 
 .q-invoice-page div#filterButtons div.filterButton span {
     vertical-align: middle;
@@ -160,7 +160,7 @@ td.manage-column.columnEdit > * {vertical-align: middle;}
     box-shadow: 0 0 0 0px;
 }
 
-dashicons-download {
+q-invoice-page dashicons-download {
     vertical-align: middle;
 }
 

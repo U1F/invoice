@@ -199,14 +199,14 @@ function showOpenInvoices()
         
         ?>
             <tr 
-                class="edit<?php
+                class="<?php
          
                     if ($paid) {
                         echo ' paid ';
                     } else if ($dunning) {
-                        echo ' dunning ';
+                        echo ' dunning edit';
                     } else {
-                        echo ' open ';
+                        echo ' open edit';
                     } 
 
                     if ($cancelled) {
@@ -313,7 +313,7 @@ function showOpenInvoices()
                 </td>
 
                 <td class="manage-column  columnStatusPaid">
-                <span style="font-size: 20px;"
+                <span style="font-size: 20px; <?php if($cancelled){echo 'opacity:0;';}?>"
                         id="<?php echo $invoice_header->id;?>" 
                         title="Mark As Paid"
                         class="invoicePaid markAsPaid dashicons dashicons-money-alt"
@@ -321,26 +321,11 @@ function showOpenInvoices()
                     >
                     </span>
 
-                    <label class="switch">
-                    <input type="checkbox" class="checkboxForPayment" 
-                        <?php          
-                            $paymentDate = date_parse_from_format(
-                                "Y-m-d", 
-                                $invoice_header->paydate
-                            );
-        
-                            if (checkdate(
-                                $paymentDate['month'],
-                                $paymentDate['day'], 
-                                $paymentDate['year']
-                            )
-                            ) {
-                                echo "checked";
-            
-                            }
-                        ?>
+                    <label class="switch" style="<?php if($cancelled){echo 'opacity:0;';}?>">
+                    <input type="checkbox" class="checkboxForPayment" style="<?php if($cancelled){echo 'opacity:0;';}?>"
+                        <?php if ($paid){ echo "checked";}?>
                     >
-                    <span class="sliderForPayment invoiceSlider round"></span>
+                    <span class="sliderForPayment invoiceSlider round" style="<?php if($cancelled){echo 'opacity:0;';}?>"></span>
                     </label>
                 
                 </td>
