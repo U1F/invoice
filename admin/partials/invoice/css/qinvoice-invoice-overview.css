@@ -16,7 +16,9 @@
     border-collapse: collapse;
     width: 100%;
 }
-
+.q-invoice-page table#tableInvoices thead#tableInvoicesHeader tr th{
+    font-weight: bold;
+}
 .q-invoice-page table#tableInvoices thead#tableInvoicesHeader tr th:first-child{
     padding-left:20px;
 }
@@ -68,6 +70,13 @@
 .q-invoice-page table#tableInvoices .columnDate{
     text-align: right;
 }
+
+.q-invoice-page table#tableInvoices .columnDescription{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
+
 
 .q-invoice-page table#tableInvoices .columnNet{
     text-align: right;

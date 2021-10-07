@@ -32,7 +32,7 @@
 
         <div class="filterButton inactive" id="showCancelledInvoices">
             <button class="invoiceButton">
-                Archiv / Cancelled
+                Archive / Cancelled
             </button>
         </div>
         
@@ -85,15 +85,15 @@ function showHeader()
                     class="manage-column twentyCol columnStatus">
                     <?php _e('', 'Ev'); ?>
                 </th>
-
-                <th scope="col" id="companyName" 
-                    class="manage-column hundredCol columnCompany">
-                    <?php _e('Company', 'Ev'); ?>
-                </th>
                 
                 <th scope="col" id="name" 
                     class="manage-column hundredCol columnName">
                     <?php _e('Name', 'Ev'); ?>
+                </th>
+
+                <th scope="col" id="invoiceDate" 
+                    class="manage-column fiftyCol columnDescription">
+                    <?php _e('Description', 'Ev'); ?>
                 </th>
 
                 <th scope="col" id="invoiceDate" 
@@ -250,20 +250,29 @@ function showOpenInvoices()
             </td>
                 
 
-            <td
-                class="manage-column hundredCol columnCompany">
-                <?php echo $invoice_header->company ?> 
-            </td>
+            
 
                 <td
                     class="manage-column hundredCol columnName">
-                    <span class="firstnameSpan">
-                        <?php echo  $invoice_header->firstname ?>
+                        <?php 
+                            if($invoice_header->company){
+                                echo $invoice_header->company; 
+                            } else {?>
+                                <span class="firstnameSpan">
+                                    <?php echo  $invoice_header->firstname ?>
+                                </span>
+                    
+                                <span class="lastnameSpan">
+                                    <?php echo  $invoice_header->lastname ?>
+                                </span> <?php
+                            }?>
+                </td>
+
+                <td class="manage-column fiftyCol columnDescription">
+                    <span>
+                        <?php echo  $invoice_details[0]->description ?>
                     </span>
                     
-                    <span class="lastnameSpan">
-                        <?php echo  $invoice_header->lastname ?>
-                    </span>
                 </td>
 
                 <td class="manage-column fiftyCol columnDate"
@@ -274,7 +283,7 @@ function showOpenInvoices()
                 ?>
                 </td>
 
-                <td class="manage-column fiftyCol columnNet">
+                <td class="manage-column fiftyCol columnNet" >
                     <span>
                         <?php echo number_format($netSum, 2, ',', '.') ." €" ?>
                     </span>
@@ -336,9 +345,6 @@ function showOpenInvoices()
                 
                 </td>
 
-                
-
-               
 
                 <td class="manage-column twentyCol columnEdit">
 
@@ -377,38 +383,6 @@ function showOpenInvoices()
                         value="<?php echo $invoice_header->id;?>"
                     >
                     </span>
-
-                    <?php // Start ToDo: einmal checken ob du das wirklich brauchst ?>
-                    <span style="font-size: 20px;"
-                        id="<?php echo $invoice_header->id;?>" 
-                        title="Archive/Cancelled"
-                        class="archiveSwitchLabel dashicons dashicons-archive"
-                        value="<?php echo $invoice_header->id;?>"
-                    >
-                    </span>
-
-                    <label class="switch">
-                    <input type="checkbox"  class="checkboxForCancellation"
-                        <?php          
-                            
-                            if ($invoice_header->cancellation)
-                            {
-                                echo "checked";
-            
-                            }
-                        ?>
-                    >
-                    <span class="sliderForCancellation slider round"></span>
-                    </label>
-
-                    <span style="font-size: 20px;"
-                        id="<?php echo $invoice_header->id;?>" 
-                        title="Mark As Paid"
-                        class="invoicePaid markAsPaid dashicons dashicons-money-alt"
-                        value="<?php echo $invoice_header->id;?>"
-                    >
-                    </span>
-                    <?php // End TODO?>
                     
             </tr>
             

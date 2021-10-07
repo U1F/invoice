@@ -53,8 +53,8 @@ jQuery(function ($) {
       // Get the selected tax type
       const taxType = parseInt($(this).find('select.itemTax option:selected').val())
       // Get the computed product of discounted items
-      const linePrice = parseFloat($(this).find('.qInvcLine-total').text())
-
+      const linePrice = parseFloat($(this).find('.invoiceTotal').val())
+      console.log('linePrice = ' + linePrice)
       // Save the Sum of taxes for each tax type and the sum of all taxTypes as well as the sum without taxation
       if ($.isNumeric(linePrice) && $.isNumeric(taxType)) {
         taxes.forEach(function (item) {
@@ -82,7 +82,7 @@ jQuery(function ($) {
                     '</td>' +
 
                     "<td class='qInvc-total invoiceSumsAccounts'>" +
-                    currencyFormatDE(item[1]) +
+                    addPointToThousands(currencyFormatDE(item[1])) +
                     ' ' +
                     currencySign +
                     '</td>' +
@@ -108,7 +108,7 @@ jQuery(function ($) {
       let discountedPrice = 0
       let lineSum = 0
       if (isNaN(amountOfItems) || isNaN(itemPrice)) {
-        $(this).find('.qInvcLine-total').text(currencyFormatDE(0))
+        $(this).find('.qInvcLine-total').text(addPointToThousands(currencyFormatDE(0)))
         return
       }
       discountedPrice = itemPrice
@@ -128,7 +128,7 @@ jQuery(function ($) {
       lineSum = amountOfItems * discountedPrice
       lineTax = $(this).find('select.itemTax').val()
       $(this).find('input.invoiceTax').attr('value', lineSum * lineTax / 100)
-      $(this).find('.qInvcLine-total').text(currencyFormatDE(lineSum))
+      $(this).find('.qInvcLine-total').text(addPointToThousands(currencyFormatDE(lineSum)))
       $(this).find('input.invoiceTotal').attr('value', lineSum)
       $(this).find('.invoiceItemsTotal nobr').css('display', 'inline')
     })
@@ -432,29 +432,7 @@ jQuery(function ($) {
         id: invoiceId
       },
       success: function (data) {
-        // Here we can measure success by own stanards
-        // For example a return from a DB uppdate
-        // Also maybe here we can call a notice tu the user
-        // console.log(data)
-      },
-      error: function (errorThrown) {
-        // console.log(errorThrown)
-      }
-    })
-  }
-
-  function checkInvoice (invoiceId, item) {
-    jQuery.ajax({
-      type: 'POST',
-      url: q_invoice_ajaxObject.ajax_url,
-      data: {
-        action: 'checkInvoiceServerSide',
-        _ajax_nonce: q_invoice_ajaxObject.nonce,
-        id: invoiceId,
-        item: item
-      },
-      success: function (response) {
-        console.log(response)
+        console.log('Archived Invoice succesfully')
       },
       error: function (errorThrown) {
         console.log(errorThrown)
@@ -489,13 +467,11 @@ jQuery(function ($) {
         action: 'fetchLastIDServerSide',
         _ajax_nonce: q_invoice_ajaxObject.nonce
       },
-      success: function (response, textStatus, XMLHttpRequest) {
-        // console.log('Fetched the last ID of invocies and it was :')
-        // console.log(response)
-        $('input#invoice_id').val(response)
+      success: function (invoiceID) {
+        $('input#invoice_id').val(invoiceID)
       },
-      error: function (XMLHttpRequest, textStatus, errorThrown) {
-        // console.log('Error : ' + errorThrown)
+      error: function (errorThrown) {
+        console.log('Error : ' + errorThrown)
       }
     })
   }
@@ -508,12 +484,11 @@ jQuery(function ($) {
         action: 'fetchCurrencyServerSide',
         _ajax_nonce: q_invoice_ajaxObject.nonce
       },
-      success: function (response, textStatus, XMLHttpRequest) {
-        // console.log(response)
+      success: function (response) {
         currencySign = response
       },
-      error: function (XMLHttpRequest, textStatus, errorThrown) {
-        // console.log(errorThrown)
+      error: function (errorThrown) {
+        console.log(errorThrown)
       }
     })
   }
@@ -570,9 +545,10 @@ jQuery(function ($) {
     recalcPos()
     recalcLineSum()
     recalcTotalSum()
-    if($('#q-invoice-new-readonly-dummy').text() == "0"){
-      $('#prefix').attr('readonly', false);
-      $('#invoice_id').attr('readonly', false);
+    //MMh.. Funtion draus machen? In document ready?
+    if ($('#q-invoice-new-readonly-dummy').text() === '0') {
+      $('#prefix').attr('readonly', false)
+      $('#invoice_id').attr('readonly', false)
     }
   })
 
@@ -684,8 +660,12 @@ jQuery(function ($) {
     row = $('table#tableInvoices > tbody > tr[value=' + invoice.invoice_id + ']')
     row.attr('class', ' edit open')
     // Change Infos in the right table row.
-    row.find('td.columnCompany').text(invoice.company)
-    row.find('td.columnName').text(invoice.firstname + ' ' + invoice.lastname)
+    if (invoice.company) {
+      row.find('td.columnName').text(invoice.company)
+    } else {
+      row.find('td.columnName').text(invoice.firstname + ' ' + invoice.lastname)
+    }
+    row.find('td.columnDescription').text(invoice.itemDescription[0])
     row.find('td.columnNet').text($('.qInvc-total-summe').eq(0).text() + ' ' + currencySign)
     row.find('td.columnTotal').text($('.qInvc-total-brutto-summe').eq(0).text() + ' ' + currencySign)
 
@@ -722,9 +702,14 @@ jQuery(function ($) {
     clone.attr('id', 'edit-' + id)
     clone.attr('value', id)
     clone.find('td.columnRowID').text(1 + parseInt(clone.find('td.columnRowID').text()))
-    clone.find('td.columnCompany').text(invoice.company)
-    clone.find('span.firstnameSpan').text(invoice.firstname)
-    clone.find('span.lastnameSpan').text(invoice.lastname)
+    if (invoice.company) {
+      clone.find('td.columnName').text(invoice.company)
+    } else {
+      clone.find('span.firstnameSpan').text(invoice.firstname)
+      clone.find('span.lastnameSpan').text(invoice.lastname)
+    }
+
+    clone.find('td.columnDescription').text(invoice.itemDescription[0])
     clone.find('td.columnNet').text($('.qInvc-total-summe').eq(0).text() + ' ' + currencySign)
     clone.find('td.columnTotal').text($('.qInvc-total-brutto-summe').eq(0).text() + ' ' + currencySign)
 
@@ -745,6 +730,15 @@ jQuery(function ($) {
 
     $('table#tableInvoices > tbody').prepend(clone)
   }
+  function displaySuccess () {
+    // DIE MELDUNG ALS FUNKTION?
+    $('#wpbody-content').prepend(
+      '<div class="qinvoiceMessage messageSuccess">' +
+      '<span> Invoice succesfully saved! </span>' +
+      '</div>')
+
+    $('.messageSuccess').delay(1000).fadeOut(800)
+  }
 
   jQuery(document).ready(function ($) {
     $('#invoiceForm').ajaxForm({
@@ -763,22 +757,15 @@ jQuery(function ($) {
         // $('#invoiceForm').trigger('reset')
 
         $('#invoiceOverlay').css('display', 'none')
-
-        // DIE MELDUNG ALS FUNKTION?
-        $('#wpbody-content')
-          .prepend('<div class="qinvoiceMessage messageSuccess">' +
-                    '<span> Invoice succesfully saved! </span>' +
-                    '</div>')
-
-        $('.messageSuccess').delay(1000).fadeOut(800)
+        displaySuccess()
       }
     })
 
     saveInvoiceNonces()
 
-    checkPrefixStatus()
+    //checkPrefixStatus()
 
-    checkNoStartStatus()
+    //checkNoStartStatus()
 
     checkIfBanksHaveBeenSetupinSettings()
 
@@ -801,12 +788,7 @@ jQuery(function ($) {
       )
     })
 
-    // Does not work as intended
-    // inputs.forEach(input => {
-    //   $(input)[0].setCustomValidity('')
-    // })
-
-    checkInvoice(1, 'zip')
+    $('input').bind('invalid', function () { return false })
 
     // Prevent chrome to autofill&autocomplete
     $('input[type=text], input[type=number], input[type=email], input[type=password]').focus(function (e) {
