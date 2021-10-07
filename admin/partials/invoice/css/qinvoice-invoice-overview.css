@@ -51,15 +51,22 @@
     vertical-align: middle;
 }
 
-.q-invoice-page table#tableInvoices tbody tr
+.q-invoice-page table#tableInvoices tbody tr.edit
 {
     cursor: pointer;
+    
+}
+
+.q-invoice-page table#tableInvoices tbody tr
+{
+   
     border-bottom: solid 1px lightgray;
 }
-.q-invoice-page table#tableInvoices tbody tr:hover
+.q-invoice-page table#tableInvoices tbody tr.edit:hover
 {
     background: rgba(150, 150, 150, 0.1);
 }
+
 .q-invoice-page table#tableInvoices .columnInvoiceID{
     width:26px;
     text-align: left;

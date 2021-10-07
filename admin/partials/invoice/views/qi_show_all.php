@@ -321,7 +321,7 @@ function showOpenInvoices()
                     >
                     </span>
 
-                    <label class="switch" style="<?php if($cancelled){echo 'opacity:0;';}?>">
+                    <label class="switch switchForPaidStatus" style="<?php if($cancelled){echo 'opacity:0;';}?>">
                     <input type="checkbox" class="checkboxForPayment" style="<?php if($cancelled){echo 'opacity:0;';}?>"
                         <?php if ($paid){ echo "checked";}?>
                     >
@@ -351,6 +351,7 @@ function showOpenInvoices()
 
                     <span style="font-size: 20px; <?php
                         if ($paid){echo 'color: lightgrey;';}
+                        if ($cancelled){echo ' display: none;';}
                         ?>"
                         id="<?php echo $invoice_header->id;?>" 
                         title="Cancel Invoice"
@@ -361,7 +362,12 @@ function showOpenInvoices()
                     >
                     </span>
 
-                    <span style="font-size: 20px;"
+                    <span style="font-size: 20px;<?php 
+                        if ($cancelled){
+                            echo 'display: inline-block;';
+                        } else {
+                            echo 'display: none;';
+                        }?>"
                         id="<?php echo $invoice_header->id;?>" 
                         title="Reactivate Invoice"
                         class="reactivateInvoice reactivate dashicons dashicons-undo"

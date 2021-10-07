@@ -140,13 +140,7 @@ jQuery(function ($) {
   })
 
   $(document).keydown(function (e) {
-    if (e.keyCode === 27) {
-      if ($('.contactOverlay').css('display') === 'block') {
-        $('.dialogOverlay').css('display', 'none')
-      } else {
-        $('#conctactOverlay').css('display', 'none')
-      }
-    }
+    if (e.keyCode === 27) { $('#contactOverlay').css('display', 'none') }
   })
 
   function deleteContact (contactId) {

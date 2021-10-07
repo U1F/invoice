@@ -1185,6 +1185,27 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             echo json_encode($response);
             wp_die();
         }
+
+        /**
+         * TESTIG Register the Ajax for the admin area.
+         * 
+         * Testing TODO : js/q_invoice-admin-ajax.js file is
+         * "always on"
+         * 
+         * @return void
+         *
+         * @since 1.0.0
+         */
+        public function reactivateInvoiceServerSide()
+        {
+            //check_ajax_referer($this->_plugin_name."_nonce");
+
+            Interface_Invoices::reactivateInvoice($_POST['id']);
+            //Interface_Invoices::deleteRowFromDB($_POST['id']);
+            $response['success'] = true;
+            echo json_encode($response);
+            wp_die();
+        }
         
         /**
          * TESTIG Register the Ajax for the admin area.

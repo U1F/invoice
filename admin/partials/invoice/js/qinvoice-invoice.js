@@ -175,7 +175,7 @@ jQuery(function ($) {
       invoiceRow.find('.invoiceStatusIcon').addClass('open')
       invoiceRow.removeClass('paid')
       invoiceRow.addClass('open')
-      invoiceRow.find('.columnEdit').find('.delete').css('color', 'black')
+      invoiceRow.find('.columnEdit').find('.delete').css('color', '#50575e')
       invoiceRow.find('.columnEdit').find('.delete').addClass('deleteRow')
     }
   })
@@ -440,6 +440,26 @@ jQuery(function ($) {
     })
   }
 
+  function reactivateInvoice (invoiceId) {
+    jQuery.ajax({
+      type: 'POST',
+
+      url: q_invoice_ajaxObject.ajax_url,
+
+      data: {
+        action: 'reactivateInvoiceServerSide',
+        _ajax_nonce: q_invoice_ajaxObject.nonce,
+        id: invoiceId
+      },
+      success: function (data) {
+        console.log('Reactivated Invoice succesfully')
+      },
+      error: function (errorThrown) {
+        console.log(errorThrown)
+      }
+    })
+  }
+
   function updateInvoiceHeaderItem (invoiceId, data) {
     jQuery.ajax({
       type: 'POST',
@@ -498,17 +518,45 @@ jQuery(function ($) {
     lastInvoiceIDtoDelete = event.target.id
   })
 
+  $('table#tableInvoices').on('click', '.reactivateInvoice', function (event) {
+    const lastInvoiceIDtoDelete = event.target.id
+    const targetRow = $('tr.edit' + '[value=' + lastInvoiceIDtoDelete + ']')
+    const statusIcon = targetRow.find('.invoiceStatusIcon')
+    if ($('#showCancelledInvoices').hasClass('active')) {
+      targetRow.css('display', 'none')
+    }
+    reactivateInvoice(lastInvoiceIDtoDelete)
+    $('div#archiveInvoice').css('display', 'none')
+    statusIcon.addClass('active')
+    statusIcon.removeClass('cancelled')
+    targetRow.removeClass('cancelled')
+    targetRow.addClass('active')
+    targetRow.find('.reactivateInvoice').css('display', 'none')
+    targetRow.find('.deleteRow').css('display', 'inline-block')
+    targetRow.find('.switchForPaidStatus').css('opacity', '100')
+    targetRow.find('.switchForPaidStatus > *').css('opacity', '100')
+  })
+
   $('div#archiveInvoice').on('click', '#cancelRemoveInvoice', function () {
     $('div#archiveInvoice').css('display', 'none')
   })
 
   $('div#archiveInvoice').on('click', '#confirmRemoveInvoice', function (event) {
-    $('tr.edit' + '[value=' + lastInvoiceIDtoDelete + ']').attr('class', 'cancelled edit')
+    const targetRow = $('tr.edit' + '[value=' + lastInvoiceIDtoDelete + ']')
+    const statusIcon = targetRow.find('.invoiceStatusIcon')
     if ($('#showOpenInvoices').hasClass('active')) {
-      $('tr.edit' + '[value=' + lastInvoiceIDtoDelete + ']').css('display', 'none')
-      deleteInvoice(lastInvoiceIDtoDelete)
+      targetRow.css('display', 'none')
     }
+    deleteInvoice(lastInvoiceIDtoDelete)
     $('div#archiveInvoice').css('display', 'none')
+    statusIcon.addClass('cancelled')
+    statusIcon.removeClass('active')
+    targetRow.removeClass('active')
+    targetRow.addClass('cancelled')
+    targetRow.find('.deleteRow').css('display', 'none')
+    targetRow.find('.reactivateInvoice').css('display', 'inline-block')
+    targetRow.find('.switchForPaidStatus').css('opacity', '0')
+    targetRow.find('.switchForPaidStatus > *').css('opacity', '0')
   })
 
   function writeInvoiceDetailstoFormField (inputName, dataName, position) {
@@ -773,8 +821,7 @@ jQuery(function ($) {
     currencySign = '€'
     fetchInvoiceCurrency()
 
-    $('.deleteRow').css('display', 'inline-block')
-    $('.reactivateInvoice').css('display', 'none')
+   
     $('.invoicePaid').css('display', 'none')
 
     // After submit add error class to invalid input fields

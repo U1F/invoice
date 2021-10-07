@@ -203,11 +203,12 @@ if (!class_exists('QI_Invoice')) {
             $ajaxFunctionNames = [
                 'saveInvoice',
                 'updateInvoice',
-                'deleteInvoice',
+                'deleteInvoice', // This is Deactivation ATM; should be changed
+                'reactivateInvoice',
                 'editInvoice',
                 'checkInvoice',
                 'updateInvoiceHeader',
-                'fetchLastID',                
+                'fetchLastID',        
                 'fetchCurrency',
                 'saveContact',                
                 'fetchContacts',

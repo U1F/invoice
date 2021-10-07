@@ -91,6 +91,30 @@ class Interface_Invoices
         );
         return 0;
     }
+
+    /**
+     * Function reactivateInvoice
+     * 
+     * TODO try and prepare
+     * TODO DETAILS
+     * 
+     * @param int $id 
+     * 
+     * @return bool
+     */
+    static public function reactivateInvoice(int $id)
+    {
+        $GLOBALS['wpdb']->update( 
+            $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_HEADER,
+            array(
+                'date_changed'  => date("Y-d-m"),
+                'cancellation'  => false,
+                'date_cancellation'  => null           
+            ),
+            array ('id' => $id)
+        );
+        return 0;
+    }
     /**
      * Function updateInvoiceHeaderItem
      * 
