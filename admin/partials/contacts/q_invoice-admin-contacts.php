@@ -127,7 +127,7 @@
         </table>
     </div>
 
-    <div id="overlay" style="display:none">
+    <div id="contactOverlay" class="overlay" style="display:none">
         <div id="qiContactPopup">
             <h2><?php echo __("New Contact", "ev")?></h2>
             <form 
