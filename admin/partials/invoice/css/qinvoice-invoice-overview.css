@@ -61,14 +61,16 @@
     background: rgba(150, 150, 150, 0.1);
 }
 .q-invoice-page table#tableInvoices .columnInvoiceID{
+    width:26px;
     text-align: left;
 }
 
 .q-invoice-page table#tableInvoices .columnStatus{
+    width:26px;
     text-align: center;
 }
-.q-invoice-page table#tableInvoices .columnDate{
-    text-align: right;
+.q-invoice-page table#tableInvoices .columnName{
+    text-align: left;
 }
 
 .q-invoice-page table#tableInvoices .columnDescription{
@@ -77,26 +79,35 @@
     text-overflow:ellipsis;
 }
 
+.q-invoice-page table#tableInvoices .columnDate{
+    width:80px;
+    text-align: left;
+}
 
 .q-invoice-page table#tableInvoices .columnNet{
+    width:80px;
     text-align: right;
 }
 
 .q-invoice-page table#tableInvoices .columnTotal{
+    width:80px;
     text-align: right;
 }
 
 .q-invoice-page table#tableInvoices .columnDunning{
+    width:80px;
     text-align: right;
 }
 
 
 .q-invoice-page table#tableInvoices .columnStatusPaid{
-    text-align: right;
+    text-align: center;
+    width: 42px;
 }
 
 .q-invoice-page table#tableInvoices .columnEdit{
     text-align: right;
+    width: 50px;
     padding-right: 20px;
 }
 

@@ -77,52 +77,52 @@ function showHeader()
             <tr>
 
                 <th scope="col" id="invoiceID" 
-                    class="manage-column twentyCol columnInvoiceID sortable asc">
+                    class="manage-column  columnInvoiceID sortable asc">
                     <?php _e('ID', 'Ev'); ?>
                 </th>
 
                 <th scope="col" id="invoiceStatus" 
-                    class="manage-column twentyCol columnStatus">
+                    class="manage-column  columnStatus">
                     <?php _e('', 'Ev'); ?>
                 </th>
                 
                 <th scope="col" id="name" 
-                    class="manage-column hundredCol columnName">
+                    class="manage-column  columnName">
                     <?php _e('Name', 'Ev'); ?>
                 </th>
 
                 <th scope="col" id="invoiceDate" 
-                    class="manage-column fiftyCol columnDescription">
+                    class="manage-column  columnDescription">
                     <?php _e('Description', 'Ev'); ?>
                 </th>
 
                 <th scope="col" id="invoiceDate" 
-                    class="manage-column fiftyCol columnDate">
+                    class="manage-column  columnDate">
                     <?php _e('Invoice Date', 'Ev'); ?>
                 </th>
                 
                 <th scope="col" id="sumNet" 
-                    class="manage-column fiftyCol columnNet">
+                    class="manage-column  columnNet">
                     <?php _e('Net', 'Ev'); ?>
                 </th>
                 
                 <th scope="col" id="sumTotal" 
-                    class="manage-column fiftyCol columnTotal ">
+                    class="manage-column  columnTotal ">
                     <?php _e('Total', 'Ev'); ?>
                 </th>
 
                 <th scope="col" id="invoiceDunning" 
-                    class="manage-column fiftyCol columnDunning">
+                    class="manage-column  columnDunning">
                     <?php _e('Dunning', 'Ev'); ?>
                 </th>
 
                 <th scope="col" id="invoiceStatusPaid" 
-                    class="manage-column twentyCol columnStatusPaid">
+                    class="manage-column  columnStatusPaid">
                     <?php _e('Paid', 'Ev'); ?>
                 </th>
 
                 <th scope="col" id="invoiceEdit" 
-                    class="manage-column twentyCol columnEdit ">
+                    class="manage-column fiftyCol columnEdit ">
                     <?php _e('Edit', 'Ev'); ?>
                 </th>
 
@@ -221,13 +221,13 @@ function showOpenInvoices()
                 value="<?php echo $invoice_header->id;?>"
             >    
 
-            <td class="manage-column twentyCol columnInvoiceID sortable asc">
+            <td class="manage-column  columnInvoiceID sortable asc">
                 <span>
                         <?php echo $invoice_header->id ?>
                 </span>
             </td>
             
-            <td class="manage-column twentyCol columnStatus">
+            <td class="manage-column  columnStatus">
                 <div class="circle invoiceStatusIcon<?php 
                          if ($paid) {
                             echo ' paid ';
@@ -253,7 +253,7 @@ function showOpenInvoices()
             
 
                 <td
-                    class="manage-column hundredCol columnName">
+                    class="manage-column  columnName">
                         <?php 
                             if($invoice_header->company){
                                 echo $invoice_header->company; 
@@ -268,14 +268,14 @@ function showOpenInvoices()
                             }?>
                 </td>
 
-                <td class="manage-column fiftyCol columnDescription">
+                <td class="manage-column  columnDescription">
                     <span>
                         <?php echo  $invoice_details[0]->description ?>
                     </span>
                     
                 </td>
 
-                <td class="manage-column fiftyCol columnDate"
+                <td class="manage-column  columnDate"
                     
                 >
                 <?php 
@@ -283,20 +283,20 @@ function showOpenInvoices()
                 ?>
                 </td>
 
-                <td class="manage-column fiftyCol columnNet" >
+                <td class="manage-column  columnNet" >
                     <span>
                         <?php echo number_format($netSum, 2, ',', '.') ." €" ?>
                     </span>
                     
                 </td>
 
-                <td class="manage-column fiftyCol columnTotal">
+                <td class="manage-column  columnTotal">
                 <span>
                         <?php echo number_format($totalSum, 2, ',', '.')." €" ?>
                     </span>
                 </td>
 
-                <td class="manage-column fiftyCol columnDunning">
+                <td class="manage-column  columnDunning">
                 <span>
                         <?php 
                         $dunningFee1 = intVal(get_option('qi_settings')['dunning1']);
@@ -312,7 +312,7 @@ function showOpenInvoices()
                     </span>
                 </td>
 
-                <td class="manage-column twentyCol columnStatusPaid">
+                <td class="manage-column  columnStatusPaid">
                 <span style="font-size: 20px;"
                         id="<?php echo $invoice_header->id;?>" 
                         title="Mark As Paid"
@@ -340,13 +340,13 @@ function showOpenInvoices()
                             }
                         ?>
                     >
-                    <span class="sliderForPayment slider round"></span>
+                    <span class="sliderForPayment invoiceSlider round"></span>
                     </label>
                 
                 </td>
 
 
-                <td class="manage-column twentyCol columnEdit">
+                <td class="manage-column  columnEdit">
 
                     <a 
                         style="font-size:20px; display:inline" 
