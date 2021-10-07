@@ -30,8 +30,8 @@ function Invoice_list()
     <div id="archiveInvoice" class="overlay dialogOverlay">
         <div class="confirmationBox">
             <div style="margin: 1.5em 0 1em 0; text-align: center;">
-                <h3 style="color:red;" >Do you want to archive the invoice?</h3>
-                <p>This will not delete the invoice. It will be stored in the archive. </p>
+                <h3 style="color:red;" >Do you want to cancel the invoice?</h3>
+                <p>This will not delete the invoice. It will be moved to the status "cancelled". </p>
                 <div style="text-align: center; margin: 1em 0;">
                     <button class="qInvoiceFormButton cancelButton" id="cancelRemoveInvoice">
                         Cancel
