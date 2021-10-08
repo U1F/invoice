@@ -107,16 +107,16 @@ if (!class_exists('QI_Invoice_Activator')) {
          */
         private function _setDefaultSettings()
         {
-            $options = get_option('qi_settings');
+            //$options = get_option('qi_settings');
             
             //update_option('qi_settings', $this->defaultOptions);
-            
+            /*
             foreach ($options as $key => $value ) {
                 if (!$value) {
                     update_option("qi_settings{$key}", '');
                 }
             }
-            
+            */
         }
 
         /**
