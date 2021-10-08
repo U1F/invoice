@@ -411,8 +411,10 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 'qi_invoicePage_section'
             );
             
+            if (get_option('qi_settings')['invoiceCurrency'] == 'Other') {
+                $this->addSettingsField("currency Sign", "text", "invoicePage", 1);
+            }
             
-            $this->addSettingsField("currency Sign", "text", "invoicePage", 1);
             
             //$this->addSettingsField("tax Types", "number", "invoicePage");
             add_settings_field(

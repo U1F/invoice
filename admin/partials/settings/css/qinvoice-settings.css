@@ -149,6 +149,16 @@
     height: 32px;
 }
 
+.q-invoice-page section.invoiceSettings input.error {
+    border-color: red;
+   
+}
+
+.q-invoice-page section.invoiceSettings input.error:focus {
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
+    outline:none;
+} 
+
 .q-invoice-page p.submit input#saveSettings {
     width: 360px;
     height:36px;
