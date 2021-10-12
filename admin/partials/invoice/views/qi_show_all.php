@@ -336,11 +336,18 @@ function showOpenInvoices()
                     <a 
                         style="font-size:20px; display:inline" 
                         target="_top"
-                        href=
-                        <?php 
-                        echo "'".plugins_url('q_invoice/pdf/Invoice'. $invoice_header->id.'.pdf')."'    "
-                        ?>                        "
-                        id="<?php echo "download-".$invoice_header->id;?>"
+                        href=<?php 
+                        echo "'". plugins_url(
+                            'q_invoice/pdf/Invoice-'. 
+                            get_option('qi_settings')['prefix'].'-'.
+                            $invoice_header->id.'.pdf')."'    "
+                        ?>"
+                        id="<?php 
+                            echo 
+                                "download-".
+                                get_option('qi_settings')['prefix'].'-'.
+                                $invoice_header->id;
+                            ?>"
                         title="Download Invoice"
                         class="downloadInvoice download dashicons dashicons-download"
                         value="<?php echo $invoice_header->id?>"
