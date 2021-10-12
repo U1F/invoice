@@ -266,7 +266,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 ["name" => "invoice-autocomplete", "partial" => "invoice", "dependencies" => []],
                 ["name" => "contacts", "partial" => "contacts", "dependencies" => []],
                 ["name" => "settings", "partial" => "settings", "dependencies" => []],
-                ["name" => "export", "partial" => "export", "dependencies" => []],
+                ["name" => "export", "partial" => "export", "dependencies" => []]
                 
             ];
             foreach ($partialScripts as $partialScript) {
@@ -1026,7 +1026,12 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         public function fetchLastIDServerSide()
         {
             check_ajax_referer($this->_plugin_name . "_nonce");
-            echo 1 + Interface_Invoices::getLastID();
+            if (Interface_Invoices::getLastID()) {
+                echo 1 + Interface_Invoices::getLastID();    
+            } else {
+                echo get_option('qi_settings')['noStart'];
+            }
+            
 
             wp_die();
         }
@@ -1082,6 +1087,9 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          */
         public function printInvoiceTemplate($invoiceID)
         {
+            // $invoiceDate = Interface_Invoices::getInvoiceDataItem($invoiceID, "invoice_date")["invoice_date"];
+            // $company = Interface_Invoices::getInvoiceDataItem($invoiceID, "company")["company"];
+                            
 
             ob_start();
             include_once \QI_Invoice_Constants::PART_PATH_QI . 
@@ -1097,7 +1105,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 $html2pdf->Output(
                     \QI_Invoice_Constants::PART_PATH_QI . 
                     'pdf/'.
-                    "Invoice".
+                    "Invoice-".
+                    get_option('qi_settings')['prefix'].
                     $invoiceID.
                     '.pdf', 'F'
                 );
@@ -1233,6 +1242,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         /**
          * Function checkInvoiceServerSide
          * 
+         * This might be obsolete 
+         * 
          * @return void
          *
          * @since 1.0.0
@@ -1246,7 +1257,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 $_POST["item"]
             );
         
-            echo $response[$_POST['item']];
+            echo $response;
 
             wp_die();
         }
