@@ -63,13 +63,11 @@ function Invoice_list()
         </span>
     </h1>
 
-    <?php
+    <?php 
         //When Rows in database make prefix and id readonly
-        $empty = $GLOBALS['wpdb']->get_var("SELECT COUNT(id) FROM ".
-        $GLOBALS['wpdb']->prefix . 
-        QI_Invoice_Constants::TABLE_QI_HEADER . ";");
+        $rowCountDatabase = Interface_Invoices::getRowCountDataBase();
     ?>
-    <p id="q-invoice-new-readonly-dummy" style="display: none"><?php echo $empty;?></p> 
+    <p id="q-invoice-new-readonly-dummy" style="display: none"><?php echo $rowCountDatabase;?></p> 
     
         
         
@@ -98,7 +96,7 @@ function Invoice_list()
         //DEBUG TESTING
     if (get_option('wporg_setting_name')) {
         echo "qi_settings:";
-        //$options = get_option('qi_settings');
+        $options = get_option('qi_settings');
         echo '<pre>';
         print_r(get_option('qi_settings'));
         echo '</pre>';
