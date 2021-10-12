@@ -186,21 +186,7 @@
                                     >
                             </td>
                             </tr>
-                        <tr>
                         
-                            <td class="qiContactTableLabel">
-                                <?php echo __("Name", "ev")?>
-                            </td>
-                            <td class="qiContactTableInput">
-                                <input 
-                                    name="qiContactName"
-                                    id="qiContactName"
-                                    class="qiContactInput"
-                                    type="text"
-                                    required
-                                    >   
-                            </td>
-                            </tr>
                         <tr>
                         
                             <td class="qiContactTableLabel">
@@ -216,6 +202,21 @@
                             </td>
                             </tr>
                         <tr>
+                        <tr>
+                        
+                            <td class="qiContactTableLabel">
+                                <?php echo __("Name", "ev")?>
+                            </td>
+                            <td class="qiContactTableInput">
+                                <input 
+                                    name="qiContactName"
+                                    id="qiContactName"
+                                    class="qiContactInput"
+                                    type="text"
+                                    required
+                                    >   
+                            </td>
+                            </tr>
                         
                             <td class="qiContactTableLabel">
                                 <?php echo __("Street", "ev")?>
@@ -300,7 +301,7 @@
                         ); ?>
                     </div>
                 </div>
-                <div style="padding: 20px 20px 20px 20px">
+                <div id="contactFormButtons" style="padding: 20px 20px 20px 20px">
 
                 <button 
                     type="button" 
@@ -312,7 +313,6 @@
 
 
                 <input 
-                    style="display: block; float: right"
                     type="submit"
                     value="<?php echo __('Save', 'Ev'); ?>"
                     name="save"
@@ -321,7 +321,6 @@
                 />
 
                 <input 
-                    style="display: none; float: right"
                     type="submit"
                     value="<?php echo __('Update', 'Ev'); ?>"
                     name="update"
