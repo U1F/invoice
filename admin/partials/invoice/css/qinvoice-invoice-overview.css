@@ -2,8 +2,6 @@
     float:right;
 }
 
-
-
 .q-invoice-page td.column-edit span.edit {
     cursor: pointer;
 }
@@ -35,40 +33,33 @@
     padding-top: 5px;
     padding-bottom: 5px;
     font-weight: bold;
-    border-bottom: solid 1px #d4d4d4;;
-    
+    border-bottom: solid 1px #d4d4d4;;    
 }
-.q-invoice-page table#tableInvoices th
-{
+
+.q-invoice-page table#tableInvoices th {
     padding-bottom: 9px;
     padding-top: 9px;  
 }
 
-.q-invoice-page table#tableInvoices td
-{
+.q-invoice-page table#tableInvoices td {
     padding-bottom: 7px;
     padding-top: 7px;  
     vertical-align: middle;
 }
 
-.q-invoice-page table#tableInvoices tbody tr.edit
-{
-    cursor: pointer;
-    
+.q-invoice-page table#tableInvoices tbody tr.edit {
+    cursor: pointer;    
 }
 
-.q-invoice-page table#tableInvoices tbody tr
-{
-   
+.q-invoice-page table#tableInvoices tbody tr {   
     border-bottom: solid 1px lightgray;
 }
-.q-invoice-page table#tableInvoices tbody tr.edit:hover
-{
+.q-invoice-page table#tableInvoices tbody tr.edit:hover {
     background: rgba(150, 150, 150, 0.1);
 }
 
 .q-invoice-page table#tableInvoices .columnInvoiceID{
-    width:26px;
+    width:42px;
     text-align: left;
 }
 
@@ -138,10 +129,7 @@
 
 
 .q-invoice-page div#filterButtons div.filterButton input[type=text] {
-    
-    
-   padding-left: 2px;
-   
+    padding-left: 2px;
     color: #3c434a;
     background-color: white ;
     height: 35px;
@@ -153,15 +141,14 @@
     font-size: 14px;
     border: 0px;
     box-shadow: 0 0 0 0px;
-    
-    
-   
 }
+
 .q-invoice-page td.manage-column.columnEdit > * {vertical-align: middle;}
 
 .q-invoice-page div#filterButtons div.filterButton span {
     vertical-align: middle;
 }
+
 .q-invoice-page div#filterButtons div.filterButton input[type=text]:focus {
     border: 0px;
     box-shadow: 0 0 0 0px;
@@ -171,8 +158,7 @@ q-invoice-page dashicons-download {
     vertical-align: middle;
 }
 
-.q-invoice-page .circle
-{
+.q-invoice-page .circle {
   width: 20px;
   height: 20px;
   margin-left:4px;
@@ -181,7 +167,6 @@ q-invoice-page dashicons-download {
   border: 0px solid;
   background-color: #ff0000;
   opacity: 0.8;
-  
   display: inline-block;
 }
 
@@ -212,6 +197,7 @@ q-invoice-page dashicons-download {
 .q-invoice-page .circle.open {
     background-color: yellow;
 }
+
 .q-invoice-page .circle.open.cancelled {
     background-color: gray;
 }
