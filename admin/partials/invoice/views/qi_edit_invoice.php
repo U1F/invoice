@@ -252,11 +252,22 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             </td>
 
                             <td class="inputsRightTable">
-                                <input type="text" id="prefix" 
-                                    readonly name="prefix" 
-                                    value=<?php 
-                                        echo get_option('qi_settings')['prefix']
-                                    ?>
+                                <input type="text" id="prefix" name="prefix" required
+                                    <?php if (Interface_Invoices::getRowCountDataBase()) {
+                                        echo 
+                                        "value='".
+                                        get_option('qi_settings')['prefix'].
+                                        "' readonly ";
+                                    } else {
+
+                                    } if (get_option('qi_settings')['prefix']) {
+                                        echo 
+                                        "value='".
+                                        get_option('qi_settings')['prefix'].
+                                        "'";
+                                    } else {
+                                        echo 'value=""';  
+                                    }?>         
                                 > 
                             </td> 
                             
@@ -272,8 +283,21 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             <td class="inputsRightTable">
                                 <input type="text" 
                                     id="invoice_id" name="invoice_id"
-                                    value="" 
-                                    readonly
+                                    <?php if (Interface_Invoices::getRowCountDataBase()) {
+                                    echo 
+                                    "value='".
+                                    get_option('qi_settings')['noStart'].
+                                    "' readonly ";
+                                } else {
+
+                                } if (get_option('qi_settings')['noStart']) {
+                                    echo 
+                                    "value='".
+                                    get_option('qi_settings')['noStart'].
+                                    "'";
+                                } else {
+                                    echo 'value=""';  
+                                }?>
                                 >
                             </td>
                         </tr>
@@ -322,45 +346,28 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                     type="radio" 
                                     id="bank1" 
                                     name="bank" 
-                                    value="1"
-                                    <?php 
-                                         //echo get_option('qi_settings')['bankName1'] . " IBAN: ";
-                                         //echo get_option('qi_settings')['IBAN1']. " - BIC: ";
-                                         //echo get_option('qi_settings')['BIC1'];?>
-                                    checked="checked"
-                                   
-                                >
-                                
-                                
+                                    value="1" 
+                                    checked>     
                             </td>
                         </tr>
-
+                       
                         <tr id="tableRowBank2">
                             <td 
                                 class="labelsRightTable" 
                             ><?php
                                 echo get_option('qi_settings')['bankName2']; 
                             ?></td>
-
+        
                             <td class="inputsRightTable">
-                               
+                                       
                                 <input 
                                     type="radio" 
                                     id="bank2" 
                                     name="bank" 
-                                    value="2"<?php 
-                                    //echo get_option('qi_settings')['bankName2']  . " IBAN: ";
-                                    //echo get_option('qi_settings')['IBAN2']. " - BIC: ";
-                                    //echo get_option('qi_settings')['BIC2'];
-                                   
-                                    ?>
-                                    
-                                >
-                               
-                                
-                                
+                                    value="2"> 
                             </td>
                         </tr>
+                        
                         <tr>
                             <td class="labelsRightTable">
                                 <?php echo __('Paypal Me', 'Ev');?>
@@ -543,7 +550,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                 }
                                 ?>
                                 
-                                <option value="none" 
+                                <option value="0" 
                                     
                                 ><?php echo __('None', 'Ev'); ?></option>
 
