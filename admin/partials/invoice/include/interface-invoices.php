@@ -28,7 +28,7 @@
  * @link     a.de 
  */
 class Interface_Invoices
-{
+{   
     /**
      * Function deleteRowFromDB
      * 
@@ -182,7 +182,7 @@ class Interface_Invoices
             " WHERE id = ".$invoiceID
         );
         
-        return get_object_vars($data[0]);
+        return get_object_vars($data[0]['{$invoiceItem}']);
 
     }
 
@@ -253,24 +253,69 @@ class Interface_Invoices
         $arrayLength = count($invoice_array['itemDescription']);
 
         for ($i = 0; $i < $arrayLength; $i++) {
-            
+            $price = intVal($invoice_array['itemPrice'][$i]);
+            $amount = intVal($invoice_array['amountOfItems'][$i]);
+            $discount = intVal($invoice_array['itemDiscount'][$i]);
+            $discountType = $invoice_array['discountType'][$i];
+            $discountedPrice = self::discountPrice($price, $discount, $discountType); 
+            $total = $amount * $discountedPrice;
             
             $GLOBALS['wpdb']->insert( 
                 $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_DETAILS,
                 array(
                     'invoice_id' => $invoice_array['invoice_id'],
-                    'position' => $i+1,
+                    'position' => $i + 1,
                     'description' => $invoice_array['itemDescription'][$i],
                     'amount' => $invoice_array['amountOfItems'][$i],
                     'amount_plan' => $invoice_array['itemPrice'][$i],
                     'discount' => $invoice_array['itemDiscount'][$i],
                     'discount_type' => $invoice_array['discountType'][$i],
-                    'amount_actual' => $invoice_array['amountActual'][$i],
+                    'amount_actual' => $discountedPrice,
                     'tax' => $invoice_array['itemTax'][$i],
-                    'sum' => $invoice_array['invoiceTotal'][$i] 
+                    'sum' => $total
                 )
             );
         }
+    }
+
+    /**
+     * Function getRowCountDatabase        
+     * 
+     * @return string
+     */
+    static public function getRowCountDatabase()
+    {
+        $dbQuery = "SELECT COUNT(id) FROM ";
+        $tableName = $GLOBALS['wpdb']->prefix . 
+            QI_Invoice_Constants::TABLE_QI_HEADER;
+        return $GLOBALS['wpdb']->get_var($dbQuery . $tableName. ";");
+    }
+
+    /**
+     * Function discountPrice
+     * 
+     * @param int $price
+     * @param int $discount
+     * @param string $discountType       
+     * 
+     * @return float
+     */
+    static public function discountPrice (int $price, int $discount, string $discountType)
+    {
+            $discountedPrice = $price;
+            if ($discount){
+                if ($discountType == "discountPercent") {
+                    if ($discount < 100){
+                        $discountedPrice = $price - ($price * $discount / 100);
+                    }
+                }
+                if ($discountType == "discountTotal") {
+                    if ($discount < $price) {
+                        $discountedPrice = $price - $discount;
+                    }
+                }
+            }
+        return $discountedPrice;
     }
   
     /**
@@ -282,8 +327,7 @@ class Interface_Invoices
      */
     static private function _copyFromArrayToDB($invoice_array)
     {
-        $numberOfExistingRows = $GLOBALS['wpdb']->get_var("SELECT COUNT(id) FROM ". $GLOBALS['wpdb']->prefix . QI_Invoice_Constants::TABLE_QI_HEADER . ";");
-        if($numberOfExistingRows == 0){
+        if(empty(self::getRowCountDataBase())){
 
             $GLOBALS['wpdb']->query(
                 'ALTER TABLE '.
@@ -291,6 +335,10 @@ class Interface_Invoices
                 \QI_Invoice_Constants::TABLE_QI_HEADER.
                 ' AUTO_INCREMENT = '. $invoice_array['invoice_id']
             );
+            $options = get_option('qi_settings');
+            $options['prefix'] = $invoice_array['prefix'];
+            $options['noStart'] = $invoice_array['invoice_id'];
+            update_option('qi_settings', $options); 
         }
         $GLOBALS['wpdb']->show_errors();
         
@@ -329,21 +377,27 @@ class Interface_Invoices
         
         for ($i = 0; $i < $arrayLength; $i++) {
             $GLOBALS['wpdb']->show_errors();
-          
+            $price = intVal($invoice_array['itemPrice'][$i]);
+            $amount = intVal($invoice_array['amountOfItems'][$i]);
+            $discount = intVal($invoice_array['itemDiscount'][$i]);
+            $discountType = $invoice_array['discountType'][$i];
+            $discountedPrice = self::discountPrice($price,$discount, $discountType); 
+            $total = $amount * $discountedPrice;
+
             $GLOBALS['wpdb']->insert( 
                 $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_DETAILS,
                 array(
                     
                     'invoice_id' => $detailID,
-                    'position' => $invoice_array['position'][$i],
+                    'position' => $i + 1,
                     'description' => $invoice_array['itemDescription'][$i],
                     'amount' => $invoice_array['amountOfItems'][$i],
                     'amount_plan' => $invoice_array['itemPrice'][$i],
                     'discount' => $invoice_array['itemDiscount'][$i],
                     'discount_type' => $invoice_array['discountType'][$i],
-                    'amount_actual' => $invoice_array['amountActual'][$i],
+                    'amount_actual' => $discountedPrice,
                     'tax' => $invoice_array['itemTax'][$i],
-                    'sum' => $invoice_array['invoiceTotal'][$i] 
+                    'sum' => $total
                 )
             );
               
