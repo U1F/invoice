@@ -1,17 +1,6 @@
 /* global jQuery, q_invoice_ajaxObject */
 /* eslint no-undef: "error" */
 jQuery(function ($) {
-  /*
-  const customerFormFields = [
-    'company',
-    'additional',
-    'firstname',
-    'lastname',
-    'street',
-    'zip',
-    'city',
-    'loc_id'
-  ] */
   let contactData = []
 
   fetchContacts()
@@ -28,7 +17,11 @@ jQuery(function ($) {
     if ($(event.target).val().length > 0) {
       for (let i = 0; i < contactData[0].length; i++) {
         if (contactData[0][i][$(event.target)[0].id].toLowerCase().includes($(event.target).val().toLowerCase(), 0)) {
-          matchedNames[nameCount] = contactData[0][i].company
+          if (contactData[0][i].company) {
+            matchedNames[nameCount] = contactData[0][i].company
+          } else {
+            matchedNames[nameCount] = contactData[0][i].firstname + ' ' + contactData[0][i].lastname
+          }
           matchedIDs[nameCount] = contactData[0][i].id
           nameCount++
         }
