@@ -53,8 +53,7 @@ jQuery(function ($) {
       // Get the selected tax type
       const taxType = parseInt($(this).find('select.itemTax option:selected').val())
       // Get the computed product of discounted items
-      const linePrice = parseFloat($(this).find('.invoiceTotal').val())
-      console.log('linePrice = ' + linePrice)
+      const linePrice = parseFloat($(this).find('.invoiceTotal').attr('value'))
       // Save the Sum of taxes for each tax type and the sum of all taxTypes as well as the sum without taxation
       if ($.isNumeric(linePrice) && $.isNumeric(taxType)) {
         taxes.forEach(function (item) {
@@ -153,23 +152,28 @@ jQuery(function ($) {
   }
 
   $('.columnStatusPaid').on('click', '.sliderForPayment', function (event) {
-    // IS ARCHIVED OR PAID MORE IMPORTANT OR SAME TIME
+    // get key elements and save them to variables for later use
     const sliderBox = $(event.target).parent()
     const invoiceRow = sliderBox.parent().parent()
 
+    // if the slider gets, but was not checked..
     if (!sliderBox.find('input').prop('checked')) {
+      // .. set a paydate to mark as paid
       const data = { paydate: formatDate(new Date()) }
       markInvoice(getRowNumber(event.target), data)
 
+      // and mark that row as paid instead of open
       invoiceRow.removeClass('open edit')
       invoiceRow.addClass('paid')
       invoiceRow.find('.invoiceStatusIcon').addClass('paid')
       invoiceRow.find('.invoiceStatusIcon').removeClass('open')
       invoiceRow.addClass('paid')
       invoiceRow.removeClass('open')
+      // paid invoices should not look and be editable
       invoiceRow.find('.columnEdit').find('.delete').css('color', 'lightgrey')
       invoiceRow.find('.columnEdit').find('.delete').removeClass('deleteRow')
     } else {
+      // remove paydate, mark as open and make editable
       const data = { paydate: '' }
       unmarkInvoice(getRowNumber(event.target), data)
       invoiceRow.removeClass('paid')
@@ -232,72 +236,89 @@ jQuery(function ($) {
     target.attr('class', 'filterButton inactive')
   }
 
+  function showAllInvoices () {
+    // BOILER-PLATE CODE AHEAD
+    $('tr.cancelled').css('display', 'table-row')
+    $('tr.open').css('display', 'table-row')
+    $('tr.dunning').css('display', 'table-row')
+    $('tr.paid').css('display', 'table-row')
+    // Only show relevant Invoices
+    $('.delete').css('display', 'inline-block')
+    $('.reactivateInvoice').css('display', 'none')
+    // $('.dashicons-archive').css('display', 'inline-block  ')
+    $('.switch').css('display', 'inline-block')
+    $('.invoicePaid').css('display', 'none')
+  }
+
+  function showOpenInvoices () {
+    $('tr.open').css('display', 'table-row')
+    $('tr.cancelled').css('display', 'none')
+    $('tr.dunning').css('display', 'table-row')
+    $('tr.paid').css('display', 'none')
+
+    $('.delete').css('display', 'inline-block')
+    $('.reactivateInvoice').css('display', 'none')
+    // $('.dashicons-archive').css('display', 'none')
+    $('.switch').css('display', 'inline-block')
+    $('.invoicePaid').css('display', 'none')
+  }
+
+  function showCancelledInvoices () {
+    $('tr.cancelled').css('display', 'table-row')
+    $('tr.active').css('display', 'none')
+
+    $('.delete').css('display', 'none')
+    $('.reactivateInvoice').css('display', 'inline-block')
+    // $('.dashicons-archive').css('display', 'none')
+    $('.switch').css('display', 'none')
+    $('.invoicePaid').css('display', 'none')
+  }
+  function showInvoicesWithDunning () {
+    $('tr.cancelled').css('display', 'none')
+    $('tr.open').css('display', 'none')
+    $('tr.dunning').css('display', 'table-row')
+    $('tr.paid').css('display', 'none')
+
+    $('.delete').css('display', 'none')
+    $('.reactivateInvoice').css('display', 'none')
+    // $('.dashicons-archive').css('display', 'none')
+    $('.switch').css('display', 'none')
+    $('.invoicePaid').css('display', 'inline-block')
+  }
+  function showPaidInvoices () {
+    $('tr.cancelled').css('display', 'none')
+    $('tr.open').css('display', 'none')
+    $('tr.dunning').css('display', 'none')
+    $('tr.paid').css('display', 'table-row')
+
+    $('.delete').css('display', 'none')
+    $('.reactivateInvoice').css('display', 'none')
+    // $('.dashicons-archive').css('display', 'none')
+    $('.switch').css('display', 'none')
+    $('.invoicePaid').css('display', 'none')
+  }
+
   $('#filterButtons').on('click', 'div.inactive', function (event) {
     setFilterButtonInactive($('#filterButtons').find('div.active'))
-    // console.log($(event.target).parent())
     setFilterButtonActive($(event.target).parent())
     if ($(event.target).parent().attr('id') === 'showAllInvoices') {
-      // BOILER-PLATE CODE AHEAD
-      $('tr.cancelled').css('display', 'table-row')
-      $('tr.open').css('display', 'table-row')
-      $('tr.dunning').css('display', 'table-row')
-      $('tr.paid').css('display', 'table-row')
-      // Only show relevant Invoices
-      $('.delete').css('display', 'inline-block')
-      $('.reactivateInvoice').css('display', 'none')
-      // $('.dashicons-archive').css('display', 'inline-block  ')
-      $('.switch').css('display', 'inline-block')
-      $('.invoicePaid').css('display', 'none')
+      showAllInvoices()
     }
 
     if ($(event.target).parent().attr('id') === 'showOpenInvoices') {
-      $('tr.open').css('display', 'table-row')
-      $('tr.cancelled').css('display', 'none')
-      $('tr.dunning').css('display', 'table-row')
-      $('tr.paid').css('display', 'none')
-
-      $('.delete').css('display', 'inline-block')
-      $('.reactivateInvoice').css('display', 'none')
-      // $('.dashicons-archive').css('display', 'none')
-      $('.switch').css('display', 'inline-block')
-      $('.invoicePaid').css('display', 'none')
+      showOpenInvoices()
     }
 
     if ($(event.target).parent().attr('id') === 'showCancelledInvoices') {
-      $('tr.cancelled').css('display', 'table-row')
-      $('tr.active').css('display', 'none')
-
-      $('.delete').css('display', 'none')
-      $('.reactivateInvoice').css('display', 'inline-block')
-      // $('.dashicons-archive').css('display', 'none')
-      $('.switch').css('display', 'none')
-      $('.invoicePaid').css('display', 'none')
+      showCancelledInvoices()
     }
 
     if ($(event.target).parent().attr('id') === 'showInvoicesWithDunning') {
-      $('tr.cancelled').css('display', 'none')
-      $('tr.open').css('display', 'none')
-      $('tr.dunning').css('display', 'table-row')
-      $('tr.paid').css('display', 'none')
-
-      $('.delete').css('display', 'none')
-      $('.reactivateInvoice').css('display', 'none')
-      // $('.dashicons-archive').css('display', 'none')
-      $('.switch').css('display', 'none')
-      $('.invoicePaid').css('display', 'inline-block')
+      showInvoicesWithDunning()
     }
 
     if ($(event.target).parent().attr('id') === 'showInvoicesPaid') {
-      $('tr.cancelled').css('display', 'none')
-      $('tr.open').css('display', 'none')
-      $('tr.dunning').css('display', 'none')
-      $('tr.paid').css('display', 'table-row')
-
-      $('.delete').css('display', 'none')
-      $('.reactivateInvoice').css('display', 'none')
-      // $('.dashicons-archive').css('display', 'none')
-      $('.switch').css('display', 'none')
-      $('.invoicePaid').css('display', 'none')
+      showPaidInvoices()
     }
   })
 
@@ -388,7 +409,7 @@ jQuery(function ($) {
   })
 
   function checkIfBanksHaveBeenSetupinSettings () {
-    if ($('tr#tableRowBank2 input#bank2').val()) {
+    if ($('tr#tableRowBank2 td.labelsRightTable').text()) {
       $('tr#tableRowBank2').css('display', 'table-row')
       $('tr#tableRowBank1').css('display', 'table-row')
     } else {
@@ -458,7 +479,9 @@ jQuery(function ($) {
         data: data
       },
       success: function (response) {
-        console.log(response)
+        if (response) {
+          console.log(response)
+        }
       },
       error: function (errorThrown) {
         console.log(errorThrown)
@@ -598,8 +621,6 @@ jQuery(function ($) {
       },
       success: function (response, textStatus, XMLHttpRequest) {
         obj = JSON.parse(response)
-        console.log(obj)
-
         writeInvoiceHeadertoFormField('#invoice_id', 'id')
         writeInvoiceHeadertoFormField('#prefix ', 'prefix')
         writeInvoiceHeadertoFormField('#company', 'company')
@@ -611,6 +632,9 @@ jQuery(function ($) {
         writeInvoiceHeadertoFormField('#city', 'city')
         writeInvoiceHeadertoFormField('#dateOfInvoice', 'invoice_date')
         writeInvoiceHeadertoFormField('#performanceDate', 'delivery_date')
+        if (obj[0][0].bank === '2') {
+          $('td.inputsRightTable input#bank2').attr('checked', 'true')
+        }
         writeInvoiceHeadertoFormField('#loc_id', 'customerID')
 
         writeInvoiceDetailstoFormField('input.amountOfItems', 'amount', 0)
@@ -758,7 +782,7 @@ jQuery(function ($) {
     clone.find('a.download').attr('id', 'download-' + id)
     clone.find('a.download').attr('value', id)
 
-    clone.find('a.download').attr('href', '/wp-content/plugins/q_invoice/pdf/Invoice' + id + '.pdf')
+    clone.find('a.download').attr('href', '/wp-content/plugins/q_invoice/pdf/Invoice-' + invoice.prefix + '-' + id + '.pdf')
 
     clone.find('span.deleteRow').attr('id', id)
     clone.find('span.deleteRow').attr('value', id)
@@ -779,7 +803,6 @@ jQuery(function ($) {
     $('#invoiceForm').ajaxForm({
       success: function (response) {
         const serverResponse = JSON.parse(response).data
-        console.log(serverResponse)
         const invoiceID = JSON.parse(response).id
 
         if (serverResponse.action === 'updateInvoiceServerSide') {
@@ -797,10 +820,6 @@ jQuery(function ($) {
     })
 
     saveInvoiceNonces()
-
-    // checkPrefixStatus()
-
-    // checkNoStartStatus()
 
     checkIfBanksHaveBeenSetupinSettings()
 
@@ -824,7 +843,7 @@ jQuery(function ($) {
     $('input').bind('invalid', function () { return false })
 
     // Prevent chrome to autofill&autocomplete
-    $('input[type=text], input[type=number], input[type=email], input[type=password]').focus(function (e) {
+    $('#invoiceInputTables input').focus(function (e) {
       $(this).attr('autocomplete', 'new-password')
     })
   })
