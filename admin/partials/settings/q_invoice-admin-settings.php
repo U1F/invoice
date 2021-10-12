@@ -34,7 +34,10 @@
        
         
     </h1>
-
+    
+    <p id="q-invoice-new-readonly-dummy" style="display: none"><?php 
+        echo Interface_Invoices::getRowCountDatabase();
+    ?></p> 
     
     <form 
         id='qinvoiceSettings' 
@@ -129,7 +132,6 @@
     
     <?php 
     
-            //print_r(get_option('qi_settings'));
     ?>
 </div>
 <?php
