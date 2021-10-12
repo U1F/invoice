@@ -1,7 +1,6 @@
 /* global jQuery */
 /* eslint no-undef: "error" */
 jQuery(function ($) {
-
   $('textarea').each(function () {
     this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;')
   }).on('input', function () {
@@ -39,11 +38,11 @@ jQuery(function ($) {
     $('select#invoiceCurrency').parent().append(currencySignInput)
     if ($('select#invoiceCurrency').val() === 'Other') {
       $('#currencySign').css('display', 'inline-block')
-
     }
-    if($('#q-invoice-readonly-dummy').text() == "0"){
-      $('#prefix').attr('readonly', false);
-      $('#noStart').attr('readonly', false);
+
+    if ($('#q-invoice-readonly-dummy').text()) {
+      $('#prefix').attr('readonly', true)
+      $('#noStart').attr('readonly', true)
     }
   })
 })
