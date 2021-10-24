@@ -33,7 +33,8 @@ if (!defined('WPINC')) {
 }
 
 // Path of this file
-define('INVOICE_ROOT_FILE', __FILE__);
+// define('INVOICE_ROOT_FILE', __FILE__);
+define('INVOICE_ROOT_PATH', dirname(__FILE__));
 
 /**
  * Currently plugin version.
