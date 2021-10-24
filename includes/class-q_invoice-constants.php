@@ -43,7 +43,6 @@ if (!class_exists('QI_Invoice_Constants')) {
      */ 
     class QI_Invoice_Constants
     {
-        //const INVOICE_ROOT_PATH        = ABSPATH . "wp-content/plugins/qInvoice/";
         const TABLE_QI_CONTACTS   = "q_invoice_contacts";
         const TABLE_QI_DETAILS    = "q_invoice_details";
         const TABLE_QI_HEADER     = "q_invoice_header";

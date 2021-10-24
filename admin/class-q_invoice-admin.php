@@ -65,12 +65,11 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $this->_plugin_name = $plugin_name;
             $this->_version = $version;
 
-            //include_once INVOICE_ROOT_PATH .
             include_once INVOICE_ROOT_PATH.
                 "/includes/" .
                 "interface-invoices.php";
 
-                include_once INVOICE_ROOT_PATH .
+            include_once INVOICE_ROOT_PATH .
                 "/includes/" .
                 "interface-contacts.php";
         }
