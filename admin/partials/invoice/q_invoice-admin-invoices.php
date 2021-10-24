@@ -74,7 +74,7 @@ function Invoice_list()
         
     <?php 
         ob_start();
-        include_once \QI_Invoice_Constants::PART_PATH_QI . 
+        include_once INVOICE_ROOT_PATH . 
         "/admin/partials/invoice/views/qi_show_all.php";
 
         showHeader();
@@ -87,7 +87,7 @@ function Invoice_list()
         echo $showAll;
 
         ob_start();
-        include_once \QI_Invoice_Constants::PART_PATH_QI . 
+        include_once INVOICE_ROOT_PATH . 
         "/admin/partials/invoice/views/qi_edit_invoice.php"; 
         $editInv= ob_get_contents();
         ob_end_clean();
@@ -100,7 +100,7 @@ function Invoice_list()
         echo '<pre>';
         print_r(get_option('qi_settings'));
         echo '</pre>';
-        include_once \QI_Invoice_Constants::PART_PATH_QI . 
+        include_once INVOICE_ROOT_PATH . 
         "/admin/partials/export/export.php";  
         exportInovice(2, "invoice");          
     }

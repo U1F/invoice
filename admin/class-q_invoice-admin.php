@@ -65,12 +65,12 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $this->_plugin_name = $plugin_name;
             $this->_version = $version;
 
-            //include_once \QI_Invoice_Constants::PART_PATH_QI .
+            //include_once INVOICE_ROOT_PATH .
             include_once INVOICE_ROOT_PATH.
                 "/includes/" .
                 "interface-invoices.php";
 
-                include_once \QI_Invoice_Constants::PART_PATH_QI .
+                include_once INVOICE_ROOT_PATH .
                 "/includes/" .
                 "interface-contacts.php";
         }
@@ -1095,19 +1095,19 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             //$customerName = $firstName. "_" .$lastName;    
 
             ob_start();
-            include_once \QI_Invoice_Constants::PART_PATH_QI . 
+            include_once INVOICE_ROOT_PATH . 
             "/admin/partials/export/export.php";  
             exportInovice($invoiceID, "invoice");             
             $exportInv= ob_get_contents();
             ob_end_clean();
-            include  \QI_Invoice_Constants::PART_PATH_QI . 
+            include  INVOICE_ROOT_PATH . 
             '/admin/partials/export/html2pdf.class.php';
             try {
                 $html2pdf = new HTML2PDF('P', 'A4', 'de');
                 $html2pdf->writeHTML($exportInv, isset($_GET['vuehtml']));
                 // PDF Name : Invoice/Dunning/etc-$prefix$no-Customername_$datum
                 $html2pdf->Output(
-                    \QI_Invoice_Constants::PART_PATH_QI . 
+                    INVOICE_ROOT_PATH . 
                     'pdf/'.
                     "Invoice-".
                     get_option('qi_settings')['prefix'].
