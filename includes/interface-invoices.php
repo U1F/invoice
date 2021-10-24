@@ -175,14 +175,14 @@ class Interface_Invoices
      */
     static public function getInvoiceDataItem($invoiceID, $invoiceItem)
     {
-        $data = $GLOBALS['wpdb']->get_results(
+        $data = $GLOBALS['wpdb']->get_var(
             "SELECT ".$invoiceItem." FROM ".
             $GLOBALS['wpdb']->prefix . 
             \QI_Invoice_Constants::TABLE_QI_HEADER.
             " WHERE id = ".$invoiceID
         );
         
-        return get_object_vars($data[0]['{$invoiceItem}']);
+        return $data;
 
     }
 

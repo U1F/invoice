@@ -1088,11 +1088,14 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         public function printInvoiceTemplate($invoiceID)
         {
             $invoiceDate = Interface_Invoices::getInvoiceDataItem($invoiceID, "invoice_date");
-            //$company = Interface_Invoices::getInvoiceDataItem($invoiceID, "company")["company"];
-            //$lastName = Interface_Invoices::getInvoiceDataItem($invoiceID, "company")["company"];
-            //$firstName = Interface_Invoices::getInvoiceDataItem($invoiceID, "company")["company"];
-            //$customerName = $firstName. "_" .$lastName;    
-
+            $company = Interface_Invoices::getInvoiceDataItem($invoiceID, "company");
+            $lastName = Interface_Invoices::getInvoiceDataItem($invoiceID, "lastname");
+            $firstName = Interface_Invoices::getInvoiceDataItem($invoiceID, "firstname");
+            
+            $customerName = $firstName. "_" .$lastName;    
+            if ($company) {
+                $customerName = $company;
+            }
             ob_start();
             include_once INVOICE_ROOT_PATH . 
             "/admin/partials/export/export.php";  
@@ -1107,12 +1110,12 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 // PDF Name : Invoice/Dunning/etc-$prefix$no-Customername_$datum
                 $html2pdf->Output(
                     INVOICE_ROOT_PATH . 
-                    'pdf/'.
+                    '/pdf/'.
                     "Invoice-".
                     get_option('qi_settings')['prefix'].
                     $invoiceID. "_".
-                    //$company. "_".
-                    //$invoiceDate.
+                    $customerName. "_".
+                    $invoiceDate.
                     '.pdf', 'F'
                 );
             } catch (HTML2PDF_exception $e) {
