@@ -338,10 +338,10 @@ function showOpenInvoices()
                         target="_top"
                         href=<?php 
                         echo "'". plugins_url(
-                            INVOICE_ROOT_PATH .
-                            '/pdf/Invoice-'. 
+                            INVOICE_ROOT_PATH) .
+                            '/pdf/'. 
                             Interface_Export::makeFilename($invoice_header->id).
-                            '.pdf')."'    "
+                            '.pdf'."' "
                         ?>"
                         id="<?php 
                             echo 
