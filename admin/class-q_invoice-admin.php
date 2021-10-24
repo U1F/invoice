@@ -72,6 +72,10 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             include_once INVOICE_ROOT_PATH .
                 "/includes/" .
                 "interface-contacts.php";
+            
+            include_once INVOICE_ROOT_PATH .
+                "/includes/" .
+                "interface-export.php";
         }
 
           /**
@@ -1077,6 +1081,36 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         }
 
         /**
+         * Function makeFilename
+         * 
+         * @param int $invoiceID 
+         * 
+         * @return string
+         *
+         * @since 1.0.0
+         */
+        public function makeFilename($invoiceID) 
+        {
+            $invoiceDate = Interface_Invoices::getInvoiceDataItem($invoiceID, "invoice_date");
+            $company = Interface_Invoices::getInvoiceDataItem($invoiceID, "company");
+            $lastName = Interface_Invoices::getInvoiceDataItem($invoiceID, "lastname");
+            $firstName = Interface_Invoices::getInvoiceDataItem($invoiceID, "firstname");
+            $customerName = $firstName. "_" .$lastName;    
+            if ($company) {
+                $customerName = $company;
+            }
+
+            $filename = 
+                "Invoice-".
+                get_option('qi_settings')['prefix'].
+                $invoiceID. "_".
+                $customerName. "_".
+                $invoiceDate;
+
+            return $filename;
+        }
+
+        /**
          * Function printInvoiceTemplate
          * 
          * @param int $invoiceID 
@@ -1087,15 +1121,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          */
         public function printInvoiceTemplate($invoiceID)
         {
-            $invoiceDate = Interface_Invoices::getInvoiceDataItem($invoiceID, "invoice_date");
-            $company = Interface_Invoices::getInvoiceDataItem($invoiceID, "company");
-            $lastName = Interface_Invoices::getInvoiceDataItem($invoiceID, "lastname");
-            $firstName = Interface_Invoices::getInvoiceDataItem($invoiceID, "firstname");
             
-            $customerName = $firstName. "_" .$lastName;    
-            if ($company) {
-                $customerName = $company;
-            }
             ob_start();
             include_once INVOICE_ROOT_PATH . 
             "/admin/partials/export/export.php";  
@@ -1111,11 +1137,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 $html2pdf->Output(
                     INVOICE_ROOT_PATH . 
                     '/pdf/'.
-                    "Invoice-".
-                    get_option('qi_settings')['prefix'].
-                    $invoiceID. "_".
-                    $customerName. "_".
-                    $invoiceDate.
+                    $this->makeFilename($invoiceID).
                     '.pdf', 'F'
                 );
             } catch (HTML2PDF_exception $e) {

@@ -338,9 +338,10 @@ function showOpenInvoices()
                         target="_top"
                         href=<?php 
                         echo "'". plugins_url(
-                            'q_invoice/pdf/Invoice-'. 
-                            get_option('qi_settings')['prefix'].'-'.
-                            $invoice_header->id.'.pdf')."'    "
+                            INVOICE_ROOT_PATH .
+                            '/pdf/Invoice-'. 
+                            Interface_Export::makeFilename($invoice_header->id).
+                            '.pdf')."'    "
                         ?>"
                         id="<?php 
                             echo 
