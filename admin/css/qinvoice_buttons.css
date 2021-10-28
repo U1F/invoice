@@ -115,7 +115,7 @@ border: 1px solid #c0c0c0;
     width: 0;
     height: 0;
   }
-
+/*kugel h/w: 25px; left:0; box h:25, w: 50 transform:25*/
 
 .q-invoice-page .invoiceSlider {
     position: absolute;
@@ -127,18 +127,19 @@ border: 1px solid #c0c0c0;
     background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;
+    border: 1px solid rgba(0, 0, 0, 0.15);
   }
   
   .q-invoice-page .invoiceSlider:before {
     position: absolute;
     content: "";
-    height: 17px;
-    width: 17px;
-    left: 2px;
-    bottom: 2px;
+    height: 15px;
+    width: 15px;
+    left: 0px;
+    bottom: 0px;
     background-color: white;
     -webkit-transition: .4s;
-    transition: .4s;
+    transition: .1s ease-in;
   }
   
   .q-invoice-page input:checked + .invoiceSlider {
@@ -157,7 +158,9 @@ border: 1px solid #c0c0c0;
   
   /* Rounded invoiceSliders */
   .q-invoice-page .invoiceSlider.round {
-    border-radius: 20px;
+    border-radius: 34px;
+    height: 15px;
+    width:30px;
   }
   
   .q-invoice-page .invoiceSlider.round:before {

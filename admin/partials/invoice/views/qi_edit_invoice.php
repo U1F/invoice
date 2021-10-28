@@ -64,6 +64,8 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                         value=""
                                         
                                         autocomplete="new-password"
+
+                                        required
                                         
                                     >
                                     
@@ -115,7 +117,8 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             <td class="inputsLeftTable">
                                 <div style="display:flex;">
                                     <div>
-                                        <input 
+                                        <input
+                                            class="inputName"
                                             type="text" 
                                             placeholder="<?php 
                                                 echo __("First Name", 'Ev');
@@ -133,7 +136,8 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                     <div style="flex-grow: 1"></div>
 
                                     <div>
-                                        <input 
+                                        <input
+                                            class="inputName"
                                             type="text" 
                                             placeholder="<?php 
                                                 echo __('Last Name', 'Ev');
@@ -282,7 +286,8 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
 
                             <td class="inputsRightTable">
                                 <input type="text" 
-                                    id="invoice_id" name="invoice_id"
+                                    id="invoice_id" name="invoice_id" size="6"
+                                    style="width: auto; text-align:left;"
                                     <?php if (Interface_Invoices::getRowCountDataBase()) {
                                     echo 
                                     "value='".

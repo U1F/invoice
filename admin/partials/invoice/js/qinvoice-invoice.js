@@ -457,7 +457,7 @@ jQuery(function ($) {
 
     Clone.find('input:text').val('')
     Clone.find('input').val('')
-    Clone.find('select.itemTax').val('0')
+    Clone.find('select.itemTax').val(Row.find('select.itemTax').val())
     Clone.find('input.invoicepositionHidden').val(Clone.find('.invoiceItemsNo > span').text())
     // Clone.find('span.qInvcLine-total').text('');
     // Clone.find('.invoiceItemsTotal nobr').html('<span class="qInvcLine-total"></span>');
@@ -869,6 +869,7 @@ jQuery(function ($) {
 
     $('table#tableInvoices > tbody').prepend(clone)
   }
+
   function displaySuccess () {
     // DIE MELDUNG ALS FUNKTION?
     $('#wpbody-content').prepend(
@@ -927,4 +928,27 @@ jQuery(function ($) {
       $(this).attr('autocomplete', 'new-password')
     })
   })
+
+  jQuery(document).ready(function ($) {
+    $('#company').blur(function(){
+      if(!$(this).val()){
+        $('#firstname').prop('required', true);
+        $('#lastname').prop('required', true);
+        $('#company').prop('required', true);
+      }else{
+        $('#firstname').prop('required', false);
+        $('#lastname').prop('required', false);
+      }
+    });
+    $('.inputName').blur(function(){
+      if(!$(this).val() || !$('#lastname').val() || !$('#firstname').val()){
+        $('#firstname').prop('required', true);
+        $('#lastname').prop('required', true);
+        $('#company').prop('required', true);
+      }else{
+        $('#company').prop('required', false);
+      }
+    });
+  })
+
 })

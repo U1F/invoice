@@ -311,8 +311,13 @@ td.invoiceItemsHeader {
                     width="<?php echo $tableWidthOfInvoiceHead;?>"
                 >
                     <b><?php echo __("Kundennr.", "ev");?></b><br> 
-                    <span id="CustomerID"><?php 
-                        echo $invoiceData[0][0]->customerID;?>
+                    <span id="CustomerID"><?php
+                        if($invoiceData[0][0]->customerID != 0){
+                            echo $invoiceData[0][0]->customerID;
+                        }else{
+                            echo '-';
+                        }
+                        ?>
                     </span>
                 </td>
                 
