@@ -27,7 +27,7 @@
             src="<?php echo esc_url(
                 plugins_url('../../img/qanuk_snowflake.png', __FILE__)
             );?>">
-        <span id="qanuk_title"><?php _e('Q invoice by qanuk.io', 'Ev'); ?></span>
+        <span id="qanuk_title"><?php _e('Q INVOICE by qanuk.io', 'Ev'); ?></span>
         <span id="qanuk_title_media"><?php _e('Contacts', 'Ev'); ?></span> 
         <span class="addNewButton">
             <button id="qiNewContact" class="button-primary">

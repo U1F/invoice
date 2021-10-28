@@ -31,7 +31,7 @@ function Invoice_list()
         <div class="confirmationBox">
             <div style="margin: 1.5em 0 1em 0; text-align: center;">
                 <h3 style="color:red;" >Do you want to cancel the invoice?</h3>
-                <p>This will not delete the invoice. It will be moved to the status "cancelled". </p>
+                <p>This will not delete the invoice. <br> It will be moved to the status "cancelled". </p>
                 <div style="text-align: center; margin: 1em 0;">
                     <button class="qInvoiceFormButton cancelButton" id="cancelRemoveInvoice">
                         Cancel
@@ -51,7 +51,7 @@ function Invoice_list()
             $snow = '../../img/qanuk_snowflake.png';
             echo esc_url(plugins_url($snow, __FILE__));
             ?>">
-        <span id="qanuk_title"><?php _e('Q invoice by qanuk.io', 'Ev'); ?></span>
+        <span id="qanuk_title"><?php _e('Q INVOICE by qanuk.io', 'Ev'); ?></span>
         <!--span id="qanuk_title_media"><?php _e('Q', 'Ev'); ?></span-->
         
         <span class="addNewButton">

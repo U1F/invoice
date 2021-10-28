@@ -248,6 +248,22 @@ jQuery(function ($) {
     // $('.dashicons-archive').css('display', 'inline-block  ')
     $('.switch').css('display', 'inline-block')
     $('.invoicePaid').css('display', 'none')
+
+    $('#qi_totalSumNetto').css('display', 'block')
+    $('#qi_openSumNetto').css('display', 'none')
+    $('#qi_cancelledSumNetto').css('display', 'none')
+    $('#qi_dunningSumNetto').css('display', 'none')
+    $('#qi_paidSumNetto').css('display', 'none')
+    $('#qi_totalSumTotal').css('display', 'block')
+    $('#qi_openSumTotal').css('display', 'none')
+    $('#qi_cancelledSumTotal').css('display', 'none')
+    $('#qi_dunningSumTotal').css('display', 'none')
+    $('#qi_paidSumTotal').css('display', 'none')
+    $('#qi_totalSumDunning').css('display', 'block')
+    $('#qi_openSumDunning').css('display', 'none')
+    $('#qi_cancelledSumDunning').css('display', 'none')
+    $('#qi_dunningSumDunning').css('display', 'none')
+    $('#qi_paidSumDunning').css('display', 'none')
   }
 
   function showOpenInvoices () {
@@ -261,6 +277,22 @@ jQuery(function ($) {
     // $('.dashicons-archive').css('display', 'none')
     $('.switch').css('display', 'inline-block')
     $('.invoicePaid').css('display', 'none')
+
+    $('#qi_totalSumNetto').css('display', 'none')
+    $('#qi_openSumNetto').css('display', 'block')
+    $('#qi_cancelledSumNetto').css('display', 'none')
+    $('#qi_dunningSumNetto').css('display', 'none')
+    $('#qi_paidSumNetto').css('display', 'none')
+    $('#qi_totalSumTotal').css('display', 'none')
+    $('#qi_openSumTotal').css('display', 'block')
+    $('#qi_cancelledSumTotal').css('display', 'none')
+    $('#qi_dunningSumTotal').css('display', 'none')
+    $('#qi_paidSumTotal').css('display', 'none')
+    $('#qi_totalSumDunning').css('display', 'none')
+    $('#qi_openSumDunning').css('display', 'block')
+    $('#qi_cancelledSumDunning').css('display', 'none')
+    $('#qi_dunningSumDunning').css('display', 'none')
+    $('#qi_paidSumDunning').css('display', 'none')
   }
 
   function showCancelledInvoices () {
@@ -272,6 +304,22 @@ jQuery(function ($) {
     // $('.dashicons-archive').css('display', 'none')
     $('.switch').css('display', 'none')
     $('.invoicePaid').css('display', 'none')
+
+    $('#qi_totalSumNetto').css('display', 'none')
+    $('#qi_openSumNetto').css('display', 'none')
+    $('#qi_cancelledSumNetto').css('display', 'block')
+    $('#qi_dunningSumNetto').css('display', 'none')
+    $('#qi_paidSumNetto').css('display', 'none')
+    $('#qi_totalSumTotal').css('display', 'none')
+    $('#qi_openSumTotal').css('display', 'none')
+    $('#qi_cancelledSumTotal').css('display', 'block')
+    $('#qi_dunningSumTotal').css('display', 'none')
+    $('#qi_paidSumTotal').css('display', 'none')
+    $('#qi_totalSumDunning').css('display', 'none')
+    $('#qi_openSumDunning').css('display', 'none')
+    $('#qi_cancelledSumDunning').css('display', 'block')
+    $('#qi_dunningSumDunning').css('display', 'none')
+    $('#qi_paidSumDunning').css('display', 'none')
   }
   function showInvoicesWithDunning () {
     $('tr.cancelled').css('display', 'none')
@@ -284,6 +332,22 @@ jQuery(function ($) {
     // $('.dashicons-archive').css('display', 'none')
     $('.switch').css('display', 'none')
     $('.invoicePaid').css('display', 'inline-block')
+
+    $('#qi_totalSumNetto').css('display', 'none')
+    $('#qi_openSumNetto').css('display', 'none')
+    $('#qi_cancelledSumNetto').css('display', 'none')
+    $('#qi_dunningSumNetto').css('display', 'block')
+    $('#qi_paidSumNetto').css('display', 'none')
+    $('#qi_totalSumTotal').css('display', 'none')
+    $('#qi_openSumTotal').css('display', 'none')
+    $('#qi_cancelledSumTotal').css('display', 'none')
+    $('#qi_dunningSumTotal').css('display', 'block')
+    $('#qi_paidSumTotal').css('display', 'none')
+    $('#qi_totalSumDunning').css('display', 'none')
+    $('#qi_openSumDunning').css('display', 'none')
+    $('#qi_cancelledSumDunning').css('display', 'none')
+    $('#qi_dunningSumDunning').css('display', 'block')
+    $('#qi_paidSumDunning').css('display', 'none')
   }
   function showPaidInvoices () {
     $('tr.cancelled').css('display', 'none')
@@ -296,6 +360,22 @@ jQuery(function ($) {
     // $('.dashicons-archive').css('display', 'none')
     $('.switch').css('display', 'none')
     $('.invoicePaid').css('display', 'none')
+
+    $('#qi_totalSumNetto').css('display', 'none')
+    $('#qi_openSumNetto').css('display', 'none')
+    $('#qi_cancelledSumNetto').css('display', 'none')
+    $('#qi_dunningSumNetto').css('display', 'none')
+    $('#qi_paidSumNetto').css('display', 'block')
+    $('#qi_totalSumTotal').css('display', 'none')
+    $('#qi_openSumTotal').css('display', 'none')
+    $('#qi_cancelledSumTotal').css('display', 'none')
+    $('#qi_dunningSumTotal').css('display', 'none')
+    $('#qi_paidSumTotal').css('display', 'block')
+    $('#qi_totalSumDunning').css('display', 'none')
+    $('#qi_openSumDunning').css('display', 'none')
+    $('#qi_cancelledSumDunning').css('display', 'none')
+    $('#qi_dunningSumDunning').css('display', 'none')
+    $('#qi_paidSumDunning').css('display', 'block')
   }
 
   $('#filterButtons').on('click', 'div.inactive', function (event) {
