@@ -234,13 +234,13 @@ function showOpenInvoices()
                     } 
                          
                 ?>" 
-                id="edit-<?php echo $invoice_header->id;?>"
-                value="<?php echo $invoice_header->id;?>"
+                id="edit-<?php echo esc_attr($invoice_header->id);?>"
+                value="<?php echo esc_html($invoice_header->id);?>"
             >    
 
             <td class="manage-column  columnInvoiceID sortable asc">
                 <span>
-                        <?php echo $invoice_header->id ?>
+                        <?php echo esc_html($invoice_header->id); ?>
                 </span>
             </td>
             
@@ -273,21 +273,21 @@ function showOpenInvoices()
                     class="manage-column  columnName">
                         <?php 
                             if($invoice_header->company){
-                                echo $invoice_header->company; 
+                                echo esc_html($invoice_header->company); 
                             } else {?>
                                 <span class="firstnameSpan">
-                                    <?php echo  $invoice_header->firstname ?>
+                                    <?php echo  esc_html($invoice_header->firstname); ?>
                                 </span>
                     
                                 <span class="lastnameSpan">
-                                    <?php echo  $invoice_header->lastname ?>
+                                    <?php echo  esc_html($invoice_header->lastname); ?>
                                 </span> <?php
                             }?>
                 </td>
 
                 <td class="manage-column  columnDescription">
                     <span>
-                        <?php echo  $invoice_details[0]->description?>
+                        <?php echo  esc_html($invoice_details[0]->description);?>
                     </span>
                     
                 </td>
@@ -381,10 +381,10 @@ function showOpenInvoices()
 
                 <td class="manage-column  columnStatusPaid">
                 <span style="font-size: 20px; <?php if($cancelled){echo 'opacity:0;';}?>"
-                        id="<?php echo $invoice_header->id;?>" 
+                        id="<?php echo esc_attr($invoice_header->id);?>" 
                         title="Mark As Paid"
                         class="invoicePaid markAsPaid dashicons dashicons-money-alt"
-                        value="<?php echo $invoice_header->id;?>"
+                        value="<?php echo esc_html($invoice_header->id);?>"
                     >
                     </span>
 
@@ -418,7 +418,7 @@ function showOpenInvoices()
                             ?>"
                         title="Download Invoice"
                         class="downloadInvoice download dashicons dashicons-download"
-                        value="<?php echo $invoice_header->id?>"
+                        value="<?php echo esc_html($invoice_header->id);?>"
                         download
                     >
                     </a>
@@ -428,12 +428,12 @@ function showOpenInvoices()
                         if ($paid){echo 'color: lightgrey;';}
                         if ($cancelled){echo ' display: none;';}
                         ?>"
-                        id="<?php echo $invoice_header->id;?>" 
+                        id="<?php echo esc_attr($invoice_header->id);?>" 
                         title="Cancel Invoice"
                         class="delete <?php
                         if (!$paid){echo 'deleteRow';}
                         ?> dashicons dashicons-no"
-                        value="<?php echo $invoice_header->id;?>"
+                        value="<?php echo esc_html($invoice_header->id);?>"
                     >
                     </span>
 
@@ -443,10 +443,10 @@ function showOpenInvoices()
                         } else {
                             echo 'display: none;';
                         }?>"
-                        id="<?php echo $invoice_header->id;?>" 
+                        id="<?php echo esc_attr($invoice_header->id);?>" 
                         title="Reactivate Invoice"
                         class="reactivateInvoice reactivate dashicons dashicons-undo"
-                        value="<?php echo $invoice_header->id;?>"
+                        value="<?php echo esc_html($invoice_header->id);?>"
                     >
                     </span>
                     
@@ -461,8 +461,8 @@ function showOpenInvoices()
             echo ' all ';
                     
         ?>" 
-        id="total-<?php echo $invoice_header->id;?>"
-        value="<?php echo $invoice_header->id;?>"
+        id="total-<?php echo esc_attr($invoice_header->id);?>"
+        value="<?php echo esc_html($invoice_header->id);?>"
         style="border-top: 2px dashed lightgray"
     >    
 

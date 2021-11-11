@@ -64,39 +64,39 @@
 
                 $count++;
                 ?>
-                <tr value="<?php echo $contact->id;?>">
+                <tr value="<?php echo esc_html($contact->id);?>">
                
 
                 <td class="manage-column fiftyCol columnRowID">
-                    <?php echo esc_attr($count); ?>
+                    <?php echo esc_html($count); ?>
                 </td>
 
                 <td class="manage-column twohundredCol columnCompany">
-                    <?php echo $contact->company ?> 
+                    <?php echo esc_html($contact->company); ?> 
                 </td>
 
                 <td class="manage-column hundredCol columnName">
                     
                     <span class="columnFirstName">
-                        <?php echo  $contact->firstname; ?>
+                        <?php echo  esc_html($contact->firstname); ?>
                     </span>
                     
                     <span class="columnLastName">
-                        <?php echo  $contact->lastname; ?>
+                        <?php echo  esc_html($contact->lastname); ?>
                     </span>
 
                 </td>
 
                 <td class="manage-column fiftyCol columnCity">
                     <span>
-                        <?php echo $contact->city; ?>
+                        <?php echo esc_html($contact->city); ?>
                     </span>
                     
                 </td>
 
                 <td class="manage-column fiftyCol columnEmail">
                 <span>
-                        <?php echo $contact->email; ?>
+                        <?php echo esc_html($contact->email); ?>
                     </span>
                 </td>
 
@@ -112,7 +112,7 @@
                     </span>
 
                     <span style="font-size: 20px"
-                        id="<?php echo $contact->id; //should be delete-ID-?>" 
+                        id="<?php echo esc_attr($contact->id); //should be delete-ID-?>" 
                         title="delete"
                         class="deleteContact dashicons dashicons-no">
                     </span>

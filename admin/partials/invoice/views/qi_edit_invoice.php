@@ -504,7 +504,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                     step="0.01"
                                     required
                                 >
-                                <span><?php echo $currencySymbol ?></span>
+                                <span><?php echo esc_html($currencySymbol) ?></span>
                             </nobr>     
                         </td>
 
@@ -522,7 +522,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                 <select name="discountType[]" class="discountType">
                                     <option value="discountPercent">%</option>
                                     <option value="discountTotal"><?php 
-                                        echo $currencySymbol;
+                                        echo esc_html($currencySymbol);
                                     ?></option>
                                 </select>
 
@@ -578,7 +578,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                     class="qInvcLine-total"> 
                                 </span>
                                 
-                                <?php echo $currencySymbol ?>
+                                <?php echo esc_html($currencySymbol) ?>
                             </nobr>
 
                             <input 
@@ -625,7 +625,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             <td  
                                 class="qInvc-total invoiceSumsAccounts">
                                     <span class="qInvc-total-summe"></span> 
-                                    <?php echo $currencySymbol ?>
+                                    <?php echo esc_html($currencySymbol); ?>
                             </td>
                         </tr>
 
@@ -639,7 +639,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             
                             <td class="qInvc-total invoiceSumsAccounts">
                                 <span class="qInvc-total-brutto-summe"></span> 
-                                <?php echo $currencySymbol ?>
+                                <?php echo esc_html($currencySymbol); ?>
                             </td>
                             
             

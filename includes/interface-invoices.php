@@ -204,18 +204,18 @@ class Interface_Invoices
             $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_HEADER,
             array(
                 
-                'prefix' => $invoice_array['prefix'],
-                'invoice_date' => $invoice_array['dateOfInvoice'], 
-                'delivery_date' => $invoice_array['performanceDate'],
-                'company' => $invoice_array['company'],
-                'additional' => $invoice_array['additional'],
-                'firstname' =>  $invoice_array['firstname'],
-                'lastname' =>  $invoice_array['lastname'],
-                'street'  => $invoice_array['street'],
-                'zip'  => $invoice_array['zip'],
-                'city'  => $invoice_array['city'],
+                'prefix' => sanitize_text_field($invoice_array['prefix']),
+                'invoice_date' => sanitize_text_field($invoice_array['dateOfInvoice']), 
+                'delivery_date' => sanitize_text_field($invoice_array['performanceDate']),
+                'company' => sanitize_text_field($invoice_array['company']),
+                'additional' => sanitize_text_field($invoice_array['additional']),
+                'firstname' =>  sanitize_text_field($invoice_array['firstname']),
+                'lastname' =>  sanitize_text_field($invoice_array['lastname']),
+                'street'  => sanitize_text_field($invoice_array['street']),
+                'zip'  => sanitize_text_field($invoice_array['zip']),
+                'city'  => sanitize_text_field($invoice_array['city']),
                 'email'  => "",
-                'bank' => $invoice_array['bank'],
+                'bank' => sanitize_text_field($invoice_array['bank']),
                 'date_changed'  => "",
                 'dunning1'  => "",
                 'date_dunning1'  => "",
@@ -263,16 +263,16 @@ class Interface_Invoices
             $GLOBALS['wpdb']->insert( 
                 $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_DETAILS,
                 array(
-                    'invoice_id' => $invoice_array['invoice_id'],
+                    'invoice_id' => sanitize_text_field($invoice_array['invoice_id']),
                     'position' => $i + 1,
-                    'description' => $invoice_array['itemDescription'][$i],
-                    'amount' => $invoice_array['amountOfItems'][$i],
-                    'amount_plan' => $invoice_array['itemPrice'][$i],
-                    'discount' => $invoice_array['itemDiscount'][$i],
-                    'discount_type' => $invoice_array['discountType'][$i],
-                    'amount_actual' => $discountedPrice,
-                    'tax' => $invoice_array['itemTax'][$i],
-                    'sum' => $total
+                    'description' => sanitize_text_field($invoice_array['itemDescription'][$i]),
+                    'amount' => sanitize_text_field($invoice_array['amountOfItems'][$i]),
+                    'amount_plan' => sanitize_text_field($invoice_array['itemPrice'][$i]),
+                    'discount' => sanitize_text_field($invoice_array['itemDiscount'][$i]),
+                    'discount_type' => sanitize_text_field($invoice_array['discountType'][$i]),
+                    'amount_actual' => sanitize_text_field($discountedPrice),
+                    'tax' => sanitize_text_field($invoice_array['itemTax'][$i]),
+                    'sum' => sanitize_text_field($total)
                 )
             );
         }
@@ -388,16 +388,16 @@ class Interface_Invoices
                 $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_DETAILS,
                 array(
                     
-                    'invoice_id' => $detailID,
+                    'invoice_id' => sanitize_text_field($detailID),
                     'position' => $i + 1,
-                    'description' => $invoice_array['itemDescription'][$i],
-                    'amount' => $invoice_array['amountOfItems'][$i],
-                    'amount_plan' => $invoice_array['itemPrice'][$i],
-                    'discount' => $invoice_array['itemDiscount'][$i],
-                    'discount_type' => $invoice_array['discountType'][$i],
-                    'amount_actual' => $discountedPrice,
-                    'tax' => $invoice_array['itemTax'][$i],
-                    'sum' => $total
+                    'description' => sanitize_text_field($invoice_array['itemDescription'][$i]),
+                    'amount' => sanitize_text_field($invoice_array['amountOfItems'][$i]),
+                    'amount_plan' => sanitize_text_field($invoice_array['itemPrice'][$i]),
+                    'discount' => sanitize_text_field($invoice_array['itemDiscount'][$i]),
+                    'discount_type' => sanitize_text_field($invoice_array['discountType'][$i]),
+                    'amount_actual' => sanitize_text_field($discountedPrice),
+                    'tax' => sanitize_text_field($invoice_array['itemTax'][$i]),
+                    'sum' => sanitize_text_field($total)
                 )
             );
               
