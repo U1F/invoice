@@ -233,7 +233,7 @@ function showOpenInvoices()
                         echo ' active ';
                     } 
                          
-                ?>" 
+                ?> q_invoice-content-row" 
                 id="edit-<?php echo esc_attr($invoice_header->id);?>"
                 value="<?php echo esc_html($invoice_header->id);?>"
             >    
@@ -404,9 +404,8 @@ function showOpenInvoices()
                         style="font-size:20px; display:inline" 
                         target="_top"
                         href=<?php 
-                        echo "'". plugins_url(
-                            INVOICE_ROOT_PATH) .
-                            '/pdf/'. 
+                        echo "'". plugins_url() .
+                            '/q-invoice/pdf/'. 
                             Interface_Export::makeFilename($invoice_header->id).
                             '.pdf'."' "
                         ?>"

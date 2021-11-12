@@ -746,6 +746,20 @@ jQuery(function ($) {
         $('input.itemPrice').each(function () {
           $(this).val(parseFloat($(this).val()).toFixed(2))
         })
+        $('#lastname').prop('required', false);
+        $('#firstname').prop('required', false);
+        $('#company').prop('required', false);
+    
+        if(!$("#company").val() && (!$("#firstname").val() || !$("#firstname").val())){
+          $('#company').prop('required', true);
+          $('#lastname').prop('required', true);
+          $('#firstname').prop('required', true);
+        } else if(!$("#company").val()){
+          $('#lastname').prop('required', true);
+          $('#firstname').prop('required', true);
+        }else{
+          $('#company').prop('required', true);
+        }
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
         console.log(errorThrown)
@@ -805,8 +819,27 @@ jQuery(function ($) {
       row.find('td.columnName').text(invoice.firstname + ' ' + invoice.lastname)
     }
     row.find('td.columnDescription').text(invoice.itemDescription[0])
+    /*var colNetOld
+    var colTotOld = row.find('td.columnTotal').text;*/
     row.find('td.columnNet').text($('.qInvc-total-summe').eq(0).text() + ' ' + currencySign)
     row.find('td.columnTotal').text($('.qInvc-total-brutto-summe').eq(0).text() + ' ' + currencySign)
+
+    /*var totalTot = parseFloat(colTot) + parseFloat((document.getElementById('qi_totalSumTotal').innerHTML).replace(/\s+/g, '').split(currencySign, 1));
+    var totalNet = parseFloat(colNet) + parseFloat((document.getElementById('qi_totalSumNetto').innerHTML).replace(/\s+/g, '').split(currencySign, 1));
+*/
+    
+    var visibleTotalRows = $(".q_invoice-content-row:visible td.columnTotal span");
+    var visibleNettoRows = $(".q_invoice-content-row:visible td.columnNet span");
+    var newTotalNet = 0.00;
+    var newTotalTotal = 0.00;
+    for(var i = 0; i < visibleTotalRows.length; i++){
+      newTotalTotal = newTotalTotal + parseFloat(((visibleTotalRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+      newTotalNet = newTotalNet + parseFloat(((visibleNettoRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+    }
+    newTotalTotal.toString().replace('.', ',');
+    newTotalNet.toString().replace('.', ',');
+    document.getElementById('qi_totalSumTotal').innerHTML = newTotalTotal + ' ' + currencySign;
+    document.getElementById('qi_totalSumNetto').innerHTML = newTotalNet + ' ' + currencySign;
 
     const date = invoice.dateOfInvoice
     // change to german date format
@@ -851,6 +884,8 @@ jQuery(function ($) {
     clone.find('td.columnDescription').text(invoice.itemDescription[0])
     clone.find('td.columnNet').text($('.qInvc-total-summe').eq(0).text() + ' ' + currencySign)
     clone.find('td.columnTotal').text($('.qInvc-total-brutto-summe').eq(0).text() + ' ' + currencySign)
+    document.getElementById('qi_totalSumTotal').value = document.getElementById('qi_totalSumTotal').value + parseInt($('.qInvc-total-brutto-summe').eq(0).text());
+    document.getElementById('qi_totalSumTotal').innerHTML = document.getElementById('qi_totalSumNetto').value + ' ' + currencySign;
 
     const date = invoice.dateOfInvoice
     // change to german date format
@@ -931,21 +966,26 @@ jQuery(function ($) {
 
   jQuery(document).ready(function ($) {
     $('#company').blur(function(){
-      if(!$(this).val()){
+      if(!$(this).val() && (!$('#lastname').val() || !$('#firstname').val())){
         $('#firstname').prop('required', true);
         $('#lastname').prop('required', true);
         $('#company').prop('required', true);
-      }else{
+      }else if(!!$('#lastname').val() && !!$('#firstname').val()){
+        $('#company').prop('required', false);
+      } else{
         $('#firstname').prop('required', false);
         $('#lastname').prop('required', false);
       }
     });
     $('.inputName').blur(function(){
-      if(!$(this).val() || !$('#lastname').val() || !$('#firstname').val()){
+      if((!$(this).val() || !$('#lastname').val() || !$('#firstname').val()) && !$('#company').val()){
         $('#firstname').prop('required', true);
         $('#lastname').prop('required', true);
         $('#company').prop('required', true);
-      }else{
+      }else if(!!$('#company').val()){
+        $('#firstname').prop('required', false);
+        $('#lastname').prop('required', false);
+      } else{
         $('#company').prop('required', false);
       }
     });

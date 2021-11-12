@@ -1097,7 +1097,15 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $firstName = Interface_Invoices::getInvoiceDataItem($invoiceID, "firstname");
             $customerName = $firstName. "_" .$lastName;    
             if ($company) {
-                $customerName = sanitize_file_name($company);
+                str_replace('/', '_', $company);
+                str_replace(':', '_', $company);
+                str_replace('?', '_', $company);
+                str_replace('"', '_', $company);
+                str_replace('<', '_', $company);
+                str_replace('>', '_', $company);
+                str_replace('|', '_', $company);
+                str_replace('.', '_', $company);
+                $customerName = $company;
             }
 
             $filename = 
