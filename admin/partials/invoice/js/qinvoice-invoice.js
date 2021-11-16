@@ -819,33 +819,91 @@ jQuery(function ($) {
       row.find('td.columnName').text(invoice.firstname + ' ' + invoice.lastname)
     }
     row.find('td.columnDescription').text(invoice.itemDescription[0])
-    /*var colNetOld
-    var colTotOld = row.find('td.columnTotal').text;*/
     row.find('td.columnNet').text($('.qInvc-total-summe').eq(0).text() + ' ' + currencySign)
     row.find('td.columnTotal').text($('.qInvc-total-brutto-summe').eq(0).text() + ' ' + currencySign)
-
-    /*var totalTot = parseFloat(colTot) + parseFloat((document.getElementById('qi_totalSumTotal').innerHTML).replace(/\s+/g, '').split(currencySign, 1));
-    var totalNet = parseFloat(colNet) + parseFloat((document.getElementById('qi_totalSumNetto').innerHTML).replace(/\s+/g, '').split(currencySign, 1));
-*/
-    
-    var visibleTotalRows = $(".q_invoice-content-row:visible td.columnTotal span");
-    var visibleNettoRows = $(".q_invoice-content-row:visible td.columnNet span");
-    var newTotalNet = 0.00;
-    var newTotalTotal = 0.00;
-    for(var i = 0; i < visibleTotalRows.length; i++){
-      newTotalTotal = newTotalTotal + parseFloat(((visibleTotalRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
-      newTotalNet = newTotalNet + parseFloat(((visibleNettoRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
-    }
-    newTotalTotal.toString().replace('.', ',');
-    newTotalNet.toString().replace('.', ',');
-    document.getElementById('qi_totalSumTotal').innerHTML = newTotalTotal + ' ' + currencySign;
-    document.getElementById('qi_totalSumNetto').innerHTML = newTotalNet + ' ' + currencySign;
 
     const date = invoice.dateOfInvoice
     // change to german date format
     const formattedDate = date.slice(8, 10) + '.' + date.slice(5, 7) + '.' + date.slice(0, 4)
     row.find('td.columnDate').text(formattedDate)
     row.attr('class', 'edit open')
+    q_invoice_RecalcSums(
+      parseFloat(((row.find('td.columnTotal').text()).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.')),
+      parseFloat(((row.find('td.columnNet').text()).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.')),
+      0.0
+    );
+  }
+
+  function q_invoice_RecalcSums(modifiedTotal, modifiedNet, modifiedDun){
+    //Rows haben folgende Attribute: (paid || dunning edit || open edit) && (cancelled || active)
+    var openTotalRows = $(".open td.columnTotal span");
+    var openNetRows = $(".open td.columnNet span");
+    var openDunRows = $(".open td.columnDunning span");
+    var cancelledTotalRows = $(".cancelled td.columnTotal span");
+    var cancelledNetRows = $(".cancelled td.columnNet span");
+    var cancelledDunRows = $(".cancelled td.columnDunning span");
+    var dunningTotalRows = $(".dunning td.columnTotal span");
+    var dunningNetRows = $(".dunning td.columnNet span");
+    var dunningDunRows = $(".dunning td.columnDunning span");
+    var paidTotalRows = $(".paid td.columnTotal span");
+    var paidNetRows = $(".paid td.columnNet span");
+    var paidDunRows = $(".paid td.columnDunning span");
+
+    var newOpenTotalNet = modifiedNet;
+    var newOpenTotalTotal = modifiedTotal;
+    var newOpenTotalDun = modifiedDun;
+    for(var i = 0; i < openTotalRows.length; i++){
+      newOpenTotalTotal = newOpenTotalTotal + parseFloat(((openTotalRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+      newOpenTotalNet = newOpenTotalNet + parseFloat(((openNetRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+      //newOpenTotalDun = newOpenTotalDun + parseFloat(((openDunRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+    }
+
+    var newCancelledTotalNet = 0.00;
+    var newCancelledTotalTotal = 0.00;
+    var newCancelledTotalDun = 0.00;
+    for(var i = 0; i < cancelledTotalRows.length; i++){
+      newCancelledTotalTotal = newCancelledTotalTotal + parseFloat(((cancelledTotalRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+      newCancelledTotalNet = newCancelledTotalNet + parseFloat(((cancelledNetRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+      //newCancelledTotalDun = newCancelledTotalDun + parseFloat(((cancelledDunRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+    }
+
+    var newDunningTotalNet = 0.00;
+    var newDunningTotalTotal = 0.00;
+    var newDunningTotalDun = 0.00;
+    for(var i = 0; i < dunningTotalRows.length; i++){
+      newDunningTotalTotal = newDunningTotalTotal + parseFloat(((dunningTotalRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+      newDunningTotalNet = newDunningTotalNet + parseFloat(((dunningNetRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+      //newDunningTotalDun = newDunningTotalDun + parseFloat(((dunningDunRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+    }
+
+    var newPaidTotalNet = 0.00;
+    var newPaidTotalTotal = 0.00;
+    var newPaidTotalDun = 0.00;
+    for(var i = 0; i < paidTotalRows.length; i++){
+      newPaidTotalTotal = newPaidTotalTotal + parseFloat(((paidTotalRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+      newPaidTotalNet = newPaidTotalNet + parseFloat(((paidNetRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+      //newPaidTotalDun = newPaidTotalDun + parseFloat(((paidDunRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+    }
+
+    var newAllTotalNet = newPaidTotalNet + newDunningTotalNet + newOpenTotalNet;
+    var newAllTotalTotal = newPaidTotalTotal + newDunningTotalTotal + newOpenTotalTotal;
+    var newAllTotalDun = newPaidTotalDun + newDunningTotalDun + newOpenTotalDun;
+
+    $('#qi_totalSumNetto').html(newAllTotalNet.toString().replace('.', ',') + ' ' + currencySign);
+    $('#qi_openSumNetto').html(newOpenTotalNet.toString().replace('.', ',') + ' ' + currencySign);
+    $('#qi_cancelledSumNetto').html(newCancelledTotalNet.toString().replace('.', ',') + ' ' + currencySign);
+    $('#qi_dunningSumNetto').html(newDunningTotalNet.toString().replace('.', ',') + ' ' + currencySign);
+    $('#qi_paidSumNetto').html(newPaidTotalNet.toString().replace('.', ',') + ' ' + currencySign);
+    $('#qi_totalSumTotal').html(newAllTotalTotal.toString().replace('.', ',') + ' ' + currencySign);
+    $('#qi_openSumTotal').html(newOpenTotalTotal.toString().replace('.', ',') + ' ' + currencySign);
+    $('#qi_cancelledSumTotal').html(newCancelledTotalTotal.toString().replace('.', ',') + ' ' + currencySign);
+    $('#qi_dunningSumTotal').html(newDunningTotalTotal.toString().replace('.', ',') + ' ' + currencySign);
+    $('#qi_paidSumTotal').html(newPaidTotalTotal.toString().replace('.', ',') + ' ' + currencySign);
+    $('#qi_totalSumDunning').html(newAllTotalDun.toString().replace('.', ',') + ' ' + currencySign);
+    $('#qi_openSumDunning').html(newOpenTotalDun.toString().replace('.', ',') + ' ' + currencySign);
+    $('#qi_cancelledSumDunning').html(newCancelledTotalDun.toString().replace('.', ',') + ' ' + currencySign);
+    $('#qi_dunningSumDunning').html(newDunningTotalDun.toString().replace('.', ',') + ' ' + currencySign);
+    $('#qi_paidSumDunning').html(newPaidTotalDun.toString().replace('.', ',') + ' ' + currencySign);
   }
 
   function formatDate (date) {
@@ -902,7 +960,14 @@ jQuery(function ($) {
     clone.find('span.deleteRow').attr('id', id)
     clone.find('span.deleteRow').attr('value', id)
 
+    q_invoice_RecalcSums(
+      parseFloat(((clone.find('td.columnTotal').text()).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.')),
+      parseFloat(((clone.find('td.columnNet').text()).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.')),
+      0.0
+    );
+
     $('table#tableInvoices > tbody').prepend(clone)
+
   }
 
   function displaySuccess () {
