@@ -715,6 +715,11 @@ jQuery(function ($) {
         if (obj[0][0].bank === '2') {
           $('td.inputsRightTable input#bank2').attr('checked', 'true')
         }
+        if (!(obj[0][0]['paydate'] == '0000-00-00')){
+          $('#invocie_form_paid_toggle').prop("checked", true);
+        } else{
+          $('#invocie_form_paid_toggle').prop("checked", false);
+        }
         writeInvoiceHeadertoFormField('#loc_id', 'customerID')
 
         writeInvoiceDetailstoFormField('input.amountOfItems', 'amount', 0)
