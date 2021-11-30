@@ -1061,4 +1061,23 @@ jQuery(function ($) {
     });
   })
 
+  /**
+   * Switch function for toggle in Invoice Form:
+   * 
+   * - The toggle is unchecked if the Invoice Form is shown (Invoice Form Popup will be deactivated if the Invoice is already Paid --> Toggle would be checked)
+   * - When the Toggle is checked the Invoice Form can not be modified until you uncheck the paid toggle in the list --> checking the toggle closes the Popup and prohibits further modifications
+   * - The toggle will be observed by an on change evnt listener
+   * - If this listener detects the Toggle to be checked, a click action in the paid toggle in the overview is simulated and the popup will be closed
+   *  */
+
+  $('#invocie_form_paid_toggle').change(function(){
+    if (this.checked){
+
+      var id = $('#invoice_id').val();
+      $('#edit-'+id).find('.sliderForPayment').click();
+      $('#invoiceOverlay').css('display', 'none');
+
+    }
+  });
+
 })
