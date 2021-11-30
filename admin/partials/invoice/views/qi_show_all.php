@@ -30,17 +30,19 @@
             </button>
         </div>
 
+        <div class="filterButton inactive" id="showInvoicesWithDunning">
+            <button class="invoiceButton">
+                Dunning
+            </button>
+        </div>
+
         <div class="filterButton inactive" id="showCancelledInvoices">
             <button class="invoiceButton">
                 Cancelled
             </button>
         </div>
         
-        <div class="filterButton inactive" id="showInvoicesWithDunning">
-            <button class="invoiceButton">
-                Dunning
-            </button>
-        </div>
+    
         <div class="filterButton inactive" id="showInvoicesPaid">
             <button class="invoiceButton">
                 Paid

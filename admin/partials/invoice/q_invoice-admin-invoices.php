@@ -51,7 +51,7 @@ function Invoice_list()
             $snow = '../../img/qanuk_snowflake.png';
             echo esc_url(plugins_url($snow, __FILE__));
             ?>">
-        <span id="qanuk_title"><?php _e('Q INVOICE by qanuk.io', 'Ev'); ?></span>
+        <span id="qanuk_title"><?php _e('Q Invoice by qanuk.io', 'Ev'); ?></span>
         <!--span id="qanuk_title_media"><?php _e('Q', 'Ev'); ?></span-->
         
         <span class="addNewButton">
