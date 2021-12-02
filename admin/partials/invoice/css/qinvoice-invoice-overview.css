@@ -100,11 +100,11 @@
 
 .q-invoice-page table#tableInvoices .columnStatusPaid{
     text-align: center;
-    width: 42px;
+    width: 52px;
 }
 
 .q-invoice-page table#tableInvoices .columnEdit{
-    text-align: right;
+    text-align: center;
     width: 50px;
     padding-right: 20px;
 }

@@ -390,11 +390,11 @@ function showOpenInvoices()
                     >
                     </span>
 
-                    <label class="switch switchForPaidStatus" style="<?php if($cancelled){echo 'opacity:0;';}?>">
+                    <label class="switch switchForPaidStatus large" style="<?php if($cancelled){echo 'opacity:0;';}?>">
                     <input type="checkbox" class="checkboxForPayment" style="<?php if($cancelled){echo 'opacity:0;';}?>"
                         <?php if ($paid){ echo "checked";}?>
                     >
-                    <span class="sliderForPayment invoiceSlider round" style="<?php if($cancelled){echo 'opacity:0;';}?>"></span>
+                    <span class="sliderForPayment invoiceSlider round large" style="<?php if($cancelled){echo 'opacity:0;';}?>"></span>
                     </label>
                 
                 </td>

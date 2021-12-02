@@ -73,9 +73,6 @@ border: 1px solid #c0c0c0;
 }
 
 
-
-
-
 .q-invoice-page div#filterButtons div.active button.invoiceButton  {
 
     background-color: rgb(34, 113, 177);
@@ -103,24 +100,36 @@ border: 1px solid #c0c0c0;
 
 }
 
+/* Toggle slider CSS start */
+
+.q-invoice-page .form-wrap label:not(.switch) {
+  width: 26%;
+  float: left;
+  min-width: 100px;
+}
+
+.form-wrap label.switch {
+  margin-bottom: 3px;
+  padding: 0;
+}
+
 .q-invoice-page .switch {
     position: relative;
     display: inline-block;
-    width: 37px;
-    height: 20px;
+    width: 28px;
+    height: 14px;
 }
 
   .q-invoice-page .switch.large{
-    width: 25px;
-    height: 25px;
+    width: 52px;
+    height: 27px;
 }
   
 .q-invoice-page .switch input { 
-    opacity: 0;
+    opacity: 0 !important;
     width: 0;
     height: 0;
 }
-/*kugel h/w: 25px; left:0; box h:25, w: 50 transform:25*/
 
 .q-invoice-page .invoiceSlider {
     position: absolute;
@@ -130,20 +139,24 @@ border: 1px solid #c0c0c0;
     right: 0;
     bottom: 0;
     background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
+    -webkit-transition: 0.1s ease-in;
+    transition: 0.1s ease-in;
     border: 1px solid rgba(0, 0, 0, 0.15);
+  }
+
+  input:disabled + .slider {
+    opacity: 0.7;
   }
   
   .q-invoice-page .invoiceSlider:before {
     position: absolute;
     content: "";
-    height: 15px;
-    width: 15px;
+    height: 12px;
+    width: 12px;
     left: 0px;
     bottom: 0px;
     background-color: white;
-    -webkit-transition: .4s;
+    -webkit-transition: .1s ease-in;
     transition: .1s ease-in;
   }
 
@@ -153,35 +166,35 @@ border: 1px solid #c0c0c0;
     left: 0px;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 1px 1px;
   }
-  
+
   .q-invoice-page input:checked + .invoiceSlider {
-    background-color: rgb(34, 113, 177);
+    background-color: #007cba;
   }
   
   .q-invoice-page input:focus + .invoiceSlider {
-    box-shadow: 0 0 1px rgb(34, 113, 177);
+    box-shadow: 0 0 1px #007cba;
   }
   
   .q-invoice-page input:checked + .invoiceSlider:before {
-    -webkit-transform: translateX(15px);
-    -ms-transform: translateX(15px);
-    transform: translateX(15px);
+    -webkit-transform: translateX(14px);
+    -ms-transform: translateX(14px);
+    transform: translateX(14px);
   }
 
   .q-invoice-page input:checked + .invoiceSlider.large:before {
     -webkit-transform: translateX(25px);
     -ms-transform: translateX(25px);
     transform: translateX(25px);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 1px 1px;
   }
+
+  /* Toggle slider CSS end */
   
   /* Rounded invoiceSliders */
   .q-invoice-page .invoiceSlider.round {
     border-radius: 34px;
-    height: 15px;
-    width:30px;
   }
   .q-invoice-page .invoiceSlider.round.large {
-    border-radius: 34px;
     height: 25px;
     width:50px;
   }
