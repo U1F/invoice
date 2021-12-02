@@ -1074,8 +1074,11 @@ jQuery(function ($) {
     if (this.checked){
 
       var id = $('#invoice_id').val();
-      $('#edit-'+id).find('.sliderForPayment').click();
-      $('#invoiceOverlay').css('display', 'none');
+      
+      setTimeout(function(){
+        $('#invoiceOverlay').css('display', 'none');
+        $('#edit-'+id).find('.sliderForPayment').click();
+      },800);
 
     }
   });
