@@ -102,13 +102,13 @@ border: 1px solid #c0c0c0;
 
 /* Toggle slider CSS start */
 
-.q-invoice-page .form-wrap label:not(.switch) {
+.q-invoice-page label:not(.switch) {
   width: 26%;
   float: left;
   min-width: 100px;
 }
 
-.form-wrap label.switch {
+.q-invoice-page label.switch {
   margin-bottom: 3px;
   padding: 0;
 }
