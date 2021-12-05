@@ -216,3 +216,8 @@ border: 1px solid #c0c0c0;
      margin: 0px;
   }
   
+
+  .q_invoice_outerButton{
+    width: auto !important;
+    padding: 0px 10px !important;
+  }

@@ -59,12 +59,12 @@
 }
 
 .q-invoice-page table#tableInvoices .columnInvoiceID{
-    width:62px;
+    width:50px;
     text-align: left;
 }
 
 .q-invoice-page table#tableInvoices .columnStatus{
-    width:26px;
+    width:29px;
     text-align: center;
 }
 .q-invoice-page table#tableInvoices .columnName{
@@ -78,7 +78,7 @@
 }
 
 .q-invoice-page table#tableInvoices .columnDate{
-    width:80px;
+    width:70px;
     text-align: left;
 }
 
@@ -100,7 +100,7 @@
 
 .q-invoice-page table#tableInvoices .columnStatusPaid{
     text-align: center;
-    width: 52px;
+    width: 60px;
 }
 
 .q-invoice-page table#tableInvoices .columnEdit{

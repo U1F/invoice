@@ -56,7 +56,7 @@ function Invoice_list()
         
         <span class="addNewButton">
             <button 
-                class="button-primary" 
+                class="button-primary q_invoice_outerButton" 
                 id="newInvoice"
                 ><?php _e('New Invoice')?>
             </button>  
