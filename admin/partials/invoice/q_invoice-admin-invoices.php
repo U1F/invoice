@@ -64,7 +64,7 @@ function Invoice_list()
     </h1>
 
     <?php 
-        //When Rows in database make prefix and id readonly
+        //When Rows in database --> prefix and id readonly
         $rowCountDatabase = Interface_Invoices::getRowCountDataBase();
     ?>
     <p id="q-invoice-new-readonly-dummy" style="display: none"><?php echo esc_html($rowCountDatabase);?></p> 

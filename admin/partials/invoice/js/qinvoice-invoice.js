@@ -683,7 +683,6 @@ jQuery(function ($) {
     recalcPos()
     recalcLineSum()
     recalcTotalSum()
-    // MMh.. Funtion draus machen? In document ready?
     if ($('#q-invoice-new-readonly-dummy').text() === '0') {
       $('#prefix').attr('readonly', false)
       $('#invoice_id').attr('readonly', false)
@@ -933,45 +932,51 @@ jQuery(function ($) {
   }
 
   function addNewInvoiceRow (invoice, id) {
-    const clone = $('table#tableInvoices > tbody').find('tr').first().clone()
-    clone.attr('id', 'edit-' + id)
-    clone.attr('value', id)
-    clone.find('td.columnRowID').text(1 + parseInt(clone.find('td.columnRowID').text()))
-    if (invoice.company) {
-      clone.find('td.columnName').text(invoice.company)
-    } else {
-      clone.find('span.firstnameSpan').text(invoice.firstname)
-      clone.find('span.lastnameSpan').text(invoice.lastname)
+
+    if ($('#q-invoice-new-readonly-dummy').text() === '0') {
+      location.reload();
+    } else{
+      const clone = $('table#tableInvoices > tbody').find('tr').first().clone()
+      clone.attr('id', 'edit-' + id)
+      clone.attr('value', id)
+      clone.find('td.columnRowID').text(1 + parseInt(clone.find('td.columnRowID').text()))
+      if (invoice.company) {
+        clone.find('td.columnName').text(invoice.company)
+      } else {
+        clone.find('span.firstnameSpan').text(invoice.firstname)
+        clone.find('span.lastnameSpan').text(invoice.lastname)
+      }
+
+      clone.find('td.columnDescription').text(invoice.itemDescription[0])
+      clone.find('td.columnNet').text($('.qInvc-total-summe').eq(0).text() + ' ' + currencySign)
+      clone.find('td.columnTotal').text($('.qInvc-total-brutto-summe').eq(0).text() + ' ' + currencySign)
+      document.getElementById('qi_totalSumTotal').value = document.getElementById('qi_totalSumTotal').value + parseInt($('.qInvc-total-brutto-summe').eq(0).text());
+      document.getElementById('qi_totalSumTotal').innerHTML = document.getElementById('qi_totalSumNetto').value + ' ' + currencySign;
+
+      const date = invoice.dateOfInvoice
+      // change to german date format
+      const formattedDate = date.slice(8, 10) + '.' + date.slice(5, 7) + '.' + date.slice(0, 4)
+      clone.find('td.columnDate').text(formattedDate)
+
+      clone.find('td.columnInvoiceID span').text(id)
+
+      clone.find('a.download').attr('id', 'download-' + id)
+      clone.find('a.download').attr('value', id)
+
+      clone.find('a.download').attr('href', '/wp-content/plugins/q_invoice/pdf/Invoice-' + invoice.prefix + '-' + id + '.pdf')
+
+      clone.find('span.deleteRow').attr('id', id)
+      clone.find('span.deleteRow').attr('value', id)
+
+      q_invoice_RecalcSums(
+        parseFloat(((clone.find('td.columnTotal').text()).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.')),
+        parseFloat(((clone.find('td.columnNet').text()).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.')),
+        0.0
+      );
+
+      $('table#tableInvoices > tbody').prepend(clone)
     }
-
-    clone.find('td.columnDescription').text(invoice.itemDescription[0])
-    clone.find('td.columnNet').text($('.qInvc-total-summe').eq(0).text() + ' ' + currencySign)
-    clone.find('td.columnTotal').text($('.qInvc-total-brutto-summe').eq(0).text() + ' ' + currencySign)
-    document.getElementById('qi_totalSumTotal').value = document.getElementById('qi_totalSumTotal').value + parseInt($('.qInvc-total-brutto-summe').eq(0).text());
-    document.getElementById('qi_totalSumTotal').innerHTML = document.getElementById('qi_totalSumNetto').value + ' ' + currencySign;
-
-    const date = invoice.dateOfInvoice
-    // change to german date format
-    const formattedDate = date.slice(8, 10) + '.' + date.slice(5, 7) + '.' + date.slice(0, 4)
-    clone.find('td.columnDate').text(formattedDate)
-
-    clone.find('td.columnInvoiceID span').text(id)
-
-    clone.find('a.download').attr('id', 'download-' + id)
-    clone.find('a.download').attr('value', id)
-
-    clone.find('a.download').attr('href', '/wp-content/plugins/q_invoice/pdf/Invoice-' + invoice.prefix + '-' + id + '.pdf')
-
-    clone.find('span.deleteRow').attr('id', id)
-    clone.find('span.deleteRow').attr('value', id)
-
-    q_invoice_RecalcSums(
-      parseFloat(((clone.find('td.columnTotal').text()).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.')),
-      parseFloat(((clone.find('td.columnNet').text()).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.')),
-      0.0
-    );
-
-    $('table#tableInvoices > tbody').prepend(clone)
+  
 
   }
 
@@ -988,8 +993,8 @@ jQuery(function ($) {
   jQuery(document).ready(function ($) {
     $('#invoiceForm').ajaxForm({
       success: function (response) {
-        const serverResponse = JSON.parse(response).data
-        const invoiceID = JSON.parse(response).id
+        var serverResponse = JSON.parse(response).data
+        var invoiceID = JSON.parse(response).id
 
         if (serverResponse.action === 'updateInvoiceServerSide') {
           changeUpdatedInvoiceRow(serverResponse)
@@ -1082,5 +1087,16 @@ jQuery(function ($) {
 
     }
   });
+
+  /**
+   * Function to simulate a dynamic ID size depending on length
+   */
+
+   jQuery(document).ready(function ($) {
+    var id_width = 11;
+    var id_length = $("tbody tr:first td:first span").text().replace(/\s+/g, '').length;
+    id_width = id_width + ((id_length - 1) * 7);
+    $(".q-invoice-page table#tableInvoices .columnInvoiceID").css("width", id_width);
+   })
 
 })

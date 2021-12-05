@@ -38,7 +38,8 @@
 
 .q-invoice-page table#tableInvoices th {
     padding-bottom: 9px;
-    padding-top: 9px;  
+    padding-top: 9px;
+    padding-right: 8px;
 }
 
 .q-invoice-page table#tableInvoices td {
@@ -59,7 +60,7 @@
 }
 
 .q-invoice-page table#tableInvoices .columnInvoiceID{
-    width:50px;
+    width:46px;
     text-align: left;
 }
 

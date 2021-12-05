@@ -1,3 +1,9 @@
+<?php
+/**
+ * This file contains the template for the auto generated invoices.
+ * +invoice, +rechnung, +pdf
+ */
+?>
 
 <style>
 
@@ -61,19 +67,18 @@ td.invoiceItemsHeader {
                     style="width: 270px; text-align: right; font-size:12px;"
                 >
                 <?php 
-                $logoImageSource = plugin_dir_url(__FILE__).
-                "files/none_5002.png";
+                //$logoImageSource = plugin_dir_url(__FILE__)."files/none_5002.png";
                 
-                if (get_option('qi_settings')['logoFileUrl']) {
+                /*if (get_option('qi_settings')['logoFileUrl']) {
                     $logoImageSource = get_option('qi_settings')['logoFileUrl'];
-                }
+                }*/
                 ?>
-                
+                <?php /*
                 <img 
                     src="<?php echo $logoImageSource;?>" 
                     width="250" 
                     style="border:0px;">
-                        
+                     */?>   
                     <br>
                     <p class="invoiceSender" id="senderCompany">
                         <?php echo get_option('qi_settings')['company'];?>

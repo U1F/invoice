@@ -40,7 +40,10 @@ jQuery(function ($) {
       $('#currencySign').css('display', 'inline-block')
     }
 
-    if ($('#q-invoice-readonly-dummy').text()) {
+    if ($('#q-invoice-readonly-dummy').text() == "0") {
+      $('#prefix').attr('readonly', false)
+      $('#noStart').attr('readonly', false)
+    } else {
       $('#prefix').attr('readonly', true)
       $('#noStart').attr('readonly', true)
     }
