@@ -253,7 +253,7 @@ class Interface_Invoices
         $arrayLength = count($invoice_array['itemDescription']);
 
         for ($i = 0; $i < $arrayLength; $i++) {
-            $price = intVal($invoice_array['itemPrice'][$i]);
+            $price = floatVal($invoice_array['itemPrice'][$i]);
             $amount = intVal($invoice_array['amountOfItems'][$i]);
             $discount = intVal($invoice_array['itemDiscount'][$i]);
             $discountType = $invoice_array['discountType'][$i];
@@ -300,7 +300,7 @@ class Interface_Invoices
      * 
      * @return float
      */
-    static public function discountPrice (int $price, int $discount, string $discountType)
+    static public function discountPrice (float $price, int $discount, string $discountType)
     {
             $discountedPrice = $price;
             if ($discount){
@@ -377,7 +377,7 @@ class Interface_Invoices
         
         for ($i = 0; $i < $arrayLength; $i++) {
             $GLOBALS['wpdb']->show_errors();
-            $price = intVal($invoice_array['itemPrice'][$i]);
+            $price = floatVal($invoice_array['itemPrice'][$i]);
             $amount = intVal($invoice_array['amountOfItems'][$i]);
             $discount = intVal($invoice_array['itemDiscount'][$i]);
             $discountType = $invoice_array['discountType'][$i];

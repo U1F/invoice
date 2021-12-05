@@ -890,15 +890,19 @@ jQuery(function ($) {
     }
 
     var newAllTotalNet = newPaidTotalNet + newDunningTotalNet + newOpenTotalNet;
-    var newAllTotalTotal = newPaidTotalTotal + newDunningTotalTotal + newOpenTotalTotal;
     var newAllTotalDun = newPaidTotalDun + newDunningTotalDun + newOpenTotalDun;
+
+    var newAllTotalTotal = newPaidTotalTotal + newDunningTotalTotal + newOpenTotalTotal;
+    var totalTotalArray = newAllTotalTotal.toString().replace('.', ',').split(",");
+    var newAllTotalTotalString = totalTotalArray[0] + "," + totalTotalArray[1].substring(0,2) + " " + currencySign;
+
 
     $('#qi_totalSumNetto').html(newAllTotalNet.toString().replace('.', ',') + ' ' + currencySign);
     $('#qi_openSumNetto').html(newOpenTotalNet.toString().replace('.', ',') + ' ' + currencySign);
     $('#qi_cancelledSumNetto').html(newCancelledTotalNet.toString().replace('.', ',') + ' ' + currencySign);
     $('#qi_dunningSumNetto').html(newDunningTotalNet.toString().replace('.', ',') + ' ' + currencySign);
     $('#qi_paidSumNetto').html(newPaidTotalNet.toString().replace('.', ',') + ' ' + currencySign);
-    $('#qi_totalSumTotal').html(newAllTotalTotal.toString().replace('.', ',') + ' ' + currencySign);
+    $('#qi_totalSumTotal').html(newAllTotalTotalString);
     $('#qi_openSumTotal').html(newOpenTotalTotal.toString().replace('.', ',') + ' ' + currencySign);
     $('#qi_cancelledSumTotal').html(newCancelledTotalTotal.toString().replace('.', ',') + ' ' + currencySign);
     $('#qi_dunningSumTotal').html(newDunningTotalTotal.toString().replace('.', ',') + ' ' + currencySign);
@@ -1089,14 +1093,20 @@ jQuery(function ($) {
   });
 
   /**
-   * Function to simulate a dynamic ID size depending on length
+   * Function to simulate a dynamic ID size depending on the ID length:
+   * Each Number will receive 7px + 11px for the first
    */
 
    jQuery(document).ready(function ($) {
-    var id_width = 11;
+    
     var id_length = $("tbody tr:first td:first span").text().replace(/\s+/g, '').length;
-    id_width = id_width + ((id_length - 1) * 7);
+    if (id_length > 1){
+      var id_width = 11 + ((id_length - 1) * 7);
+    } else{
+      var id_width = 13;
+    }
     $(".q-invoice-page table#tableInvoices .columnInvoiceID").css("width", id_width);
+    
    })
 
 })
