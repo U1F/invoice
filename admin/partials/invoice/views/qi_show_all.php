@@ -406,7 +406,7 @@ function showOpenInvoices()
                         target="_top"
                         href=<?php 
                         echo "'". plugins_url() .
-                            '/q-invoice/pdf/'. 
+                            '/q_invoice/pdf/'. 
                             Interface_Export::makeFilename($invoice_header->id).
                             '.pdf'."' "
                         ?>"
