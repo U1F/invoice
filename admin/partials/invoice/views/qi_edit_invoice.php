@@ -70,6 +70,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                         value=""
                                         
                                         autocomplete="new-password"
+                                        class="autocompletePossField"
 
                                         required
                                         
@@ -124,7 +125,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                 <div style="display:flex;">
                                     <div>
                                         <input
-                                            class="inputName"
+                                            class="inputName autocompletePossField"
                                             type="text" 
                                             placeholder="<?php 
                                                 echo __("First Name", 'Ev');
@@ -135,7 +136,9 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                             autocomplete="none"
                                             required
                                         >
-                                
+                                        <div id='autocompleteFirstname'  class='autocompleteDIV' style="display:none;">
+                                        <strong>Matching Contacts</strong>
+                                        </div>
 
                                     </div>
 
@@ -143,7 +146,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
 
                                     <div>
                                         <input
-                                            class="inputName"
+                                            class="inputName autocompletePossField"
                                             type="text" 
                                             placeholder="<?php 
                                                 echo __('Last Name', 'Ev');

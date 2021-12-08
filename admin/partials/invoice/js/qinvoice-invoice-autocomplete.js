@@ -36,19 +36,33 @@ jQuery(function ($) {
   })
 
   function showTextAreaForAutocompleteOfContactFields (matchedNames, matchedIDs, fieldName) {
-    let htmlData = '<p><strong> Matching: </strong></p>'
+    let htmlData = ''
+    var noBorderOnLastItem = 'border-bottom: 1px solid #c0c0c0;';
     for (let i = 0; i < matchedNames.length; i++) {
+      if(i + 1 == matchedNames.length){
+        noBorderOnLastItem = 'border-bottom: none;';
+      } else{
+        noBorderOnLastItem = 'border-bottom: 1px solid #c0c0c0;';
+      }
+      console.log("here");
       htmlData +=
                 '<div ' +
                 "class='autocompleteButton' " +
                 "id='" + matchedIDs[i] + "'" +
                 "name='" + fieldName + "'" +
+                "style='" + noBorderOnLastItem + "'" +
                 '> ' +
                 matchedNames[i] +
                 '</div>'
     }
     $('div#autocomplete' + fieldName).html(htmlData)
   }
+
+  //hide autocomplete suggestions when clicking out of the box
+  $('.autocompletePossField').blur(function (event) {
+    const field = $(event.target)[0].id[0].toUpperCase() + $(event.target)[0].id.slice(1);
+    $('#autocomplete' + field).css('display', 'none');
+  });
 
   function storeContactData (Contacts) {
     contactData = JSON.parse(Contacts)
