@@ -983,8 +983,10 @@ jQuery(function ($) {
       clone.attr('value', id)
       clone.find('td.columnRowID').text(1 + parseInt(clone.find('td.columnRowID').text()))
       if (invoice.company) {
+        var pdfName = invoice.company;
         clone.find('td.columnName').text(invoice.company)
       } else {
+        var pdfName = invoice.firstname + "_" + invoice.lastname;
         clone.find('span.firstnameSpan').text(invoice.firstname)
         clone.find('span.lastnameSpan').text(invoice.lastname)
       }
@@ -1005,7 +1007,11 @@ jQuery(function ($) {
       clone.find('a.download').attr('id', 'download-' + id)
       clone.find('a.download').attr('value', id)
 
-      clone.find('a.download').attr('href', '/wp-content/plugins/q_invoice/pdf/Invoice-' + invoice.prefix + '-' + id + '.pdf')
+      var datePieces = formattedDate.split('.');
+      var datePDF = datePieces[2] + '-' + datePieces[1] + '-' + datePieces[0];
+
+      console.log(datePDF);
+      clone.find('a.download').attr('href', '/wp-content/plugins/q_invoice/pdf/Invoice-' + invoice.prefix + id + '_' + pdfName + '_' + datePDF + '.pdf');
 
       clone.find('span.deleteRow').attr('id', id)
       clone.find('span.deleteRow').attr('value', id)
