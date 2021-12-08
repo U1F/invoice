@@ -268,6 +268,7 @@ jQuery(function ($) {
     $('#qi_paidSumDunning').css('display', 'none')
 
     q_invoice_RecalcSums(0,0,0);
+    q_invoice_modify_cancelled_reactivation_icon();
   }
 
   function showOpenInvoices () {
@@ -390,12 +391,10 @@ jQuery(function ($) {
     q_invoice_RecalcSums(0,0,0);
   }
 
-  /*function modify_cancelled_reactivation_icon(){
-    var rows = $('tr .cancelled');
-    $.each(rows, function(){
-
-    });
-  }*/
+  function q_invoice_modify_cancelled_reactivation_icon(){
+    $('tr.cancelled').find('.dashicons-no').css('display', 'none');
+    $('tr.cancelled').find('.dashicons-undo').css('display', 'inline-block');
+  }
 
   $('#filterButtons').on('click', 'div.inactive', function (event) {
     setFilterButtonInactive($('#filterButtons').find('div.active'))
