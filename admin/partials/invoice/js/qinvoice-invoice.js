@@ -689,6 +689,7 @@ jQuery(function ($) {
     // prepare form for Ajax Action "save"
     $('h2#formHeaderEdit').css('display', 'none')
     $('h2#formHeaderCreate').css('display', 'block')
+    $('#heading-invoice').find('.switchForPaidStatus').css('display', 'none')
     $('#loc_id').prop('readonly', false)
     $('#updateInvoice').css('display', 'none')
     $('#saveInvoice').css('display', 'inline')
@@ -833,6 +834,9 @@ jQuery(function ($) {
   })
 
   function changeUpdatedInvoiceRow (invoice) {
+    // backup sum row, to avoid first ID bug
+    let sumRowBackup = ''
+    sumRowBackup = $('table#tableInvoices > tbody > tr#q_invoice_totalSums').clone()
     // Find the right row
     let row = ''
     row = $('table#tableInvoices > tbody > tr[value=' + invoice.invoice_id + ']')
@@ -852,6 +856,11 @@ jQuery(function ($) {
     // change to german date format
     const formattedDate = date.slice(8, 10) + '.' + date.slice(5, 7) + '.' + date.slice(0, 4)
     row.find('td.columnDate').text(formattedDate)
+    $('table#tableInvoices tr:last').remove()
+    $('table#tableInvoices tr:last').after(sumRowBackup)
+
+    
+
     q_invoice_RecalcSums(
       parseFloat(((row.find('td.columnTotal').text()).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.')),
       parseFloat(((row.find('td.columnNet').text()).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.')),

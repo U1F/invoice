@@ -461,7 +461,7 @@ function showOpenInvoices()
             echo ' all ';
                     
         ?>" 
-        id="total-<?php echo esc_attr($invoice_header->id);?>"
+        id="q_invoice_totalSums"
         value="<?php echo esc_html($invoice_header->id);?>"
         style="border-top: 2px dashed lightgray"
     >    
