@@ -185,6 +185,8 @@ jQuery(function ($) {
       invoiceRow.find('.columnEdit').find('.delete').css('color', '#50575e')
       invoiceRow.find('.columnEdit').find('.delete').addClass('deleteRow')
     }
+
+    q_invoice_RecalcSums(0,0,0);
   })
 
   $('.columnStatusPaid').on('click', '.markAsPaid', function (event) {
@@ -264,6 +266,8 @@ jQuery(function ($) {
     $('#qi_cancelledSumDunning').css('display', 'none')
     $('#qi_dunningSumDunning').css('display', 'none')
     $('#qi_paidSumDunning').css('display', 'none')
+
+    q_invoice_RecalcSums(0,0,0);
   }
 
   function showOpenInvoices () {
@@ -293,6 +297,8 @@ jQuery(function ($) {
     $('#qi_cancelledSumDunning').css('display', 'none')
     $('#qi_dunningSumDunning').css('display', 'none')
     $('#qi_paidSumDunning').css('display', 'none')
+
+    q_invoice_RecalcSums(0,0,0);
   }
 
   function showCancelledInvoices () {
@@ -320,6 +326,8 @@ jQuery(function ($) {
     $('#qi_cancelledSumDunning').css('display', 'block')
     $('#qi_dunningSumDunning').css('display', 'none')
     $('#qi_paidSumDunning').css('display', 'none')
+
+    q_invoice_RecalcSums(0,0,0);
   }
   function showInvoicesWithDunning () {
     $('tr.cancelled').css('display', 'none')
@@ -348,6 +356,8 @@ jQuery(function ($) {
     $('#qi_cancelledSumDunning').css('display', 'none')
     $('#qi_dunningSumDunning').css('display', 'block')
     $('#qi_paidSumDunning').css('display', 'none')
+
+    q_invoice_RecalcSums(0,0,0);
   }
   function showPaidInvoices () {
     $('tr.cancelled').css('display', 'none')
@@ -376,7 +386,16 @@ jQuery(function ($) {
     $('#qi_cancelledSumDunning').css('display', 'none')
     $('#qi_dunningSumDunning').css('display', 'none')
     $('#qi_paidSumDunning').css('display', 'block')
+
+    q_invoice_RecalcSums(0,0,0);
   }
+
+  /*function modify_cancelled_reactivation_icon(){
+    var rows = $('tr .cancelled');
+    $.each(rows, function(){
+
+    });
+  }*/
 
   $('#filterButtons').on('click', 'div.inactive', function (event) {
     setFilterButtonInactive($('#filterButtons').find('div.active'))
@@ -625,6 +644,7 @@ jQuery(function ($) {
     targetRow.find('.deleteRow').css('display', 'inline-block')
     targetRow.find('.switchForPaidStatus').css('opacity', '100')
     targetRow.find('.switchForPaidStatus > *').css('opacity', '100')
+    q_invoice_RecalcSums(0,0,0);
   })
 
   $('div#archiveInvoice').on('click', '#cancelRemoveInvoice', function () {
@@ -647,6 +667,8 @@ jQuery(function ($) {
     targetRow.find('.reactivateInvoice').css('display', 'inline-block')
     targetRow.find('.switchForPaidStatus').css('opacity', '0')
     targetRow.find('.switchForPaidStatus > *').css('opacity', '0')
+    targetRow.find('.reactivateInvoice').attr('class', 'reactivateInvoice reactivate dashicons dashicons-undo')
+    q_invoice_RecalcSums(0,0,0);
   })
 
   function writeInvoiceDetailstoFormField (inputName, dataName, position) {
@@ -815,7 +837,8 @@ jQuery(function ($) {
     // Find the right row
     let row = ''
     row = $('table#tableInvoices > tbody > tr[value=' + invoice.invoice_id + ']')
-    row.attr('class', ' edit open')
+    var rowAttributes = $('table#tableInvoices > tbody > tr[value=' + invoice.invoice_id + ']').attr('class')
+    row.attr('class', rowAttributes) // Vorher: row.attr('class', ' edit open') --> Warum war das wichtig?
     // Change Infos in the right table row.
     if (invoice.company) {
       row.find('td.columnName').text(invoice.company)
@@ -830,7 +853,6 @@ jQuery(function ($) {
     // change to german date format
     const formattedDate = date.slice(8, 10) + '.' + date.slice(5, 7) + '.' + date.slice(0, 4)
     row.find('td.columnDate').text(formattedDate)
-    row.attr('class', 'edit open')
     q_invoice_RecalcSums(
       parseFloat(((row.find('td.columnTotal').text()).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.')),
       parseFloat(((row.find('td.columnNet').text()).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.')),
@@ -838,11 +860,19 @@ jQuery(function ($) {
     );
   }
 
+  /**
+   * Function to recalc the Sum in the last row for each of "All, Open, Dunning, Cancelled, Paid"
+   * @param {*} modifiedTotal 
+   * @param {*} modifiedNet 
+   * @param {*} modifiedDun 
+   */
   function q_invoice_RecalcSums(modifiedTotal, modifiedNet, modifiedDun){
     //Rows haben folgende Attribute: (paid || dunning edit || open edit) && (cancelled || active)
-    var openTotalRows = $(".open td.columnTotal span");
-    var openNetRows = $(".open td.columnNet span");
-    var openDunRows = $(".open td.columnDunning span");
+
+    //get all rows, that exist on current page for each class attribute
+    var openTotalRows = $(".open.active td.columnTotal span");
+    var openNetRows = $(".open.active td.columnNet span");
+    var openDunRows = $(".open.active td.columnDunning span");
     var cancelledTotalRows = $(".cancelled td.columnTotal span");
     var cancelledNetRows = $(".cancelled td.columnNet span");
     var cancelledDunRows = $(".cancelled td.columnDunning span");
@@ -889,11 +919,11 @@ jQuery(function ($) {
       //newPaidTotalDun = newPaidTotalDun + parseFloat(((paidDunRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
     }
 
-    var newAllTotalNet = newPaidTotalNet + newDunningTotalNet + newOpenTotalNet;
-    var newAllTotalDun = newPaidTotalDun + newDunningTotalDun + newOpenTotalDun;
+    var newAllTotalNet = newPaidTotalNet + newDunningTotalNet + newOpenTotalNet + newCancelledTotalNet;
+    var newAllTotalDun = newPaidTotalDun + newDunningTotalDun + newOpenTotalDun + newCancelledTotalDun;
 
-    var newAllTotalTotal = newPaidTotalTotal + newDunningTotalTotal + newOpenTotalTotal;
-    var totalTotalArray = newAllTotalTotal.toString().replace('.', ',').split(",");
+    var newAllTotalTotal = newPaidTotalTotal + newDunningTotalTotal + newOpenTotalTotal + newCancelledTotalTotal;
+    var totalTotalArray = (newAllTotalTotal.toString() + '.00').replace('.', ',').split(",");
     var newAllTotalTotalString = totalTotalArray[0] + "," + totalTotalArray[1].substring(0,2) + " " + currencySign;
 
 
