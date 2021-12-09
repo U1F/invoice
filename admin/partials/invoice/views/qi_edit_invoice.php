@@ -110,9 +110,6 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                     value=""
                                     autocomplete="none"
                                 >
-                                <div id='autocompleteAdditional' class='autocompleteDIV' style="display:none;">
-                                    <strong>Matching Contacts</strong>
-                                </div>
                             </td>
                         </tr>
 
