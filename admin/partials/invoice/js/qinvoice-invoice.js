@@ -420,16 +420,27 @@ jQuery(function ($) {
     }
   })
 
+  /**
+   * Function for the search input field #searchInvoices on the Invoices overview Page
+   * You can search for all occurences of any kind of text. When you remove the text, all invoices will be shown again
+   */
   $('#filterButtons').on('keyup', 'input', function (event) {
     const searchPattern = $(this).val()
 
-    $('table#tableInvoices tbody').find('tr').each(function (index) {
-      if ($(this).find('td').text().toLowerCase().includes(searchPattern.toLowerCase()) && searchPattern) {
+    if ($(this).val() == ""){
+      $('table#tableInvoices tbody').find('tr').each(function (index) {
         $(this).css('display', 'table-row')
-      } else {
-        $(this).css('display', 'none')
-      }
-    })
+      })
+    } else {
+      $('table#tableInvoices tbody').find('tr').each(function (index) {
+        if ($(this).find('td').text().toLowerCase().includes(searchPattern.toLowerCase()) && searchPattern) {
+          $(this).css('display', 'table-row')
+        } else {
+          $(this).css('display', 'none')
+        }
+      })
+    }
+
   })
 
   $('#items').on('click', '.discountTypeSwitch', function () {
@@ -1086,6 +1097,10 @@ jQuery(function ($) {
     })
   })
 
+  /**
+   * Handle the requirements in the invoice form:
+   * Either the company name is required or the First- and Lastname
+   */
   jQuery(document).ready(function ($) {
     $('#company').blur(function(){
       if(!$(this).val() && (!$('#lastname').val() || !$('#firstname').val())){
