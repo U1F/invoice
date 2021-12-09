@@ -987,8 +987,7 @@ jQuery(function ($) {
         clone.find('td.columnName').text(invoice.company)
       } else {
         var pdfName = invoice.firstname + "_" + invoice.lastname;
-        clone.find('span.firstnameSpan').text(invoice.firstname)
-        clone.find('span.lastnameSpan').text(invoice.lastname)
+        clone.find('td.columnName').text(invoice.firstname + ' ' + invoice.lastname)
       }
 
       clone.find('td.columnDescription').text(invoice.itemDescription[0])
