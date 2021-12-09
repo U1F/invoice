@@ -15,6 +15,7 @@
  * @link       https://www.qanuk.io/
  * @since      1.0.0
  */
+
 ?>
  <div class="page_content">
      <div id="filterButtons">

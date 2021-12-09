@@ -16,14 +16,14 @@
  */
 
 /**
- * Function exportInovice($invoiceID)
+ * Function exportInvoice($invoiceID)
  * 
  * @param int    $invoiceID   1
  * @param string $invoiceType 1
  * 
  * @return void
  */
-function exportInovice($invoiceID, $invoiceType)
+function exportInvoice($invoiceID, $invoiceType)
 {
     $invoiceData = Interface_Invoices::getInvoiceData($invoiceID);
 

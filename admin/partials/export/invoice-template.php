@@ -67,99 +67,117 @@ td.invoiceItemsHeader {
                     style="width: 270px; text-align: right; font-size:12px;"
                 >
                 <?php 
-                //$logoImageSource = plugin_dir_url(__FILE__)."files/none_5002.png";
+                $logoImageSource = plugin_dir_url(__FILE__)."files/none_5002.png";
                 
                 /*if (get_option('qi_settings')['logoFileUrl']) {
                     $logoImageSource = get_option('qi_settings')['logoFileUrl'];
                 }*/
                 ?>
+
+                <?php
+                    $path =  $logoImageSource;
+                    $type = pathinfo($path, PATHINFO_EXTENSION);
+                    $data = file_get_contents($path);
+                    $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                ?>
+
+                <img src="<?php echo $base64;?>">
+
                 <?php /*
-                <img 
-                    src="<?php echo $logoImageSource;?>" 
-                    width="250" 
-                    style="border:0px;">
-                     */?>   
-                    <br>
-                    <p class="invoiceSender" id="senderCompany">
-                        <?php echo get_option('qi_settings')['company'];?>
-                    </p>
+                <span style="color: #AA0000; font-weight: bold;">Fehler n°6</span>
+                <br>
+                Datei : /home/users/hoersaal-events/www/dev.hoersaal-events.de/wp-content/plugins/q_invoice/admin/partials/export/html2pdf.class.php
+                <br>
+                Linie : 1319
+                <br>
+                <br>
+                Ladung des Bilds unmöglich <b>https://dev.hoersaal-events.de/wp-content/plugins/q_invoice/admin/partials/export/files/none_5002.png</b>
+                */?>
 
-                    <p class="invoiceSender" id="senderName">
-                        <?php 
-                        echo 
-                            get_option('qi_settings')['firstName']. " ". 
-                            get_option('qi_settings')['lastName'];
-                        ?>
-                    </p>
+
+                <br>
+
+                <?php // Sender Adress from Settings - Top right corner ?>
+                <p class="invoiceSender" id="senderCompany">
+                    <?php echo get_option('qi_settings')['company'];?>
+                </p>
+
+                <p class="invoiceSender" id="senderName">
+                    <?php 
+                    echo 
+                        get_option('qi_settings')['firstName']. " ". 
+                        get_option('qi_settings')['lastName'];
+                    ?>
+                </p>
                         
-                    <p class="invoiceSender" id="senderAdditional">
-                        <?php echo get_option('qi_settings')['additional'];?>
-                    </p>
-                        
-                    <p class="invoiceSender" id="senderAddress">
-                        <?php echo get_option('qi_settings')['street'];?>
-                    </p>
-
-                    <p class="invoiceSender" id="senderAddress2"> 
-                        <?php 
-                        echo get_option('qi_settings')['ZIP'];
-                        echo " ";
-                        echo get_option('qi_settings')['city'];
-                        ?>
-                    </p>
-
-                    <p class="invoiceSender" id="senderPlaceholder1"></p>
-                    <br>
-                    <br>
-                    <p class="invoiceSender" id="senderEmail">
-                        <?php echo get_option('qi_settings')['mail'];?>
-                    </p>
+                <p class="invoiceSender" id="senderAdditional">
+                    <?php echo get_option('qi_settings')['additional'];?>
+                </p>
                     
-                    <p class="invoiceSender" id="senderWebsite">
-                        <?php echo get_option('qi_settings')['website'];?>
-                    </p>
-                    
-                    <p class="invoiceSender" id="senderFB">
-                        
-                        <?php 
-                        if (get_option('qi_settings')['facebook']) {
-                            echo "www.fb/".get_option('qi_settings')['facebook'];
-                        }
-                        ?>
-                    </p>
+                <p class="invoiceSender" id="senderAddress">
+                    <?php echo get_option('qi_settings')['street'];?>
+                </p>
 
-                    
-                    <p class="invoiceSender" id="senderInstagram">
-                        
-                        <?php 
-                        if (get_option('qi_settings')['instagram']) {
-                            echo "www.instagram/".get_option('qi_settings')['instagram'];
-                        }
-                        ?>
-                    </p>
-                    <p class="invoiceSender" id="senderPaypal">
-                        
-                        <?php  
-                        if (get_option('qi_settings')['PayPal']) {
-                            echo "paypal.me/".get_option('qi_settings')['PayPal'];
-                        }
-                        ?>
-                    </p>
+                <p class="invoiceSender" id="senderAddress2"> 
+                    <?php 
+                    echo get_option('qi_settings')['ZIP'];
+                    echo " ";
+                    echo get_option('qi_settings')['city'];
+                    ?>
+                </p>
 
-                  
-                        <?php 
-                        if ($invoiceType=="dunning") {
-                            ?>
-                                <p class="invoiceSender" id="ZAHLUNGSERINNERUNG">
-                                    ZAHLUNGSERINNERUNG
-                                </p>
-                            <?php 
-                        }
-                        ?>
+                <p class="invoiceSender" id="senderPlaceholder1"></p>
+                <br>
+                <br>
+                <p class="invoiceSender" id="senderEmail">
+                    <?php echo get_option('qi_settings')['mail'];?>
+                </p>
+                
+                <p class="invoiceSender" id="senderWebsite">
+                    <?php echo get_option('qi_settings')['website'];?>
+                </p>
+                    
+                <p class="invoiceSender" id="senderFB">
+                    
+                    <?php 
+                    if (get_option('qi_settings')['facebook']) {
+                        echo "www.fb/".get_option('qi_settings')['facebook'];
+                    }
+                    ?>
+                </p>
+                
+                <p class="invoiceSender" id="senderInstagram">
+                    
+                    <?php 
+                    if (get_option('qi_settings')['instagram']) {
+                        echo "www.instagram/".get_option('qi_settings')['instagram'];
+                    }
+                    ?>
+                </p>
+                
+                <p class="invoiceSender" id="senderPaypal">
+                    
+                    <?php  
+                    if (get_option('qi_settings')['PayPal']) {
+                        echo "paypal.me/".get_option('qi_settings')['PayPal'];
+                    }
+                    ?>
+                </p>
+                
+                <?php 
+                if ($invoiceType=="dunning") {
+                    ?>
+                        <p class="invoiceSender" id="ZAHLUNGSERINNERUNG">
+                            ZAHLUNGSERINNERUNG
+                        </p>
+                    <?php 
+                }
+                ?>
                         
                 </td>
             </tr>
 
+            <?php //Header over receiver ?>
             <tr>
                 <td 
                     id="small" 
@@ -181,6 +199,8 @@ td.invoiceItemsHeader {
                     </u>
                 </td>
             </tr>
+
+            <?php // receiver details ?>
             <tr>
                 <td 
                     id="invoicereceiverAddress" 
@@ -220,6 +240,7 @@ td.invoiceItemsHeader {
         </table>
         <br><br><br><br><br><br>
 
+        <?php //invoice content ?>
         <div 
             id="invoiceHeader" 
             style="height:100px; vertical-align: bottom; font-size: 40px;"

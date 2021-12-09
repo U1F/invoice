@@ -1133,7 +1133,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             ob_start();
             include_once INVOICE_ROOT_PATH . 
             "/admin/partials/export/export.php";  
-            exportInovice($invoiceID, "invoice");             
+            exportInvoice($invoiceID, "invoice");             
             $exportInv= ob_get_contents();
             ob_end_clean();
             include  INVOICE_ROOT_PATH . 

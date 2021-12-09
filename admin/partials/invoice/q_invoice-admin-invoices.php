@@ -102,7 +102,7 @@ function Invoice_list()
         echo '</pre>';
         include_once INVOICE_ROOT_PATH . 
         "/admin/partials/export/export.php";  
-        exportInovice(2, "invoice");          
+        exportInvoice(2, "invoice");          
     }
     
 }
