@@ -995,9 +995,18 @@ jQuery(function ($) {
       clone.find('td.columnRowID').text(1 + parseInt(clone.find('td.columnRowID').text()))
       if (invoice.company) {
         var pdfName = invoice.company;
+        pdfName = pdfName.replace(/\/+/g, "_");
+        pdfName = pdfName.replace(/\:+/g, "_");
+        pdfName = pdfName.replace(/\?+/g, "_");
+        pdfName = pdfName.replace(/\"+/g, "_");
+        pdfName = pdfName.replace(/\<+/g, "_");
+        pdfName = pdfName.replace(/\>+/g, "_");
+        pdfName = pdfName.replace(/\|+/g, "_");
+        pdfName = pdfName.replace(/\.+/g, "_");
+        pdfName = pdfName.replace(/\s+/g, "");
         clone.find('td.columnName').text(invoice.company)
       } else {
-        var pdfName = invoice.firstname + "_" + invoice.lastname;
+        var pdfName = invoice.firstname + invoice.lastname;
         clone.find('td.columnName').text(invoice.firstname + ' ' + invoice.lastname)
       }
 
@@ -1018,10 +1027,10 @@ jQuery(function ($) {
       clone.find('a.download').attr('value', id)
 
       var datePieces = formattedDate.split('.');
-      var datePDF = datePieces[2] + '-' + datePieces[1] + '-' + datePieces[0];
+      var datePDF = datePieces[2] + '_' + datePieces[1] + '_' + datePieces[0];
 
       console.log(datePDF);
-      clone.find('a.download').attr('href', '/wp-content/plugins/q_invoice/pdf/Invoice-' + invoice.prefix + id + '_' + pdfName + '_' + datePDF + '.pdf');
+      clone.find('a.download').attr('href', '/wp-content/plugins/q_invoice/pdf/Invoice-' + invoice.prefix + id + '-' + pdfName + '-' + datePDF + '.pdf');
 
       clone.find('span.deleteRow').attr('id', id)
       clone.find('span.deleteRow').attr('value', id)

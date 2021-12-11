@@ -12,19 +12,29 @@ class Interface_Export {
         static function makeFilename($invoiceID) 
         {
             $invoiceDate = Interface_Invoices::getInvoiceDataItem($invoiceID, "invoice_date");
+            $invoiceDate = str_replace('-', '_', $invoiceDate);
             $company = Interface_Invoices::getInvoiceDataItem($invoiceID, "company");
             $lastName = Interface_Invoices::getInvoiceDataItem($invoiceID, "lastname");
             $firstName = Interface_Invoices::getInvoiceDataItem($invoiceID, "firstname");
-            $customerName = $firstName. "_" .$lastName;    
+            $customerName = $firstName.$lastName;    
             if ($company) {
+                $company = str_replace('/', '_', $company);
+                $company = str_replace(':', '_', $company);
+                $company = str_replace('?', '_', $company);
+                $company = str_replace('"', '_', $company);
+                $company = str_replace('<', '_', $company);
+                $company = str_replace('>', '_', $company);
+                $company = str_replace('|', '_', $company);
+                $company = str_replace('.', '_', $company);
+                $company = str_replace(' ', '', $company);
                 $customerName = $company;
             }
 
             $filename = 
                 "Invoice-".
                 get_option('qi_settings')['prefix'].
-                $invoiceID. "_".
-                $customerName. "_".
+                $invoiceID. "-".
+                $customerName. "-".
                 $invoiceDate;
 
             return $filename;

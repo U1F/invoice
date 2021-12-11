@@ -58,40 +58,27 @@ td.invoiceItemsHeader {
 
 <page>
     <div style="position: relative; margin-left:70px;">
-        <table width="100%">
+        <table width="100%" style="margin-top:80px;>
             <tr>
                 <td style="font-size:8px; width: 350px; height:40px;"></td>
                 
                 <td 
                     rowspan="3" 
-                    style="width: 270px; text-align: right; font-size:12px;"
+                    style="width: 270px; text-align: right; font-size:14px;"
                 >
-                <?php 
-                $logoImageSource = plugin_dir_url(__FILE__)."files/none_5002.png";
-                
-                /*if (get_option('qi_settings')['logoFileUrl']) {
-                    $logoImageSource = get_option('qi_settings')['logoFileUrl'];
-                }*/
-                ?>
-
-                <?php
-                    $path =  $logoImageSource;
-                    $type = pathinfo($path, PATHINFO_EXTENSION);
-                    $data = file_get_contents($path);
-                    $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-                ?>
-
-                <img src="<?php echo $base64;?>">
-
                 <?php /*
-                <span style="color: #AA0000; font-weight: bold;">Fehler n°6</span>
-                <br>
-                Datei : /home/users/hoersaal-events/www/dev.hoersaal-events.de/wp-content/plugins/q_invoice/admin/partials/export/html2pdf.class.php
-                <br>
-                Linie : 1319
-                <br>
-                <br>
-                Ladung des Bilds unmöglich <b>https://dev.hoersaal-events.de/wp-content/plugins/q_invoice/admin/partials/export/files/none_5002.png</b>
+                $logoImageSource = plugin_dir_url(__FILE__).
+                "files/none_5002.png";
+                
+                if (get_option('qi_settings')['logoFileUrl']) {
+                    $logoImageSource = get_option('qi_settings')['logoFileUrl'];
+                }
+                ?>
+                <img 
+                    src="<?php echo $logoImageSource;?>" 
+                    width="250"
+                    style="border:0px;">
+
                 */?>
 
 
