@@ -771,6 +771,8 @@ jQuery(function ($) {
           writeInvoiceDetailstoFormField('select.itemTax', 'tax', i)
         }
 
+        $('#heading-invoice').find('.switchForPaidStatus').css('display', 'inline-block')
+
         fetchInvoiceCurrency()
         recalcPos()
         recalcLineSum()
