@@ -397,8 +397,6 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                 </div>
             </div>
 
-            <hr> <!-- ----------------------------------------------------------- -->
-
             <div class="invoice-items">
                 <table id="items" class="form-table qInvc-table">
                     <tr id="table-invoice-items-header">

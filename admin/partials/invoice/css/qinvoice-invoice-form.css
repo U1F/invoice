@@ -35,6 +35,7 @@
 
 .q-invoice-page div#invoiceInputTables {
     margin-left: 0px;
+    margin-bottom: 25px;
     display: flex;
 }
 
