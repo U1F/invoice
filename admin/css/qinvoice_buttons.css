@@ -219,5 +219,6 @@ border: 1px solid #c0c0c0;
 
   .q_invoice_outerButton{
     width: auto !important;
-    padding: 0px 10px !important;
+    padding: 0.25rem 1rem !important;
+    margin-top: -4px !important;
   }
