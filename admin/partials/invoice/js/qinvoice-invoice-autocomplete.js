@@ -17,10 +17,10 @@ jQuery(function ($) {
     if ($(event.target).val().length > 0) {
       for (let i = 0; i < contactData[0].length; i++) {
         if (contactData[0][i][$(event.target)[0].id].toLowerCase().includes($(event.target).val().toLowerCase(), 0)) {
-          if (contactData[0][i].company) {
+          if (field == "Company") {
             matchedNames[nameCount] = contactData[0][i].company
-          } else {
-            matchedNames[nameCount] = contactData[0][i].firstname + ' ' + contactData[0][i].lastname
+          } else if (field == "Firstname" || field == "Lastname"){
+            matchedNames[nameCount] = contactData[0][i].firstname + ' ' + contactData[0][i].lastname + ' (' + contactData[0][i].company + ')'
           }
           matchedIDs[nameCount] = contactData[0][i].id
           nameCount++
