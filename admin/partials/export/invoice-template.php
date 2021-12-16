@@ -717,13 +717,42 @@ td.invoiceItemsHeader {
                 <div style="font-size:12px; text-align: center;"> 
                 <?php 
                 
-                //echo __("Bankverbindung: ", "ev"). $invoiceData[0][0]->bank. "<br>";
-                $bankNumber = $invoiceData[0][0]->bank;
+                $bankIndex = $invoiceData[0][0]->bank;
+                
+                $ibanFromDatabase = get_option('qi_settings')["IBAN{$bankIndex}"];
+
+                // Get rid of spaces if exist
+                $ibanArray = explode(' ', $ibanFromDatabase);
+                $iban = implode('' , $ibanArray);
+
+                // Seperate blz and kto
+                $blz = substr($iban, 4, 8);
+                $kto = strVal(intVal(substr($iban, 12, 10))); 
+
+                //Fill with spaces if not exist for IBAN in second line
+                $ibanArray = str_split($iban);
+                $iban = '';
+                $counter = 0;
+                for($i = 0; $i < sizeof($ibanArray); $i++){
+                    $iban = $iban.$ibanArray[$i];
+                    if($counter == 3){
+                        $iban = $iban.' ';
+                        $counter = 0;
+                    } else{
+                        $counter++;
+                    }
+
+                }
+
                 echo 
                     __("Bankverbindung: ", "ev"). 
-                    get_option('qi_settings')["bankName{$bankNumber}"].' '.
-                    'IBAN: '. get_option('qi_settings')["IBAN{$bankNumber}"]. ' - '.
-                    'BIC: '.  get_option('qi_settings')["BIC{$bankNumber}"]. '<br>';
+                    get_option('qi_settings')["bankName{$bankIndex}"].
+                    ' (BLZ '.$blz. ', Kto '. $kto . ')'.
+                    '<br>'.
+                    'IBAN: '. $iban.
+                    ' - '.
+                    'BIC: '.  get_option('qi_settings')["BIC{$bankIndex}"].
+                    '<br>';
                 
                 if (get_option('qi_settings')['invoiceTextCustomFooter']) {
                     echo get_option('qi_settings')['invoiceTextCustomFooter'];
