@@ -96,7 +96,7 @@
 }
 
 .qinvoiceMessage.messageSuccess span {
-    background: #4a9a5c;
+    background: #1bd89e;
     border-radius: 5px;
     color: #ffffff;
     display: block;
@@ -155,14 +155,14 @@ textarea.error {
 .q-invoice-page input.error:valid {
     border-style: auto;
     border-color: inherit;
-  }
-  .q-invoice-page select.error:valid {
+}
+.q-invoice-page select.error:valid {
     border-style: auto;
     border-color: inherit;
-  }
-  .q-invoice-page textarea.error:valid {
+}
+.q-invoice-page textarea.error:valid {
     border-style: auto;
     border-color: inherit;
-  }
+}
 
 

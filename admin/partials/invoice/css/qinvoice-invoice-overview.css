@@ -108,6 +108,8 @@
     text-align: center;
     width: 50px;
     padding-right: 20px;
+    color: #343a40;
+    cursor: pointer;
 }
 
 .q-invoice-page div.confirmationBox
@@ -172,11 +174,7 @@ q-invoice-page dashicons-download {
 }
 
 .q-invoice-page .circle.paid.active {
-    background-color: green;
-}
-
-.q-invoice-page .circle.paid.active {
-    background-color: green;
+    background-color: #1bd89e;
 }
 
 .q-invoice-page .circle.paid.cancelled {
@@ -188,11 +186,11 @@ q-invoice-page dashicons-download {
 }
 
 .q-invoice-page .circle.dunning {
-    background-color: red;
+    background-color: #fe667b;
 }
 
 .q-invoice-page .circle.dunning.cancelled {
-    background-color: lightsalmon;
+    background-color: #fba76f;
 }
 
 .q-invoice-page .circle.open {
@@ -203,3 +201,6 @@ q-invoice-page dashicons-download {
     background-color: gray;
 }
 
+.q-invoice-page a{
+    color: #343a40;
+}
