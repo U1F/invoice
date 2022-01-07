@@ -1,5 +1,7 @@
 .q-invoice-page #newInvoice {
     float:right;
+    height:30px;
+    line-height:unset;
 }
 
 .q-invoice-page td.column-edit span.edit {
