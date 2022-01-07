@@ -164,6 +164,7 @@ jQuery(function ($) {
     if (!sliderBox.find('input').prop('checked')) {
       // .. set a paydate to mark as paid
       const data = { paydate: formatDate(new Date()) }
+      console.log(data)
       markInvoice(getRowNumber(event.target), data)
 
       // and mark that row as paid instead of open
@@ -993,9 +994,9 @@ jQuery(function ($) {
     let day = '0'
 
     if (parseInt(unformattedDate.getMonth()) < 10) {
-      month = '0' + unformattedDate.getMonth()
+      month = '0' + (unformattedDate.getMonth() + 1)
     } else {
-      month = unformattedDate.getMonth()
+      month = unformattedDate.getMonth() + 1
     }
 
     if (parseInt(unformattedDate.getDate()) < 10) {
