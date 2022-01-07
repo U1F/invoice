@@ -47,6 +47,7 @@ border: 1px solid #c0c0c0;
     flex-direction: row;
    
     justify-content:space-between;
+    border-left: 1px solid #c0c0c0;
     
    
 }
@@ -89,7 +90,7 @@ border: 1px solid #c0c0c0;
 .q-invoice-page div.filterButton.active {
   
     background-color: rgb(34, 113, 177);
-    border: 1px solid #c0c0c0;
+    border: 1px solid rgb(34, 113, 177);
     color:white;
 }
 
