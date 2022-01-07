@@ -25,7 +25,7 @@
             </button>
         </div>
 
-        <div class="filterButton inactive" id="showOpenInvoices" style="margin-left: -1px;">
+        <div class="filterButton inactive" id="showOpenInvoices" style="margin-left: -1px; border-left: none">
             <button class="invoiceButton">
                 Open
             </button>

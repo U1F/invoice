@@ -408,6 +408,10 @@ jQuery(function ($) {
   }
 
   $('#filterButtons').on('click', 'div.inactive', function (event) {
+    if ($(event.target).parent().attr('id') === 'filterButtons') {
+      return;
+    }
+    console.log('clicked');
     setFilterButtonInactive($('#filterButtons').find('div.active'))
     setFilterButtonActive($(event.target).parent())
     if ($(event.target).parent().attr('id') === 'showAllInvoices') {
