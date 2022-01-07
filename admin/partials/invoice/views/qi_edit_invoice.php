@@ -38,7 +38,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
             <h2 id="formHeaderCreate" style="width:50%;"><?php echo __('New Invoice', 'Ev'); ?></h2>
             <div style="text-align: right; width: 50%; align-self: end;">
             <label class="switch switchForPaidStatus large" style="align-self:end; margin: 1em 0;">
-                <input id="invocie_form_paid_toggle" type="checkbox" class="checkboxForPayment">
+                <input id="invoice_form_paid_toggle" type="checkbox" class="checkboxForPayment">
                 <span class="sliderForPayment invoiceSlider round large" style="margin-left: -35px;"></span>
             </label>
             </div>

@@ -1152,8 +1152,11 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 );
             } catch (HTML2PDF_exception $e) {
                 echo $e;
-                exit;
+                return 'fail';
+                //exit;
             }
+
+            return 'success';
             
         }
         
@@ -1173,11 +1176,12 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 
                 $invoiceID = Interface_Invoices::saveArrayToDB($_POST);
 
-                $this->printInvoiceTemplate($invoiceID);
+                $pdfSuccess = $this->printInvoiceTemplate($invoiceID);
                 // NOT TESTING
                 $response['success'] = true;
                 $response['data'] = $_POST;
                 $response['id'] = $invoiceID;
+                $response['pdf'] = $pdfSuccess;
                 //$response['type'] = $_POST['action'];
                 
                 echo json_encode($response);

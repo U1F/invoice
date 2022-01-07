@@ -156,6 +156,10 @@ jQuery(function ($) {
     const sliderBox = $(event.target).parent()
     const invoiceRow = sliderBox.parent().parent()
 
+    if(invoiceRow.hasClass('cancelled')){
+      return;
+    }
+
     // if the slider gets, but was not checked..
     if (!sliderBox.find('input').prop('checked')) {
       // .. set a paydate to mark as paid
@@ -748,9 +752,9 @@ jQuery(function ($) {
           $('td.inputsRightTable input#bank2').attr('checked', 'true')
         }
         if (!(obj[0][0]['paydate'] == '0000-00-00')){
-          $('#invocie_form_paid_toggle').prop("checked", true);
+          $('#invoice_form_paid_toggle').prop("checked", true);
         } else{
-          $('#invocie_form_paid_toggle').prop("checked", false);
+          $('#invoice_form_paid_toggle').prop("checked", false);
         }
         writeInvoiceHeadertoFormField('#loc_id', 'customerID')
 
@@ -770,8 +774,6 @@ jQuery(function ($) {
           writeInvoiceDetailstoFormField('select.discountType', 'discount_type', i)
           writeInvoiceDetailstoFormField('select.itemTax', 'tax', i)
         }
-
-        $('#heading-invoice').find('.switchForPaidStatus').css('display', 'inline-block')
 
         fetchInvoiceCurrency()
         recalcPos()
@@ -829,6 +831,14 @@ jQuery(function ($) {
     if ($(event.target).is('.columnEdit > *')) { return }
     if ($(event.target).is('.columnStatusPaid')) { return }
     if ($(event.target).is('.columnStatusPaid > *')) { return }
+
+    //check if clicked line is a cancelled invoice. On yes prevent form from setting paid status by removing the paid toggle in the form
+    if($(this).hasClass('cancelled')){
+      $('#heading-invoice').find('.switchForPaidStatus').css('display', 'none')
+    } else{
+      $('#heading-invoice').find('.switchForPaidStatus').css('display', 'inline-block')
+    }
+    
     // Common Task for openning the invoice form
     reopenInvoiceForm()
 
@@ -1065,6 +1075,8 @@ jQuery(function ($) {
         var serverResponse = JSON.parse(response).data
         var invoiceID = JSON.parse(response).id
 
+        $('#invoiceOverlay').css('display', 'none')
+        
         if (serverResponse.action === 'updateInvoiceServerSide') {
           changeUpdatedInvoiceRow(serverResponse)
         }
@@ -1074,7 +1086,6 @@ jQuery(function ($) {
 
         // $('#invoiceForm').trigger('reset')
 
-        $('#invoiceOverlay').css('display', 'none')
         displaySuccess()
       }
     })
@@ -1148,7 +1159,7 @@ jQuery(function ($) {
    * - If this listener detects the Toggle to be checked, a click action in the paid toggle in the overview is simulated and the popup will be closed
    *  */
 
-  $('#invocie_form_paid_toggle').change(function(){
+  $('#invoice_form_paid_toggle').change(function(){
     if (this.checked){
 
       var id = $('#invoice_id').val();
