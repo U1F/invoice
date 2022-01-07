@@ -710,6 +710,7 @@ jQuery(function ($) {
     nonceFieldForUpdating = $('div#updateInvoiceDIV').clone()
   }
 
+  //click handler when a new invoice should be set: Clicking opens an empty form
   $('#newInvoice').click(function () {
     reopenInvoiceForm()
 
@@ -736,6 +737,10 @@ jQuery(function ($) {
       $('#prefix').attr('readonly', false)
       $('#invoice_id').attr('readonly', false)
     }
+    //reset the form sums
+    $('#sums').find('.qInvc-total-summe').text('0,00');
+    $('#sums').find('.qInvc-total-brutto-summe').text('0,00');
+    $('tr.invoiceTaxSums').remove();
   })
 
   function editInvoice (invoiceId) {
