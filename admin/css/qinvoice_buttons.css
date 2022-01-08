@@ -5,7 +5,7 @@
     font-size: 14px;
     color: #3c434a;
     background-color: white;
-    border: 1px solid #c0c0c0;
+    border: 1px solid #dadce1;
     border-radius: 4px;
     height: 36px;
     width: 150px;
@@ -35,7 +35,7 @@
 }
 
 .q-invoice-page .qInvoiceFormButton.cancelButton{
-border: 1px solid #c0c0c0;
+border: 1px solid #dadce1;
 }
 
 
@@ -47,7 +47,7 @@ border: 1px solid #c0c0c0;
     flex-direction: row;
    
     justify-content:space-between;
-    border-left: 1px solid #c0c0c0;
+    border-left: 1px solid #dadce1;
     
    
 }
@@ -57,7 +57,7 @@ border: 1px solid #c0c0c0;
     min-width:16%;
     width:17%;
     color: #3c434a;
-    border: 1px solid #c0c0c0;
+    border: 1px solid #dadce1;
     background-color: white;
     height: 36px;
     padding:0px;

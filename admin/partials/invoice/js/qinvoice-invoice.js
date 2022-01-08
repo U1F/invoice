@@ -230,7 +230,7 @@ jQuery(function ($) {
   function setFilterButtonActive (target) {
     target.css('background-color', 'rgb(34, 113, 177)')
     target.find('button').css('background-color', 'rgb(34, 113, 177)')
-    target.css('border', '1px solid #c0c0c0;')
+    target.css('border', '1px solid #dadce1;')
     target.find('button').css('color', 'white')
     target.attr('class', 'filterButton active')
     $('#filterButtons').find('.active').css('border', '1px solid rgb(34, 113, 177)');
@@ -239,13 +239,13 @@ jQuery(function ($) {
   }
 
   function setFilterButtonInactive (target) {
-    $('#filterButtons').find('.active').css('border', '1px solid #c0c0c0');
-    $('#filterButtons').find('.active').prev().css('border-right', '1px solid #c0c0c0');
-    $('#filterButtons').find('.active').next().css('border-left', '1px solid #c0c0c0');
+    $('#filterButtons').find('.active').css('border', '1px solid #dadce1');
+    $('#filterButtons').find('.active').prev().css('border-right', '1px solid #dadce1');
+    $('#filterButtons').find('.active').next().css('border-left', '1px solid #dadce1');
     $('#filterButtons').find('#showAllInvoices').css('border-left', 'none');
     target.css('background-color', 'white')
     target.find('button').css('background-color', 'white')
-    target.css('border', '1px solid #c0c0c0;')
+    target.css('border', '1px solid #dadce1;')
     target.find('button').css('color', '#3c434a')
     target.attr('class', 'filterButton inactive')
   }

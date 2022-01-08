@@ -37,12 +37,12 @@ jQuery(function ($) {
 
   function showTextAreaForAutocompleteOfContactFields (matchedNames, matchedIDs, fieldName) {
     let htmlData = ''
-    var noBorderOnLastItem = 'border-bottom: 1px solid #c0c0c0;';
+    var noBorderOnLastItem = 'border-bottom: 1px solid #dadce1;';
     for (let i = 0; i < matchedNames.length; i++) {
       if(i + 1 == matchedNames.length){
         noBorderOnLastItem = 'border-bottom: none;';
       } else{
-        noBorderOnLastItem = 'border-bottom: 1px solid #c0c0c0;';
+        noBorderOnLastItem = 'border-bottom: 1px solid #dadce1;';
       }
       console.log("here");
       htmlData +=
