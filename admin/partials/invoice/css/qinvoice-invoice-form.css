@@ -2,13 +2,11 @@
 /* Div that frames the form*/
 
 .q-invoice-page div#edit-invoice {
-    margin-top: 112px;
-    margin-left: 215px;
+    margin-top: 93px;
+    margin-left: 222px;
     margin-right: 45px;
-    margin-bottom: 45px;
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-top: 12px;
+    margin-bottom: 61px;
+    padding: 40px;
     border: 1px solid white;
     background-color: white;
     border-radius: 5px;
@@ -19,6 +17,7 @@
     font-size: 1.6em;
     font-weight: bold;
     margin-bottom: 16px;
+    margin-top: 0;
 }
 
 

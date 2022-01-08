@@ -730,7 +730,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 "<label ".
                     "class='fileUpload'".
                     "style='".
-                        "border:solid 1px #c0c0c0; ".
+                        "border:solid 1px #dadce1; ".
                         "border-radius:4px; ".
                         "padding:7px; ".
                         "min-height:32px; ".

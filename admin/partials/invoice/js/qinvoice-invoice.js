@@ -175,7 +175,7 @@ jQuery(function ($) {
       invoiceRow.addClass('paid')
       invoiceRow.removeClass('open')
       // paid invoices should not look and be editable
-      invoiceRow.find('.columnEdit').find('.delete').css('color', 'lightgrey')
+      invoiceRow.find('.columnEdit').find('.delete').css('color', '#dadce1')
       invoiceRow.find('.columnEdit').find('.delete').removeClass('deleteRow')
     } else {
       // remove paydate, mark as open and make editable

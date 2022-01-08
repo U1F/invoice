@@ -5,17 +5,16 @@
 }
 /* Div that frames the form - copied from invoices - make it class?*/
 .q-invoice-page #qiContactPopup{
-    display: inline-block;
+    display: block;
+    margin: auto;
     margin-top: 112px;
-    margin-left:40%;
-    margin-right:40%;
+    margin-bottom: 78px;
     width:20%;
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-top: 12px;
+    padding: 12px 40px;
     border: 1px solid white;
     background-color: white;
     border-radius: 5px;
+    position:relative;
 }
 
 

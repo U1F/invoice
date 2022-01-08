@@ -6,7 +6,7 @@
 */
 
 .q-invoice-page form#qinvoiceSettings {
-    border: 1px solid #c0c0c0;
+    border: 1px solid #dadce1;
     background-color: white;
     padding: 40px 40px 40px 40px;
     margin-left: 0px;
@@ -95,7 +95,7 @@
 .q-invoice-page section.invoiceSettings input[type=text] {
     padding-left: 8px;
     padding-right: 8px;
-    border: 1px solid #c0c0c0;
+    border: 1px solid #dadce1;
     width: 240px;
     height: 32px;
     border-radius: 4px;
@@ -107,7 +107,7 @@
 .q-invoice-page section.invoiceSettings input[type=email] {
     padding-left: 8px;
     padding-right: 8px;
-    border: 1px solid #c0c0c0;
+    border: 1px solid #dadce1;
     width: 240px;
     height: 32px;
     border-radius: 4px;
@@ -121,7 +121,7 @@
 .q-invoice-page section.invoiceSettings input[type=number] {
     padding-left: 8px;
     padding-right: 8px;
-    border: 1px solid #c0c0c0;
+    border: 1px solid #dadce1;
     height: 32px;
     border-radius: 4px;
     font-family: sans-serif;
@@ -132,7 +132,7 @@
 .q-invoice-page section.invoiceSettings input[type=tel] {
     padding-left: 8px;
     padding-right: 8px;
-    border: 1px solid #c0c0c0;
+    border: 1px solid #dadce1;
     height: 32px;
     border-radius: 4px;
     font-family: sans-serif;
@@ -145,7 +145,7 @@
     font-family: sans-serif;
     font-size: 14px;
     color: #3c434a;
-    border: 1px solid #c0c0c0;
+    border: 1px solid #dadce1;
     height: 32px;
 }
 
@@ -234,7 +234,7 @@ section.invoiceSettings input[id^="tax"] {
 .q-invoice-page  textarea {
     padding-left: 8px;
     padding-right: 8px;
-    border: 1px solid #c0c0c0;
+    border: 1px solid #dadce1;
     width: 100%;
     height: 32px;
     border-radius: 4px;
@@ -281,7 +281,7 @@ button#showLogoButton {
     background-color: white;
     padding-left: 8px;
     padding-right: 8px;
-    border: 1px solid #c0c0c0;
+    border: 1px solid #dadce1;
     border-radius: 4px;
     vertical-align: middle;
     color: #3c434a;

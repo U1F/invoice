@@ -426,7 +426,7 @@ function showOpenInvoices()
                     
 
                     <span style="font-size: 20px; <?php
-                        if ($paid){echo 'color: lightgrey;';}
+                        if ($paid){echo 'color: #dadce1;';}
                         if ($cancelled){echo ' display: none;';}
                         ?>"
                         id="<?php echo esc_attr($invoice_header->id);?>" 
@@ -464,7 +464,7 @@ function showOpenInvoices()
         ?>" 
         id="q_invoice_totalSums"
         value="<?php echo esc_html($invoice_header->id);?>"
-        style="border-top: 2px dashed lightgray"
+        style="border-top: 2px dashed #dadce1"
     >    
 
         <td class="manage-column  columnInvoiceID sortable asc"></td>
