@@ -1077,13 +1077,21 @@ jQuery(function ($) {
   }
 
   function displaySuccess () {
-    // DIE MELDUNG ALS FUNKTION?
     $('#wpbody-content').prepend(
       '<div class="qinvoiceMessage messageSuccess">' +
       '<span> Invoice succesfully saved! </span>' +
       '</div>')
 
     $('.messageSuccess').delay(1000).fadeOut(800)
+  }
+
+  function displayFail (details, duration) {
+    $('#wpbody-content').prepend(
+      '<div class="qinvoiceMessage messageFail">' +
+      '<span> Something went wrong! <br>' + details + ' <br><br> Please refresh the page.</span>' +
+      '</div>')
+
+    $('.messageFail').delay(duration).fadeOut(800)
   }
 
   jQuery(document).ready(function ($) {
@@ -1104,6 +1112,10 @@ jQuery(function ($) {
         // $('#invoiceForm').trigger('reset')
 
         displaySuccess()
+      },
+      error: function (response){
+        $('#invoiceOverlay').css('display', 'none');
+        displayFail('Data has not been saved completely.', 5000);
       }
     })
 

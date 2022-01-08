@@ -112,6 +112,31 @@
     
 }
 
+.qinvoiceMessage.messageFail
+{
+    margin-top:20px;
+  position: absolute;
+  width: 100%;
+  z-index: 99;
+}
+
+.qinvoiceMessage.messageFail span {
+    background: #fe667b;
+    border-radius: 5px;
+    color: #ffffff;
+    display: block;
+    font-size: 15px;
+    /*margin: 0 auto;*/
+    padding: 15px 30px;
+    text-align: center;
+    width: 50%;
+
+
+    margin-left: 25%;
+    margin-right: 25%;
+    
+}
+
 
 .q-invoice-page textarea {
     overflow: auto;
