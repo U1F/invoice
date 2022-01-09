@@ -710,7 +710,10 @@ jQuery(function ($) {
     nonceFieldForUpdating = $('div#updateInvoiceDIV').clone()
   }
 
-  //click handler when a new invoice should be set: Clicking opens an empty form
+  /**
+   * click handler when a new invoice should be set: Clicking opens an empty form
+   * 
+   **/
   $('#newInvoice').click(function () {
     reopenInvoiceForm()
 
@@ -741,8 +744,18 @@ jQuery(function ($) {
     $('#sums').find('.qInvc-total-summe').text('0,00');
     $('#sums').find('.qInvc-total-brutto-summe').text('0,00');
     $('tr.invoiceTaxSums').remove();
+
+    //reset the newContact Row
+    $('#qinv_saveContactCheckbox').prop('checked', false)
+    $('#qinv_saveContactLabel').text('Save as new Contact?');
+    $('#qinv_saveContactRow').css('display', 'none');
+    $('#qinv_saveContactCheckbox').val('empty');
   })
 
+  /**
+   * Load invoice Data by ajax and prepare form on success
+   * @param {Invoice to be edited} invoiceId 
+   */
   function editInvoice (invoiceId) {
     jQuery.ajax({
       type: 'POST',
@@ -818,6 +831,12 @@ jQuery(function ($) {
         }else{
           $('#company').prop('required', true);
         }
+
+        //prepare the newContact Row
+        $('#qinv_saveContactCheckbox').prop('checked', false)
+        $('#qinv_saveContactLabel').text('Save as new Contact?');
+        $('#qinv_saveContactRow').css('display', 'none');
+        $('#qinv_saveContactCheckbox').val('old');
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
         console.log(errorThrown)
@@ -1094,20 +1113,21 @@ jQuery(function ($) {
     $('.messageFail').delay(duration).fadeOut(800)
   }
 
+
   jQuery(document).ready(function ($) {
     $('#invoiceForm').ajaxForm({
       success: function (response) {
         var serverResponse = JSON.parse(response).data
         var invoiceID = JSON.parse(response).id
 
-        $('#invoiceOverlay').css('display', 'none')
-        
         if (serverResponse.action === 'updateInvoiceServerSide') {
           changeUpdatedInvoiceRow(serverResponse)
         }
         if (serverResponse.action === 'saveInvoiceServerSide') {
           addNewInvoiceRow(serverResponse, invoiceID)
         }
+
+        $('#invoiceOverlay').css('display', 'none')
 
         // $('#invoiceForm').trigger('reset')
 
@@ -1200,6 +1220,41 @@ jQuery(function ($) {
 
     }
   });
+
+  /**
+   * Function to set the "Save as new Contact" / "Update Contact on Save" row visible, which includes some text and a checkbox
+   * 
+   */
+
+  $('.checkForModificationField').change(function(){
+    if(!$(this).val()){
+      $('#qinv_saveContactLabel').text('Save as new Contact?');
+      $('#qinv_saveContactRow').css('display', 'table-row');
+      $('#qinv_saveContactCheckbox').val('new');
+    } else{
+      if ($('#qinv_saveContactCheckbox').val() == 'empty'){
+        $('#qinv_saveContactLabel').text('Save as new Contact?');
+        $('#qinv_saveContactRow').css('display', 'table-row');
+        $('#qinv_saveContactCheckbox').val('new');
+      } else if ($('#qinv_saveContactCheckbox').val() == 'old'){
+        $('#qinv_saveContactLabel').text('Update Contact?');
+        $('#qinv_saveContactRow').css('display', 'table-row');
+        $('#qinv_saveContactCheckbox').val('update');
+      }
+    }
+  });
+
+  $('#qinv_saveContactCheckbox').click(function(){
+    console.log('hereI')
+    if($('#qinv_saveContactCheckbox').prop("checked")){
+      console.log('hereII')
+      $('#qinv_saveContactHidden').val("true");
+    } else if(!$('#qinv_saveContactCheckbox').prop("checked")){
+      console.log('hereIII')
+      $('#qinv_saveContactHidden').val("false");
+    }
+  });
+
 
   /**
    * Function to simulate a dynamic ID size depending on the ID length:

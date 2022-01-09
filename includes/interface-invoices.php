@@ -369,6 +369,28 @@ class Interface_Invoices
                 'paydate'  => ""      
             )
         );
+
+        if($invoice_array['qinv_saveContactHidden'] == "true"){
+            $GLOBALS['wpdb']->insert( 
+                $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_CONTACTS,
+                array(
+                    
+                    
+                    'company' => $invoice_array['company'],
+                    'additional' => $invoice_array['additional'],
+                    'lastname' =>  $invoice_array['lastname'],
+                    'firstname' =>  $invoice_array['firstname'],
+                    'street'  => $invoice_array['street'],
+                    'zip'  => $invoice_array['zip'],
+                    'city'  => $invoice_array['city'],
+                    'email'  => "",
+                    'date' => "",
+                    'status' => ""
+                    
+                     
+                )
+            );
+        }
         
         
         $arrayLength = count($invoice_array['itemDescription']);

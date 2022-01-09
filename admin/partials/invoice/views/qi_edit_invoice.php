@@ -70,7 +70,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                         value=""
                                         
                                         autocomplete="new-password"
-                                        class="autocompletePossField"
+                                        class="autocompletePossField checkForModificationField"
 
                                         required
                                         
@@ -108,6 +108,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                     id="additional" 
                                     name="additional" 
                                     value=""
+                                    class="checkForModificationField"
                                     autocomplete="none"
                                 >
                             </td>
@@ -122,7 +123,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                 <div style="display:flex;">
                                     <div>
                                         <input
-                                            class="inputName autocompletePossField"
+                                            class="inputName autocompletePossField checkForModificationField"
                                             type="text" 
                                             placeholder="<?php 
                                                 echo __("First Name", 'Ev');
@@ -143,7 +144,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
 
                                     <div>
                                         <input
-                                            class="inputName autocompletePossField"
+                                            class="inputName autocompletePossField checkForModificationField"
                                             type="text" 
                                             placeholder="<?php 
                                                 echo __('Last Name', 'Ev');
@@ -178,6 +179,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                     name="street"
                                     autocomplete="none" 
                                     value=""
+                                    class="checkForModificationField"
                                     required
                                 >
                                 
@@ -200,7 +202,8 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                             id="zip" 
                                             name="zip"
                                             autocomplete="none" 
-                                            value="" 
+                                            value=""
+                                            class="checkForModificationField" 
                                             required
                                         >
                                         
@@ -218,7 +221,8 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                             id="city" 
                                             name="city" 
                                             autocomplete="none"
-                                            value="" 
+                                            value=""
+                                            class="checkForModificationField"
                                             required
                                         >
                                         
@@ -242,6 +246,15 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                                           
                                     
                                 >
+                            </td>
+                        </tr>
+                        <tr id="qinv_saveContactRow" style="display:none">
+                            <td class="labelsLeftTable"></td>
+                            <td class="labelsLeftTable">
+                                <label id="qinv_saveContactLabel" style="width: 50%;" for="qinv_saveContactCheckbox"><?php echo __("Save as new Contact?", 'Ev');?></label>
+                                <input type="checkbox" id="qinv_saveContactCheckbox" name="qinv_saveContactCheckbox" value="empty" style="margin-bottom: 0;">
+                                <input type="hidden" name="qinv_saveContactHidden" id="qinv_saveContactHidden" value="false">
+                                
                             </td>
                         </tr>
                     </table>
