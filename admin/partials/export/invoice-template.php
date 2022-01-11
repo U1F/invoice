@@ -58,7 +58,7 @@ td.invoiceItemsHeader {
 
 <page>
     <div style="position: relative; margin-left:70px;">
-        <table width="100%" style="margin-top:80px;>
+        <table width="100%" style="margin-top:80px;">
             <tr>
                 <td style="font-size:8px; width: 350px; height:40px;"></td>
                 
