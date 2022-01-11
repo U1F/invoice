@@ -1117,6 +1117,7 @@ jQuery(function ($) {
   jQuery(document).ready(function ($) {
     $('#invoiceForm').ajaxForm({
       success: function (response) {
+        console.log (response)
         var serverResponse = JSON.parse(response).data
         var invoiceID = JSON.parse(response).id
 
