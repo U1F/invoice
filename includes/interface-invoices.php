@@ -171,7 +171,7 @@ class Interface_Invoices
      * @param int $invoiceID
      * @param string $invoiceItem
      * 
-     * @return Object
+     * @return String
      */
     static public function getInvoiceDataItem($invoiceID, $invoiceItem)
     {
