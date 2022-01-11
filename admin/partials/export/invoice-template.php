@@ -66,19 +66,24 @@ td.invoiceItemsHeader {
                     rowspan="3" 
                     style="width: 270px; text-align: right; font-size:14px;"
                 >
-                <?php /*
-                $logoImageSource = $_SERVER['DOCUMENT_ROOT'].dirname($_SERVER['PHP_SELF')."files/none_5002.png";//plugin_dir_url(__FILE__).
-                //"files/none_5002.png";
+                <?php 
                 
-                if (get_option('qi_settings')['logoFileUrl']) {
-                    $logoImageSource = get_option('qi_settings')['logoFileUrl'];
-                }
+                    $logoImageSource = $_SERVER['DOCUMENT_ROOT']. 
+                        dirname($_SERVER['PHP_SELF']). 
+                        "files/none_5002.png";
+                    
+                    //plugin_dir_url(__FILE__).
+                    //"files/none_5002.png";
+                    
+                    if (get_option('qi_settings')['logoFileUrl']) {
+                        $logoImageSource = get_option('qi_settings')['logoFileFile'];
+                    }
                 ?>
                 <img 
                     src="<?php echo $logoImageSource;?>" 
                     width="250"
                     style="border:0px;">
-                */?>
+                ?>
                 
 
 
