@@ -1139,9 +1139,10 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $exportInv= ob_get_contents();
             ob_end_clean();
             include  INVOICE_ROOT_PATH . 
-            '/admin/partials/export/html2pdf.class.php';
+            //'/admin/partials/export/html2pdf.class.php';
+            '/admin/partials/export/html2pdf/vendor/autoload.php';
             try {
-                $html2pdf = new HTML2PDF('P', 'A4', 'de');
+                $html2pdf = new Spipu\Html2Pdf\Html2Pdf('P', 'A4', 'de');
                 $html2pdf->writeHTML($exportInv, isset($_GET['vuehtml']));
                 // PDF Name : Invoice/Dunning/etc-$prefix$no-Customername_$datum
                 $html2pdf->Output(
@@ -1150,7 +1151,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                     $this->makeFilename($invoiceID).
                     '.pdf', 'F'
                 );
-            } catch (HTML2PDF_exception $e) {
+            } catch (Spipu\Html2Pdf\Exception\Html2PdfException $e) {
                 echo $e;
                 return 'fail';
                 //exit;
