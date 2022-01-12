@@ -83,7 +83,7 @@ td.invoiceItemsHeader {
                     src="<?php echo $logoImageSource;?>" 
                     width="250"
                     style="border:0px;">
-                ?>
+                
                 
 
 
