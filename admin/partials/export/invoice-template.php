@@ -72,12 +72,21 @@ td.invoiceItemsHeader {
                         dirname($_SERVER['PHP_SELF']). 
                         "files/none_5002.png";
                     
-                    //plugin_dir_url(__FILE__).
-                    //"files/none_5002.png";
-                    
                     if (get_option('qi_settings')['logoFileUrl']) {
-                        $logoImageSource = get_option('qi_settings')['logoFileFile'];
+                        $logoImageURL = get_option('qi_settings')['logoFileUrl'];
+						$logoImageFile = get_option('qi_settings')['logoFileFile'];
                     }
+                    
+                    echo $logoImageURL. " ". $logoImageFile;
+					
+					$imagedata = file_get_contents($logoImageFile);
+             		
+                    $base64 = base64_encode($imagedata);
+					// following line does not work:
+                    $mimetype = mime_content_type($imagedata);
+					// mimetype statically set to jpeg, errors on other files
+					$logoImageSource = 'data:'.'image/jpeg'.';base64,'.$base64;
+					
                 ?>
                 <img 
                     src="<?php echo $logoImageSource;?>" 
