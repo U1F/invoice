@@ -382,7 +382,7 @@ function showOpenInvoices()
                 </td>
 
                 <td class="manage-column  columnStatusPaid">
-                <span style="font-size: 20px; <?php if($cancelled){echo 'opacity:0;';}?>"
+                <span style="display:none; font-size: 20px; <?php if($cancelled){echo 'opacity:0;';}?>"
                         id="<?php echo esc_attr($invoice_header->id);?>" 
                         title="Mark As Paid"
                         class="invoicePaid markAsPaid dashicons dashicons-money-alt"
