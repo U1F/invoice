@@ -59,15 +59,9 @@ jQuery(function ($) {
 
   //hide autocomplete suggestions when clicking out of the box
   $('.autocompletePossField').blur(function (event) {
-    try {
-      if($(event.target).parent().parent().find('.autocompleteButton').is(':hover')){
-        return;
-      }
-      const field = $(event.target)[0].id[0].toUpperCase() + $(event.target)[0].id.slice(1);
-      $('#autocomplete' + field).css('display', 'none');
-    } catch (error) {
-      console.log('An syntax error with :hover occured.');
-    }
+    
+    const field = $(event.target)[0].id[0].toUpperCase() + $(event.target)[0].id.slice(1);
+    $('#autocomplete' + field).css('display', 'none');
     
   });
 
@@ -93,15 +87,23 @@ jQuery(function ($) {
     })
   }
 
-  $('#invoiceFormInputsLeft').on('click', 'div.autocompleteButton', function () {
+  $('#invoiceFormInputsLeft').on('mousedown', 'div.autocompleteButton', function () {
+    //fill the invoice form with choosen data
     fillContactDataInInvoiceForm($(this).attr('id'))
-
+    //remove the autocomplete overlay
     $('div#autocompleteCompany').html('')
     $('#autocomplete' + $(this).attr('name')).css('display', 'none')
-    //to recognize that a database contact has been filled in. If this will be modified, than the contact can be automatically updated
-    //prevent of double entrys by undisplaying the row on click
-    $('#qinv_saveContactCheckbox').val('old')
-    $('#qinv_saveContactRow').css('display', 'none')
+    /*to recognize that a database contact has been filled in. If this will be modified, than the contact can be automatically updated
+     *prevent of double entrys by undisplaying the row on click
+     *the delay is used to handle the change event in q-invoice-invoice.js before the mousedown, sothe row keeps beeing invisible
+     */
+     var nextID = $(this).attr('id');
+     setTimeout(function () {
+      $('#qinv_saveContactCheckbox').val('old')
+      $('#qinv_saveContactID').val(nextID)
+      $('#qinv_saveContactRow').css('display', 'none')
+     }, 250);
+    
   })
 
   $('#invoiceFormInputsLeft').on('mouseover', 'div.autocompleteButton', function () {
