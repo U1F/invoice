@@ -378,3 +378,87 @@
     
 }
 
+@media only screen and (max-width:960px){
+
+    .q-invoice-page div#edit-invoice{
+        margin-left: 50px;
+        margin-right: 14px;
+    }
+
+}
+
+@media only screen and (max-width:780px){
+
+    .q-invoice-page div#edit-invoice{
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .q-invoice-page div#invoiceInputTables{
+        display: block;
+    }
+
+}
+
+@media only screen and (max-width:550px){
+
+    .q-invoice-page td.labelsLeftTable, .q-invoice-page #invoiceForm td.labelsRightTable{
+        width: 40%;
+    }
+
+    .q-invoice-page div#invoiceInputTableLeft, .q-invoice-page #invoiceForm div#invoiceInputTableRight, .q-invoice-page #invoiceForm table#invoiceFormInputsRight{
+        width: 100%;
+    }
+
+    .q-invoice-page td.inputsLeftTable{
+        width: 60%
+    }
+
+    .q-invoice-page #input_container{
+        width: 100%;
+    }
+
+    .q-invoice-page td.inputsLeftTable input{
+        width: 100%;
+    }
+
+    .q-invoice-page #invoiceForm #company{
+        width: 100%;
+    }
+
+    .q-invoice-page #invoiceForm #inputDashiconCompanyRegister{
+        width: 100%;
+    }
+
+    .qi_formNames{
+        width: 49%;
+    }
+
+    .qi_formZIP{
+        width: 29%;
+    }
+    .qi_formCity{
+        width: 69%
+    }
+
+    .q-invoice-page #invoiceForm td.inputsLeftTable input#firstname, .q-invoice-page #invoiceForm td.inputsLeftTable input#lastname, .q-invoice-page #invoiceForm td.inputsLeftTable input#zip, .q-invoice-page #invoiceForm td.inputsLeftTable input#city{
+        width: 100%;
+    }
+
+    .q-invoice-page #invoiceForm td.inputsLeftTable input#zip{
+        width: 50;
+    }
+
+    .q-invoice-page #invoiceForm td.inputsLeftTable input#city{
+        width: 100px;
+    }
+
+    .q-invoice-flexPlaceholder{
+        flex-grow: 0;
+    }
+
+    .q-invoice-page #invoiceForm div.autocompleteDIV{
+        width: 100%;
+    }
+
+}

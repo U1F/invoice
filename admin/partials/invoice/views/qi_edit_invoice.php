@@ -121,7 +121,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
 
                             <td class="inputsLeftTable">
                                 <div style="display:flex;">
-                                    <div>
+                                    <div class="qi_formNames">
                                         <input
                                             class="inputName autocompletePossField checkForModificationField"
                                             type="text" 
@@ -140,9 +140,9 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
 
                                     </div>
 
-                                    <div style="flex-grow: 1"></div>
+                                    <div class="q-invoice-flexPlaceholder" style="flex-grow: 1"></div>
 
-                                    <div>
+                                    <div class="qi_formNames">
                                         <input
                                             class="inputName autocompletePossField checkForModificationField"
                                             type="text" 
@@ -193,7 +193,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
 
                             <td class="inputsLeftTable">
                                 <div style="display:flex;">
-                                    <div>
+                                    <div class="qi_formZIP">
                                         <input 
                                             placeholder="<?php 
                                                 echo __("ZIP Code", 'Ev');
@@ -209,9 +209,9 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                         
                                     </div>
 
-                                    <div style="flex-grow: 1"></div>
+                                    <div class="q-invoice-flexPlaceholder" style="flex-grow: 1"></div>
 
-                                    <div>
+                                    <div class="qi_formCity">
 
                                         <input 
                                             placeholder="<?php 

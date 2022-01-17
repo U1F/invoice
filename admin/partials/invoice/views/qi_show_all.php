@@ -58,7 +58,7 @@
         
 
      </div>
-    <div class="tab_content_wrapper">
+    <div id="q-invoice-TableContentWrapper" class="tab_content_wrapper">
 <?php 
 
 
