@@ -244,11 +244,11 @@
 }
 
 .q-invoice-page #invoiceForm table#items td.invoiceItemsDescription {
-    width: 100%;
+    width: 100px;
 }
 
 .q-invoice-page #invoiceForm table#items td.invoiceItemsDescription input.itemDescription {
-    width: 100%;
+    width: 100px;
 }
 
 .q-invoice-page #invoiceForm table#items td.invoiceItemsPrice {
@@ -378,6 +378,14 @@
     
 }
 
+@media only screen and (max-width:1300px){
+
+    .q-invoice-page #invoiceForm div.invoice-items{
+        overflow-y: auto;
+    }
+
+}
+
 @media only screen and (max-width:960px){
 
     .q-invoice-page div#edit-invoice{
@@ -445,12 +453,15 @@
         width: 100%;
     }
 
-    .q-invoice-page #invoiceForm td.inputsLeftTable input#zip{
-        width: 50;
+    .q-invoice-page #invoiceForm td.inputsRightTable{
+        width:60%;
     }
 
-    .q-invoice-page #invoiceForm td.inputsLeftTable input#city{
-        width: 100px;
+    .q-invoice-page #invoiceForm td.inputsRightTable input[type=text],
+    [type=date]{
+        width: 100%;
+        height: 36px;
+        font-size: 12px !important;
     }
 
     .q-invoice-flexPlaceholder{
