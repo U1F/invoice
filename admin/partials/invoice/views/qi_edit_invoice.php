@@ -252,8 +252,9 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             <td class="labelsLeftTable"></td>
                             <td class="labelsLeftTable">
                                 <label id="qinv_saveContactLabel" style="width: 50%;" for="qinv_saveContactCheckbox"><?php echo __("Save as new Contact?", 'Ev');?></label>
-                                <input type="checkbox" id="qinv_saveContactCheckbox" name="qinv_saveContactCheckbox" value="empty" style="margin-bottom: 0;">
+                                <input type="checkbox" name="qinv_saveContactCheckbox" id="qinv_saveContactCheckbox" value="empty" style="margin-bottom: 0;">
                                 <input type="hidden" name="qinv_saveContactHidden" id="qinv_saveContactHidden" value="false">
+                                <input type="hidden" name="qinv_saveContactID" id="qinv_saveContactID" value="-1">
                                 
                             </td>
                         </tr>

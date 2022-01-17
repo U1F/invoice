@@ -746,12 +746,18 @@ jQuery(function ($) {
     $('tr.invoiceTaxSums').remove();
 
     //reset the newContact Row
-    $('#qinv_saveContactCheckbox').prop('checked', false)
+    $('#qinv_saveContactCheckbox').prop('checked', false);
+    $('#qinv_saveContactHidden').val("false");
+    $('#qinv_saveContactID').val('-1');
     $('#qinv_saveContactLabel').text('Save as new Contact?');
     $('#qinv_saveContactRow').css('display', 'none');
     $('#qinv_saveContactCheckbox').val('empty');
+    
   })
 
+  //Save existing Contacts for further usage
+  let contactData = [];
+  fetchContacts();
   /**
    * Load invoice Data by ajax and prepare form on success
    * @param {Invoice to be edited} invoiceId 
@@ -833,14 +839,67 @@ jQuery(function ($) {
         }
 
         //prepare the newContact Row
-        $('#qinv_saveContactCheckbox').prop('checked', false)
-        $('#qinv_saveContactLabel').text('Save as new Contact?');
-        $('#qinv_saveContactRow').css('display', 'none');
-        $('#qinv_saveContactCheckbox').val('old');
+        $('#qinv_saveContactCheckbox').prop('checked', false);
+        $('#qinv_saveContactHidden').val("false");
+
+        //check if Contact exists in Database
+        var eI_isContact = false;
+        for(i = 0; i < contactData[0].length; i++){
+          //check for each contact if the full adress and name is like the data in the form
+          if(contactData[0][i].street == obj[0][0]['street'] 
+            && contactData[0][i].zip == obj[0][0]['zip'] 
+            && contactData[0][i].city == obj[0][0]['city'] 
+            && (contactData[0][i].company == obj[0][0]['company'] || contactData[0][i].firstname == obj[0][0]['firstname']))
+          {
+            eI_isContact = true;
+            var eI_ID = contactData[0][i].id;
+          }
+        }
+        //if there is a matching contact prepare for update, if not prepare for add new
+        if(eI_isContact){
+          $('#qinv_saveContactID').val(eI_ID);
+          $('#qinv_saveContactCheckbox').val('old');
+          $('#qinv_saveContactLabel').text('Update Contact?');
+          $('#qinv_saveContactRow').css('display', 'none');
+          $('#qinv_saveContactCheckbox').prop('checked', true);
+          $('#qinv_saveContactHidden').val("true");
+        }else{
+          $('#qinv_saveContactID').val("-1");
+          $('#qinv_saveContactLabel').text('Save as new Contact?');
+          $('#qinv_saveContactRow').css('display', 'table-row');
+          $('#qinv_saveContactCheckbox').val('new');
+        }
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
         console.log(errorThrown)
       }
+    })
+  }
+
+  /**
+   * Next two functions are copied from qinvice-invoice-autocomplete
+   * calling the method using the other file has taken lots of time
+   * @param {Contcts to parse} Contacts 
+   */
+  function storeContactData (Contacts) {
+    contactData = JSON.parse(Contacts)
+  }
+  function fetchContacts () {
+    jQuery.ajax({
+      type: 'POST',
+      url: q_invoice_ajaxObject.ajax_url,
+
+      data: {
+        action: 'fetchContactsServerSide',
+        _ajax_nonce: q_invoice_ajaxObject.nonce
+      },
+      success: function (response, textStatus, XMLHttpRequest) {
+        storeContactData(response)
+      },
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
+        alert(errorThrown)
+      }
+
     })
   }
 
@@ -917,8 +976,8 @@ jQuery(function ($) {
     row.find('td.columnDate').text(formattedDate)
     $('table#tableInvoices tr:last').remove()
     $('table#tableInvoices tr:last').after(sumRowBackup)
-
-    
+    //hold contact list up to date
+    fetchContacts()
 
     q_invoice_RecalcSums(
       parseFloat(((row.find('td.columnTotal').text()).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.')),
@@ -1090,6 +1149,8 @@ jQuery(function ($) {
       );
 
       $('table#tableInvoices > tbody').prepend(clone)
+      //keep invoice contacts up to date
+      fetchContacts()
     }
   
 
@@ -1224,34 +1285,51 @@ jQuery(function ($) {
 
   /**
    * Function to set the "Save as new Contact" / "Update Contact on Save" row visible, which includes some text and a checkbox
-   * 
    */
 
   $('.checkForModificationField').change(function(){
     if(!$(this).val()){
-      $('#qinv_saveContactLabel').text('Save as new Contact?');
-      $('#qinv_saveContactRow').css('display', 'table-row');
-      $('#qinv_saveContactCheckbox').val('new');
+      var cFMFallEmpty = true;
+      var all = $('.checkForModificationField').each(function(){
+        if ($(this).val()){
+          cFMFallEmpty = false;
+        }
+      });
+      if(cFMFallEmpty){
+        $('#qinv_saveContactRow').css('display', 'none');
+        $('#qinv_saveContactCheckbox').val('empty');
+        $('#qinv_saveContactID').val('-1');
+        $('#qinv_saveContactCheckbox').prop('checked', false);
+        $('#qinv_saveContactHidden').val("false");
+      } else if($('#qinv_saveContactCheckbox').val() == 'old'){
+        $('#qinv_saveContactLabel').text('Update Contact?');
+        $('#qinv_saveContactRow').css('display', 'table-row');
+        $('#qinv_saveContactCheckbox').val('update');
+        $('#qinv_saveContactCheckbox').prop('checked', true);
+        $('#qinv_saveContactHidden').val("true");
+      }
     } else{
       if ($('#qinv_saveContactCheckbox').val() == 'empty'){
         $('#qinv_saveContactLabel').text('Save as new Contact?');
         $('#qinv_saveContactRow').css('display', 'table-row');
         $('#qinv_saveContactCheckbox').val('new');
+        $('#qinv_saveContactID').val('-1');
+        $('#qinv_saveContactCheckbox').prop('checked', false);
+        $('#qinv_saveContactHidden').val("false");
       } else if ($('#qinv_saveContactCheckbox').val() == 'old'){
         $('#qinv_saveContactLabel').text('Update Contact?');
         $('#qinv_saveContactRow').css('display', 'table-row');
         $('#qinv_saveContactCheckbox').val('update');
+        $('#qinv_saveContactCheckbox').prop('checked', true);
+        $('#qinv_saveContactHidden').val("true");
       }
     }
   });
 
   $('#qinv_saveContactCheckbox').click(function(){
-    console.log('hereI')
     if($('#qinv_saveContactCheckbox').prop("checked")){
-      console.log('hereII')
       $('#qinv_saveContactHidden').val("true");
     } else if(!$('#qinv_saveContactCheckbox').prop("checked")){
-      console.log('hereIII')
       $('#qinv_saveContactHidden').val("false");
     }
   });

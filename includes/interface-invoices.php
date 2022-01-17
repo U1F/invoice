@@ -276,6 +276,50 @@ class Interface_Invoices
                 )
             );
         }
+
+        //check if the used contact has to be inserted
+        if($invoice_array['qinv_saveContactHidden'] == "true"){
+            //check if the contact has already existed or has to be added as a new one
+            if($invoice_array['qinv_saveContactCheckbox'] == "new"){
+                $GLOBALS['wpdb']->insert( 
+                    $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_CONTACTS,
+                    array(
+                        
+                        
+                        'company' => $invoice_array['company'],
+                        'additional' => $invoice_array['additional'],
+                        'lastname' =>  $invoice_array['lastname'],
+                        'firstname' =>  $invoice_array['firstname'],
+                        'street'  => $invoice_array['street'],
+                        'zip'  => $invoice_array['zip'],
+                        'city'  => $invoice_array['city'],
+                        'email'  => "",
+                        'date' => "",
+                        'status' => ""
+                        
+                         
+                    )
+                );
+            } else if($invoice_array['qinv_saveContactCheckbox'] == "update"){
+                $GLOBALS['wpdb']->update( 
+                    $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_CONTACTS,
+                    array(
+                        'company' => $invoice_array['company'],
+                        'additional' => $invoice_array['additional'],
+                        'lastname' =>  $invoice_array['lastname'],
+                        'firstname' =>  $invoice_array['firstname'],
+                        'street'  => $invoice_array['street'],
+                        'zip'  => $invoice_array['zip'],
+                        'city'  => $invoice_array['city'],
+                        'email'  => "",
+                        'date' => "",
+                        'status' => ""
+                    ),
+                    array ('id' => $invoice_array['qinv_saveContactID'])
+                );
+            }
+            
+        }
     }
 
     /**
@@ -368,30 +412,7 @@ class Interface_Invoices
                 'date_cancellation'  => "",
                 'paydate'  => ""      
             )
-        );
-
-        if($invoice_array['qinv_saveContactHidden'] == "true"){
-            $GLOBALS['wpdb']->insert( 
-                $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_CONTACTS,
-                array(
-                    
-                    
-                    'company' => $invoice_array['company'],
-                    'additional' => $invoice_array['additional'],
-                    'lastname' =>  $invoice_array['lastname'],
-                    'firstname' =>  $invoice_array['firstname'],
-                    'street'  => $invoice_array['street'],
-                    'zip'  => $invoice_array['zip'],
-                    'city'  => $invoice_array['city'],
-                    'email'  => "",
-                    'date' => "",
-                    'status' => ""
-                    
-                     
-                )
-            );
-        }
-        
+        );        
         
         $arrayLength = count($invoice_array['itemDescription']);
 
@@ -423,6 +444,50 @@ class Interface_Invoices
                 )
             );
               
+        }
+
+        //check if the used contact has to be inserted
+        if($invoice_array['qinv_saveContactHidden'] == "true"){
+            //check if the contact has already existed or has to be added as a new one
+            if($invoice_array['qinv_saveContactCheckbox'] == "new"){
+                $GLOBALS['wpdb']->insert( 
+                    $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_CONTACTS,
+                    array(
+                        
+                        
+                        'company' => $invoice_array['company'],
+                        'additional' => $invoice_array['additional'],
+                        'lastname' =>  $invoice_array['lastname'],
+                        'firstname' =>  $invoice_array['firstname'],
+                        'street'  => $invoice_array['street'],
+                        'zip'  => $invoice_array['zip'],
+                        'city'  => $invoice_array['city'],
+                        'email'  => "",
+                        'date' => "",
+                        'status' => ""
+                        
+                         
+                    )
+                );
+            } else if($invoice_array['qinv_saveContactCheckbox'] == "update"){
+                $GLOBALS['wpdb']->update( 
+                    $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_CONTACTS,
+                    array(
+                        'company' => $invoice_array['company'],
+                        'additional' => $invoice_array['additional'],
+                        'lastname' =>  $invoice_array['lastname'],
+                        'firstname' =>  $invoice_array['firstname'],
+                        'street'  => $invoice_array['street'],
+                        'zip'  => $invoice_array['zip'],
+                        'city'  => $invoice_array['city'],
+                        'email'  => "",
+                        'date' => "",
+                        'status' => ""
+                    ),
+                    array ('id' => $invoice_array['qinv_saveContactID'])
+                );
+            }
+            
         }
         return $detailID;
     }
