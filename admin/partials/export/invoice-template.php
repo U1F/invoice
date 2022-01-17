@@ -76,25 +76,16 @@ td.invoiceItemsHeader {
                         $logoImageURL = get_option('qi_settings')['logoFileUrl'];
 						$logoImageFile = get_option('qi_settings')['logoFileFile'];
                     }
-                    
-                    echo $logoImageURL. " ". $logoImageFile;
-					
-					$imagedata = file_get_contents($logoImageFile);
-             		
-                    $base64 = base64_encode($imagedata);
-					// following line does not work:
-                    $mimetype = mime_content_type($imagedata);
-					// mimetype statically set to jpeg, errors on other files
-					$logoImageSource = 'data:'.'image/jpeg'.';base64,'.$base64;
+                    $mimetype =  wp_get_image_mime( $logoImageFile );
+                    $imagedata = file_get_contents($logoImageFile);
+             		$base64 = base64_encode($imagedata);
+					$logoImageSource = 'data:'. $mimetype .';base64,'.$base64;
 					
                 ?>
                 <img 
                     src="<?php echo $logoImageSource;?>" 
                     width="250"
                     style="border:0px;">
-                
-                
-
 
                 <br>
 
