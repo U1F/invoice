@@ -441,6 +441,14 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 'invoicePage',
                 'qi_invoicePage_section'
             );
+
+            add_settings_field(
+                'qi_settingsInvoiceDotType', 
+                'Dottype', 
+                [$this, 'showInputForinvoiceDotType'],
+                'invoicePage',
+                'qi_invoicePage_section'
+            );
          
             
            
@@ -873,6 +881,39 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 foreach ($items as $item) {
                 
                     $selected = ($options['invoiceUnit']==$item) ? 'selected="selected"' : ''; 
+                    echo "<option value=".$item." ".$selected.">".$item."</option>";
+                }
+
+                echo "</select>";
+            }
+        }
+
+        /**
+         * Function showInputForinvoiceDotType
+         * 
+         * @return void
+         */
+        public function showInputForinvoiceDotType()
+        {
+            $options = get_option('qi_settings');
+            
+            if (empty($options['invoiceDotType'])) {
+                
+                echo "<select "
+                    ."id='qi_settings[invoiceDotType]'" 
+                    ."name='qi_settings[invoiceDotType]'>"
+                    ."<option value=',' selected='selected'>1.000,00</option>"  
+                    ."<option value='.'>1,000.00</option>"
+                    ."</select>";
+            } else {
+                $items = array(",", ".");
+                echo "<select ".
+                    "id='qi_settings[invoiceDotType]'" .
+                    "name='qi_settings[invoiceDotType]'>";
+                
+                foreach ($items as $item) {
+                
+                    $selected = ($options['invoiceDotType']==$item) ? 'selected="selected"' : ''; 
                     echo "<option value=".$item." ".$selected.">".$item."</option>";
                 }
 
