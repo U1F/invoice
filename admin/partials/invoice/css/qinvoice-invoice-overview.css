@@ -222,6 +222,10 @@ q-invoice-page dashicons-download {
         display: block;
     }
 
+    .q-invoice-page div.confirmationBox{
+        width: 50%;
+    }
+
 }
 
 @media only screen and (max-width:500px){

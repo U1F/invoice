@@ -378,6 +378,10 @@
     
 }
 
+#qi_invoiceFormPositions{
+    display:flex;
+}
+
 @media only screen and (max-width:1300px){
 
     .q-invoice-page #invoiceForm div.invoice-items{
@@ -431,6 +435,18 @@
 }
 
 @media only screen and (max-width:550px){
+
+    #qi_invoiceFormButtons{
+        text-align: center;
+    }
+
+    #qi_invoiceFormPositions{
+        display:block;
+    }
+
+    #saveInvoice, #updateInvoice{
+        float: unset!important;
+    }
 
     .q-invoice-page td.labelsLeftTable, .q-invoice-page #invoiceForm td.labelsRightTable{
         width: 40%;

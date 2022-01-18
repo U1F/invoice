@@ -622,7 +622,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                     </table>
                 </div>
                 <!-- ----------------------------------------------------------- -->
-                <div style="display: flex;">
+                <div id="qi_invoiceFormPositions">
                     <button 
                         type="button"               
                         id="qInvc-add-line">
@@ -698,7 +698,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                 </div>
             </div>
             
-            <div style="padding: 20px 20px 0 20px">
+            <div id="qi_invoiceFormButtons" style="padding: 20px 20px 0 20px">
 
                 <button 
                     type="button" 

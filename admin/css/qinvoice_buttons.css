@@ -228,8 +228,22 @@ border: 1px solid #dadce1;
   }
   .q-invoice-page div#filterButton{
     min-width: 870px;
+  }
 }
+
+@media only screen and (max-width:782px){
+  .q-invoice-page label:not(.switch){
+    margin-right: 5px;
+  }
 }
+
+@media only screen and (max-width:615px){
+  .q-invoice-page .qInvoiceFormButton.cancelButton{
+    margin-bottom: 5px;
+  }
+}
+
+
 @media only screen and (max-width:500px){
   .q-invoice-page div.filterButton{
     font-size: 12px;

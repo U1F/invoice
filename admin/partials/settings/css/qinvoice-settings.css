@@ -293,3 +293,51 @@ span.dashicons-format-image {
     vertical-align: middle;
     color: rgb(34, 113, 177);
 }
+
+#qi_contactFormHeightMod {
+    height:450px;
+}
+
+@media only screen and (max-width:1250px){
+
+    #qi_contactFormHeightMod, .q-invoice-page .containerFirst, .q-invoice-page .containerSecond {
+        height: auto;
+    }
+
+    .q-invoice-page section#settingsTable, .q-invoice-page #firstColumn, .q-invoice-page #secondColumn, .q-invoice-page #thirdColumn{
+        display: block;
+    }
+    
+}
+
+@media only screen and (max-width:782px){
+
+    #qi_contactFormHeightMod, .q-invoice-page .containerFirst, .q-invoice-page .containerSecond {
+        height: auto;
+    }
+
+    .q-invoice-page section#settingsTable, .q-invoice-page #firstColumn, .q-invoice-page #secondColumn, .q-invoice-page #thirdColumn{
+        display: block;
+    }
+
+    .q-invoice-page p.submit input#saveSettings{
+        width: 30%;
+    }
+    
+}
+
+@media only screen and (max-width:500px){
+
+    .q-invoice-page p.submit input#saveSettings{
+        width: 50%;
+    }
+    
+}
+
+@media only screen and (max-width:350px){
+
+    .q-invoice-page p.submit input#saveSettings, .q-invoice-page section.invoiceSettings input[type="text"], .q-invoice-page section.invoiceSettings input[type="email"]{
+        width: 90%;
+    }
+    
+}
