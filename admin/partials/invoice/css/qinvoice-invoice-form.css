@@ -406,6 +406,28 @@
         display: block;
     }
 
+    .q-invoice-page #invoiceForm tr#table-invoice-items-header td, .q-invoice-page #invoiceForm table#items td{
+        display: table-cell;
+    }
+
+    .q-invoice-page #invoiceForm table#items td.invoiceItemsAmount{
+        width: 100px;
+    }
+
+    #qi_amountField{
+        display: flex;
+    }
+
+    .q-invoice-page #invoiceForm div#invoice-sums{
+        margin-top: 12px;
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+
+    .qi_mobileFlex{
+        display: flex;
+    }
+
 }
 
 @media only screen and (max-width:550px){
@@ -470,6 +492,14 @@
 
     .q-invoice-page #invoiceForm div.autocompleteDIV{
         width: 100%;
+    }
+
+    .q-invoice-page #invoiceForm div.invoice-items {
+        overflow-y: unset;
+    }
+
+    #qi_allItemsAndSums{
+        overflow-y: auto;
     }
 
 }

@@ -235,3 +235,16 @@ border: 1px solid #dadce1;
     font-size: 12px;
   }
 }
+
+@media only screen and (max-width:350px){
+
+  .q-invoice-page div#contactFormButtons{
+    display: block;
+    text-align: center;
+  }
+
+  .q-invoice-page div#contactFormButtons button.qInvoiceFormButton.cancelButton{
+    margin-bottom: 10px;
+  }
+  
+}

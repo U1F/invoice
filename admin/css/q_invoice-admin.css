@@ -191,3 +191,17 @@ textarea.error {
 }
 
 
+@media only screen and (max-width:960px){
+    
+    .q-invoice-page .overlay {
+        left: 35px;
+    }
+}
+
+@media only screen and (max-width:780px){
+
+    .q-invoice-page .overlay {
+        left: 0px;
+    }
+    
+}
