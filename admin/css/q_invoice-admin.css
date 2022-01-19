@@ -12,9 +12,10 @@
 }
 
 .q-invoice-page h1.headerline {
-    font-family: sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     font-size: 2em;
-    font-weight: bold;
+    font-weight: 600;;
+    font-size: 2em;
     margin-top: 20px;
     margin-bottom: 34px;
     margin-left: 0px;
@@ -191,3 +192,17 @@ textarea.error {
 }
 
 
+@media only screen and (max-width:960px){
+    
+    .q-invoice-page .overlay {
+        left: 35px;
+    }
+}
+
+@media only screen and (max-width:780px){
+
+    .q-invoice-page .overlay {
+        left: 0px;
+    }
+    
+}

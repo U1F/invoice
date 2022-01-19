@@ -73,7 +73,7 @@ jQuery(function ($) {
 
         $('table#sums tr.invoiceSums:first').after(
           "<tr id='qInvc-total-mwst" + item[0] + "-summe'" +
-                    "class='invoiceTaxSums'" +
+                    "class='invoiceTaxSums qi_mobileFlex'" +
                     '>' +
 
                     "<td class='qInvc-total invoiceSumsLabel'>" +

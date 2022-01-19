@@ -72,12 +72,14 @@
 }
 .q-invoice-page table#tableInvoices .columnName{
     text-align: left;
+    width: 120px;
 }
 
 .q-invoice-page table#tableInvoices .columnDescription{
     white-space: nowrap;
     overflow: hidden;
     text-overflow:ellipsis;
+    width: 120px;
 }
 
 .q-invoice-page table#tableInvoices .columnDate{
@@ -201,4 +203,41 @@ q-invoice-page dashicons-download {
 
 .q-invoice-page a{
     color: #343a40;
+}
+
+#q-invoice-TableContentWrapper{
+    overflow-y: auto;
+}
+
+@media only screen and (max-width:960px){
+    .q-invoice-page table#tableInvoices .columnName{
+        width: 80px;
+    }
+
+    .q-invoice-page div#filterButtons div.filterButton input[type="text"]{
+        width: 60%;
+    }
+
+    .qanuk_title_media{
+        display: block;
+    }
+
+    .q-invoice-page div.confirmationBox{
+        width: 50%;
+    }
+
+}
+
+@media only screen and (max-width:500px){
+    .q-invoice-page div#filterButtons div.filterButton input[type="text"]{
+        width: 40%;
+    }
+    
+}
+
+@media only screen and (max-width:300px){
+    .q-invoice-page #newInvoice{
+        font-size: 10px;
+        padding: 0px 5px !important;
+    }
 }

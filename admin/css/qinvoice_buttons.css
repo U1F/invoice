@@ -65,8 +65,6 @@ border: 1px solid #dadce1;
     font-family: sans-serif;
     font-size: 14px;
     font-weight: bold !important;
-    
-    
     text-align:center;
     padding-left: 0px;
     padding-right: 0px;
@@ -222,3 +220,45 @@ border: 1px solid #dadce1;
     width: auto !important;
     padding: 0.25rem 1rem !important;
   }
+
+
+@media only screen and (max-width:960px){
+    .q-invoice-page div.filterButton{
+      font-size: 13px;
+  }
+  .q-invoice-page div#filterButton{
+    min-width: 870px;
+  }
+}
+
+@media only screen and (max-width:782px){
+  .q-invoice-page label:not(.switch){
+    margin-right: 5px;
+  }
+}
+
+@media only screen and (max-width:615px){
+  .q-invoice-page .qInvoiceFormButton.cancelButton{
+    margin-bottom: 5px;
+  }
+}
+
+
+@media only screen and (max-width:500px){
+  .q-invoice-page div.filterButton{
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width:350px){
+
+  .q-invoice-page div#contactFormButtons{
+    display: block;
+    text-align: center;
+  }
+
+  .q-invoice-page div#contactFormButtons button.qInvoiceFormButton.cancelButton{
+    margin-bottom: 10px;
+  }
+  
+}

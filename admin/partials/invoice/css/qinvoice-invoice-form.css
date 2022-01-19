@@ -244,11 +244,11 @@
 }
 
 .q-invoice-page #invoiceForm table#items td.invoiceItemsDescription {
-    width: 100%;
+    width: 100px;
 }
 
 .q-invoice-page #invoiceForm table#items td.invoiceItemsDescription input.itemDescription {
-    width: 100%;
+    width: 100px;
 }
 
 .q-invoice-page #invoiceForm table#items td.invoiceItemsPrice {
@@ -378,3 +378,144 @@
     
 }
 
+#qi_invoiceFormPositions{
+    display:flex;
+}
+
+@media only screen and (max-width:1300px){
+
+    .q-invoice-page #invoiceForm div.invoice-items{
+        overflow-y: auto;
+    }
+
+}
+
+@media only screen and (max-width:960px){
+
+    .q-invoice-page div#edit-invoice{
+        margin-left: 50px;
+        margin-right: 14px;
+    }
+
+}
+
+@media only screen and (max-width:780px){
+
+    .q-invoice-page div#edit-invoice{
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .q-invoice-page div#invoiceInputTables{
+        display: block;
+    }
+
+    .q-invoice-page #invoiceForm tr#table-invoice-items-header td, .q-invoice-page #invoiceForm table#items td{
+        display: table-cell;
+    }
+
+    .q-invoice-page #invoiceForm table#items td.invoiceItemsAmount{
+        width: 100px;
+    }
+
+    #qi_amountField{
+        display: flex;
+    }
+
+    .q-invoice-page #invoiceForm div#invoice-sums{
+        margin-top: 12px;
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+
+    .qi_mobileFlex{
+        display: flex;
+    }
+
+}
+
+@media only screen and (max-width:550px){
+
+    #qi_invoiceFormButtons{
+        text-align: center;
+    }
+
+    #qi_invoiceFormPositions{
+        display:block;
+    }
+
+    #saveInvoice, #updateInvoice{
+        float: unset!important;
+    }
+
+    .q-invoice-page td.labelsLeftTable, .q-invoice-page #invoiceForm td.labelsRightTable{
+        width: 40%;
+    }
+
+    .q-invoice-page div#invoiceInputTableLeft, .q-invoice-page #invoiceForm div#invoiceInputTableRight, .q-invoice-page #invoiceForm table#invoiceFormInputsRight{
+        width: 100%;
+    }
+
+    .q-invoice-page td.inputsLeftTable{
+        width: 60%
+    }
+
+    .q-invoice-page #input_container{
+        width: 100%;
+    }
+
+    .q-invoice-page td.inputsLeftTable input{
+        width: 100%;
+    }
+
+    .q-invoice-page #invoiceForm #company{
+        width: 100%;
+    }
+
+    .q-invoice-page #invoiceForm #inputDashiconCompanyRegister{
+        width: 100%;
+    }
+
+    .qi_formNames{
+        width: 49%;
+    }
+
+    .qi_formZIP{
+        width: 29%;
+    }
+    .qi_formCity{
+        width: 69%
+    }
+
+    .q-invoice-page #invoiceForm td.inputsLeftTable input#firstname, .q-invoice-page #invoiceForm td.inputsLeftTable input#lastname, .q-invoice-page #invoiceForm td.inputsLeftTable input#zip, .q-invoice-page #invoiceForm td.inputsLeftTable input#city{
+        width: 100%;
+    }
+
+    .q-invoice-page #invoiceForm td.inputsRightTable{
+        width:60%;
+    }
+
+    .q-invoice-page #invoiceForm td.inputsRightTable input[type=text],
+    [type=date]{
+        width: 100%;
+        height: 36px;
+        font-size: 12px !important;
+    }
+
+    .q-invoice-flexPlaceholder{
+        flex-grow: 0;
+    }
+
+    .q-invoice-page #invoiceForm div.autocompleteDIV{
+        width: 100%;
+    }
+
+    .q-invoice-page #invoiceForm div.invoice-items {
+        overflow-y: unset;
+    }
+
+    #qi_allItemsAndSums{
+        overflow-y: auto;
+    }
+
+}

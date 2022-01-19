@@ -22,8 +22,8 @@
             src="<?php echo esc_url(
                 plugins_url('../../img/qanuk_snowflake.png', __FILE__)
             );?>">
-        <span id="qanuk_title"><?php _e('Q Invoice', 'Ev'); ?></span>
-        <span id="qanuk_title_media"><?php _e(' - Settings', 'Ev'); ?></span>
+        <span id="qanuk_title"><?php _e('Settings', 'Ev'); ?></span>
+        <span id="qanuk_title_media"><?php _e('Settings', 'Ev'); ?></span>
         <?php
             //When Rows in database make prefix and id readonly
             $empty = $GLOBALS['wpdb']->get_var("SELECT COUNT(id) FROM ".
@@ -74,7 +74,7 @@
 
             <div id="secondColumn">
                 <div class="container containerFirst">
-                    <div style="height:450px;">
+                    <div id="qi_contactFormHeightMod">
                     <?php
                         settings_fields('contactForm');
                         do_settings_sections('contactPage');

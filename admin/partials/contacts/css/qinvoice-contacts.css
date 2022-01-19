@@ -92,3 +92,49 @@
     padding-right: 20px;
 
 }
+
+@media only screen and (max-width:350px){
+
+    .q-invoice-page input.qiContactInput{
+        width: 90px;
+    }
+    
+}
+
+
+@media only screen and (max-width:500px){
+    
+    #qi_contactsAddNewButton{
+        display: block;
+        margin-top: 10px;
+    }
+
+    #qi_contactsHeadline{
+        margin-bottom: 49px;
+    }
+
+    .q-invoice-page #qiNewContact{
+        float: left;
+    }
+
+}
+
+@media only screen and (max-width:780px){
+
+    .q-invoice-page div#show-contacts{
+        overflow-y: auto;
+    }
+
+    .q-invoice-page #qiContactPopup{
+        width: 70%!important;
+    }
+    
+}
+
+@media only screen and (max-width:1300px){
+
+    .q-invoice-page #qiContactPopup{
+        width: 30%;
+    }
+    
+}

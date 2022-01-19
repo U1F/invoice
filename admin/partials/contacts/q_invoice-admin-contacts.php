@@ -22,14 +22,14 @@
 </style>
 
 <div class="q-invoice-page invoice-page">
-    <h1 class="headerline">
+    <h1 id="qi_contactsHeadline" class="headerline">
         <img id="imgSnowflake" 
             src="<?php echo esc_url(
                 plugins_url('../../img/qanuk_snowflake.png', __FILE__)
             );?>">
-        <span id="qanuk_title"><?php _e('Q Invoice', 'Ev'); ?></span>
-        <span id="qanuk_title_media"><?php _e(' - Contacts', 'Ev'); ?></span> 
-        <span class="addNewButton">
+        <span id="qanuk_title"><?php _e('Contacts', 'Ev'); ?></span>
+        <span id="qanuk_title_media"><?php _e('Contacts', 'Ev'); ?></span> 
+        <span id="qi_contactsAddNewButton" class="addNewButton">
             <button id="qiNewContact" class="button-primary">
                 <?php _e('New Contact')?>
             </button>   

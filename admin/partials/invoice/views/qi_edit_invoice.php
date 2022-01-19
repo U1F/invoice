@@ -121,7 +121,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
 
                             <td class="inputsLeftTable">
                                 <div style="display:flex;">
-                                    <div>
+                                    <div class="qi_formNames">
                                         <input
                                             class="inputName autocompletePossField checkForModificationField"
                                             type="text" 
@@ -140,9 +140,9 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
 
                                     </div>
 
-                                    <div style="flex-grow: 1"></div>
+                                    <div class="q-invoice-flexPlaceholder" style="flex-grow: 1"></div>
 
-                                    <div>
+                                    <div class="qi_formNames">
                                         <input
                                             class="inputName autocompletePossField checkForModificationField"
                                             type="text" 
@@ -193,7 +193,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
 
                             <td class="inputsLeftTable">
                                 <div style="display:flex;">
-                                    <div>
+                                    <div class="qi_formZIP">
                                         <input 
                                             placeholder="<?php 
                                                 echo __("ZIP Code", 'Ev');
@@ -209,9 +209,9 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                         
                                     </div>
 
-                                    <div style="flex-grow: 1"></div>
+                                    <div class="q-invoice-flexPlaceholder" style="flex-grow: 1"></div>
 
-                                    <div>
+                                    <div class="qi_formCity">
 
                                         <input 
                                             placeholder="<?php 
@@ -411,8 +411,9 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                 </div>
             </div>
 
-            <div class="invoice-items">
-                <table id="items" class="form-table qInvc-table">
+            <div id="qi_allItemsAndSums">
+                <div class="invoice-items">
+                    <table id="items" class="form-table qInvc-table">
                     <tr id="table-invoice-items-header">
 
                         <td class="invoiceMoveButton">
@@ -527,7 +528,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                         </td>
 
                         <td class="invoiceItemsDiscount">
-                            <nobr>
+                            <nobr id="qi_amountField">
                                 
                                 <input 
                                     type="number" 
@@ -618,51 +619,52 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                         </td>
 
                     </tr>
-                </table>
-                
-                <!-- ----------------------------------------------------------- -->
-                
-                <button 
-                    type="button"               
-                    id="qInvc-add-line">
-                    <span style="vertical-align: middle;"> 
-                        &#10010; 
-                        <?php echo __('New Position', 'Ev'); ?>
-                    </span>  
-                </button>
-                   
-
-                <div id="invoice-sums" >
-                    <table id="sums" class="form-table">
-                        <tr class="invoiceSums">
-
-                            <td class="qInvc-tota invoiceSumsLabel">
-                                <?php echo __('Net', 'Ev'); ?>
-                            </td>
-
-                            <td  
-                                class="qInvc-total invoiceSumsAccounts">
-                                    <span class="qInvc-total-summe"></span> 
-                                    <?php echo esc_html($currencySymbol); ?>
-                            </td>
-                        </tr>
-
-                        
-                        
-                        
-                        <tr class="invoiceSums" id="qInvc-total-gross">
-                            <td class="qInvc-total invoiceSumsLabel">
-                                <?php echo __('Gross', 'Ev'); ?> 
-                            </td>
-                            
-                            <td class="qInvc-total invoiceSumsAccounts">
-                                <span class="qInvc-total-brutto-summe"></span> 
-                                <?php echo esc_html($currencySymbol); ?>
-                            </td>
-                            
-            
-                        </tr>
                     </table>
+                </div>
+                <!-- ----------------------------------------------------------- -->
+                <div id="qi_invoiceFormPositions">
+                    <button 
+                        type="button"               
+                        id="qInvc-add-line">
+                        <span style="vertical-align: middle;"> 
+                            &#10010; 
+                            <?php echo __('New Position', 'Ev'); ?>
+                        </span>  
+                    </button>
+                                
+
+                    <div id="invoice-sums" >
+                        <table id="sums" class="form-table">
+                            <tr class="invoiceSums qi_mobileFlex">
+
+                                <td class="qInvc-tota invoiceSumsLabel">
+                                    <?php echo __('Net', 'Ev'); ?>
+                                </td>
+
+                                <td  
+                                    class="qInvc-total invoiceSumsAccounts">
+                                        <span class="qInvc-total-summe"></span> 
+                                        <?php echo esc_html($currencySymbol); ?>
+                                </td>
+                            </tr>
+
+                                
+                                
+                                
+                            <tr class="invoiceSums qi_mobileFlex" id="qInvc-total-gross">
+                                <td class="qInvc-total invoiceSumsLabel">
+                                    <?php echo __('Gross', 'Ev'); ?> 
+                                </td>
+                                
+                                <td class="qInvc-total invoiceSumsAccounts">
+                                    <span class="qInvc-total-brutto-summe"></span> 
+                                    <?php echo esc_html($currencySymbol); ?>
+                                </td>
+                                
+                                
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -696,7 +698,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                 </div>
             </div>
             
-            <div style="padding: 20px 20px 0 20px">
+            <div id="qi_invoiceFormButtons" style="padding: 20px 20px 0 20px">
 
                 <button 
                     type="button" 

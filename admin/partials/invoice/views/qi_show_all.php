@@ -58,7 +58,7 @@
         
 
      </div>
-    <div class="tab_content_wrapper">
+    <div id="q-invoice-TableContentWrapper" class="tab_content_wrapper">
 <?php 
 
 
@@ -171,6 +171,13 @@ function showOpenInvoices()
     $cancelledDunning = 0;
     $dunningDunning = 0;
     $paidDunning = 0;
+
+    $decimalDot = get_option('qi_settings')['invoiceDotType'];
+    if($decimalDot == ','){
+        $thousandsDot = '.';
+    } else if($decimalDot == '.'){
+        $thousandsDot = ',';
+    }
 
     
     
@@ -317,7 +324,7 @@ function showOpenInvoices()
                             $cancelledNetto = $cancelledNetto + $netSum;
                         }
                         $totalNetto = $totalNetto + $netSum;
-                        echo number_format($netSum, 2, ',', '.') ." €"; ?>
+                        echo number_format($netSum, 2, $thousandsDot, $decimalDot) ." €"; ?>
                     </span>
                     
                 </td>
@@ -337,7 +344,7 @@ function showOpenInvoices()
                             $cancelledTotal = $cancelledTotal + $totalSum;
                         }
                         $totalTotal = $totalTotal + $totalSum;
-                        echo number_format($totalSum, 2, ',', '.')." €"; ?>
+                        echo number_format($totalSum, 2, $thousandsDot, $decimalDot)." €"; ?>
                     </span>
                 </td>
 
@@ -360,7 +367,7 @@ function showOpenInvoices()
                                         $cancelledDunning = $cancelledDunning + $dunningFee1 + $dunningFee2;
                                     }
                                     $totalDunning = $totalDunning + $dunningFee1 + $dunningFee2;
-                                    echo number_format($dunningFee1 + $dunningFee2, 2, ',', '.')." €";
+                                    echo number_format($dunningFee1 + $dunningFee2, 2, $thousandsDot, $decimalDot)." €";
                                 } else {
                                     if ($paid) {
                                         $paidDunning = $paidDunning + $dunningFee1;
@@ -374,7 +381,7 @@ function showOpenInvoices()
                                         $cancelledDunning = $cancelledDunning + $dunningFee1;
                                     }
                                     $totalDunning = $totalDunning + $dunningFee1;
-                                    echo number_format($dunningFee1, 2, ',', '.')." €";
+                                    echo number_format($dunningFee1, 2, $thousandsDot, $decimalDot)." €";
                                 }
                             }
                          ?>
@@ -480,27 +487,27 @@ function showOpenInvoices()
         <td class="manage-column  columnNet" >
             <span id="qi_totalSumNetto">
                 <?php 
-                echo number_format($totalNetto, 2, ',', '.') ." €";
+                echo number_format($totalNetto, 2, $thousandsDot, $decimalDot) ." €";
                  ?>
             </span>
             <span id="qi_openSumNetto" style="display: none;">
                 <?php 
-                echo number_format($openNetto, 2, ',', '.') ." €";
+                echo number_format($openNetto, 2, $thousandsDot, $decimalDot) ." €";
                  ?>
             </span>
             <span id="qi_cancelledSumNetto" style="display: none;">
                 <?php 
-                echo number_format($cancelledNetto, 2, ',', '.') ." €";
+                echo number_format($cancelledNetto, 2, $thousandsDot, $decimalDot) ." €";
                  ?>
             </span>
             <span id="qi_dunningSumNetto" style="display: none;">
                 <?php 
-                echo number_format($dunningNetto, 2, ',', '.') ." €";
+                echo number_format($dunningNetto, 2, $thousandsDot, $decimalDot) ." €";
                  ?>
             </span>
             <span id="qi_paidSumNetto" style="display: none;">
                 <?php 
-                echo number_format($paidNetto, 2, ',', '.') ." €";
+                echo number_format($paidNetto, 2, $thousandsDot, $decimalDot) ." €";
                  ?>
             </span>
         </td>
@@ -508,27 +515,27 @@ function showOpenInvoices()
         <td class="manage-column  columnTotal">
             <span id="qi_totalSumTotal">
                 <?php 
-                echo number_format($totalTotal, 2, ',', '.') ." €";
+                echo number_format($totalTotal, 2, $thousandsDot, $decimalDot) ." €";
                  ?>
             </span>
             <span id="qi_openSumTotal" style="display: none;">
                 <?php 
-                echo number_format($openTotal, 2, ',', '.') ." €";
+                echo number_format($openTotal, 2, $thousandsDot, $decimalDot) ." €";
                  ?>
             </span>
             <span id="qi_cancelledSumTotal" style="display: none;">
                 <?php 
-                echo number_format($cancelledTotal, 2, ',', '.') ." €";
+                echo number_format($cancelledTotal, 2, $thousandsDot, $decimalDot) ." €";
                  ?>
             </span>
             <span id="qi_dunningSumTotal" style="display: none;">
                 <?php 
-                echo number_format($dunningTotal, 2, ',', '.') ." €";
+                echo number_format($dunningTotal, 2, $thousandsDot, $decimalDot) ." €";
                  ?>
             </span>
             <span id="qi_paidSumTotal" style="display: none;">
                 <?php 
-                echo number_format($paidTotal, 2, ',', '.') ." €";
+                echo number_format($paidTotal, 2, $thousandsDot, $decimalDot) ." €";
                  ?>
             </span>
         </td>
@@ -536,27 +543,27 @@ function showOpenInvoices()
         <td class="manage-column  columnDunning">
             <span id="qi_totalSumDunning">
                 <?php 
-                echo number_format($totalDunning, 2, ',', '.') ." €";
+                echo number_format($totalDunning, 2, $thousandsDot, $decimalDot) ." €";
                  ?>
             </span>
             <span id="qi_openSumDunning" style="display: none;">
                 <?php 
-                echo number_format($openDunning, 2, ',', '.') ." €";
+                echo number_format($openDunning, 2, $thousandsDot, $decimalDot) ." €";
                  ?>
             </span>
             <span id="qi_cancelledSumDunning" style="display: none;">
                 <?php 
-                echo number_format($cancelledDunning, 2, ',', '.') ." €";
+                echo number_format($cancelledDunning, 2, $thousandsDot, $decimalDot) ." €";
                  ?>
             </span>
             <span id="qi_dunningSumDunning" style="display: none;">
                 <?php 
-                echo number_format($dunningDunning, 2, ',', '.') ." €";
+                echo number_format($dunningDunning, 2, $thousandsDot, $decimalDot) ." €";
                  ?>
             </span>
             <span id="qi_paidSumDunning" style="display: none;">
                 <?php 
-                echo number_format($paidDunning, 2, ',', '.') ." €";
+                echo number_format($paidDunning, 2, $thousandsDot, $decimalDot) ." €";
                  ?>
             </span>
         </td>
