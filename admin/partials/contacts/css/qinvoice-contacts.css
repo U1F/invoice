@@ -27,7 +27,7 @@
 }
 
 .q-invoice-page input[type=text],
-[type=date] {
+.q-invoice-page input[type=date] {
     border-radius: 4px !Important;
     height: 36px;
     padding-left: 14px;
