@@ -148,7 +148,7 @@
 }
 
 .q-invoice-page #invoiceForm td.inputsRightTable input[type=text],
-[type=date] {
+.q-invoice-page input[type=date] {
     width: 140px;
     height: 32px;
 }
