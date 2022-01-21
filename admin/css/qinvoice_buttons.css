@@ -68,6 +68,7 @@ border: 1px solid #dadce1;
     text-align:center;
     padding-left: 0px;
     padding-right: 0px;
+    border-bottom: none;
     
 }
 
@@ -105,6 +106,7 @@ border: 1px solid #dadce1;
   width: 26%;
   float: left;
   min-width: 100px;
+  width: 115px;
 }
 
 .q-invoice-page label.switch {

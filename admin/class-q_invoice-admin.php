@@ -902,11 +902,11 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 echo "<select "
                     ."id='qi_settings[invoiceDotType]'" 
                     ."name='qi_settings[invoiceDotType]'>"
-                    ."<option value=',' selected='selected'>1.000,00</option>"  
-                    ."<option value='.'>1,000.00</option>"
+                    ."<option value='1.000,00' selected='selected'>1.000,00</option>"  
+                    ."<option value='1,000.00'>1,000.00</option>"
                     ."</select>";
             } else {
-                $items = array(",", ".");
+                $items = array("1,000.00", "1.000,00");
                 echo "<select ".
                     "id='qi_settings[invoiceDotType]'" .
                     "name='qi_settings[invoiceDotType]'>";

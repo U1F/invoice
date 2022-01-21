@@ -506,7 +506,7 @@ td.invoiceItemsHeader {
                         style="text-align: right; font-size:12px;"> 
                         <?php 
                         echo
-                        number_format(floatval($invoiceDetail->amount_plan), 2, $separator, '.') 
+                        number_format(floatval($invoiceDetail->amount_plan), 2, $decimalDot, $thousandsDot) 
                         . " ".
                         $currencySign;
                         ?>
@@ -521,7 +521,7 @@ td.invoiceItemsHeader {
                                 <?php 
                                 
                                 if ($invoiceDetail->discount > 0) {
-                                    echo number_format(intval($invoiceDetail->discount), 2, $separator, '.');
+                                    echo number_format(intval($invoiceDetail->discount), 2, $decimalDot, $thousandsDot);
                                     if ($invoiceDetail->discount_type == "discountPercent") {
                                         echo " %";
                                     } else { 
@@ -545,7 +545,7 @@ td.invoiceItemsHeader {
 
                         <?php 
                             echo
-                            number_format(floatval($invoiceDetail->sum), 2, $separator, '.'). 
+                            number_format(floatval($invoiceDetail->sum), 2, $decimalDot, $thousandsDot). 
                             " ".
                             $currencySign;
                         ?>
@@ -613,7 +613,7 @@ td.invoiceItemsHeader {
                 </td>
                 <td style="font-size:10px; text-align:right; padding-right:8px;" >
                     <?php echo 
-                        number_format($totalNet, 2, $separator, '.'). 
+                        number_format($totalNet, 2, $decimalDot, $thousandsDot). 
                         " " . $currencySign;
                     ?>
                 </td>
@@ -632,7 +632,7 @@ td.invoiceItemsHeader {
                         <?php 
                         echo 
                             $key."% Mehrwertsteuer aus ".  
-                            number_format($taxSums[$key], 2, $separator, '.'). 
+                            number_format($taxSums[$key], 2, $decimalDot, $thousandsDot). 
                             " ". $currencySign,"&nbsp;netto";?>
                     </td>
 
@@ -642,7 +642,7 @@ td.invoiceItemsHeader {
                         <?php 
                         $tax = $taxSums[$key] * $key / 100;
                         $taxTotal += $tax;
-                        echo number_format($tax, 2, $separator, '.')." ".$currencySign;
+                        echo number_format($tax, 2, $decimalDot, $thousandsDot)." ".$currencySign;
                         ?>
                     </td>
                 </tr>
@@ -672,7 +672,7 @@ td.invoiceItemsHeader {
                 <td style="padding-right:8px; font-size:14px;" align="right">
                     <b> 
                         <?php 
-                            echo number_format($taxTotal+$totalNet, 2, $separator, '.')." ".
+                            echo number_format($taxTotal+$totalNet, 2, $decimalDot, $thousandsDot)." ".
                             $currencySign;
                         ?>
                     </b>

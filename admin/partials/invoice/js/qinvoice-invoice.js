@@ -23,6 +23,10 @@ jQuery(function ($) {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
   }
 
+  function addCommaToThousands (num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  }
+
   /**
      *
      * @param {*} num
@@ -35,6 +39,21 @@ jQuery(function ($) {
         .replace('.', ',') // replace decimal point character with ,
       // .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
         .replace(/(\d)(?=(\d{6})+(?!\d))/g, '$1.')
+    )
+  }
+
+  /**
+     *
+     * @param {*} num
+     * @returns num
+     */
+   function currencyFormatEN (num) {
+    return (
+      num
+        .toFixed(2)
+        .replace(',', '.') // replace decimal point character with .
+      // .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+        .replace(/(\d)(?=(\d{6})+(?!\d))/g, '$1,')
     )
   }
 

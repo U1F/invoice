@@ -64,8 +64,15 @@ function Invoice_list()
     <?php 
         //When Rows in database --> prefix and id readonly
         $rowCountDatabase = Interface_Invoices::getRowCountDataBase();
+        $dotType = get_option('qi_settings')['invoiceDotType'];
+        if($dotType == '1,000.00'){
+            $decimalDot = '.';
+        } else if($dotType = '1.000,00'){
+            $decimalDot = ',';
+        }
     ?>
-    <p id="q-invoice-new-readonly-dummy" style="display: none"><?php echo esc_html($rowCountDatabase);?></p> 
+    <p id="q-invoice-new-readonly-dummy" value="<?php echo $decimalDot ?>" style="display: none"><?php echo esc_html($rowCountDatabase);?></p>
+    <p id="q-invoice-new-dot-dummy" style="display: none"><?php echo $decimalDot ?></p> 
     
         
         

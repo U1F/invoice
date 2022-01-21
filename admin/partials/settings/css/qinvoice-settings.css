@@ -18,6 +18,7 @@
     justify-content: space-between;
     padding: 0px 0px 0x 0px;
     width: 100%;
+    margin-left:-15px;
 }
 
 .q-invoice-page .containerFirst {
@@ -29,6 +30,7 @@
 }
 
 .q-invoice-page #firstColumn {
+    width: 33%;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
@@ -39,6 +41,7 @@
 }
 
 .q-invoice-page #secondColumn {
+    width: 33%;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
@@ -53,6 +56,7 @@
 }
 
 .q-invoice-page #thirdColumn {
+    width: 33%;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
@@ -275,6 +279,7 @@ div#popupLogoImage img {
 
 button#showLogoButton { 
     margin-top: -1px;
+    margin-left: 10px;
     font-family: sans-serif;
     font-size: 14px;
     height: 33px;
@@ -286,6 +291,7 @@ button#showLogoButton {
     vertical-align: middle;
     color: #3c434a;
     cursor: pointer;
+    width:115px;
     
 }
 
@@ -296,6 +302,10 @@ span.dashicons-format-image {
 
 #qi_contactFormHeightMod {
     height:450px;
+}
+
+#q-invoice-TableContentWrapper{
+    margin-top:3px;
 }
 
 @media only screen and (max-width:1250px){
@@ -322,6 +332,18 @@ span.dashicons-format-image {
 
     .q-invoice-page p.submit input#saveSettings{
         width: 30%;
+    }
+
+    button#showLogoButton{
+        margin-left: 0px;
+    }
+
+    .q-invoice-page .containerSecond, .q-invoice-page .containerFirst{
+        padding-left: 0;
+    }
+
+    .q-invoice-page .invoiceSettings{
+        padding-left: 15px;
     }
     
 }

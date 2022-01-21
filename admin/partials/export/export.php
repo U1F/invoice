@@ -49,8 +49,22 @@ function exportInvoice($invoiceID, $invoiceType)
     
 
     $separator =",";
+
+    $dotType = get_option('qi_settings')['invoiceDotType'];
+    if($dotType == '1,000.00'){
+        $decimalDot = '.';
+        $thousandsDot = ',';
+    } else if($dotType = '1.000,00'){
+        $decimalDot = ',';
+        $thousandsDot = '.';
+    }
+
     
     include_once "invoice-template.php";
+
+
+    
+
     ?>
 
     <?php
