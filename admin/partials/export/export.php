@@ -45,10 +45,6 @@ function exportInvoice($invoiceID, $invoiceType)
 
     }
     $taxSums['none'] = 0;
-    
-    
-
-    $separator =",";
 
     $dotType = get_option('qi_settings')['invoiceDotType'];
     if($dotType == '1,000.00'){
