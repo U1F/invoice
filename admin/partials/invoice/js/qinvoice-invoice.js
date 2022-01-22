@@ -2,6 +2,17 @@
 /* eslint no-undef: "error" */
 
 jQuery(function ($) {
+
+  const formatterDE = new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: 2
+  });
+  const formatterEN = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2
+  });
   let currencySign = ''
   let lastInvoiceIDtoDelete = 0
   let nonceFieldForSaving = ''
@@ -19,12 +30,16 @@ jQuery(function ($) {
   //    .........................................................................
   //    .........................................................................
 
-  function addPointToThousands (num) {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+  function removeCurrencySign(value){
+
+    value = value.toString();
+    value = value.slice(0, value.length - 2);
+    return value;
+
   }
 
-  function addCommaToThousands (num) {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  function addPointToThousands (num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
   }
 
   /**
@@ -39,21 +54,6 @@ jQuery(function ($) {
         .replace('.', ',') // replace decimal point character with ,
       // .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
         .replace(/(\d)(?=(\d{6})+(?!\d))/g, '$1.')
-    )
-  }
-
-  /**
-     *
-     * @param {*} num
-     * @returns num
-     */
-   function currencyFormatEN (num) {
-    return (
-      num
-        .toFixed(2)
-        .replace(',', '.') // replace decimal point character with .
-      // .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-        .replace(/(\d)(?=(\d{6})+(?!\d))/g, '$1,')
     )
   }
 
@@ -90,6 +90,12 @@ jQuery(function ($) {
       if (item[1]) {
         taxSum = taxSum + item[1]
 
+        if($('#q-invoice-new-dot-dummy').text() == ','){
+          var valueTotal = removeCurrencySign(formatterDE.format(parseFloat(item[1])));
+        } else{
+          var valueTotal = removeCurrencySign(formatterEN.format(parseFloat(item[1])));
+        }
+
         $('table#sums tr.invoiceSums:first').after(
           "<tr id='qInvc-total-mwst" + item[0] + "-summe'" +
                     "class='invoiceTaxSums qi_mobileFlex'" +
@@ -100,7 +106,7 @@ jQuery(function ($) {
                     '</td>' +
 
                     "<td class='qInvc-total invoiceSumsAccounts'>" +
-                    addPointToThousands(currencyFormatDE(item[1])) +
+                    valueTotal +
                     ' ' +
                     currencySign +
                     '</td>' +
@@ -109,9 +115,16 @@ jQuery(function ($) {
       }
     })
     totalSum = netSum + taxSum
+    if($('#q-invoice-new-dot-dummy').text() == ','){
+      var formattedNet = removeCurrencySign(formatterDE.format(parseFloat(netSum)));
+      var formattedTotal = removeCurrencySign(formatterDE.format(parseFloat(totalSum)));
+    } else{
+      var formattedNet = removeCurrencySign(formatterEN.format(parseFloat(netSum)));
+      var formattedTotal = removeCurrencySign(formatterEN.format(parseFloat(totalSum)));
+    }
     // Write formatted Sums to the form
-    $('.qInvc-total-summe').eq(0).text(addPointToThousands(currencyFormatDE(netSum)))
-    $('.qInvc-total-brutto-summe').eq(0).text(addPointToThousands(currencyFormatDE(totalSum)))
+    $('.qInvc-total-summe').eq(0).text(formattedNet);
+    $('.qInvc-total-brutto-summe').eq(0).text(formattedTotal);
   }
 
   /**
@@ -126,7 +139,12 @@ jQuery(function ($) {
       let discountedPrice = 0
       let lineSum = 0
       if (isNaN(amountOfItems) || isNaN(itemPrice)) {
-        $(this).find('.qInvcLine-total').text(addPointToThousands(currencyFormatDE(0)))
+        if($('#q-invoice-new-dot-dummy').text() == ','){
+          var formattedZero = removeCurrencySign(formatterDE.format(0));
+        } else{
+          var formattedZero = removeCurrencySign(formatterEN.format(0));
+        }
+        $(this).find('.qInvcLine-total').text(formattedZero)
         return
       }
       discountedPrice = itemPrice
@@ -144,9 +162,15 @@ jQuery(function ($) {
       }
       $(this).find('input.amountActual').attr('value', discountedPrice)
       lineSum = amountOfItems * discountedPrice
+      //format linesum
+      if($('#q-invoice-new-dot-dummy').text() == ','){
+        var formattedLineSum = removeCurrencySign(formatterDE.format(parseFloat(lineSum)));
+      } else{
+        var formattedLineSum = removeCurrencySign(formatterEN.format(parseFloat(lineSum)));
+      }
       lineTax = $(this).find('select.itemTax').val()
       $(this).find('input.invoiceTax').attr('value', lineSum * lineTax / 100)
-      $(this).find('.qInvcLine-total').text(addPointToThousands(currencyFormatDE(lineSum)))
+      $(this).find('.qInvcLine-total').text(formattedLineSum)
       $(this).find('input.invoiceTotal').attr('value', lineSum)
       $(this).find('.invoiceItemsTotal nobr').css('display', 'inline')
     })
@@ -492,9 +516,9 @@ jQuery(function ($) {
     $(this).val(parseFloat($(this).val()).toFixed(2))
   })
 
-  $('#items').on('change', 'input.itemPrice', function () {
+  /*$('#items').on('change', 'input.itemPrice', function () {
     $(this).val(parseFloat($(this).val()).toFixed(2))
-  })
+  })*/
 
   $('.qInvc-table').eq(0).on('change', 'select.itemTax, select.discountType', function () {
     recalcLineSum()
@@ -815,7 +839,12 @@ jQuery(function ($) {
 
         writeInvoiceDetailstoFormField('input.amountOfItems', 'amount', 0)
         writeInvoiceDetailstoFormField('input.itemDescription', 'description', 0)
-        writeInvoiceDetailstoFormField('input.itemPrice', 'amount_plan', 0)
+        //write in formatted prices
+        if($('#q-invoice-new-dot-dummy').text() == ','){
+          $('tr.wp-list-table-qInvcLine').eq(0).find('input.itemPrice').val(removeCurrencySign(formatterDE.format(obj[1][0]['amount_plan'])))
+        } else{
+          $('tr.wp-list-table-qInvcLine').eq(0).find('input.itemPrice').val(removeCurrencySign(formatterEN.format(obj[1][0]['amount_plan'])))
+        }
         writeInvoiceDetailstoFormField('input.itemDiscount', 'discount', 0)
         writeInvoiceDetailstoFormField('select.discountType', 'discount_type', 0)
         writeInvoiceDetailstoFormField('select.itemTax', 'tax', 0)
@@ -824,7 +853,12 @@ jQuery(function ($) {
           $('tr.wp-list-table-qInvcLine').eq(i - 1).clone().insertAfter($('tr.wp-list-table-qInvcLine').eq(i - 1))
           writeInvoiceDetailstoFormField('input.amountOfItems', 'amount', i)
           writeInvoiceDetailstoFormField('input.itemDescription', 'description', i)
-          writeInvoiceDetailstoFormField('input.itemPrice', 'amount_plan', i)
+          //write in formatted prices
+          if($('#q-invoice-new-dot-dummy').text() == ','){
+            $('tr.wp-list-table-qInvcLine').eq(i).find('input.itemPrice').val(removeCurrencySign(formatterDE.format(obj[1][i]['amount_plan'])))
+          } else{
+            $('tr.wp-list-table-qInvcLine').eq(i).find('input.itemPrice').val(removeCurrencySign(formatterEN.format(obj[1][i]['amount_plan'])))
+          }
           writeInvoiceDetailstoFormField('input.itemDiscount', 'discount', i)
           writeInvoiceDetailstoFormField('select.discountType', 'discount_type', i)
           writeInvoiceDetailstoFormField('select.itemTax', 'tax', i)
@@ -839,9 +873,9 @@ jQuery(function ($) {
           $(this).val(parseFloat($(this).val()).toFixed(2))
         })
 
-        $('input.itemPrice').each(function () {
+        /*$('input.itemPrice').each(function () {
           $(this).val(parseFloat($(this).val()).toFixed(2))
-        })
+        })*/
         $('#lastname').prop('required', false);
         $('#firstname').prop('required', false);
         $('#company').prop('required', false);
