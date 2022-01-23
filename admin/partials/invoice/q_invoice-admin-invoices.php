@@ -45,20 +45,25 @@ function Invoice_list()
         
     </div>
 
-    <h1 class="headerline">
-        <img id="imgSnowflake" 
-            src="<?php 
-            $snow = '../../img/qanuk_snowflake.png';
-            echo esc_url(plugins_url($snow, __FILE__));
+    <h1 class="headerline" style="display:flex;">
+
+        <span id="qanuk_title" style="display:flex;">
+            <img id="imgSnowflake" 
+                src="<?php 
+                $snow = '../../img/qanuk_snowflake.png';
+                echo esc_url(plugins_url($snow, __FILE__));
             ?>">
-        <span id="qanuk_title"><?php _e('Q Invoice by qanuk.io', 'Ev'); ?></span>
-        <span id="qanuk_title_media"><?php _e('Q Invoice', 'Ev'); ?></span>
+        </span>
         
-        <button 
-            class="button-primary q_invoice_outerButton" 
-            id="newInvoice"
-            ><?php _e('New Invoice')?>
-        </button>
+        <span id="qanuk_title" style="margin-left: 10px; margin-top: -7px;"><?php _e('Q Invoice by qanuk.io', 'Ev'); ?></span>
+        <span id="qanuk_title_media" style="margin-left: 10px; margin-top: -7px;"><?php _e('Q Invoice', 'Ev'); ?></span>
+        <div id="qinv_startButtonMod">
+            <button 
+                class="button-primary q_invoice_outerButton" 
+                id="newInvoice"
+                ><?php _e('New Invoice')?>
+            </button>
+        </div>
     </h1>
 
     <?php 

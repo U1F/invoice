@@ -19,6 +19,7 @@
     margin-top: 20px;
     margin-bottom: 34px;
     margin-left: 0px;
+    display: flex;
 }
 
 .q-invoice-page h1.headerline > *{

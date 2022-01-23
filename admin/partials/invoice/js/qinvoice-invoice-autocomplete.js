@@ -106,9 +106,9 @@ jQuery(function ($) {
     
   })
 
-  $('#invoiceFormInputsLeft').on('mouseover', 'div.autocompleteButton', function () {
+  /*$('#invoiceFormInputsLeft').on('mouseover', 'div.autocompleteButton', function () {
     fillContactDataInInvoiceForm($(this).attr('id'))
-  })
+  })*/
 
   function fillContactDataInInvoiceForm (id) {
     for (let i = 0; i < contactData[0].length; i++) {

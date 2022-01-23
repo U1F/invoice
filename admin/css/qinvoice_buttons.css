@@ -220,7 +220,7 @@ border: 1px solid #dadce1;
 
   .q_invoice_outerButton{
     width: auto !important;
-    padding: 0.25rem 1rem !important;
+    padding: 0.25rem 2rem !important;
   }
 
 
@@ -261,6 +261,10 @@ border: 1px solid #dadce1;
 
   .q-invoice-page div#contactFormButtons button.qInvoiceFormButton.cancelButton{
     margin-bottom: 10px;
+  }
+
+  .q_invoice_outerButton{
+    padding: 0.25rem 1rem !important;
   }
   
 }
