@@ -190,11 +190,11 @@ q-invoice-page dashicons-download {
 }
 
 .q-invoice-page .circle.dunning.cancelled {
-    background-color: #fba76f;
+    background-color: #fb7b26;
 }
 
 .q-invoice-page .circle.open {
-    background-color: #fba76f;
+    background-color: #fb7b26;
 }
 
 .q-invoice-page .circle.open.cancelled {
