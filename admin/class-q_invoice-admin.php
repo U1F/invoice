@@ -764,7 +764,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                     $logoImageSource = get_option('qi_settings')['logoFileUrl'];
                 }
                 ?>
-                <button id='showLogoButton' type='button'> Show Logo <span class="dashicons dashicons-format-image"></span></button>
+                <button id='showLogoButton' type='button'><img style="width: 100px; height: auto;" src="<?php echo $logoImageSource;?>"></button>
                 <div id="popupLogoImage">
                     <img src="<?php echo $logoImageSource;?>">
                 </div> 

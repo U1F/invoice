@@ -66,105 +66,105 @@ td.invoiceItemsHeader {
                     rowspan="3" 
                     style="width: 270px; text-align: right; font-size:14px;"
                 >
-                <?php 
-                
-                    $logoImageSource = $_SERVER['DOCUMENT_ROOT']. 
-                        dirname($_SERVER['PHP_SELF']). 
-                        "files/none_5002.png";
+                    <?php 
+
+                        $logoImageSource = $_SERVER['DOCUMENT_ROOT']. 
+                            dirname($_SERVER['PHP_SELF']). 
+                            "files/none_5002.png";
+
+                        if (get_option('qi_settings')['logoFileUrl']) {
+                            $logoImageURL = get_option('qi_settings')['logoFileUrl'];
+				    		$logoImageFile = get_option('qi_settings')['logoFileFile'];
+                        }
+                        $mimetype =  wp_get_image_mime( $logoImageFile );
+                        $imagedata = file_get_contents($logoImageFile);
+             	    	$base64 = base64_encode($imagedata);
+				    	$logoImageSource = 'data:'. $mimetype .';base64,'.$base64;
                     
-                    if (get_option('qi_settings')['logoFileUrl']) {
-                        $logoImageURL = get_option('qi_settings')['logoFileUrl'];
-						$logoImageFile = get_option('qi_settings')['logoFileFile'];
+                    ?>
+                    <img 
+                        src="<?php echo $logoImageSource;?>" 
+                        width="250"
+                        style="border:0px; margin-bottom: 10px;">
+
+                    <br>
+
+                    <?php // Sender Adress from Settings - Top right corner ?>
+                    <p class="invoiceSender" id="senderCompany">
+                        <?php echo get_option('qi_settings')['company'];?>
+                    </p>
+
+                    <p class="invoiceSender" id="senderName">
+                        <?php 
+                        echo 
+                            get_option('qi_settings')['firstName']. " ". 
+                            get_option('qi_settings')['lastName'];
+                        ?>
+                    </p>
+
+                    <p class="invoiceSender" id="senderAdditional">
+                        <?php echo get_option('qi_settings')['additional'];?>
+                    </p>
+
+                    <p class="invoiceSender" id="senderAddress">
+                        <?php echo get_option('qi_settings')['street'];?>
+                    </p>
+
+                    <p class="invoiceSender" id="senderAddress2"> 
+                        <?php 
+                        echo get_option('qi_settings')['ZIP'];
+                        echo " ";
+                        echo get_option('qi_settings')['city'];
+                        ?>
+                    </p>
+
+                    <p class="invoiceSender" id="senderPlaceholder1"></p>
+                    <br>
+                    <br>
+                    <p class="invoiceSender" id="senderEmail">
+                        <?php echo get_option('qi_settings')['mail'];?>
+                    </p>
+                    
+                    <p class="invoiceSender" id="senderWebsite">
+                        <?php echo get_option('qi_settings')['website'];?>
+                    </p>
+
+                    <p class="invoiceSender" id="senderFB">
+
+                        <?php 
+                        if (get_option('qi_settings')['facebook']) {
+                            echo "www.fb/".get_option('qi_settings')['facebook'];
+                        }
+                        ?>
+                    </p>
+                    
+                    <p class="invoiceSender" id="senderInstagram">
+
+                        <?php 
+                        if (get_option('qi_settings')['instagram']) {
+                            echo "www.instagram/".get_option('qi_settings')['instagram'];
+                        }
+                        ?>
+                    </p>
+                    
+                    <p class="invoiceSender" id="senderPaypal">
+
+                        <?php  
+                        if (get_option('qi_settings')['PayPal']) {
+                            echo "paypal.me/".get_option('qi_settings')['PayPal'];
+                        }
+                        ?>
+                    </p>
+                    
+                    <?php 
+                    if ($invoiceType=="dunning") {
+                        ?>
+                            <p class="invoiceSender" id="ZAHLUNGSERINNERUNG">
+                                ZAHLUNGSERINNERUNG
+                            </p>
+                        <?php 
                     }
-                    $mimetype =  wp_get_image_mime( $logoImageFile );
-                    $imagedata = file_get_contents($logoImageFile);
-             		$base64 = base64_encode($imagedata);
-					$logoImageSource = 'data:'. $mimetype .';base64,'.$base64;
-					
-                ?>
-                <img 
-                    src="<?php echo $logoImageSource;?>" 
-                    width="250"
-                    style="border:0px;">
-
-                <br>
-
-                <?php // Sender Adress from Settings - Top right corner ?>
-                <p class="invoiceSender" id="senderCompany">
-                    <?php echo get_option('qi_settings')['company'];?>
-                </p>
-
-                <p class="invoiceSender" id="senderName">
-                    <?php 
-                    echo 
-                        get_option('qi_settings')['firstName']. " ". 
-                        get_option('qi_settings')['lastName'];
                     ?>
-                </p>
-                        
-                <p class="invoiceSender" id="senderAdditional">
-                    <?php echo get_option('qi_settings')['additional'];?>
-                </p>
-                    
-                <p class="invoiceSender" id="senderAddress">
-                    <?php echo get_option('qi_settings')['street'];?>
-                </p>
-
-                <p class="invoiceSender" id="senderAddress2"> 
-                    <?php 
-                    echo get_option('qi_settings')['ZIP'];
-                    echo " ";
-                    echo get_option('qi_settings')['city'];
-                    ?>
-                </p>
-
-                <p class="invoiceSender" id="senderPlaceholder1"></p>
-                <br>
-                <br>
-                <p class="invoiceSender" id="senderEmail">
-                    <?php echo get_option('qi_settings')['mail'];?>
-                </p>
-                
-                <p class="invoiceSender" id="senderWebsite">
-                    <?php echo get_option('qi_settings')['website'];?>
-                </p>
-                    
-                <p class="invoiceSender" id="senderFB">
-                    
-                    <?php 
-                    if (get_option('qi_settings')['facebook']) {
-                        echo "www.fb/".get_option('qi_settings')['facebook'];
-                    }
-                    ?>
-                </p>
-                
-                <p class="invoiceSender" id="senderInstagram">
-                    
-                    <?php 
-                    if (get_option('qi_settings')['instagram']) {
-                        echo "www.instagram/".get_option('qi_settings')['instagram'];
-                    }
-                    ?>
-                </p>
-                
-                <p class="invoiceSender" id="senderPaypal">
-                    
-                    <?php  
-                    if (get_option('qi_settings')['PayPal']) {
-                        echo "paypal.me/".get_option('qi_settings')['PayPal'];
-                    }
-                    ?>
-                </p>
-                
-                <?php 
-                if ($invoiceType=="dunning") {
-                    ?>
-                        <p class="invoiceSender" id="ZAHLUNGSERINNERUNG">
-                            ZAHLUNGSERINNERUNG
-                        </p>
-                    <?php 
-                }
-                ?>
                         
                 </td>
             </tr>
