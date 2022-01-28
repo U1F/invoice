@@ -19,6 +19,11 @@
     color: white !important;
  
 }
+
+.q-invoice-page #searchInvoices{
+  width: 20%;
+  border-right: none;
+}
 .q-invoice-page .qInvoiceFormButton {
     margin:0 2em;
     height: 36px;
@@ -45,19 +50,17 @@ border: 1px solid #dadce1;
     margin-bottom:-2px;
     display: flex;
     flex-direction: row;
-   
     justify-content:space-between;
-    border-left: 1px solid #dadce1;
+    border: 1px solid #dadce1;
     
    
 }
 .q-invoice-page div.filterButton{
     
     flex: 0 1 auto;
-    min-width:16%;
-    width:17%;
+    min-width: 16%;
+    width: 16%;
     color: #3c434a;
-    border: 1px solid #dadce1;
     background-color: white;
     height: 36px;
     padding:0px;
@@ -68,7 +71,10 @@ border: 1px solid #dadce1;
     text-align:center;
     padding-left: 0px;
     padding-right: 0px;
+    border-top: none;
+    border-right: 1px solid #dadce1;
     border-bottom: none;
+    border-left: none;
     
 }
 
@@ -82,9 +88,10 @@ border: 1px solid #dadce1;
 
 .q-invoice-page div#filterButtons div.filterButton button{
     height: inherit;
-    border: 0px solid;
+    border: none;
     background-color: white;
     width: 100%;
+    height: 100%;
 }
 .q-invoice-page div.filterButton.active {
   
@@ -110,7 +117,6 @@ border: 1px solid #dadce1;
 }
 
 .q-invoice-page label.switch {
-  margin-bottom: 3px;
   padding: 0;
 }
 
@@ -123,7 +129,7 @@ border: 1px solid #dadce1;
 
   .q-invoice-page .switch.large{
     width: 52px;
-    height: 27px;
+    height: 25px;
 }
   
 .q-invoice-page .switch input { 

@@ -271,24 +271,26 @@ jQuery(function ($) {
   })
 
   function setFilterButtonActive (target) {
-    target.css('background-color', 'rgb(34, 113, 177)')
+    //target.css('background-color', 'rgb(34, 113, 177)')
     target.find('button').css('background-color', 'rgb(34, 113, 177)')
-    target.css('border', '1px solid #dadce1;')
+    //target.css('border', '1px solid #dadce1;')
     target.find('button').css('color', 'white')
     target.attr('class', 'filterButton active')
-    $('#filterButtons').find('.active').css('border', '1px solid rgb(34, 113, 177)');
-    $('#filterButtons').find('.active').prev().css('border-right', 'none');
-    $('#filterButtons').find('.active').next().css('border-left', 'none');
+    //$('#filterButtons').find('.active').css('border', '1px solid rgb(34, 113, 177)');
+    //$('#filterButtons').find('.active').prev().css('border-right', 'none');
+    //$('#filterButtons').find('.active').next().css('border-left', 'none');
+    //target.css('border-left', 'none;')
   }
 
   function setFilterButtonInactive (target) {
-    $('#filterButtons').find('.active').css('border', '1px solid #dadce1');
-    $('#filterButtons').find('.active').prev().css('border-right', '1px solid #dadce1');
-    $('#filterButtons').find('.active').next().css('border-left', '1px solid #dadce1');
-    $('#filterButtons').find('#showAllInvoices').css('border-left', 'none');
-    target.css('background-color', 'white')
+    //$('#filterButtons').find('.active').css('border', '1px solid #dadce1');
+    //$('#filterButtons').find('.active').css('border-right', 'none');
+    //$('#filterButtons').find('.active').prev().css('border-right', '1px solid #dadce1');
+    //$('#filterButtons').find('.active').next().css('border-left', '1px solid #dadce1');
+    //$('#filterButtons').find('#showAllInvoices').css('border-left', 'none');
+    //target.css('background-color', 'white')
     target.find('button').css('background-color', 'white')
-    target.css('border', '1px solid #dadce1;')
+    //target.css('border', '1px solid #dadce1;')
     target.find('button').css('color', '#3c434a')
     target.attr('class', 'filterButton inactive')
   }

@@ -15,6 +15,7 @@
 .q-invoice-page table#tableInvoices{
     border-collapse: collapse;
     width: 100%;
+    border: 1px solid #dadce1;
 }
 .q-invoice-page table#tableInvoices thead#tableInvoicesHeader tr th{
     font-weight: bold;
