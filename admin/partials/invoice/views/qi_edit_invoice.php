@@ -60,7 +60,8 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             </td>
 
                             <td class="inputsLeftTable">
-                                <div id="input_container"> <input name="company" style="display:none">
+                                <div class="input_container"> 
+                                    <input name="company" style="display:none">
                                     <input 
                                         type="text" 
                                         id="company" 
@@ -80,15 +81,12 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                         id="inputDashiconCompanyRegister" 
                                         class="dashicons dashicons-admin-users">
                                     </span>
+
+                                    <div id='autocompleteCompany' class='autocompleteDIV' style="display:none;">
+                                        <strong>Matching Contacts</strong>
+                                    </div>
                                 </div>
                                 
-                                
-
-                                <div id='autocompleteCompany' class='autocompleteDIV' style="display:none;">
-                                    <strong>Matching Contacts</strong>
-                                </div>
-
-                                </div>
                                 
                                 
                             </td>   
@@ -120,7 +118,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             </td>
 
                             <td class="inputsLeftTable">
-                                <div style="display:flex;">
+                                <div class="input_container" style="display:flex; background-color:white;">
                                     <div class="qi_formNames">
                                         <input
                                             class="inputName autocompletePossField checkForModificationField"
@@ -134,10 +132,11 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                             autocomplete="none"
                                             required
                                         >
-                                        <div id='autocompleteFirstname'  class='autocompleteDIV' style="display:none;">
-                                        <strong>Matching Contacts</strong>
-                                        </div>
 
+                                    </div>
+
+                                    <div id='autocompleteFirstname'  class='autocompleteDIV' style="display:none;">
+                                            <strong>Matching Contacts</strong>
                                     </div>
 
                                     <div class="q-invoice-flexPlaceholder" style="flex-grow: 1"></div>
@@ -155,9 +154,11 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                             value="" 
                                             required
                                         >
-                                        <div id='autocompleteLastname'  class='autocompleteDIV' style="display:none;">
+                                        
+                                    </div>
+
+                                    <div id='autocompleteLastname'  class='autocompleteDIV' style="display:none;">
                                         <strong>Matching Contacts</strong>
-                                        </div>
                                     </div>
                                 </div>
                                 

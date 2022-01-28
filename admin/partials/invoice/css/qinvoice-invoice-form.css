@@ -75,7 +75,7 @@
     width: 320px;
 }
 
-.q-invoice-page #input_container {
+.q-invoice-page .input_container {
     position: relative;
     padding: 0;
     margin: 0 0px;
@@ -357,8 +357,9 @@
     border-radius: 5px;
 }
 
-.q-invoice-page #invoiceForm div#autocompleteLastname, .q-invoice-page #invoiceForm div#autocompleteLastname {
-    width: 152px;
+.q-invoice-page #invoiceForm div#autocompleteLastname{
+    width: 100%;
+    margin-top: 36px;
 }
 
 .q-invoice-page #invoiceForm div.autocompleteButton {
@@ -387,6 +388,10 @@
 #qinv_saveContactLabel{
     width: 50%;
     float: unset;
+}
+
+.q-invoice-page #invoiceForm div#autocompleteFirstname{
+    margin-top: 36px;
 }
 
 @media only screen and (max-width:1300px){
@@ -447,6 +452,10 @@
         display: flex;
     }
 
+    .q-invoice-page #invoiceForm div#autocompleteLastname, .q-invoice-page #invoiceForm div#autocompleteFirstname{
+        margin-top: 40px;
+    }
+
 }
 
 @media only screen and (max-width:550px){
@@ -475,7 +484,7 @@
         width: 60%
     }
 
-    .q-invoice-page #input_container{
+    .q-invoice-page .input_container{
         width: 100%;
     }
 
