@@ -2,6 +2,8 @@
 
 .q-invoice-page #qiNewContact {
     float:right;
+    height:30px;
+    line-height:unset;
 }
 /* Div that frames the form - copied from invoices - make it class?*/
 .q-invoice-page #qiContactPopup{
@@ -107,10 +109,6 @@
     #qi_contactsAddNewButton{
         display: block;
         margin-top: 10px;
-    }
-
-    #qi_contactsHeadline{
-        margin-bottom: 49px;
     }
 
     .q-invoice-page #qiNewContact{

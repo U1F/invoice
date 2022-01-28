@@ -209,7 +209,7 @@ q-invoice-page dashicons-download {
     overflow-y: auto;
 }
 
-#qinv_startButtonMod{
+.qinv_startButtonMod{
     display:flex;
     justify-content: center;
     right: 0;

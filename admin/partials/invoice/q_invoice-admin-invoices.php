@@ -47,7 +47,7 @@ function Invoice_list()
 
     <h1 class="headerline" style="display:flex;">
 
-        <span id="qanuk_title" style="display:flex;">
+        <span id="qinv_main_title_logo" style="display:flex;">
             <img id="imgSnowflake" 
                 src="<?php 
                 $snow = '../../img/qanuk_snowflake.png';
@@ -57,7 +57,7 @@ function Invoice_list()
         
         <span id="qanuk_title" style="margin-left: 10px; margin-top: -7px;"><?php _e('Q Invoice by qanuk.io', 'Ev'); ?></span>
         <span id="qanuk_title_media" style="margin-left: 10px; margin-top: -7px;"><?php _e('Q Invoice', 'Ev'); ?></span>
-        <div id="qinv_startButtonMod">
+        <div class="qinv_startButtonMod">
             <button 
                 class="button-primary q_invoice_outerButton" 
                 id="newInvoice"
