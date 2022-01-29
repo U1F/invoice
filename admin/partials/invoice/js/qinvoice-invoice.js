@@ -711,11 +711,11 @@ jQuery(function ($) {
       }
     })
   }
-
+  // this might be obsolete ..
   $('table#tableInvoices').on('click', '.deleteRow', function (event) {
     $('div#archiveInvoice').css('display', 'block')
     lastInvoiceIDtoDelete = event.target.id
-  })
+  }) // .. until here
 
   $('table#tableInvoices').on('click', '.reactivateInvoice', function (event) {
     const lastInvoiceIDtoDelete = event.target.id
@@ -745,7 +745,7 @@ jQuery(function ($) {
     const targetRow = $('tr.edit' + '[value=' + lastInvoiceIDtoDelete + ']')
     const statusIcon = targetRow.find('.invoiceStatusIcon')
     if ($('#showOpenInvoices').hasClass('active')) {
-      targetRow.css('display', 'none')
+      targetRow.fadeOut("slow")
     }
     deleteInvoice(lastInvoiceIDtoDelete)
     $('div#archiveInvoice').css('display', 'none')
