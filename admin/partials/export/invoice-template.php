@@ -238,18 +238,18 @@ td.invoiceItemsHeader {
             style="height:100px; vertical-align: bottom; font-size: 40px;"
         >
             <?php 
-            $heading=__("Rechnung", "ev");
+            $heading=__("Invoice", "ev");
             $invoiceText = get_option('qi_settings')['invoiceTextIntro'];
             if ($invoiceType =="invoice") {
-                $heading=__("Rechnung", "ev");
+                $heading=__("Invoice", "ev");
                 if (get_option('qi_settings')['invoiceTextIntro']) {
                     $invoiceText = get_option('qi_settings')['invoiceTextIntro'];   
                 } else {
-                    $invoiceText = "Folgende Leistung stellen wir Ihnen in Rechnung:";
+                    $invoiceText = __("We are invoicing for the following services:", "ev");
                 }
                 
             } else if ($invoiceType =="credit") {
-                $heading=__("Gutschrift", "ev");
+                $heading=__("Credit Note", "ev");
                 $invoiceText ="Folgende Leistung schreiben wir Ihnen gut.";
             } else if ($invoiceType =="dunning1") {
                 $heading=__("Payment Reminder", "ev");
@@ -320,7 +320,7 @@ td.invoiceItemsHeader {
                     class="invoiceInfoHeader" 
                     width="<?php echo $tableWidthOfInvoiceHead;?>"
                 >
-                    <b><?php echo __("Rechnungsnr.", "ev");?></b><br>
+                    <b><?php echo __("Invoice ID.", "ev");?></b><br>
                     <span id="invoiceID"><?php echo $invoiceID;?></span>
                 </td>
 
@@ -328,7 +328,7 @@ td.invoiceItemsHeader {
                     class="invoiceInfoHeader" 
                     width="<?php echo $tableWidthOfInvoiceHead;?>"
                 >
-                    <b><?php echo __("Kundennr.", "ev");?></b><br> 
+                    <b><?php echo __("Customer ID.", "ev");?></b><br> 
                     <span id="CustomerID"><?php
                         if($invoiceData[0][0]->customerID != 0){
                             echo $invoiceData[0][0]->customerID;
@@ -343,7 +343,7 @@ td.invoiceItemsHeader {
                     class="invoiceInfoHeader" 
                     width="<?php echo $tableWidthOfInvoiceHead;?>"
                 >
-                    <b><?php echo __("Rechnungsdatum", "ev");?></b>
+                    <b><?php echo __("date of invoice", "ev");?></b>
                     <br> 
                     <span id="orderDate">
                         <?php 
@@ -360,7 +360,7 @@ td.invoiceItemsHeader {
                         width="<?php echo $tableWidthOfInvoiceHead;?>"
                     >
 
-                        <b><?php echo __("Leistungsdatum", "ev");?></b><br>
+                        <b><?php echo __("date of delivery", "ev");?></b><br>
                         
                         <span id="serviceDate">
                             <?php
@@ -412,13 +412,13 @@ td.invoiceItemsHeader {
                     style="width:35px;  font-size:12px; text-align: right;">
                     <?php 
                     if (get_option('qi_settings')['invoiceUnit'] == "Amount") {
-                        echo __("Anzahl", "ev");
+                        echo __("Amount", "ev");
                     }
                     if (get_option('qi_settings')['invoiceUnit'] == "Hours") {
-                        echo __("Stunden", "ev");
+                        echo __("Hours", "ev");
                     }
                     if (get_option('qi_settings')['invoiceUnit'] == "Liter") {
-                        echo __("Liter", "ev");
+                        echo __("Litre", "ev");
                     }
                     ?>
 
@@ -429,13 +429,13 @@ td.invoiceItemsHeader {
                     style="
                         width:<?php echo $invoiceDetailDescriptionWidthHeader;?>px; 
                         font-size:12px;">
-                    <?php echo __("Beschreibung", "ev");?>
+                    <?php echo __("Desciption", "ev");?>
                 </td>
                 
                 <td 
                     class="invoiceItemsHeader" 
                     style="width:50px;  font-size:12px; text-align: right; ">
-                    <?php echo __("Preis", "ev");?>
+                    <?php echo __("Price", "ev");?>
                 </td>
 
                 <?php if ($InvoiceHasAtLeastOneDiscount) {
@@ -443,7 +443,7 @@ td.invoiceItemsHeader {
                         <td 
                         class="invoiceItemsHeader" 
                         style="width:60px;  font-size:12px; text-align: right;">
-                        <?php echo __("Rabatt", "ev");?>
+                        <?php echo __("Discount", "ev");?>
                         </td>
                     <?php 
                 } ?>
@@ -451,7 +451,7 @@ td.invoiceItemsHeader {
                 <td 
                     class="invoiceItemsHeader" 
                     style="width:75px;  font-size:12px;" align="right">
-                    <?php echo __("Summe", "ev");?>
+                    <?php echo __("Total", "ev");?>
                 </td>
                 
                 
@@ -573,7 +573,7 @@ td.invoiceItemsHeader {
 
                 <td>
                     <div style="width:371px;font-size:14px; word-wrap: break-word;">
-                        <?php echo __("Mahngebühr", "ev");?>
+                        <?php echo __("dunning fee", "ev");?>
                     </div>
                 </td>
 
@@ -609,7 +609,7 @@ td.invoiceItemsHeader {
                 <td 
                     style="font-size:10px;" 
                     colspan="<?php echo 4 + $InvoiceHasAtLeastOneDiscount;?>"><?php 
-                    echo __("Netto", "ev"); ?>
+                    echo __("net total", "ev"); ?>
                 </td>
                 <td style="font-size:10px; text-align:right; padding-right:8px;" >
                     <?php echo 
@@ -666,7 +666,7 @@ td.invoiceItemsHeader {
                     style="font-size:14px" 
                     colspan="<?php echo 4 + $InvoiceHasAtLeastOneDiscount;?>"
                 >
-                    <b>GESAMTBETRAG</b>
+                    <b>TOTAL AMOUNT</b>
                 </td>
                 
                 <td style="padding-right:8px; font-size:14px;" align="right">
@@ -690,7 +690,7 @@ td.invoiceItemsHeader {
             } else {
                 ?>
                 <div style="font-size:14px;  width: 640px;">
-                Danke für die gute Zusammenarbeit!<br>
+                Thank you for the excellent co-operation.<br>
                 <br>
                 <?php echo get_option('qi_settings')['invoiceTextPaymentDeadline']; ?> 
                 </div>
