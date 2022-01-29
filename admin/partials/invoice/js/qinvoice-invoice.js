@@ -748,7 +748,7 @@ jQuery(function ($) {
       targetRow.css('display', 'none')
     }
     deleteInvoice(lastInvoiceIDtoDelete)
-    $('div#archiveInvoice').css('display', 'none')
+    $('div#archiveInvoice').fadeOut("slow")
     statusIcon.addClass('cancelled')
     statusIcon.removeClass('active')
     targetRow.removeClass('active')
