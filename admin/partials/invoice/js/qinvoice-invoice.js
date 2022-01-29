@@ -194,6 +194,7 @@ jQuery(function ($) {
     updateInvoiceHeaderItem(invoiceID, data)
   }
 
+  // Clicking on the slider Paid/Unpaid changes UI functionality and updates database
   $('.columnStatusPaid').on('click', '.sliderForPayment', function (event) {
     // get key elements and save them to variables for later use
     const sliderBox = $(event.target).parent()
@@ -246,6 +247,7 @@ jQuery(function ($) {
     return $(eventsOriginalTarget).closest('tr').attr('value')
   }
 
+  // Escape key closes Overlay
   $(document).keydown(function (e) {
     if (e.keyCode === 27) {
       if ($('.dialogOverlay').css('display') === 'block') {
@@ -256,6 +258,7 @@ jQuery(function ($) {
     }
   })
 
+  // Clicking outside of the form or cancel button also closes Overlay
   $('#invoiceOverlay').click(function (event) {
     if ($(event.target).is('.overlay')) {
       $('#invoiceOverlay').css('display', 'none')
@@ -265,6 +268,7 @@ jQuery(function ($) {
     }
   })
 
+  // Closing PopUp "Archive Invoice"
   $('.dialogOverlay').click(function (event) {
     if ($(event.target).is('.overlay')) {
       $('.dialogOverlay').css('display', 'none')
@@ -296,6 +300,7 @@ jQuery(function ($) {
     target.attr('class', 'filterButton inactive')
   }
 
+  // Filter Invoices to "All" and show relevant UI elements
   function showAllInvoices () {
     // BOILER-PLATE CODE AHEAD
     $('tr.cancelled').css('display', 'table-row')
@@ -329,6 +334,7 @@ jQuery(function ($) {
     q_invoice_modify_cancelled_reactivation_icon();
   }
 
+  // Filter invoices to "Open Invoices" and show/hide UI elements
   function showOpenInvoices () {
     $('tr.open').css('display', 'table-row')
     $('tr.cancelled').css('display', 'none')
@@ -359,7 +365,8 @@ jQuery(function ($) {
 
     q_invoice_RecalcSums(0,0,0);
   }
-
+  
+  // Filter invoices to "Cancelled Invoices" and show/hide UI elements
   function showCancelledInvoices () {
     $('tr.cancelled').css('display', 'table-row')
     $('tr.active').css('display', 'none')
@@ -388,6 +395,8 @@ jQuery(function ($) {
 
     q_invoice_RecalcSums(0,0,0);
   }
+
+  // Filter invoices to "Invoices With Dunning" and show/hide UI elements
   function showInvoicesWithDunning () {
     $('tr.cancelled').css('display', 'none')
     $('tr.open').css('display', 'none')
@@ -418,6 +427,8 @@ jQuery(function ($) {
 
     q_invoice_RecalcSums(0,0,0);
   }
+
+  // Filter invoices to "Paid Invoices" and show/hide UI elements
   function showPaidInvoices () {
     $('tr.cancelled').css('display', 'none')
     $('tr.open').css('display', 'none')
@@ -454,6 +465,7 @@ jQuery(function ($) {
     $('tr.cancelled').find('.dashicons-undo').css('display', 'inline-block');
   }
 
+  // Manage UI visibility of filter buttons
   $('#filterButtons').on('click', 'div.inactive', function (event) {
     if ($(event.target).parent().attr('id') === 'filterButtons') {
       return;
@@ -505,6 +517,7 @@ jQuery(function ($) {
 
   })
 
+  // Is this implemented?
   $('#items').on('click', '.discountTypeSwitch', function () {
     if ($(this).val() === 'Euro') {
       $(this).val('Percent')
@@ -533,6 +546,7 @@ jQuery(function ($) {
     recalcTotalSum()
   })
 
+  // Calculate Positions of invoice items
   function recalcPos () {
     $('.wp-list-table-qInvcLine').each(function (index) {
       $(this).find('.qInvc-pos').text(index + 1)
@@ -540,6 +554,7 @@ jQuery(function ($) {
     })
   }
 
+  // Add a new line for invoice item
   $('#qInvc-add-line').click(function (e) {
     e.preventDefault()
 
@@ -558,6 +573,7 @@ jQuery(function ($) {
     recalcPos()
   })
 
+  // Remove invoice item
   $('.qInvc-table').eq(0).on('click', '.qInvc-delete-line', function (e) {
     e.preventDefault()
 
@@ -571,6 +587,7 @@ jQuery(function ($) {
     recalcTotalSum()
   })
 
+  // Provides a handle to sort items
   $('.qInvc-table').eq(0).sortable({
     items: 'tr.wp-list-table-qInvcLine',
     handle: '.sortHandle',
@@ -579,6 +596,7 @@ jQuery(function ($) {
     }
   })
 
+  // Only show two bank items, if two banks have been set up in settings
   function checkIfBanksHaveBeenSetupinSettings () {
     if ($('tr#tableRowBank2 td.labelsRightTable').text()) {
       $('tr#tableRowBank2').css('display', 'table-row')
