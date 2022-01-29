@@ -722,7 +722,7 @@ jQuery(function ($) {
     const targetRow = $('tr.edit' + '[value=' + lastInvoiceIDtoDelete + ']')
     const statusIcon = targetRow.find('.invoiceStatusIcon')
     if ($('#showCancelledInvoices').hasClass('active')) {
-      targetRow.css('display', 'none')
+      targetRow.fadeOut("slow")
     }
     reactivateInvoice(lastInvoiceIDtoDelete)
     $('div#archiveInvoice').css('display', 'none')
