@@ -753,7 +753,7 @@ jQuery(function ($) {
     statusIcon.removeClass('active')
     targetRow.removeClass('active')
     targetRow.addClass('cancelled')
-    targetRow.find('.deleteRow').fadeOut("slow")
+    targetRow.find('.deleteRow').css('display', 'none')
     targetRow.find('.reactivateInvoice').css('display', 'inline-block')
     targetRow.find('.switchForPaidStatus').css('opacity', '0')
     targetRow.find('.switchForPaidStatus > *').css('opacity', '0')
