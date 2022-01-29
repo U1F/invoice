@@ -237,9 +237,10 @@ jQuery(function ($) {
     q_invoice_RecalcSums(0,0,0);
   })
 
+  // Ich denke, das folgende ist nicht mehr nötig:
   $('.columnStatusPaid').on('click', '.markAsPaid', function (event) {
     $(event.target).closest('tr').find('.sliderForPayment').click()
-  })
+  }) // Bis hier hin.
 
   function getRowNumber (eventsOriginalTarget) {
     return $(eventsOriginalTarget).closest('tr').attr('value')
