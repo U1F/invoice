@@ -70,17 +70,17 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                             echo __('Company Name', 'Ev')?>" 
                                         value=""
                                         
-                                        autocomplete="new-password"
+                                        autocomplete="off"
                                         class="autocompletePossField checkForModificationField"
 
                                         required
                                         
                                     >
                                     
-                                    <span style="display:none"
+                                    <?php /*<span style="display:none"
                                         id="inputDashiconCompanyRegister" 
                                         class="dashicons dashicons-admin-users">
-                                    </span>
+                                    </span>*/ ?>
 
                                     <div id='autocompleteCompany' class='autocompleteDIV' style="display:none;">
                                         <strong>Matching Contacts</strong>
@@ -107,7 +107,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                     name="additional" 
                                     value=""
                                     class="checkForModificationField"
-                                    autocomplete="none"
+                                    autocomplete="off"
                                 >
                             </td>
                         </tr>
@@ -129,7 +129,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                             id="firstname" 
                                             name="firstname" 
                                             value="" 
-                                            autocomplete="none"
+                                            autocomplete="off"
                                             required
                                         >
 
@@ -517,8 +517,9 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                         <td class="invoiceItemsPrice">
                             <nobr>
                                 <input 
-                                    type="number"  
-                                    class="itemPrice" 
+                                    type="text"  
+                                    class="itemPrice"
+                                    style="width: 80px"
                                     name="itemPrice[]" 
                                     value="" 
                                     step="0.01"

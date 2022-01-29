@@ -25,7 +25,7 @@ function Invoice_list()
 {
     
     ?>
-<div class="q-invoice-page invoice-page" style="overflow: auto;">
+<div class="q-invoice-page invoice-page">
     <!-- This file should primarily consist of HTML with a little bit of PHP. -->
     <div id="archiveInvoice" class="overlay dialogOverlay">
         <div class="confirmationBox">

@@ -33,21 +33,24 @@ jQuery(function ($) {
   function removeCurrencySign(value){
 
     value = value.toString();
-    value = value.slice(0, value.length - 2);
+    //Add Currency Symbols here, that will be added with any currency Formatter like formatterDE or formatterEN
+    value = value.replace("€", "");
+    value = value.replace("$", "");
+    value = value.replace(" ", "");
     return value;
 
   }
 
-  function addPointToThousands (num) {
+  /*function addPointToThousands (num) {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
-  }
+  }*/
 
   /**
      *
      * @param {*} num
      * @returns num
      */
-  function currencyFormatDE (num) {
+  /*function currencyFormatDE (num) {
     return (
       num
         .toFixed(2)
@@ -55,7 +58,7 @@ jQuery(function ($) {
       // .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
         .replace(/(\d)(?=(\d{6})+(?!\d))/g, '$1.')
     )
-  }
+  }*/
 
   function recalcTotalSum () {
     const taxes = []
@@ -897,6 +900,7 @@ jQuery(function ($) {
         /*$('input.itemPrice').each(function () {
           $(this).val(parseFloat($(this).val()).toFixed(2))
         })*/
+
         $('#lastname').prop('required', false);
         $('#firstname').prop('required', false);
         $('#company').prop('required', false);
@@ -1300,7 +1304,7 @@ jQuery(function ($) {
 
     // Prevent chrome to autofill&autocomplete
     $('#invoiceInputTables input').focus(function (e) {
-      $(this).attr('autocomplete', 'new-password')
+      $(this).attr('autocomplete', 'off')
     })
   })
 

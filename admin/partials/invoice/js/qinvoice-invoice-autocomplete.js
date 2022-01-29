@@ -136,14 +136,14 @@ jQuery(function ($) {
 
         $('#contactRegister').css('display', 'none')
       }
-    } else if ($(event.target).is('#inputDashiconCompanyRegister')) {
+    } /*else if ($(event.target).is('#inputDashiconCompanyRegister')) {
       // $("#contactRegister").css("display", "block");
-    } else {
+    }*/ else {
       $('#contactRegister').css('display', 'none')
     }
   })
 
-  $('#inputDashiconCompanyRegister').click(function (event) {
+  /*$('#inputDashiconCompanyRegister').click(function (event) {
     $('#contacts > tbody').empty()
     $('#contactRegister').css('display', 'block')
     for (let i = 0; i < contactData[0].length; i++) {
@@ -163,5 +163,5 @@ jQuery(function ($) {
                      '</td>' +
                  '</tr>')
     }
-  })
+  })*/
 })

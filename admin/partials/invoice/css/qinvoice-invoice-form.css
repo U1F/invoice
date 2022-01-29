@@ -90,13 +90,13 @@
     width: 100%;
 }
 
-.q-invoice-page #invoiceForm #inputDashiconCompanyRegister {
+/*.q-invoice-page #invoiceForm #inputDashiconCompanyRegister {
     position: absolute;
     bottom: 2px;
     right: 5px;
     width: 24px;
     height: 24px;
-}
+}*/
 
 .q-invoice-page #invoiceForm td.inputsLeftTable input#firstname {
     width: 152px;
@@ -496,9 +496,9 @@
         width: 100%;
     }
 
-    .q-invoice-page #invoiceForm #inputDashiconCompanyRegister{
+    /*.q-invoice-page #invoiceForm #inputDashiconCompanyRegister{
         width: 100%;
-    }
+    }*/
 
     .qi_formNames{
         width: 49%;
