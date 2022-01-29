@@ -745,7 +745,7 @@ jQuery(function ($) {
     const targetRow = $('tr.edit' + '[value=' + lastInvoiceIDtoDelete + ']')
     const statusIcon = targetRow.find('.invoiceStatusIcon')
     if ($('#showOpenInvoices').hasClass('active')) {
-      targetRow.css('display', 'none')
+      targetRow.fadeOut("slow")
     }
     deleteInvoice(lastInvoiceIDtoDelete)
     $('div#archiveInvoice').css('display', 'none')
