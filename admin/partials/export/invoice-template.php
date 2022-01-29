@@ -320,7 +320,7 @@ td.invoiceItemsHeader {
                     class="invoiceInfoHeader" 
                     width="<?php echo $tableWidthOfInvoiceHead;?>"
                 >
-                    <b><?php echo __("Invoice ID.", "ev");?></b><br>
+                    <b><?php echo __("Invoice ID", "ev");?></b><br>
                     <span id="invoiceID"><?php echo $invoiceID;?></span>
                 </td>
 
@@ -328,7 +328,7 @@ td.invoiceItemsHeader {
                     class="invoiceInfoHeader" 
                     width="<?php echo $tableWidthOfInvoiceHead;?>"
                 >
-                    <b><?php echo __("Customer ID.", "ev");?></b><br> 
+                    <b><?php echo __("Customer ID", "ev");?></b><br> 
                     <span id="CustomerID"><?php
                         if($invoiceData[0][0]->customerID != 0){
                             echo $invoiceData[0][0]->customerID;
@@ -343,7 +343,7 @@ td.invoiceItemsHeader {
                     class="invoiceInfoHeader" 
                     width="<?php echo $tableWidthOfInvoiceHead;?>"
                 >
-                    <b><?php echo __("date of invoice", "ev");?></b>
+                    <b><?php echo __("Invoice Date", "ev");?></b>
                     <br> 
                     <span id="orderDate">
                         <?php 
@@ -360,7 +360,7 @@ td.invoiceItemsHeader {
                         width="<?php echo $tableWidthOfInvoiceHead;?>"
                     >
 
-                        <b><?php echo __("date of delivery", "ev");?></b><br>
+                        <b><?php echo __("Delivery Date", "ev");?></b><br>
                         
                         <span id="serviceDate">
                             <?php
@@ -412,7 +412,7 @@ td.invoiceItemsHeader {
                     style="width:35px;  font-size:12px; text-align: right;">
                     <?php 
                     if (get_option('qi_settings')['invoiceUnit'] == "Amount") {
-                        echo __("Amount", "ev");
+                        echo __("Quantity", "ev");
                     }
                     if (get_option('qi_settings')['invoiceUnit'] == "Hours") {
                         echo __("Hours", "ev");
@@ -451,7 +451,7 @@ td.invoiceItemsHeader {
                 <td 
                     class="invoiceItemsHeader" 
                     style="width:75px;  font-size:12px;" align="right">
-                    <?php echo __("Total", "ev");?>
+                    <?php echo __("Amount", "ev");?>
                 </td>
                 
                 
@@ -609,7 +609,7 @@ td.invoiceItemsHeader {
                 <td 
                     style="font-size:10px;" 
                     colspan="<?php echo 4 + $InvoiceHasAtLeastOneDiscount;?>"><?php 
-                    echo __("net total", "ev"); ?>
+                    echo __("Subtotal without Tax", "ev"); ?>
                 </td>
                 <td style="font-size:10px; text-align:right; padding-right:8px;" >
                     <?php echo 
@@ -631,9 +631,9 @@ td.invoiceItemsHeader {
                     >
                         <?php 
                         echo 
-                            $key."% Mehrwertsteuer aus ".  
+                            $key."% Tax of ".  
                             number_format($taxSums[$key], 2, $decimalDot, $thousandsDot). 
-                            " ". $currencySign,"&nbsp;netto";?>
+                            " ". $currencySign;?>
                     </td>
 
                     <td 
@@ -666,7 +666,7 @@ td.invoiceItemsHeader {
                     style="font-size:14px" 
                     colspan="<?php echo 4 + $InvoiceHasAtLeastOneDiscount;?>"
                 >
-                    <b>TOTAL AMOUNT</b>
+                    <b>TOTAL</b>
                 </td>
                 
                 <td style="padding-right:8px; font-size:14px;" align="right">
@@ -750,7 +750,7 @@ td.invoiceItemsHeader {
                 }
 
                 echo 
-                    __("Bankverbindung: ", "ev"). 
+                    __("Bank Details: ", "ev"). 
                     get_option('qi_settings')["bankName{$bankIndex}"].
                     ' (BLZ '.$blz. ', Kto '. $kto . ')'.
                     '<br>'.
