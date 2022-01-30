@@ -19,6 +19,7 @@
 }
 .q-invoice-page table#tableInvoices thead#tableInvoicesHeader tr th{
     font-weight: bold;
+    border-bottom: 1px solid #dadce1;
 }
 .q-invoice-page table#tableInvoices thead#tableInvoicesHeader tr th:first-child{
     padding-left:20px;

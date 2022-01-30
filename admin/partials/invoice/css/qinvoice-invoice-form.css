@@ -42,7 +42,7 @@
 /* Div that frames the left input fields of the Invoice*/
 
 .q-invoice-page div#invoiceInputTableLeft {
-    width: 440px;
+    width: 50%;
 }
 
 
@@ -129,7 +129,7 @@
 /* Styles for the right table, labels and input fields*/
 
 .q-invoice-page #invoiceForm div#invoiceInputTableRight {
-    width: 260px;
+    width: 45%;
 }
 
 .q-invoice-page #invoiceForm table#invoiceFormInputsRight {
@@ -139,12 +139,12 @@
 }
 
 .q-invoice-page #invoiceForm td.labelsRightTable {
-    width: 120px;
+    width: 90%;
     font-weight: bold;
 }
 
 .q-invoice-page #invoiceForm td.inputsRightTable {
-    width: 144px;
+    width: fit-content;
 }
 
 .q-invoice-page #invoiceForm td.inputsRightTable input[type=text],

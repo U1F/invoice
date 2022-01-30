@@ -303,10 +303,6 @@ span.dashicons-format-image {
     height:450px;
 }
 
-#q-invoice-TableContentWrapper{
-    margin-top: 1px;
-}
-
 @media only screen and (max-width:1250px){
 
     #qi_contactFormHeightMod, .q-invoice-page .containerFirst, .q-invoice-page .containerSecond {

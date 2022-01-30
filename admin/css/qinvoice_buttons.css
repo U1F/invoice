@@ -43,16 +43,17 @@
 border: 1px solid #dadce1;
 }
 
-
+.ant-table-thead > tr > th {
+  border-bottom-color: #dadce1;
+}
 
 
 .q-invoice-page div#filterButtons {
-    margin-bottom:-2px;
     display: flex;
     flex-direction: row;
     justify-content:space-between;
     border: 1px solid #dadce1;
-    
+    border-bottom: none;
    
 }
 .q-invoice-page div.filterButton{
