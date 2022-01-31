@@ -58,6 +58,15 @@
         
 
      </div>
+    <div id="mobileFilterButtons">
+        <select name="mobileFilterButtonsDropdown" id="mobileFilterButtonsDropdown">
+            <option class="mobileFilterButtonsOption" value="all" selected>All</option>
+            <option class="mobileFilterButtonsOption" value="open">Open</option>
+            <option class="mobileFilterButtonsOption" value="dunning">Dunning</option>
+            <option class="mobileFilterButtonsOption" value="cancelled">Cancelled</option>
+            <option class="mobileFilterButtonsOption" value="paid">Paid</option>
+        </select>
+    </div>
     <div id="q-invoice-TableContentWrapper" class="tab_content_wrapper" style="border-top:none">
 <?php 
 
@@ -259,7 +268,7 @@ function showOpenInvoices()
             >    
 
             <td class="manage-column  columnInvoiceID sortable asc">
-                <span>
+                <span id="qinv_mainIdSpan">
                         <?php echo esc_html($invoice_header->id); ?>
                 </span>
             </td>
