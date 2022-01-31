@@ -1267,7 +1267,7 @@ jQuery(function ($) {
       $(this).attr('autocomplete', 'off')
     })
 
-    invoicesOnPage = 10
+    invoicesOnPage =999
 
     filterInvoices('all')
     
