@@ -377,8 +377,8 @@ jQuery(function ($) {
         showReactivationButton(false)
         showPayToggle(true)
         // The next 2 need work:
-        $('#tableInvoices tbody tr.open').slice(0, 5).show()
-        $('#tableInvoices tbody tr.dunnung').slice(0, 5).show()
+        $('#tableInvoices tbody tr.open').slice(0, invoicesOnPage).show()
+        $('#tableInvoices tbody tr.dunnung').slice(0, invoicesOnPage).show()
         $('#qi_openSumNetto').show()
         $('#qi_openSumTotal').show()
         $('#qi_openSumDunning').show()
@@ -398,7 +398,7 @@ jQuery(function ($) {
         showDeleteButton(false)
         showReactivationButton(false)
         showPayToggle(false)
-        $('#tableInvoices tbody tr.dunning').slice(0, 5).show();
+        $('#tableInvoices tbody tr.dunning').slice(0, invoicesOnPage).show();
         $('#qi_dunningSumNetto').show()
         $('#qi_dunningSumDunning').show()
         $('#qi_dunningSumTotal').show()
