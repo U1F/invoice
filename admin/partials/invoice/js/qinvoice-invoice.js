@@ -189,8 +189,14 @@ jQuery(function ($) {
   // ............................................................................................................................
   // ............................................................................................................................
 
+  $("#filterButtons").on("click",function(){
+    console.log("#filterButtons: 'You clicked me!'")
+    //  paginate()
+  })
   // sum has to be omitted 
   // For most rows we need a special sort function.
+  // Sums would have to be added below
+  // Every Caption would need its own algorithm (comparer)
     $('th').click(function(){
       return; // for now, I do not want this function to work
       var table = $(this).parents('table').eq(0)
@@ -208,9 +214,6 @@ jQuery(function ($) {
     }
 
     function getCellValue(row, index){ return $(row).children('td').eq(index).text() }
-
-
-  
 
   function markInvoice (invoiceID, data) {
     updateInvoiceHeaderItem(invoiceID, data)
@@ -277,9 +280,9 @@ jQuery(function ($) {
   $(document).keydown(function (e) {
     if (e.keyCode === 27) {
       if ($('.dialogOverlay').css('display') === 'block') {
-        $('.dialogOverlay').css('display', 'none')
+        $('.dialogOverlay').hide()
       } else {
-        $('#invoiceOverlay').css('display', 'none')
+        $('#invoiceOverlay').hide()
       }
     }
   })
@@ -287,17 +290,17 @@ jQuery(function ($) {
   // Clicking outside of the form or cancel button also closes Overlay
   $('#invoiceOverlay').click(function (event) {
     if ($(event.target).is('.overlay')) {
-      $('#invoiceOverlay').css('display', 'none')
+      $('#invoiceOverlay').hide()
     }
     if ($(event.target).is('.cancelButton')) {
-      $('#invoiceOverlay').css('display', 'none')
+      $('#invoiceOverlay').hide()
     }
   })
 
   // Closing PopUp "Archive Invoice"
   $('.dialogOverlay').click(function (event) {
     if ($(event.target).is('.overlay')) {
-      $('.dialogOverlay').css('display', 'none')
+      $('.dialogOverlay').hide()
     }
   })
 
@@ -326,168 +329,101 @@ jQuery(function ($) {
     target.attr('class', 'filterButton inactive')
   }
 
-  // Filter Invoices to "All" and show relevant UI elements
-  function showAllInvoices () {
-    // BOILER-PLATE CODE AHEAD
-    $('tr.cancelled').css('display', 'table-row')
-    $('tr.open').css('display', 'table-row')
-    $('tr.dunning').css('display', 'table-row')
-    $('tr.paid').css('display', 'table-row')
-    // Only show relevant Invoices
-    $('.delete').css('display', 'inline-block')
-    $('.reactivateInvoice').css('display', 'none')
-    // $('.dashicons-archive').css('display', 'inline-block  ')
-    $('.switch').css('display', 'inline-block')
-    $('.invoicePaid').css('display', 'none')
-
-    $('#qi_totalSumNetto').css('display', 'block')
-    $('#qi_openSumNetto').css('display', 'none')
-    $('#qi_cancelledSumNetto').css('display', 'none')
-    $('#qi_dunningSumNetto').css('display', 'none')
-    $('#qi_paidSumNetto').css('display', 'none')
-    $('#qi_totalSumTotal').css('display', 'block')
-    $('#qi_openSumTotal').css('display', 'none')
-    $('#qi_cancelledSumTotal').css('display', 'none')
-    $('#qi_dunningSumTotal').css('display', 'none')
-    $('#qi_paidSumTotal').css('display', 'none')
-    $('#qi_totalSumDunning').css('display', 'block')
-    $('#qi_openSumDunning').css('display', 'none')
-    $('#qi_cancelledSumDunning').css('display', 'none')
-    $('#qi_dunningSumDunning').css('display', 'none')
-    $('#qi_paidSumDunning').css('display', 'none')
-
-    q_invoice_RecalcSums(0,0,0);
-    q_invoice_modify_cancelled_reactivation_icon();
+  function showPayToggle(doShow){
+    if (doShow) {
+      $('.switch').show()
+    }
+    else {
+      $('.switch').hide()
+    }
   }
 
-  // Filter invoices to "Open Invoices" and show/hide UI elements
-  function showOpenInvoices () {
-    $('tr.open').css('display', 'table-row')
-    $('tr.cancelled').css('display', 'none')
-    $('tr.dunning').css('display', 'table-row')
-    $('tr.paid').css('display', 'none')
+  function showDeleteButton(doShow){
+    if (doShow) {
+      $('.delete').show()
+    }
+    else {
+      $('.delete').hide()
+    }
+  }
 
-    $('.delete').css('display', 'inline-block')
-    $('.reactivateInvoice').css('display', 'none')
-    // $('.dashicons-archive').css('display', 'none')
-    $('.switch').css('display', 'inline-block')
-    $('.invoicePaid').css('display', 'none')
+  function showReactivationButton(doShow){
+    if (doShow) {
+      $('.reactivateInvoice').show()
+    }
+    else {
+      $('.reactivateInvoice').hide()
+    }
+  }
 
-    $('#qi_totalSumNetto').css('display', 'none')
-    $('#qi_openSumNetto').css('display', 'block')
-    $('#qi_cancelledSumNetto').css('display', 'none')
-    $('#qi_dunningSumNetto').css('display', 'none')
-    $('#qi_paidSumNetto').css('display', 'none')
-    $('#qi_totalSumTotal').css('display', 'none')
-    $('#qi_openSumTotal').css('display', 'block')
-    $('#qi_cancelledSumTotal').css('display', 'none')
-    $('#qi_dunningSumTotal').css('display', 'none')
-    $('#qi_paidSumTotal').css('display', 'none')
-    $('#qi_totalSumDunning').css('display', 'none')
-    $('#qi_openSumDunning').css('display', 'block')
-    $('#qi_cancelledSumDunning').css('display', 'none')
-    $('#qi_dunningSumDunning').css('display', 'none')
-    $('#qi_paidSumDunning').css('display', 'none')
+  function filterInvoices(invoiceCategory){
+    $('#tableInvoices tbody tr').hide()
+    $('#q_invoice_totalSums span').hide()
+    
+    switch (invoiceCategory){
+      case "all":
+        showDeleteButton(true)
+        showReactivationButton(false)
+        showPayToggle(true)
+        $('#tableInvoices tbody tr').slice(0, invoicesOnPage).show();
+        $('#qi_totalSumNetto').show()
+        $('#qi_totalSumTotal').show()
+        $('#qi_totalSumDunning').show()
+        q_invoice_modify_cancelled_reactivation_icon();
+        break
+
+      case "open":
+        showDeleteButton(false)
+        showReactivationButton(false)
+        showPayToggle(true)
+        // The next 2 need work:
+        $('#tableInvoices tbody tr.open').slice(0, 5).show()
+        $('#tableInvoices tbody tr.dunnung').slice(0, 5).show()
+        $('#qi_openSumNetto').show()
+        $('#qi_openSumTotal').show()
+        $('#qi_openSumDunning').show()
+        break
+
+      case "cancelled":
+        showDeleteButton(false)
+        showReactivationButton(true)
+        showPayToggle(true)
+        $('#tableInvoices tbody tr.cancelled').slice(0, invoicesOnPage).show()
+        $('#qi_cancelledSumNetto').show()
+        $('#qi_cancelledSumTotal').show()
+        $('#qi_cancelledSumDunning').show()
+        break
+
+      case "dunning":
+        showDeleteButton(false)
+        showReactivationButton(false)
+        showPayToggle(false)
+        $('#tableInvoices tbody tr.dunning').slice(0, 5).show();
+        $('#qi_dunningSumNetto').show()
+        $('#qi_dunningSumDunning').show()
+        $('#qi_dunningSumTotal').show()
+        break
+
+      case "paid":
+        showDeleteButton(false)
+        showReactivationButton(false)
+        showPayToggle(false)
+        $('#tableInvoices tbody tr.paid').slice(0, invoicesOnPage).show();
+        $('#qi_paidSumDunning').show()
+        $('#qi_paidSumTotal').show()
+        $('#qi_paidSumNetto').show()
+        break
+    }
 
     q_invoice_RecalcSums(0,0,0);
+    $('#q_invoice_totalSums').show()
+
   }
   
-  // Filter invoices to "Cancelled Invoices" and show/hide UI elements
-  function showCancelledInvoices () {
-    $('tr.cancelled').css('display', 'table-row')
-    $('tr.active').css('display', 'none')
-
-    $('.delete').css('display', 'none')
-    $('.reactivateInvoice').css('display', 'inline-block')
-    // $('.dashicons-archive').css('display', 'none')
-    $('.switch').css('display', 'none')
-    $('.invoicePaid').css('display', 'none')
-
-    $('#qi_totalSumNetto').css('display', 'none')
-    $('#qi_openSumNetto').css('display', 'none')
-    $('#qi_cancelledSumNetto').css('display', 'block')
-    $('#qi_dunningSumNetto').css('display', 'none')
-    $('#qi_paidSumNetto').css('display', 'none')
-    $('#qi_totalSumTotal').css('display', 'none')
-    $('#qi_openSumTotal').css('display', 'none')
-    $('#qi_cancelledSumTotal').css('display', 'block')
-    $('#qi_dunningSumTotal').css('display', 'none')
-    $('#qi_paidSumTotal').css('display', 'none')
-    $('#qi_totalSumDunning').css('display', 'none')
-    $('#qi_openSumDunning').css('display', 'none')
-    $('#qi_cancelledSumDunning').css('display', 'block')
-    $('#qi_dunningSumDunning').css('display', 'none')
-    $('#qi_paidSumDunning').css('display', 'none')
-
-    q_invoice_RecalcSums(0,0,0);
-  }
-
-  // Filter invoices to "Invoices With Dunning" and show/hide UI elements
-  function showInvoicesWithDunning () {
-    $('tr.cancelled').css('display', 'none')
-    $('tr.open').css('display', 'none')
-    $('tr.dunning').css('display', 'table-row')
-    $('tr.paid').css('display', 'none')
-
-    $('.delete').css('display', 'none')
-    $('.reactivateInvoice').css('display', 'none')
-    // $('.dashicons-archive').css('display', 'none')
-    $('.switch').css('display', 'none')
-    $('.invoicePaid').css('display', 'inline-block')
-
-    $('#qi_totalSumNetto').css('display', 'none')
-    $('#qi_openSumNetto').css('display', 'none')
-    $('#qi_cancelledSumNetto').css('display', 'none')
-    $('#qi_dunningSumNetto').css('display', 'block')
-    $('#qi_paidSumNetto').css('display', 'none')
-    $('#qi_totalSumTotal').css('display', 'none')
-    $('#qi_openSumTotal').css('display', 'none')
-    $('#qi_cancelledSumTotal').css('display', 'none')
-    $('#qi_dunningSumTotal').css('display', 'block')
-    $('#qi_paidSumTotal').css('display', 'none')
-    $('#qi_totalSumDunning').css('display', 'none')
-    $('#qi_openSumDunning').css('display', 'none')
-    $('#qi_cancelledSumDunning').css('display', 'none')
-    $('#qi_dunningSumDunning').css('display', 'block')
-    $('#qi_paidSumDunning').css('display', 'none')
-
-    q_invoice_RecalcSums(0,0,0);
-  }
-
-  // Filter invoices to "Paid Invoices" and show/hide UI elements
-  function showPaidInvoices () {
-    $('tr.cancelled').css('display', 'none')
-    $('tr.open').css('display', 'none')
-    $('tr.dunning').css('display', 'none')
-    $('tr.paid').css('display', 'table-row')
-
-    $('.delete').css('display', 'none')
-    $('.reactivateInvoice').css('display', 'none')
-    // $('.dashicons-archive').css('display', 'none')
-    $('.switch').css('display', 'none')
-    $('.invoicePaid').css('display', 'none')
-
-    $('#qi_totalSumNetto').css('display', 'none')
-    $('#qi_openSumNetto').css('display', 'none')
-    $('#qi_cancelledSumNetto').css('display', 'none')
-    $('#qi_dunningSumNetto').css('display', 'none')
-    $('#qi_paidSumNetto').css('display', 'block')
-    $('#qi_totalSumTotal').css('display', 'none')
-    $('#qi_openSumTotal').css('display', 'none')
-    $('#qi_cancelledSumTotal').css('display', 'none')
-    $('#qi_dunningSumTotal').css('display', 'none')
-    $('#qi_paidSumTotal').css('display', 'block')
-    $('#qi_totalSumDunning').css('display', 'none')
-    $('#qi_openSumDunning').css('display', 'none')
-    $('#qi_cancelledSumDunning').css('display', 'none')
-    $('#qi_dunningSumDunning').css('display', 'none')
-    $('#qi_paidSumDunning').css('display', 'block')
-
-    q_invoice_RecalcSums(0,0,0);
-  }
+  
 
   function q_invoice_modify_cancelled_reactivation_icon(){
-    $('tr.cancelled').find('.dashicons-no').css('display', 'none');
+    $('tr.cancelled').find('.dashicons-no').hide();
     $('tr.cancelled').find('.dashicons-undo').css('display', 'inline-block');
   }
 
@@ -500,23 +436,23 @@ jQuery(function ($) {
     setFilterButtonInactive($('#filterButtons').find('div.active'))
     setFilterButtonActive($(event.target).parent())
     if ($(event.target).parent().attr('id') === 'showAllInvoices') {
-      showAllInvoices()
+      filterInvoices('all')
     }
 
     if ($(event.target).parent().attr('id') === 'showOpenInvoices') {
-      showOpenInvoices()
+      filterInvoices('open')
     }
 
     if ($(event.target).parent().attr('id') === 'showCancelledInvoices') {
-      showCancelledInvoices()
+      filterInvoices('cancelled')
     }
 
     if ($(event.target).parent().attr('id') === 'showInvoicesWithDunning') {
-      showInvoicesWithDunning()
+      filterInvoices('dunning')
     }
 
     if ($(event.target).parent().attr('id') === 'showInvoicesPaid') {
-      showPaidInvoices()
+      filterInvoices('paid')
     }
   })
 
@@ -536,7 +472,7 @@ jQuery(function ($) {
         if ($(this).find('td').text().toLowerCase().includes(searchPattern.toLowerCase()) && searchPattern) {
           $(this).css('display', 'table-row')
         } else {
-          $(this).css('display', 'none')
+          $(this).hide()
         }
       })
     }
@@ -593,7 +529,7 @@ jQuery(function ($) {
     Clone.find('input.invoicepositionHidden').val(Clone.find('.invoiceItemsNo > span').text())
     // Clone.find('span.qInvcLine-total').text('');
     // Clone.find('.invoiceItemsTotal nobr').html('<span class="qInvcLine-total"></span>');
-    Clone.find('.invoiceItemsTotal nobr').css('display', 'none')
+    Clone.find('.invoiceItemsTotal nobr').hide()
     Clone.insertAfter(Row)
 
     recalcPos()
@@ -628,8 +564,8 @@ jQuery(function ($) {
       $('tr#tableRowBank2').css('display', 'table-row')
       $('tr#tableRowBank1').css('display', 'table-row')
     } else {
-      $('tr#tableRowBank1').css('display', 'none')
-      $('tr#tableRowBank2').css('display', 'none')
+      $('tr#tableRowBank1').hide()
+      $('tr#tableRowBank2').hide()
     }
   }
 
@@ -751,12 +687,12 @@ jQuery(function ($) {
       targetRow.fadeOut("slow")
     }
     reactivateInvoice(lastInvoiceIDtoDelete)
-    $('div#archiveInvoice').css('display', 'none')
+    $('div#archiveInvoice').hide()
     statusIcon.addClass('active')
     statusIcon.removeClass('cancelled')
     targetRow.removeClass('cancelled')
     targetRow.addClass('active')
-    targetRow.find('.reactivateInvoice').css('display', 'none')
+    targetRow.find('.reactivateInvoice').hide()
     targetRow.find('.deleteRow').css('display', 'inline-block')
     targetRow.find('.switchForPaidStatus').css('opacity', '100')
     targetRow.find('.switchForPaidStatus > *').css('opacity', '100')
@@ -764,7 +700,7 @@ jQuery(function ($) {
   })
 
   $('div#archiveInvoice').on('click', '#cancelRemoveInvoice', function () {
-    $('div#archiveInvoice').css('display', 'none')
+    $('div#archiveInvoice').hide()
   })
 
   $('div#archiveInvoice').on('click', '#confirmRemoveInvoice', function (event) {
@@ -774,12 +710,12 @@ jQuery(function ($) {
       targetRow.fadeOut("slow")
     }
     deleteInvoice(lastInvoiceIDtoDelete)
-    $('div#archiveInvoice').css('display', 'none')
+    $('div#archiveInvoice').hide()
     statusIcon.addClass('cancelled')
     statusIcon.removeClass('active')
     targetRow.removeClass('active')
     targetRow.addClass('cancelled')
-    targetRow.find('.deleteRow').css('display', 'none')
+    targetRow.find('.deleteRow').hide()
     targetRow.find('.reactivateInvoice').css('display', 'inline-block')
     targetRow.find('.switchForPaidStatus').css('opacity', '0')
     targetRow.find('.switchForPaidStatus > *').css('opacity', '0')
@@ -808,11 +744,11 @@ jQuery(function ($) {
     reopenInvoiceForm()
 
     // prepare form for Ajax Action "save"
-    $('h2#formHeaderEdit').css('display', 'none')
+    $('h2#formHeaderEdit').hide()
     $('h2#formHeaderCreate').css('display', 'block')
-    $('#heading-invoice').find('.switchForPaidStatus').css('display', 'none')
+    $('#heading-invoice').find('.switchForPaidStatus').hide()
     $('#loc_id').prop('readonly', false)
-    $('#updateInvoice').css('display', 'none')
+    $('#updateInvoice').hide()
     $('#saveInvoice').css('display', 'inline')
     $("input[name='action']").val('saveInvoiceServerSide')
 
@@ -840,7 +776,7 @@ jQuery(function ($) {
     $('#qinv_saveContactHidden').val("false");
     $('#qinv_saveContactID').val('-1');
     $('#qinv_saveContactLabel').text('Save as new Contact?');
-    $('#qinv_saveContactRow').css('display', 'none');
+    $('#qinv_saveContactRow').hide();
     $('#qinv_saveContactCheckbox').val('empty');
     
   })
@@ -961,7 +897,7 @@ jQuery(function ($) {
           $('#qinv_saveContactID').val(eI_ID);
           $('#qinv_saveContactCheckbox').val('old');
           $('#qinv_saveContactLabel').text('Update Contact?');
-          $('#qinv_saveContactRow').css('display', 'none');
+          $('#qinv_saveContactRow').hide();
           $('#qinv_saveContactCheckbox').prop('checked', true);
           $('#qinv_saveContactHidden').val("true");
         }else{
@@ -1030,7 +966,7 @@ jQuery(function ($) {
 
     //check if clicked line is a cancelled invoice. On yes prevent form from setting paid status by removing the paid toggle in the form
     if($(this).hasClass('cancelled')){
-      $('#heading-invoice').find('.switchForPaidStatus').css('display', 'none')
+      $('#heading-invoice').find('.switchForPaidStatus').hide()
     } else{
       $('#heading-invoice').find('.switchForPaidStatus').css('display', 'inline-block')
     }
@@ -1040,10 +976,10 @@ jQuery(function ($) {
 
     // Show the header for Editing only
     $('h2#formHeaderEdit').css('display', 'block')
-    $('h2#formHeaderCreate').css('display', 'none')
+    $('h2#formHeaderCreate').hide()
     // Show the button for Editing only
     $('#updateInvoice').css('display', 'inline')
-    $('#saveInvoice').css('display', 'none')
+    $('#saveInvoice').hide()
     // Prepare AJAX Function
     $("input[name='action']").val('updateInvoiceServerSide')
     // Only the nonce for saving is needed
@@ -1290,14 +1226,14 @@ jQuery(function ($) {
           addNewInvoiceRow(serverResponse, invoiceID)
         }
 
-        $('#invoiceOverlay').css('display', 'none')
+        $('#invoiceOverlay').hide()
 
         // $('#invoiceForm').trigger('reset')
 
         displaySuccess()
       },
       error: function (response){
-        $('#invoiceOverlay').css('display', 'none');
+        $('#invoiceOverlay').hide();
         displayFail('Data has not been saved completely.', 5000);
       }
     })
@@ -1310,7 +1246,7 @@ jQuery(function ($) {
     currencySign = '€'
     fetchInvoiceCurrency()
 
-    $('.invoicePaid').css('display', 'none')
+    $('.invoicePaid').hide()
 
     // After submit add error class to invalid input fields
     inputs.forEach(input => {
@@ -1331,6 +1267,10 @@ jQuery(function ($) {
       $(this).attr('autocomplete', 'off')
     })
 
+    invoicesOnPage = 10
+
+    filterInvoices('all')
+    
     
   })
 
@@ -1380,7 +1320,7 @@ jQuery(function ($) {
       var id = $('#invoice_id').val();
       
       setTimeout(function(){
-        $('#invoiceOverlay').css('display', 'none');
+        $('#invoiceOverlay').hide();
         $('#edit-'+id).find('.sliderForPayment').click();
       },800);
 
@@ -1400,7 +1340,7 @@ jQuery(function ($) {
         }
       });
       if(cFMFallEmpty){
-        $('#qinv_saveContactRow').css('display', 'none');
+        $('#qinv_saveContactRow').hide();
         $('#qinv_saveContactCheckbox').val('empty');
         $('#qinv_saveContactID').val('-1');
         $('#qinv_saveContactCheckbox').prop('checked', false);
