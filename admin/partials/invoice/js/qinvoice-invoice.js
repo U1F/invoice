@@ -427,6 +427,25 @@ jQuery(function ($) {
     $('tr.cancelled').find('.dashicons-undo').css('display', 'inline-block');
   }
 
+  // Manage UI visibility of filter buttons mobile version
+  $('.mobileFilterButtonsOption').on('click', function (event) {
+    if ($(event.target).val() === 'all') {
+      filterInvoices('all')
+    }
+    if ($(event.target).val() === 'open') {
+      filterInvoices('open')
+    }
+    if ($(event.target).val() === 'paid') {
+      filterInvoices('paid')
+    }
+    if ($(event.target).val() === 'cancelled') {
+      filterInvoices('cancelled')
+    }
+    if ($(event.target).val() === 'dunning') {
+      filterInvoices('dunning')
+    }
+  });
+
   // Manage UI visibility of filter buttons
   $('#filterButtons').on('click', 'div.inactive', function (event) {
     if ($(event.target).parent().attr('id') === 'filterButtons') {
@@ -455,6 +474,10 @@ jQuery(function ($) {
       filterInvoices('paid')
     }
   })
+
+  $('#qInvMobileSearchIcon').on('click', function (event){
+    $('#filterButtonMobileSearchInput').css('display', 'block');
+  });
 
   /**
    * Function for the search input field #searchInvoices on the Invoices overview Page

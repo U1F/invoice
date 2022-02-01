@@ -66,6 +66,11 @@
             <option class="mobileFilterButtonsOption" value="cancelled">Cancelled</option>
             <option class="mobileFilterButtonsOption" value="paid">Paid</option>
         </select>
+        <div id="searchInvoicesMobile">
+            <input id="filterButtonMobileSearchInput" type=text>
+            </input>
+            <span id="qInvMobileSearchIcon" class="dashicons dashicons-search"></span>
+        </div>
     </div>
     <div id="q-invoice-TableContentWrapper" class="tab_content_wrapper" style="border-top:none">
 <?php 

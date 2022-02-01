@@ -241,12 +241,29 @@ border: 1px solid #dadce1;
   border: none;
 }
 
-.q-invoice-page #mobileFilterButtonsDropdown{
+.q-invoice-page select#mobileFilterButtonsDropdown{
   color: #3c434a;
   border-color: #dadce1;
   border-bottom: none;
 }
 
+.q-invoice-page #searchInvoicesMobile{
+  width: 20%;
+  position:absolute;
+  margin-left: 120px;
+}
+
+.q-invoice-page #filterButtonMobileSearchInput{
+  display: none;
+  width: 110px;
+  border-color: #dadce1;
+  border-bottom: none;
+  margin-left: -120px;
+}
+
+.q-invoice-page #qInvMobileSearchIcon{
+  display: none;
+}
 
 
 @media only screen and (max-width:960px){
@@ -264,11 +281,15 @@ border: 1px solid #dadce1;
   }
 
   .q-invoice-page div#mobileFilterButtons {
-    display:block;
+    display:flex;
+  }
+
+  .q-invoice-page #qInvMobileSearchIcon{
+    display: block;
   }
 
   .q-invoice-page div#filterButtons {
-    display:none;
+    display: none;
   }
 }
 
