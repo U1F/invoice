@@ -419,8 +419,6 @@ jQuery(function ($) {
     $('#q_invoice_totalSums').show()
 
   }
-  
-  
 
   function q_invoice_modify_cancelled_reactivation_icon(){
     $('tr.cancelled').find('.dashicons-no').hide();
@@ -451,7 +449,6 @@ jQuery(function ($) {
     if ($(event.target).parent().attr('id') === 'filterButtons') {
       return;
     }
-    console.log('clicked');
     setFilterButtonInactive($('#filterButtons').find('div.active'))
     setFilterButtonActive($(event.target).parent())
     if ($(event.target).parent().attr('id') === 'showAllInvoices') {
@@ -477,13 +474,18 @@ jQuery(function ($) {
 
   $('#qInvMobileSearchIcon').on('click', function (event){
     $('#filterButtonMobileSearchInput').css('display', 'block');
+    $('#filterButtonMobileSearchInput').focus();
+  });
+
+  $('#filterButtonMobileSearchInput').blur(function (event){
+    $('#filterButtonMobileSearchInput').css('display', 'none');
   });
 
   /**
    * Function for the search input field #searchInvoices on the Invoices overview Page
    * You can search for all occurences of any kind of text. When you remove the text, all invoices will be shown again
    */
-  $('#filterButtons').on('keyup', 'input', function (event) {
+  $('.qInvMainSearchable').on('keyup', 'input', function (event) {
     const searchPattern = $(this).val()
 
     if ($(this).val() == ""){
@@ -1410,12 +1412,16 @@ jQuery(function ($) {
    jQuery(document).ready(function ($) {
     
     var id_length = $("tbody tr:first td:first span").text().replace(/\s+/g, '').length;
-    if (id_length > 1){
+    if (id_length > 2){
       var id_width = 11 + ((id_length - 1) * 7);
     } else{
-      var id_width = 13;
+      var id_width = 20;
     }
-    $(".q-invoice-page table#tableInvoices .columnInvoiceID").css("width", id_width);
+    var ids = document.getElementsByClassName('columnInvoiceID');
+    for(var i = 0; i < ids.length; i++){
+      ids[i].style.width = id_width + '!important';
+    }
+    //$(".q-invoice-page table#tableInvoices .columnInvoiceID").css("width", id_width);
     
    })
 

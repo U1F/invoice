@@ -66,6 +66,7 @@
 .q-invoice-page table#tableInvoices .columnInvoiceID{
     width:46px;
     text-align: left;
+    padding-right: 0;
 }
 
 .q-invoice-page table#tableInvoices .columnStatus{
@@ -95,7 +96,7 @@
 }
 
 .q-invoice-page table#tableInvoices .columnTotal{
-    width:40px;
+    width:50px;
     text-align: right;
 }
 
@@ -236,18 +237,19 @@ q-invoice-page dashicons-download {
 
 @media only screen and (max-width:1300px){
 
-    .columnInvoiceID #qinv_mainIdSpan{
-        width: fit-content;
-        display: block;
-    }
-
-    .q-invoice-page table#tableInvoices .columnDate{
-        width: max-content;
+    @-moz-document url-prefix() {
+        .q-invoice-page table#tableInvoices .columnInvoiceID{
+            width: max-content !important;
+        }
+    
+        .q-invoice-page table#tableInvoices .columnDate{
+            width: max-content;
+        }
     }
     
 }
 
-@media only screen and (max-width:1100px){
+@media only screen and (max-width:1200px){
     .q-invoice-page table#tableInvoices .columnDescription{
         display: none;
     }
@@ -262,8 +264,28 @@ q-invoice-page dashicons-download {
 }
 
 @media only screen and (max-width:960px){
+
+    @-moz-document url-prefix() {
+        .q-invoice-page table#tableInvoices .columnTotal{
+            width: max-content;
+        }
+    }
+
     .q-invoice-page table#tableInvoices .columnName{
-        width: 80px;
+        min-width: 100px;
+    }
+
+    .q-invoice-page table#tableInvoices .columnTotal{
+        width: 90px;
+        text-align: right;
+    }
+
+    .q-invoice-page table#tableInvoices .columnStatusPaid{
+        width: 70px;
+    }
+
+    .q-invoice-page table#tableInvoices .columnDate{
+        width: 90px;
     }
 
     .q-invoice-page div#filterButtons div.filterButton input[type="text"]{
@@ -283,7 +305,7 @@ q-invoice-page dashicons-download {
     }
 
     .q-invoice-page table#tableInvoices .columnEdit{
-        width: 70px!important;
+        width: 80px!important;
     }
 
 }
