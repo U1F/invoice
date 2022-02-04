@@ -139,7 +139,7 @@ jQuery(function ($) {
     deleteContact(event.target.id)
   })
 
-  $(document).keydown(function (e) {
+  $(document).on('keydown', function (e) {
     if (e.keyCode === 27) { $('#contactOverlay').css('display', 'none') }
   })
 

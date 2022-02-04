@@ -58,7 +58,7 @@ jQuery(function ($) {
   }
 
   //hide autocomplete suggestions when clicking out of the box
-  $('.autocompletePossField').blur(function (event) {
+  $('.autocompletePossField').on('blur', function (event) {
     
     const field = $(event.target)[0].id[0].toUpperCase() + $(event.target)[0].id.slice(1);
     $('#autocomplete' + field).css('display', 'none');

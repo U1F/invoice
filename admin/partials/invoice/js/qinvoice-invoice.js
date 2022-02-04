@@ -277,7 +277,7 @@ jQuery(function ($) {
   }
 
   // Escape key closes Overlay
-  $(document).keydown(function (e) {
+  $(document).on('keydown', function (e) {
     if (e.keyCode === 27) {
       if ($('.dialogOverlay').css('display') === 'block') {
         $('.dialogOverlay').hide()
@@ -477,7 +477,7 @@ jQuery(function ($) {
     $('#filterButtonMobileSearchInput').focus();
   });
 
-  $('#filterButtonMobileSearchInput').blur(function (event){
+  $('#filterButtonMobileSearchInput').on('blur', function (event){
     $('#filterButtonMobileSearchInput').css('display', 'none');
   });
 
@@ -838,11 +838,12 @@ jQuery(function ($) {
         if (obj[0][0].bank === '2') {
           $('td.inputsRightTable input#bank2').attr('checked', 'true')
         }
-        if (!(obj[0][0]['paydate'] == '0000-00-00')){
+        //currently you cant open a paid invoice so their is no need for the if
+        /*if (!(obj[0][0]['paydate'] != '0000-00-00')){
           $('#invoice_form_paid_toggle').prop("checked", true);
-        } else{
+        } else{*/
           $('#invoice_form_paid_toggle').prop("checked", false);
-        }
+        //}
         writeInvoiceHeadertoFormField('#loc_id', 'customerID')
 
         writeInvoiceDetailstoFormField('input.amountOfItems', 'amount', 0)
@@ -1237,7 +1238,14 @@ jQuery(function ($) {
   }
 
 
+  /**
+   * Handle the Submit event by clicking on Save or Update
+   */
   jQuery(document).ready(function ($) {
+    $('#saveInvoice').on('click', function(){
+      //$('#saveInvoice').prop('disabled', true);
+    });
+
     $('#invoiceForm').ajaxForm({
       success: function (response) {
         console.log (response)
@@ -1288,7 +1296,7 @@ jQuery(function ($) {
     $('input').bind('invalid', function () { return false })
 
     // Prevent chrome to autofill&autocomplete
-    $('#invoiceInputTables input').focus(function (e) {
+    $('#invoiceInputTables input').on('focus', function (e) {
       $(this).attr('autocomplete', 'off')
     })
 
@@ -1304,7 +1312,7 @@ jQuery(function ($) {
    * Either the company name is required or the First- and Lastname
    */
   jQuery(document).ready(function ($) {
-    $('#company').blur(function(){
+    $('#company').on('blur', function(){
       if(!$(this).val() && (!$('#lastname').val() || !$('#firstname').val())){
         $('#firstname').prop('required', true);
         $('#lastname').prop('required', true);
@@ -1316,7 +1324,7 @@ jQuery(function ($) {
         $('#lastname').prop('required', false);
       }
     });
-    $('.inputName').blur(function(){
+    $('.inputName').on('blur', function(){
       if((!$(this).val() || !$('#lastname').val() || !$('#firstname').val()) && !$('#company').val()){
         $('#firstname').prop('required', true);
         $('#lastname').prop('required', true);
@@ -1339,7 +1347,7 @@ jQuery(function ($) {
    * - If this listener detects the Toggle to be checked, a click action in the paid toggle in the overview is simulated and the popup will be closed
    *  */
 
-  $('#invoice_form_paid_toggle').change(function(){
+  $('#invoice_form_paid_toggle').on('change', function(){
     if (this.checked){
 
       var id = $('#invoice_id').val();
@@ -1356,7 +1364,7 @@ jQuery(function ($) {
    * Function to set the "Save as new Contact" / "Update Contact on Save" row visible, which includes some text and a checkbox
    */
 
-  $('.checkForModificationField').change(function(){
+  $('.checkForModificationField').on('change', function(){
     if(!$(this).val()){
       var cFMFallEmpty = true;
       var all = $('.checkForModificationField').each(function(){
