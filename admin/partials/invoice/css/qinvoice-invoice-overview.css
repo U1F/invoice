@@ -238,10 +238,6 @@ q-invoice-page dashicons-download {
 @media only screen and (max-width:1300px){
 
     @-moz-document url-prefix() {
-        .q-invoice-page table#tableInvoices .columnInvoiceID{
-            width: max-content !important;
-        }
-    
         .q-invoice-page table#tableInvoices .columnDate{
             width: max-content;
         }

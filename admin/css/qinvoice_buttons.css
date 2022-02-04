@@ -270,6 +270,12 @@ border: 1px solid #dadce1;
   align-self: center;
 }
 
+@media only screen and (max-width: 1400px){
+  .q-invoice-page .qInvoiceFormButton{
+    margin: 0;
+  }
+}
+
 
 @media only screen and (max-width:960px){
     .q-invoice-page div.filterButton{

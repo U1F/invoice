@@ -2,6 +2,8 @@
 /* eslint no-undef: "error" */
 let updateContactDiv = ''
 let saveContactDiv = ''
+let contactIDtoDelete = ''
+let rowOfDeletedContact = ''
 jQuery(function ($) {
   jQuery(document).ready(function ($) {
     $('#qiContactForm').ajaxForm({
@@ -135,12 +137,26 @@ jQuery(function ($) {
   }
 
   $('table#contacts > tbody').on('click', '.deleteContact', function (event) {
-    $(this).closest('tr').remove()
-    deleteContact(event.target.id)
+    $('div#deleteContact').css('display', 'block')
+    rowOfDeletedContact = $(this).closest('tr')
+    contactIDtoDelete = event.target.id
+  })
+
+  $('#confirmDeleteContact').on('click', function (event) {
+    rowOfDeletedContact.remove()
+    deleteContact(contactIDtoDelete)
+    $('div#deleteContact').css('display', 'none')
+  })
+
+  $('#cancelDeleteContact').on('click', function (event) {
+    $('div#deleteContact').css('display', 'none')
   })
 
   $(document).on('keydown', function (e) {
-    if (e.keyCode === 27) { $('#contactOverlay').css('display', 'none') }
+    if (e.keyCode === 27) { 
+      $('#contactOverlay').css('display', 'none')
+      $('div#deleteContact').css('display', 'none')
+    }
   })
 
   $('#contactOverlay').click(function (event) {

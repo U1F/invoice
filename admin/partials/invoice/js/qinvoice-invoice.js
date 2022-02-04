@@ -1242,11 +1242,10 @@ jQuery(function ($) {
    * Handle the Submit event by clicking on Save or Update
    */
   jQuery(document).ready(function ($) {
-    $('#saveInvoice').on('click', function(){
-      //$('#saveInvoice').prop('disabled', true);
-    });
-
     $('#invoiceForm').ajaxForm({
+      beforeSerialize: function($form, options) {
+        $('#saveInvoice').attr('disabled', 'disabled');
+      },
       success: function (response) {
         console.log (response)
         var serverResponse = JSON.parse(response).data
@@ -1262,10 +1261,12 @@ jQuery(function ($) {
         $('#invoiceOverlay').hide()
 
         // $('#invoiceForm').trigger('reset')
+        $('#saveInvoice').prop('disabled', false);
 
         displaySuccess()
       },
       error: function (response){
+        $('#saveInvoice').prop('disabled', false);
         $('#invoiceOverlay').hide();
         displayFail('Data has not been saved completely.', 5000);
       }
@@ -1421,13 +1422,15 @@ jQuery(function ($) {
     
     var id_length = $("tbody tr:first td:first span").text().replace(/\s+/g, '').length;
     if (id_length > 2){
-      var id_width = 11 + ((id_length - 1) * 7);
+      var id_width = 11 + ((id_length - 2) * 7);
     } else{
       var id_width = 20;
     }
+    id_width_string = 'width: ' + id_width.toString() + 'px';
     var ids = document.getElementsByClassName('columnInvoiceID');
     for(var i = 0; i < ids.length; i++){
-      ids[i].style.width = id_width + '!important';
+      ids[i].setAttribute('style', id_width_string);
+      console.log(ids[i].style.width);
     }
     //$(".q-invoice-page table#tableInvoices .columnInvoiceID").css("width", id_width);
     
