@@ -458,7 +458,15 @@
 
 }
 
-@media only screen and (max-width:550px){
+@media only screen and (max-width:590px){
+
+    .q-invoice-page #invoiceForm div#invoice-sums{
+        margin-left: 0px;
+    }
+
+    .q-invoice-page #invoiceForm div#invoice-sums{
+        width:265px;
+    }
 
     #qi_invoiceFormButtons{
         text-align: center;
