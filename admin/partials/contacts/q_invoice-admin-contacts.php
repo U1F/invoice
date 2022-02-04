@@ -23,6 +23,24 @@
 
 <div class="q-invoice-page invoice-page">
 
+    <div id="deleteContact" class="overlay dialogOverlay">
+        <div class="confirmationBox">
+            <div style="margin: 1.5em 0 1em 0; text-align: center;">
+                <h3 style="color:red;" >Do you really want to delete the Contact?</h3>
+                <p>This can not be undone. </p>
+                <div style="text-align: center; margin: 1em 0;">
+                    <button class="qInvoiceFormButton cancelButton" id="cancelDeleteContact">
+                        Cancel
+                    </button>
+                    <button class="qInvoiceFormButton submitButton" id="confirmDeleteContact">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
     <h1 id="qi_contactsHeadline" class="headerline" style="display:flex;">
         <span id="qinv_contact_title_logo" style="display:flex;">
             <img id="imgSnowflake" 
