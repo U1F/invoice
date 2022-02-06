@@ -137,8 +137,8 @@ jQuery(function ($) {
     let lineTax = 0
     $('.wp-list-table-qInvcLine').each(function () {
       const amountOfItems = parseInt($(this).find('input.amountOfItems').val())
-      const itemPrice = parseFloat($(this).find('input.itemPrice').val())
-      const discountOnItem = parseFloat($(this).find('input.itemDiscount').val())
+      const itemPrice = parseFloat($(this).find('input.itemPrice').val().replace(',','.'))
+      const discountOnItem = parseFloat($(this).find('input.itemDiscount').val().replace(',', '.'))
       let discountedPrice = 0
       let lineSum = 0
       if (isNaN(amountOfItems) || isNaN(itemPrice)) {
@@ -163,13 +163,14 @@ jQuery(function ($) {
           }
         }
       }
+      discountedPrice = discountedPrice.toFixed(2);
       $(this).find('input.amountActual').attr('value', discountedPrice)
       lineSum = amountOfItems * discountedPrice
       //format linesum
       if($('#q-invoice-new-dot-dummy').text() == ','){
-        var formattedLineSum = removeCurrencySign(formatterDE.format(parseFloat(lineSum)));
+        var formattedLineSum = removeCurrencySign(formatterDE.format(lineSum));
       } else{
-        var formattedLineSum = removeCurrencySign(formatterEN.format(parseFloat(lineSum)));
+        var formattedLineSum = removeCurrencySign(formatterEN.format(lineSum));
       }
       lineTax = $(this).find('select.itemTax').val()
       $(this).find('input.invoiceTax').attr('value', lineSum * lineTax / 100)
@@ -237,7 +238,6 @@ jQuery(function ($) {
     if (!sliderBox.find('input').prop('checked')) {
       // .. set a paydate to mark as paid
       const data = { paydate: formatDate(new Date()) }
-      console.log(data)
       markInvoice(getRowNumber(event.target), data)
 
       // and mark that row as paid instead of open
@@ -306,9 +306,9 @@ jQuery(function ($) {
 
   function setFilterButtonActive (target) {
     //target.css('background-color', 'rgb(34, 113, 177)')
-    target.find('button').css('background-color', 'rgb(34, 113, 177)')
+    //target.find('button').css('background-color', 'rgb(34, 113, 177)')
     //target.css('border', '1px solid #dadce1;')
-    target.find('button').css('color', 'white')
+    //target.find('button').css('color', 'white')
     target.attr('class', 'filterButton active')
     //$('#filterButtons').find('.active').css('border', '1px solid rgb(34, 113, 177)');
     //$('#filterButtons').find('.active').prev().css('border-right', 'none');
@@ -323,9 +323,10 @@ jQuery(function ($) {
     //$('#filterButtons').find('.active').next().css('border-left', '1px solid #dadce1');
     //$('#filterButtons').find('#showAllInvoices').css('border-left', 'none');
     //target.css('background-color', 'white')
-    target.find('button').css('background-color', 'white')
+    //target.find('button').css('background-color', 'white')
+    //target.find('button').css('height', '36px')
     //target.css('border', '1px solid #dadce1;')
-    target.find('button').css('color', '#3c434a')
+    //target.find('button').css('color', '#3c434a')
     target.attr('class', 'filterButton inactive')
   }
 
@@ -515,11 +516,7 @@ jQuery(function ($) {
     }
   })
 
-  $('#items').on('change', 'input.itemDiscount', function () {
-    $(this).val(parseFloat($(this).val()).toFixed(2))
-  })
-
-  /*$('#items').on('change', 'input.itemPrice', function () {
+  /*$('#items').on('change', 'input.itemDiscount', function () {
     $(this).val(parseFloat($(this).val()).toFixed(2))
   })*/
 
@@ -848,27 +845,28 @@ jQuery(function ($) {
 
         writeInvoiceDetailstoFormField('input.amountOfItems', 'amount', 0)
         writeInvoiceDetailstoFormField('input.itemDescription', 'description', 0)
-        //write in formatted prices
+        //write in formatted prices and discounts
         if($('#q-invoice-new-dot-dummy').text() == ','){
           $('tr.wp-list-table-qInvcLine').eq(0).find('input.itemPrice').val(removeCurrencySign(formatterDE.format(obj[1][0]['amount_plan'])))
+          $('tr.wp-list-table-qInvcLine').eq(0).find('input.itemDiscount').val(removeCurrencySign(formatterDE.format(obj[1][0]['discount'].replace(',', '.'))))
         } else{
           $('tr.wp-list-table-qInvcLine').eq(0).find('input.itemPrice').val(removeCurrencySign(formatterEN.format(obj[1][0]['amount_plan'])))
+          $('tr.wp-list-table-qInvcLine').eq(0).find('input.itemDiscount').val(removeCurrencySign(formatterEN.format(obj[1][0]['discount'])))
         }
-        writeInvoiceDetailstoFormField('input.itemDiscount', 'discount', 0)
         writeInvoiceDetailstoFormField('select.discountType', 'discount_type', 0)
         writeInvoiceDetailstoFormField('select.itemTax', 'tax', 0)
-
         for (let i = 1; i < obj[1].length; i++) {
           $('tr.wp-list-table-qInvcLine').eq(i - 1).clone().insertAfter($('tr.wp-list-table-qInvcLine').eq(i - 1))
           writeInvoiceDetailstoFormField('input.amountOfItems', 'amount', i)
           writeInvoiceDetailstoFormField('input.itemDescription', 'description', i)
-          //write in formatted prices
+          //write in formatted prices and discounts
           if($('#q-invoice-new-dot-dummy').text() == ','){
             $('tr.wp-list-table-qInvcLine').eq(i).find('input.itemPrice').val(removeCurrencySign(formatterDE.format(obj[1][i]['amount_plan'])))
+            $('tr.wp-list-table-qInvcLine').eq(i).find('input.itemDiscount').val(removeCurrencySign(formatterDE.format(obj[1][i]['discount'].replace(',', '.'))))
           } else{
             $('tr.wp-list-table-qInvcLine').eq(i).find('input.itemPrice').val(removeCurrencySign(formatterEN.format(obj[1][i]['amount_plan'])))
+            $('tr.wp-list-table-qInvcLine').eq(i).find('input.itemDiscount').val(removeCurrencySign(formatterEN.format(obj[1][i]['discount'])))
           }
-          writeInvoiceDetailstoFormField('input.itemDiscount', 'discount', i)
           writeInvoiceDetailstoFormField('select.discountType', 'discount_type', i)
           writeInvoiceDetailstoFormField('select.itemTax', 'tax', i)
         }
@@ -878,11 +876,7 @@ jQuery(function ($) {
         recalcLineSum()
         recalcTotalSum()
 
-        $('input.itemDiscount').each(function () {
-          $(this).val(parseFloat($(this).val()).toFixed(2))
-        })
-
-        /*$('input.itemPrice').each(function () {
+        /*$('input.itemDiscount').each(function () {
           $(this).val(parseFloat($(this).val()).toFixed(2))
         })*/
 
@@ -1199,7 +1193,6 @@ jQuery(function ($) {
       var datePieces = formattedDate.split('.');
       var datePDF = datePieces[2] + '_' + datePieces[1] + '_' + datePieces[0];
 
-      console.log(datePDF);
       clone.find('a.download').attr('href', '/wp-content/plugins/q_invoice/pdf/Invoice-' + invoice.prefix + id + '-' + pdfName + '-' + datePDF + '.pdf');
 
       clone.find('span.deleteRow').attr('id', id)
@@ -1430,7 +1423,6 @@ jQuery(function ($) {
     var ids = document.getElementsByClassName('columnInvoiceID');
     for(var i = 0; i < ids.length; i++){
       ids[i].setAttribute('style', id_width_string);
-      console.log(ids[i].style.width);
     }
     //$(".q-invoice-page table#tableInvoices .columnInvoiceID").css("width", id_width);
     

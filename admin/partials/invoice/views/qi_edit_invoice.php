@@ -533,10 +533,11 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             <nobr id="qi_amountField">
                                 
                                 <input 
-                                    type="number" 
+                                    type="text" 
                                     name="itemDiscount[]" 
                                     value="" 
-                                    class="itemDiscount" 
+                                    class="itemDiscount"
+                                    style="width: 80px;"
                                     step="0.01"      
                                 >
                                 
