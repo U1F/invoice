@@ -25,32 +25,32 @@
             </button>
         </div>
 
-        <div class="filterButton inactive" id="showOpenInvoices" style="margin-left: -1px; border-left: none">
+        <div class="filterButton inactive" id="showOpenInvoices" style="border-left: none">
             <button class="invoiceButton">
                 Open
             </button>
         </div>
 
-        <div class="filterButton inactive" id="showInvoicesWithDunning" style="margin-left: -1px;">
+        <div class="filterButton inactive" id="showInvoicesWithDunning">
             <button class="invoiceButton">
                 Dunning
             </button>
         </div>
 
-        <div class="filterButton inactive" id="showCancelledInvoices" style="margin-left: -1px;">
+        <div class="filterButton inactive" id="showCancelledInvoices">
             <button class="invoiceButton">
                 Cancelled
             </button>
         </div>
         
     
-        <div class="filterButton inactive" id="showInvoicesPaid" style="margin-left: -1px;">
+        <div class="filterButton inactive" id="showInvoicesPaid">
             <button class="invoiceButton">
                 Paid
             </button>
         </div>
 
-        <div class="filterButton q_invoice_headerBorderMod" id="searchInvoices" style="margin-left: -1px;">
+        <div class="filterButton q_invoice_headerBorderMod" id="searchInvoices">
             <input type=text>
             </input>
             <span class="dashicons dashicons-search"></span>
