@@ -427,22 +427,23 @@ jQuery(function ($) {
   }
 
   // Manage UI visibility of filter buttons mobile version
-  $('.mobileFilterButtonsOption').on('click', function (event) {
-    if ($(event.target).val() === 'all') {
+  $('#mobileFilterButtonsDropdown').on('change', function (event) {
+    if ($('#mobileFilterButtonsDropdown option:selected').val() === 'all') {
       filterInvoices('all')
     }
-    if ($(event.target).val() === 'open') {
+    if ($('#mobileFilterButtonsDropdown option:selected').val() === 'open') {
       filterInvoices('open')
     }
-    if ($(event.target).val() === 'paid') {
+    if ($('#mobileFilterButtonsDropdown option:selected').val() === 'paid') {
       filterInvoices('paid')
     }
-    if ($(event.target).val() === 'cancelled') {
+    if ($('#mobileFilterButtonsDropdown option:selected').val() === 'cancelled') {
       filterInvoices('cancelled')
     }
-    if ($(event.target).val() === 'dunning') {
+    if ($('#mobileFilterButtonsDropdown option:selected').val() === 'dunning') {
       filterInvoices('dunning')
     }
+    $('#mobileFilterButtonsDropdown').blur();
   });
 
   // Manage UI visibility of filter buttons

@@ -238,6 +238,8 @@ border: 1px solid #dadce1;
   color: #3c434a;
   border-color: #dadce1;
   border-bottom: none;
+  margin-left: 0;
+  width: 110px;
 }
 
 .q-invoice-page #searchInvoicesMobile{
@@ -261,6 +263,7 @@ border: 1px solid #dadce1;
 .q-invoice-page #qInvMobileSearchIcon{
   display: none;
   align-self: center;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 1400px){

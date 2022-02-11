@@ -192,6 +192,12 @@ textarea.error {
     border-color: inherit;
 }
 
+@media only screen and (max-width:1050px){
+    .invoice-page{
+        padding-top: 20px;
+    }
+}
+
 
 @media only screen and (max-width:960px){
     
@@ -205,5 +211,22 @@ textarea.error {
     .q-invoice-page .overlay {
         left: 0px;
     }
+
+    .invoice-page{
+        padding-top: 0px;
+    }
     
+}
+
+@media only screen and (max-width:620px){
+    .invoice-page{
+        padding-top: 60px;
+    }
+    
+}
+
+@media only screen and (max-width:330px){
+    .q-invoice-page h1.headerline {
+        margin-bottom: 40px;
+    }
 }
