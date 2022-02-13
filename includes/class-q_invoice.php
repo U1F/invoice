@@ -216,7 +216,7 @@ if (!class_exists('QI_Invoice')) {
                 'updateContact',
                 'deleteContact',
                 'editContact', 
-                
+                'removeLogo',
                 'printInvoiceTemplate',
             ];
 

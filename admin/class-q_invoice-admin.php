@@ -76,6 +76,10 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             include_once INVOICE_ROOT_PATH .
                 "/includes/" .
                 "interface-export.php";
+
+            include_once INVOICE_ROOT_PATH .
+                "/includes/" .
+                "interface-settings.php";
         }
 
           /**
@@ -357,7 +361,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $this->addSettingsField("city", "text", "pluginPage", 1);
             
              
-            add_settings_field(
+            /*add_settings_field(
                 'qi_settings' ."logoFileUrl", 
                 null, 
                 [$this, 'hideInput'],
@@ -367,9 +371,9 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                     "name" => "logo File Url",
                     "type" => "text"
                 ]
-            );
+            );*/
 
-            add_settings_field(
+            /*add_settings_field(
                 'qi_settings' ."logoFileFile", 
                 null,
                 [$this, 'hideInput'],
@@ -379,7 +383,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                     "name" => "logo File File",
                     "type" => "text"
                 ]
-            );
+            );*/
 
             add_settings_field(
                 'qi_settingsLogoFile', 
@@ -732,16 +736,18 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          */
         public function showInputForLogo()
         {
-            
-            echo 
-
+            //if an logog file has already been uploaded
+            if (get_option('qi_settings')['logoFileUrl'] != '') {
+                //set the upload field to display:none, because their is already file
+                echo 
                 "<label ".
+                    "id='qinv_settings_uploadLogo'".
                     "class='fileUpload'".
                     "style='".
+                        "display:none; ".
                         "border:solid 1px #dadce1; ".
                         "border-radius:4px; ".
                         "padding:7px; ".
-                        "min-height:32px; ".
                     "'".
                 ">".
                     "<input ".
@@ -753,23 +759,69 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                     "' />".
 
                     "Upload".
-
                 "</label>";
-                
-                
+                //grab the logo image source
+                $logoImageSource = get_option('qi_settings')['logoFileUrl'];
+                ?>
+                <div id='showLogoDiv'>
+                    <div class="qinv_settings_logo_tbBuffer">
+                        <span
+                            id="qinv_settings_delete_logo" 
+                            title="Delete Logo"
+                            class="delete dashicons dashicons-no"
+                        >
+                    </span>
+                    </div>
+                    <img style="width: 220px;" src="<?php echo $logoImageSource;?>">
+                    <div class="qinv_settings_logo_tbBuffer" style="height:10px;">
+                    </div>
+                </div>
+                <?php
+            } else{
+                //if no file has been uploaded the upload field has to be visible
+                echo 
+                "<label ".
+                    "id='qinv_settings_uploadLogo'".
+                    "class='fileUpload'".
+                    "style='".
+                        "border:solid 1px #dadce1; ".
+                        "border-radius:4px; ".
+                        "padding:7px; ".
+                    "'".
+                ">".
+                    "<input ".
+                        "id='logoFile' ".
+                        "name='logoFile' ".
+                        "type='file' ".
+                        "style='display:none'".
+                        "value='".         
+                    "' />".
+
+                    "Upload".
+                "</label>";
+                //grab the default image source
                 $logoImageSource = plugin_dir_url(__FILE__).
                 "/files/none_5002.png";
-                
-                if (get_option('qi_settings')['logoFileUrl']) {
-                    $logoImageSource = get_option('qi_settings')['logoFileUrl'];
-                }
+
                 ?>
-                <button id='showLogoButton' type='button'><img style="width: 100px; height: auto;" src="<?php echo $logoImageSource;?>"></button>
-                <div id="popupLogoImage">
-                    <img src="<?php echo $logoImageSource;?>">
-                </div> 
-                
+                <div id='showLogoDiv' style='display:none;'>
+                <div class="qinv_settings_logo_tbBuffer">
+                        <span style="display:none;"
+                            id="qinv_settings_delete_logo" 
+                            title="Delete Logo"
+                            class="delete dashicons dashicons-no"
+                        >
+                    </span>
+                    </div>
+                    <img style="width: 220px;" src="<?php echo $logoImageSource;?>">
+                    <div class="qinv_settings_logo_tbBuffer" style="height:10px;">
+                    </div>
+                </div>
+                <br>
+                <br>
+                <p id="qinv_settings_logo_message" style="color: red; display:none; margin-bottom:-30px;">Press 'Save Settings' to submit your data.</p>
                 <?php
+            }
                 
         } 
 
@@ -1068,6 +1120,23 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          *
          * @since 1.0.0
          */
+        public function removeLogoServerSide()
+        {
+            check_ajax_referer($this->_plugin_name . "_nonce");
+            $data = Interface_Settings::removeLogo();
+            echo $data;
+
+            wp_die();
+        }
+
+
+        /**
+         * TESTIG Register the Ajax for the admin area.
+         * 
+         * @return void
+         *
+         * @since 1.0.0
+         */
         public function fetchLastIDServerSide()
         {
             check_ajax_referer($this->_plugin_name . "_nonce");
@@ -1076,7 +1145,6 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             } else {
                 echo get_option('qi_settings')['noStart'];
             }
-            
 
             wp_die();
         }

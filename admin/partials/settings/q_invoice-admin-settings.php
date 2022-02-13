@@ -17,6 +17,23 @@
 ?>
 
 <div class='q-invoice-page invoice-page'>
+
+<div id="qinv_settings_deleteLogoOverlay" class="overlay dialogOverlay">
+    <div class="confirmationBox">
+        <div style="margin: 1.5em 0 1em 0; text-align: center;">
+            <h3 style="color:red;" >Do you really want to delete the logo?</h3>
+            <p>This can not be undone. <br> You can upload another logo afterwards. </p>
+            <div style="text-align: center; margin: 1em 0;">
+                <button class="qInvoiceFormButton cancelButton" id="cancelRemoveLogo">
+                    Cancel
+                </button>
+                <button class="qInvoiceFormButton submitButton" id="confirmRemoveLogo">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div> 
+</div>
 <h1 class="headerline">
     <span id="qinv_settings_title_logo" style="display:flex;">  
         <img id="imgSnowflake" 

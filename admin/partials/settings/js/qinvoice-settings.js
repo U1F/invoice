@@ -17,12 +17,12 @@ jQuery(function ($) {
       $('#currencySign').css('display', 'none')
     }
   })
-  $('button#showLogoButton').click(function () {
+  /*$('button#showLogoButton').click(function () {
     console.log('mouse was over')
     $('div#popupLogoImage').css('display', 'inline-block')
-  })
+  })*/
 
-  $('#qinvoiceSettings').on('click', function (event) {
+  /*$('#qinvoiceSettings').on('click', function (event) {
     if (!(
       $(event.target).is('img') ||
       $(event.target).is('#popupLogoImage') ||
@@ -30,7 +30,27 @@ jQuery(function ($) {
       $(event.target).is('button#showLogoButton'))) {
       $('div#popupLogoImage').css('display', 'none')
     }
+  })*/
+
+  //functions to delete the logo and to open the confirmation alert
+  $('#qinv_settings_delete_logo').on('click', function (event){
+    $('div#qinv_settings_deleteLogoOverlay').css('display', 'block');
   })
+  $('#cancelRemoveLogo').on('click', function(event){
+    $('div#qinv_settings_deleteLogoOverlay').css('display', 'none');
+  })
+  $('#confirmRemoveLogo').on('click', function(event){
+    //$('#showLogoDiv').css('display', 'none');
+    //$('#qinv_settings_uploadLogo').css('display', 'block');
+    $('div#qinv_settings_deleteLogoOverlay').css('display', 'none');
+    qinv_settings_removeLogoFile();
+  })
+  $('#qinv_settings_uploadLogo').on('click', function(event){
+    $('#qinv_settings_logo_message').css('display', 'block');
+  })
+ 
+
+  
 
   jQuery(document).ready(function ($) {
     const currencySignInput = $('#currencySign').clone()
@@ -48,4 +68,25 @@ jQuery(function ($) {
       $('#noStart').attr('readonly', true)
     }
   })
+
+  function qinv_settings_removeLogoFile(){
+    jQuery.ajax({
+      type: 'POST',
+
+      url: q_invoice_ajaxObject.ajax_url,
+
+      data: {
+        action: 'removeLogoServerSide',
+        _ajax_nonce: q_invoice_ajaxObject.nonce
+      },
+      success: function (data) {
+        console.log('Removal Status: ' + data)
+        $('.submit #saveSettings').click();
+      },
+      error: function (errorThrown) {
+        console.log('Logo not removed')
+        console.log(errorThrown)
+      }
+    })
+  }
 })

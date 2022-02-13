@@ -18,15 +18,10 @@
     justify-content: space-between;
     padding: 0px 0px 0x 0px;
     width: 100%;
-    margin-left:-15px;
-}
-
-.q-invoice-page .containerFirst {
-    height: 450px;
 }
 
 .q-invoice-page .containerSecond {
-    height: 400px;
+    height: 450px;
 }
 
 .q-invoice-page #firstColumn {
@@ -38,6 +33,10 @@
 
 .q-invoice-page #firstColumn .container {
     align-self: flex-start;
+}
+
+.q-invoice-page #firstColumn .containerFirst {
+    min-height: 500px;
 }
 
 .q-invoice-page #secondColumn {
@@ -64,6 +63,10 @@
 
 .q-invoice-page #thirdColumn .container {
     align-self: flex-end;
+}
+
+.q-invoice-page #thirdColumn .containerFirst{
+    min-height: 500px;
 }
 
 .q-invoice-page section.invoiceSettings h2 {
@@ -275,23 +278,33 @@ div#popupLogoImage img {
 }
 
 
-
-
-button#showLogoButton { 
+div#showLogoDiv { 
     margin-top: -1px;
-    margin-left: 10px;
     font-family: sans-serif;
     font-size: 14px;
     background-color: white;
-    padding-left: 8px;
-    padding-right: 8px;
     border: 1px solid #dadce1;
     border-radius: 4px;
     vertical-align: middle;
     color: #3c434a;
+    width:240px;
+    text-align: center;
+}
+
+#qinv_settings_delete_logo{
+    color: #343a40;
     cursor: pointer;
-    width:115px;
-    
+    font-size: 20px;
+    right: 0;
+}
+#qinv_settings_delete_logo::before{
+    top: 0;
+}
+
+.qinv_settings_logo_tbBuffer{
+    height: 20px;
+    width:100%;
+    text-align: right;
 }
 
 span.dashicons-format-image {
@@ -300,7 +313,7 @@ span.dashicons-format-image {
 }
 
 #qi_contactFormHeightMod {
-    height:450px;
+    height:500px;
 }
 
 @media only screen and (max-width:1250px){
@@ -329,7 +342,7 @@ span.dashicons-format-image {
         width: 30%;
     }
 
-    button#showLogoButton{
+    div#showLogoDiv{
         margin-left: 0px;
     }
 
