@@ -47,8 +47,7 @@
 }
 
 .q-invoice-page table#tableInvoices td {
-    padding-bottom: 7px;
-    padding-top: 7px;  
+    padding: 8px 10px; 
     vertical-align: middle;
 }
 
@@ -86,7 +85,7 @@
 }
 
 .q-invoice-page table#tableInvoices .columnDate{
-    width:45px;
+    width:50px;
     text-align: left;
 }
 

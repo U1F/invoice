@@ -57,6 +57,7 @@ function Invoice_list()
         
         <span id="qanuk_title"><?php _e('Q Invoice by qanuk.io', 'Ev'); ?></span>
         <span id="qanuk_title_media"><?php _e('Q Invoice', 'Ev'); ?></span>
+        
         <div class="qinv_startButtonMod">
             <button 
                 class="button-primary q_invoice_outerButton" 
