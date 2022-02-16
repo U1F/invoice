@@ -241,7 +241,7 @@ jQuery(function ($) {
       markInvoice(getRowNumber(event.target), data)
 
       // and mark that row as paid instead of open
-      invoiceRow.removeClass('open edit')
+      invoiceRow.removeClass('open')
       invoiceRow.addClass('paid')
       invoiceRow.find('.invoiceStatusIcon').addClass('paid')
       invoiceRow.find('.invoiceStatusIcon').removeClass('open')
@@ -808,6 +808,8 @@ jQuery(function ($) {
       },
       success: function (response, textStatus, XMLHttpRequest) {
         obj = JSON.parse(response)
+        console.log(obj[0][0].paydate)
+        
         writeInvoiceHeadertoFormField('#invoice_id', 'id')
         writeInvoiceHeadertoFormField('#prefix ', 'prefix')
         writeInvoiceHeadertoFormField('#company', 'company')
@@ -823,11 +825,11 @@ jQuery(function ($) {
           $('td.inputsRightTable input#bank2').attr('checked', 'true')
         }
         //currently you cant open a paid invoice so their is no need for the if
-        /*if (!(obj[0][0]['paydate'] != '0000-00-00')){
+        if (!(obj[0][0]['paydate'] != '0000-00-00')){
           $('#invoice_form_paid_toggle').prop("checked", true);
-        } else{*/
+        } else{
           $('#invoice_form_paid_toggle').prop("checked", false);
-        //}
+        }
         writeInvoiceHeadertoFormField('#loc_id', 'customerID')
 
         writeInvoiceDetailstoFormField('input.amountOfItems', 'amount', 0)
@@ -912,6 +914,16 @@ jQuery(function ($) {
           $('#qinv_saveContactLabel').text('Save as new Contact?');
           $('#qinv_saveContactRow').css('display', 'table-row');
           $('#qinv_saveContactCheckbox').val('new');
+        }
+        if (obj[0][0].paydate == "0000-00-00"){
+          console.log('invoice is open')
+          $('#invoiceForm   *').prop('disabled', false )
+        }
+        else {
+          console.log('invoice is paid')
+          //$('#invoiceForm > *').css("color", "blue")
+          $('#invoiceForm   *').prop('disabled', true )
+          //$('#invoiceForm *').prop('read-only', true )
         }
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {

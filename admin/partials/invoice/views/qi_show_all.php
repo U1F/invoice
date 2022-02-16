@@ -253,7 +253,7 @@ function showOpenInvoices()
                 class="<?php
          
                     if ($paid) {
-                        echo ' paid ';
+                        echo ' paid edit ';
                     } else if ($dunning) {
                         echo ' dunning edit';
                     } else {
