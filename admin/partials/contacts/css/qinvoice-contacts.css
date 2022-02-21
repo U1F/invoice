@@ -85,8 +85,6 @@
     
     padding-bottom: 7px;
     padding-top: 7px;
-
-    
 }
 
 
@@ -96,11 +94,36 @@
     width:1%;
 }
 
+.q-invoice-page td.columnCompany 
+{
+    width:100px!important;
+}
+
+.q-invoice-page td.columnName
+{
+    width:100px!important;
+}
+
+.q-invoice-page td.columnCity
+{
+    width:100px!important;
+}
+
+.q-invoice-page td.columnEmail
+{
+    width:100px!important;
+}
+
+.q-invoice-page td.columnStatus
+{
+    width:10px!important;
+}
+
 .q-invoice-page td.columnEdit
 {
     text-align: right;
     padding-right: 20px;
-
+    width: 20px!important;
 }
 
 @media only screen and (max-width:350px){

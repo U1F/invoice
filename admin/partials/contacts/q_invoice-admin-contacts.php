@@ -49,8 +49,8 @@
             );?>">
         </span>
 
-        <span id="qanuk_title" style="margin-left: 10px; margin-top: -7px;"><?php _e('Contacts', 'Ev'); ?></span>
-        <span id="qanuk_title_media" style="margin-left: 10px; margin-top: -7px;"><?php _e('Contacts', 'Ev'); ?></span> 
+        <span id="qanuk_title" style="margin-left: 10px; line-height:100%"><?php _e('Contacts', 'Ev'); ?></span>
+        <span id="qanuk_title_media" style="margin-left: 10px; line-height:100%"><?php _e('Contacts', 'Ev'); ?></span> 
         <div class="qinv_startButtonMod">
             <button id="qiNewContact" class="button-primary q_invoice_outerButton">
                 <?php _e('New Contact')?>
