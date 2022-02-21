@@ -308,7 +308,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             <td class="inputsRightTable">
                                 <input type="text" 
                                     id="invoice_id" name="invoice_id" size="6"
-                                    style="width: auto; text-align:left;"
+                                    style="text-align:left;"
                                     <?php if (Interface_Invoices::getRowCountDataBase()) {
                                     echo 
                                     "value='".
@@ -515,7 +515,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                         </td>
 
                         <td class="invoiceItemsPrice">
-                            <nobr>
+                            <nobr class="q_inv_mobile_flex_mod">
                                 <input 
                                     type="text"  
                                     class="itemPrice"
@@ -525,7 +525,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                     step="0.01"
                                     required
                                 >
-                                <span><?php echo esc_html($currencySymbol) ?></span>
+                                <span id="q_imv_item_price_currency"><?php echo esc_html($currencySymbol) ?></span>
                             </nobr>     
                         </td>
 

@@ -431,16 +431,19 @@
 
 }
 
-@media only screen and (max-width:780px){
+@media only screen and (max-width:880px){
 
-    .q-invoice-page div#edit-invoice{
-        margin-left: 20px;
-        margin-right: 20px;
+    .q-invoice-page #invoiceForm div#invoiceInputTableRight,
+    .q-invoice-page div#invoiceInputTableLeft,
+    .q-invoice-page #invoiceForm table#invoiceFormInputsRight,
+    .q-invoice-page #invoiceForm table#invoiceFormInputsLeft,
+    .q-invoice-page #invoiceForm div.autocompleteDIV{
+        width: 100%;
     }
 
-}
-
-@media only screen and (max-width:880px){
+    .q-invoice-page #invoiceForm td.labelsRightTable{
+        width: 20%;
+    }
 
     .q-invoice-page div#invoiceInputTables{
         display: block;
@@ -474,6 +477,34 @@
 
 }
 
+@media only screen and (max-width:782px){
+
+    .q-invoice-page div#edit-invoice{
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .q-invoice-page input[type="checkbox"]::before{
+        margin: -0.1875rem 0 0 -0.25rem;
+        height: 1.3125rem;
+        width: 1.3125rem;
+    }
+
+    .q-invoice-page input[type="checkbox"]{
+        height: 1rem;
+        width: 1rem;
+    }
+
+    .q-invoice-page #q_imv_item_price_currency{
+        line-height: 2.8;
+    }
+
+    .q-invoice-page .q_inv_mobile_flex_mod{
+        display: flex;
+    }
+
+}
+
 @media only screen and (max-width:590px){
 
     .q-invoice-page #invoiceForm div#invoice-sums{
@@ -496,12 +527,10 @@
         float: unset!important;
     }
 
-    .q-invoice-page td.labelsLeftTable, .q-invoice-page #invoiceForm td.labelsRightTable{
+    .q-invoice-page td.labelsLeftTable,
+    .q-invoice-page #invoiceForm
+    td.labelsRightTable{
         width: 40%;
-    }
-
-    .q-invoice-page div#invoiceInputTableLeft, .q-invoice-page #invoiceForm div#invoiceInputTableRight, .q-invoice-page #invoiceForm table#invoiceFormInputsRight{
-        width: 100%;
     }
 
     .q-invoice-page td.inputsLeftTable{
@@ -520,10 +549,6 @@
         width: 100%;
     }
 
-    /*.q-invoice-page #invoiceForm #inputDashiconCompanyRegister{
-        width: 100%;
-    }*/
-
     .qi_formNames{
         width: 49%;
     }
@@ -535,7 +560,10 @@
         width: 69%
     }
 
-    .q-invoice-page #invoiceForm td.inputsLeftTable input#firstname, .q-invoice-page #invoiceForm td.inputsLeftTable input#lastname, .q-invoice-page #invoiceForm td.inputsLeftTable input#zip, .q-invoice-page #invoiceForm td.inputsLeftTable input#city{
+    .q-invoice-page #invoiceForm td.inputsLeftTable input#firstname,
+    .q-invoice-page #invoiceForm td.inputsLeftTable input#lastname,
+    .q-invoice-page #invoiceForm td.inputsLeftTable input#zip,
+    .q-invoice-page #invoiceForm td.inputsLeftTable input#city{
         width: 100%;
     }
 
@@ -547,15 +575,10 @@
     [type=date]{
         width: 100%;
         height: 36px;
-        font-size: 12px !important;
     }
 
     .q-invoice-flexPlaceholder{
         flex-grow: 0;
-    }
-
-    .q-invoice-page #invoiceForm div.autocompleteDIV{
-        width: 100%;
     }
 
     .q-invoice-page #invoiceForm div.invoice-items {

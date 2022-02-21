@@ -1412,9 +1412,9 @@ jQuery(function ($) {
 
    jQuery(document).ready(function ($) {
     
-    var id_length = $("tbody tr:first td:first span").text().replace(/\s+/g, '').length;
+    /*var id_length = $("tbody tr:first td:first span").text().replace(/\s+/g, '').length;
     if (id_length > 2){
-      var id_width = 11 + ((id_length - 2) * 7);
+      var id_width = 12 + ((id_length - 2) * 7);
     } else{
       var id_width = 20;
     }
@@ -1422,7 +1422,7 @@ jQuery(function ($) {
     var ids = document.getElementsByClassName('columnInvoiceID');
     for(var i = 0; i < ids.length; i++){
       ids[i].setAttribute('style', id_width_string);
-    }
+    }*/
     //$(".q-invoice-page table#tableInvoices .columnInvoiceID").css("width", id_width);
     
    })
