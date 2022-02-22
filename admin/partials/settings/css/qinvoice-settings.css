@@ -316,25 +316,48 @@ span.dashicons-format-image {
     height:500px;
 }
 
-@media only screen and (max-width:1250px){
+@media only screen and (max-width:1275px){
 
-    #qi_contactFormHeightMod, .q-invoice-page .containerFirst, .q-invoice-page .containerSecond {
+    #qi_contactFormHeightMod,
+    .q-invoice-page .containerFirst,
+    .q-invoice-page .containerSecond {
         height: auto;
+        min-height: unset!important;
+        margin-bottom: 20px;
     }
 
-    .q-invoice-page section#settingsTable, .q-invoice-page #firstColumn, .q-invoice-page #secondColumn, .q-invoice-page #thirdColumn{
+    .q-invoice-page section#settingsTable,
+    .q-invoice-page #firstColumn,
+    .q-invoice-page #secondColumn,
+    .q-invoice-page #thirdColumn{
         display: block;
+        width: 100%;
+    }
+
+    .q-invoice-page section.invoiceSettings th {
+        width: 10%;
+        min-width: 120px;
+    }
+
+    .q-invoice-page section.invoiceSettings input[type=text],
+    .q-invoice-page section.invoiceSettings input[type=email] {
+        width: 50%;
     }
     
 }
 
 @media only screen and (max-width:782px){
 
-    #qi_contactFormHeightMod, .q-invoice-page .containerFirst, .q-invoice-page .containerSecond {
+    #qi_contactFormHeightMod,
+    .q-invoice-page .containerFirst,
+    .q-invoice-page .containerSecond {
         height: auto;
     }
 
-    .q-invoice-page section#settingsTable, .q-invoice-page #firstColumn, .q-invoice-page #secondColumn, .q-invoice-page #thirdColumn{
+    .q-invoice-page section#settingsTable,
+    .q-invoice-page #firstColumn,
+    .q-invoice-page #secondColumn,
+    .q-invoice-page #thirdColumn{
         display: block;
     }
 
@@ -346,7 +369,8 @@ span.dashicons-format-image {
         margin-left: 0px;
     }
 
-    .q-invoice-page .containerSecond, .q-invoice-page .containerFirst{
+    .q-invoice-page .containerSecond,
+    .q-invoice-page .containerFirst{
         padding-left: 0;
     }
 
@@ -366,7 +390,9 @@ span.dashicons-format-image {
 
 @media only screen and (max-width:350px){
 
-    .q-invoice-page p.submit input#saveSettings, .q-invoice-page section.invoiceSettings input[type="text"], .q-invoice-page section.invoiceSettings input[type="email"]{
+    .q-invoice-page p.submit input#saveSettings,
+    .q-invoice-page section.invoiceSettings input[type="text"],
+    .q-invoice-page section.invoiceSettings input[type="email"]{
         width: 90%;
     }
     

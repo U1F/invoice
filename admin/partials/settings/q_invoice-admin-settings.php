@@ -41,8 +41,8 @@
                 plugins_url('../../img/qanuk_snowflake.png', __FILE__)
         );?>">
     </span>
-        <span id="qanuk_title" style="margin-left: 10px; margin-top: -7px;"><?php _e('Settings', 'Ev'); ?></span>
-        <span id="qanuk_title_media" style="margin-left: 10px; margin-top: -7px;"><?php _e('Settings', 'Ev'); ?></span>
+        <span id="qanuk_title" style="margin-left: 10px;"><?php _e('Settings', 'Ev'); ?></span>
+        <span id="qanuk_title_media" style="margin-left: 10px;"><?php _e('Settings', 'Ev'); ?></span>
         <?php
             //When Rows in database make prefix and id readonly
             $empty = $GLOBALS['wpdb']->get_var("SELECT COUNT(id) FROM ".
