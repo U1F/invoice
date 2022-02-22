@@ -65,13 +65,13 @@
     <div id="show-contacts">
         <table class="wp-list-table widefat" id="contacts">
             <thead id="contactTabkeHeader"> 
-                <td class="columnRowID fiftyCol">#</td>
-                <td class="columnCompany twohundredCol">Company</td>
-                <td class="columnName hundredCol">Name</td>
-                <td class="columnCity fiftyCol">City</td>
-                <td class="columnEmail fiftyCol">Email</td>
-                <td class="columnStatus fiftyCol"></td>  
-                <td class="columnEdit eightyCol"></td>  
+                <td class="check-column columnRowID fiftyCol">#</td>
+                <td class="check-column columnCompany twohundredCol">Company</td>
+                <td class="check-column columnName hundredCol">Name</td>
+                <td class="check-column columnCity fiftyCol">City</td>
+                <td class="check-column columnEmail fiftyCol">Email</td>
+                <td class="check-column columnStatus fiftyCol"></td>  
+                <td class="check-column columnEdit eightyCol"></td>  
             </thead>
             <?php
             $table_name = $GLOBALS['wpdb']->prefix . 
@@ -89,15 +89,15 @@
                 <tr value="<?php echo esc_html($contact->id);?>">
                
 
-                <td class="manage-column fiftyCol columnRowID">
+                <td class="check-column manage-column fiftyCol columnRowID">
                     <?php echo esc_html($count); ?>
                 </td>
 
-                <td class="manage-column twohundredCol columnCompany">
+                <td class="check-column manage-column twohundredCol columnCompany">
                     <?php echo esc_html($contact->company); ?> 
                 </td>
 
-                <td class="manage-column hundredCol columnName">
+                <td class="check-column manage-column hundredCol columnName">
                     
                     <span class="columnFirstName">
                         <?php echo  esc_html($contact->firstname); ?>
@@ -109,23 +109,23 @@
 
                 </td>
 
-                <td class="manage-column fiftyCol columnCity">
+                <td class="check-column manage-column fiftyCol columnCity">
                     <span>
                         <?php echo esc_html($contact->city); ?>
                     </span>
                     
                 </td>
 
-                <td class="manage-column fiftyCol columnEmail">
+                <td class="check-column manage-column fiftyCol columnEmail">
                 <span>
                         <?php echo esc_html($contact->email); ?>
                     </span>
                 </td>
 
-                <td class="manage-column fiftyCol columnStatus">
+                <td class="check-column manage-column fiftyCol columnStatus">
                 </td>
 
-                <td class="manage-column eightyCol columnEdit">
+                <td class="check-column manage-column eightyCol columnEdit">
                     
                     <span style="font-size: 20px"
                         id="<?php echo "edit-".$contact->id;?>"
@@ -157,7 +157,7 @@
                 method="post" 
                 name="qiContactForm"
                 id="qiContactForm">
-                <table>
+                <table id="qiContactFormTable">
                     <thead>
 
                     </thead>

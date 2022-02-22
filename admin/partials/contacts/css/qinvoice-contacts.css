@@ -19,7 +19,7 @@
     position:relative;
 }
 
-.q-invoice-page #qiContactForm{
+.q-invoice-page #qiContactFormTable{
     width: 100%;
 }
 
@@ -53,6 +53,7 @@
 
 .q-invoice-page table#contacts{
     border-collapse: collapse;
+    min-width: 760px;
 }
 
 .q-invoice-page table#contacts td.first{
@@ -82,7 +83,7 @@
 
 .q-invoice-page table#contacts td
  {
-    
+    padding-left: 20px;
     padding-bottom: 7px;
     padding-top: 7px;
 }
@@ -96,27 +97,27 @@
 
 .q-invoice-page td.columnCompany 
 {
-    width:100px!important;
+    width:100px;
 }
 
 .q-invoice-page td.columnName
 {
-    width:100px!important;
+    width:100px;
 }
 
 .q-invoice-page td.columnCity
 {
-    width:100px!important;
+    width:100px;
 }
 
 .q-invoice-page td.columnEmail
 {
-    width:100px!important;
+    width:100px;
 }
 
 .q-invoice-page td.columnStatus
 {
-    width:10px!important;
+    width:10px;
 }
 
 .q-invoice-page td.columnEdit
@@ -126,14 +127,42 @@
     width: 20px!important;
 }
 
-@media only screen and (max-width:350px){
+.q-invoice-page div#show-contacts{
+    overflow-y: scroll;
+}
 
-    .q-invoice-page input.qiContactInput{
-        width: 90px;
+@media only screen and (max-width:1300px){
+
+    .q-invoice-page #qiContactPopup{
+        width: 30%;
     }
     
 }
 
+@media only screen and (max-width:1100px){
+
+    .q-invoice-page td.columnEdit{
+        width: 31px!important;
+    }
+    
+}
+
+@media only screen and (max-width:850px){
+
+    .q-invoice-page td.columnEdit{
+        width: 37px!important;
+    }
+    
+}
+
+@media only screen and (max-width:782px){
+
+    .q-invoice-page #qiContactPopup{
+        width: 70%!important;
+    }
+
+    
+}
 
 @media only screen and (max-width:500px){
     
@@ -146,24 +175,4 @@
         float: left;
     }
 
-}
-
-@media only screen and (max-width:780px){
-
-    .q-invoice-page div#show-contacts{
-        overflow-y: auto;
-    }
-
-    .q-invoice-page #qiContactPopup{
-        width: 70%!important;
-    }
-    
-}
-
-@media only screen and (max-width:1300px){
-
-    .q-invoice-page #qiContactPopup{
-        width: 30%;
-    }
-    
 }
