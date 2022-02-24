@@ -565,7 +565,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 "textarea", 
                 "invoiceTextPage",
                 0,
-                "Your text will show above invoice details.",
+                "This text will be shown above invoice details.",
                 "text_details_input_mod"
             );
 
@@ -574,7 +574,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 "textarea", 
                 "invoiceTextPage",
                 0,
-                "This text will show after invoice details.",
+                "This text will be shown below invoice details.",
                 "text_details_input_mod"
             );
             $this->addSettingsField(
@@ -825,7 +825,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 </div>
                 <br>
                 <br>
-                <p id="qinv_settings_logo_message" style="color: red; display:none; margin-bottom:-30px;">Press 'Save Settings' to submit your data.</p>
+                <p id="qinv_settings_logo_message" style="color: red; display:none; margin-bottom:-30px;">Press 'Save Settings' to submit your logo.</p>
                 <?php
             }
                 

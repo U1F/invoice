@@ -44,6 +44,8 @@
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .q-invoice-page #secondColumn .container {
@@ -80,7 +82,7 @@
     vertical-align: middle;
     font-family: sans-serif;
     font-size: 14px;
-    width: 118px;
+    width: 130px;
     font-weight: bold;
     padding: 0 0 17px 0;
 }
@@ -317,6 +319,10 @@ section.invoiceSettings input[id^="tax"] {
     height:500px;
 }
 
+.q-invoice-page .text_details_input_mod textarea{
+    min-height: 64px;
+}
+
 @media only screen and (max-width:1275px){
 
     .q-invoice-page #qi_contactFormHeightMod,
@@ -325,6 +331,11 @@ section.invoiceSettings input[id^="tax"] {
         height: auto;
         min-height: unset!important;
         margin-bottom: 20px;
+    }
+
+    .q-invoice-page #secondColumn{
+        margin-left: 0;
+        margin-right: 0;
     }
 
     .q-invoice-page section#settingsTable,
@@ -337,7 +348,7 @@ section.invoiceSettings input[id^="tax"] {
 
     .q-invoice-page section.invoiceSettings th {
         width: 10%;
-        min-width: 120px;
+        min-width: 130px;
     }
 
     .q-invoice-page section.invoiceSettings input[type=text],
@@ -404,10 +415,6 @@ section.invoiceSettings input[id^="tax"] {
     .q-invoice-page .containerSecond,
     .q-invoice-page .containerFirst{
         padding-left: 0;
-    }
-
-    .q-invoice-page .text_details_input_mod textarea{
-        min-height: 64px;
     }
 
     .q-invoice-page section.invoiceSettings th{
