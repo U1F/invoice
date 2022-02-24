@@ -565,7 +565,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 "textarea", 
                 "invoiceTextPage",
                 0,
-                "Your text will show above invoice details."
+                "Your text will show above invoice details.",
+                "text_details_input_mod"
             );
 
             $this->addSettingsField(
@@ -573,21 +574,24 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 "textarea", 
                 "invoiceTextPage",
                 0,
-                "This text will show after invoice details."
+                "This text will show after invoice details.",
+                "text_details_input_mod"
             );
             $this->addSettingsField(
                 "invoice Text Payment Deadline", 
                 "textarea", 
                 "invoiceTextPage",
                 0,
-                "You can announce how many days you will wait for payment."
+                "You can announce how many days you will wait for payment.",
+                "text_details_input_mod"
             );
             $this->addSettingsField(
                 "invoice Text Custom Footer", 
                 "textarea", 
                 "invoiceTextPage",
                 0,
-                "You can add details like your tax ID."
+                "You can add details like your tax ID.",
+                "text_details_input_mod"
             );
 
         }
@@ -610,7 +614,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $type, 
             $page, 
             $required=0,
-            $placeholder=""
+            $placeholder="", 
+            $class=""
         )
         {
             $callback = "showInputForSetting";
@@ -629,7 +634,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                     "name" => $name,
                     "type" => $type,
                     "placeholder" => $placeholder,
-                    "required" => $required
+                    "required" => $required,
+                    "class" => $class
                 ]
             );
         }

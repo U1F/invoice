@@ -58,6 +58,7 @@
         echo Interface_Invoices::getRowCountDatabase();
     ?></p> 
     
+    <div id="settingsFormWrapper">
     <form 
         id='qinvoiceSettings' 
         action='options.php' 
@@ -148,6 +149,7 @@
         ?>
     
     </form>
+    </div>
     
     <?php 
     
