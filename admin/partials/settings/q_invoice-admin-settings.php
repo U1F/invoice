@@ -59,96 +59,96 @@
     ?></p> 
     
     <div id="settingsFormWrapper">
-    <form 
-        id='qinvoiceSettings' 
-        action='options.php' 
-        enctype='multipart/form-data' 
-        method='post' >
-
+        <form 
+            id='qinvoiceSettings' 
+            action='options.php' 
+            enctype='multipart/form-data' 
+            method='post' >
         
-   
-
-
-        <section id="settingsTable" class="invoiceSettings">
             
-            <div id="firstColumn">
-                <div class="container containerFirst">
-                    <?php
-                        settings_fields('pluginForm');
-                        do_settings_sections('pluginPage'); 
-                        settings_fields('logoForm');
-                        do_settings_sections('logoPage'); 
-                    ?>
-                </div>
-
-                <div class="container containerSecond">
-                    <?php
-                        settings_fields('invoiceForm');
-                        do_settings_sections('invoicePage');
-
-                    ?>
-                </div>
-
+        
+        
+        
+            <section id="settingsTable" class="invoiceSettings">
                 
-            </div>
-
-            <div id="secondColumn">
-                <div class="container containerFirst">
-                    <div id="qi_contactFormHeightMod">
+                <div id="firstColumn">
+                    <div class="container containerFirst">
+                        <?php
+                            settings_fields('pluginForm');
+                            do_settings_sections('pluginPage'); 
+                            settings_fields('logoForm');
+                            do_settings_sections('logoPage'); 
+                        ?>
+                    </div>
+        
+                    <div class="container containerSecond">
+                        <?php
+                            settings_fields('invoiceForm');
+                            do_settings_sections('invoicePage');
+        
+                        ?>
+                    </div>
+        
+                    
+                </div>
+        
+                <div id="secondColumn">
+                    <div class="container containerFirst">
+                        <div id="qi_contactFormHeightMod">
+                        <?php
+                            settings_fields('contactForm');
+                            do_settings_sections('contactPage');
+                        ?>
+                        </div >
+        
+                        <div class="container containerSecond">
+                        <?php
+                            settings_fields('dunningForm');
+                            do_settings_sections('dunningPage'); 
+                        ?>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div id="thirdColumn">
+                    <div class="container containerFirst" >
                     <?php
-                        settings_fields('contactForm');
-                        do_settings_sections('contactPage');
+                    settings_fields('bankForm');
+                    do_settings_sections('bankPage');
                     ?>
-                    </div >
-
+                    </div>
+        
                     <div class="container containerSecond">
                     <?php
-                        settings_fields('dunningForm');
-                        do_settings_sections('dunningPage'); 
+                    settings_fields('mailForm');
+                    do_settings_sections('mailPage');
                     ?>
                     </div>
                     
-                </div>
-            </div>
-            
-            <div id="thirdColumn">
-                <div class="container containerFirst" >
-                <?php
-                settings_fields('bankForm');
-                do_settings_sections('bankPage');
-                ?>
-                </div>
-
-                <div class="container containerSecond">
-                <?php
-                settings_fields('mailForm');
-                do_settings_sections('mailPage');
-                ?>
-                </div>
-                
-
-                
-            </div>
-            
-            
-
-        </section>
-        <section class="invoiceSettings">
-        <div >
-            <?php
-                settings_fields('invoiceTextForm');
-                do_settings_sections('invoiceTextPage');
-                
-            ?>
-        </div>  
-        </section>
-        <?php 
-           
         
-        submit_button($text = "Save Settings", $type = "primary", $name = "saveSettings"); 
-        ?>
-    
-    </form>
+                    
+                </div>
+                
+                
+        
+            </section>
+            <section class="invoiceSettings">
+            <div >
+                <?php
+                    settings_fields('invoiceTextForm');
+                    do_settings_sections('invoiceTextPage');
+                    
+                ?>
+            </div>  
+            </section>
+            <?php 
+               
+            
+            submit_button($text = "Save Settings", $type = "primary", $name = "saveSettings"); 
+            ?>
+        
+        </form>
     </div>
     
     <?php 
