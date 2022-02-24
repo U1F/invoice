@@ -62,8 +62,13 @@
     padding-bottom: 6px;
 }
 
+.q-invoice-page #bank1::before,
+.q-invoice-page #bank2::before{
+    margin: 0.2rem !important;
+}
+
 .q-invoice-page td.labelsLeftTable {
-    width: 20%;
+    width: 30%;
     font-weight: bold;
 }
 
@@ -442,7 +447,7 @@
     }
 
     .q-invoice-page #invoiceForm td.labelsRightTable{
-        width: 20%;
+        width: 30%;
     }
 
     .q-invoice-page div#invoiceInputTables{
@@ -478,6 +483,11 @@
 }
 
 @media only screen and (max-width:782px){
+
+    .q-invoice-page #bank1::before,
+.q-invoice-page #bank2::before{
+    margin: 0.4375rem !important;
+}
 
     .q-invoice-page div#edit-invoice{
         margin-left: 20px;
