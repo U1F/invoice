@@ -5,21 +5,35 @@ let saveContactDiv = ''
 let contactIDtoDelete = ''
 let rowOfDeletedContact = ''
 jQuery(function ($) {
+
+  function displaySuccess () {
+    $('#wpbody-content').prepend(
+      '<div class="qinvoiceMessage messageSuccess">' +
+      '<span> Contact succesfully saved! </span>' +
+      '</div>')
+
+    $('.messageSuccess').delay(5000).fadeOut(800)
+  }
+
+  function displayFail (details, duration) {
+    $('#wpbody-content').prepend(
+      '<div class="qinvoiceMessage messageFail">' +
+      '<span> Something went wrong! <br>' + details + ' <br><br> Please refresh the page.</span>' +
+      '</div>')
+
+    $('.messageFail').delay(duration).fadeOut(800)
+  }
+
   jQuery(document).ready(function ($) {
     $('#qiContactForm').ajaxForm({
+      beforeSerialize: function($form, options) {
+        $('#saveContact').attr('disabled', 'disabled');
+      },
       success: function (response) {
         console.log('response:')
         console.log(response)
         $('#qiContactForm').trigger('reset')
         document.getElementById('contactOverlay').style.display = 'none'
-
-        // TODO Julian nach Success Meldung fragen
-        $('#wpbody-content')
-          .prepend('<div class="qinvoiceMessage messageSuccess">' +
-                        '<span>Contact successfully saved!</span>' +
-                        '</div>')
-
-        $('.messageSuccess').delay(1000).fadeOut(800)
 
         const obj = JSON.parse(response)
         if (obj.type === 'save') {
@@ -27,6 +41,16 @@ jQuery(function ($) {
         } else if (obj.type === 'update') {
           changeUpdatedContactRow(JSON.parse(response).contactData, JSON.parse(response).id)
         }
+
+        $('#saveContact').prop('disabled', false);
+
+        displaySuccess();
+      },
+      error: function (response){
+        $('#saveContact').prop('disabled', false);
+        $('#qiContactForm').trigger('reset')
+        document.getElementById('contactOverlay').style.display = 'none'
+        displayFail("Can't save Contact Data.", 5000);
       }
     })
 
@@ -35,6 +59,12 @@ jQuery(function ($) {
   })
   $('#qiNewContact').click(function () {
     document.getElementById('contactOverlay').style.display = 'block'
+
+    //reset required field error color
+    $('.qiContactTableInput input[required]').each(function(e){
+      $(this).removeClass('error')
+    })
+
 
     // reset form
     $('#qiContactForm')[0].reset()
@@ -130,9 +160,13 @@ jQuery(function ($) {
     clone.find('span.columnLastName').text(contact.qiContactName)
     clone.find('td.columnCity').text(contact.qiContactCity)
     clone.find('td.columnEmail').text(contact.qiContactEmail)
-
+    //Check Point
+    console.log(id.toString())
+    console.log(clone.val())
+    clone.value = id.toString()
     clone.find('span.editContact').attr('id', 'edit-' + id)
     clone.find('span.deleteContact').attr('id', id)
+   
     $('table#contacts > tbody').append(clone)
   }
 
