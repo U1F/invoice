@@ -129,6 +129,12 @@
 
 .q-invoice-page div#show-contacts{
     overflow-y: scroll;
+    -ms-overflow-style: none;   /* IE and Edge */
+    scrollbar-width: none;      /* Firefox */
+}
+
+.q-invoice-page div#show-contacts::-webkit-scrollbar{
+    display: none;              /* Chrome, Safari, Opera*/
 }
 
 @media only screen and (max-width:1300px){

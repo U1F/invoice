@@ -163,7 +163,7 @@ jQuery(function ($) {
     //Check Point
     console.log(id.toString())
     console.log(clone.val())
-    clone.value = id.toString()
+    clone.attr('value', id.toString())
     clone.find('span.editContact').attr('id', 'edit-' + id)
     clone.find('span.deleteContact').attr('id', id)
    
