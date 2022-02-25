@@ -843,7 +843,27 @@ jQuery(function ($) {
           $('tr.wp-list-table-qInvcLine').eq(0).find('input.itemDiscount').val(removeCurrencySign(formatterEN.format(obj[1][0]['discount'])))
         }
         writeInvoiceDetailstoFormField('select.discountType', 'discount_type', 0)
-        writeInvoiceDetailstoFormField('select.itemTax', 'tax', 0)
+
+        //If the Tax has been set up in settings, it can be selected from the dropdown. If not or if the user has deleted it afterwards it will be shown by an extra options field
+        var taxTypes = $('.itemTax').eq(0).find('option')
+        var taxExists = false;
+        for(i=0; i < taxTypes.length-2; i++){
+          if(obj[1][0]['tax'] == taxTypes[i].value){
+            taxExists = true;
+          }
+        }
+        //if yes just enter the data; if not show the specific options field with row specific data (not saved in wp-settings)
+        if(taxExists){
+          writeInvoiceDetailstoFormField('select.itemTax', 'tax', 0);
+          console.log('yes')
+          taxTypes[taxTypes.length-1].style.display = 'none';
+        } else {
+          taxTypes[taxTypes.length-1].style.display = 'block';
+          taxTypes[taxTypes.length-1].value = obj[1][0]['tax'];
+          taxTypes[taxTypes.length-1].innerText = obj[1][0]['tax'] + '%';
+          taxTypes[taxTypes.length-1].selected = true;
+        }
+        
         for (let i = 1; i < obj[1].length; i++) {
           $('tr.wp-list-table-qInvcLine').eq(i - 1).clone().insertAfter($('tr.wp-list-table-qInvcLine').eq(i - 1))
           writeInvoiceDetailstoFormField('input.amountOfItems', 'amount', i)
@@ -857,7 +877,25 @@ jQuery(function ($) {
             $('tr.wp-list-table-qInvcLine').eq(i).find('input.itemDiscount').val(removeCurrencySign(formatterEN.format(obj[1][i]['discount'])))
           }
           writeInvoiceDetailstoFormField('select.discountType', 'discount_type', i)
-          writeInvoiceDetailstoFormField('select.itemTax', 'tax', i)
+          
+          //If the Tax has been set up in settings, it can be selected from the dropdown. If not or if the user has deleted it afterwards it will be shown by an extra options field
+          taxTypes = $('.itemTax').eq(i).find('option')
+          taxExists = false;
+          for(j=0; j < taxTypes.length-2; j++){
+            if(obj[1][i]['tax'] == taxTypes[j].value){
+              taxExists = true;
+            }
+          }
+          //if yes just enter the data; if not show the specific options field with row specific data (not saved in wp-settings)
+          if(taxExists){
+            writeInvoiceDetailstoFormField('select.itemTax', 'tax', i);
+            taxTypes[taxTypes.length-1].style.display = 'none';
+          } else {
+            taxTypes[taxTypes.length-1].style.display = 'block';
+            taxTypes[taxTypes.length-1].value = obj[1][i]['tax'];
+            taxTypes[taxTypes.length-1].innerText = obj[1][i]['tax'] + '%';
+            taxTypes[taxTypes.length-1].selected = true;
+          }
         }
 
         fetchInvoiceCurrency()

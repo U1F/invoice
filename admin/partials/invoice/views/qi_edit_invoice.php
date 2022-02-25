@@ -580,6 +580,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                 <option value="0" 
                                     
                                 ><?php echo __('None', 'Ev'); ?></option>
+                                <option value=""></option>
 
                             </select>
 
