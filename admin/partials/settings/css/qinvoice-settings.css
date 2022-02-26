@@ -36,7 +36,7 @@
 }
 
 .q-invoice-page #firstColumn .containerFirst {
-    min-height: 500px;
+    min-height: 520px;
 }
 
 .q-invoice-page #secondColumn {
@@ -68,7 +68,7 @@
 }
 
 .q-invoice-page #thirdColumn .containerFirst{
-    min-height: 500px;
+    min-height: 520px;
 }
 
 .q-invoice-page section.invoiceSettings h2 {
@@ -316,14 +316,14 @@ section.invoiceSettings input[id^="tax"] {
 }
 
 .q-invoice-page #qi_contactFormHeightMod {
-    height:500px;
+    height:520px;
 }
 
 .q-invoice-page .text_details_input_mod textarea{
     min-height: 64px;
 }
 
-@media only screen and (max-width:1275px){
+@media only screen and (max-width:1320px){
 
     .q-invoice-page #qi_contactFormHeightMod,
     .q-invoice-page .containerFirst,

@@ -62,11 +62,12 @@
     padding-bottom: 6px;
 }
 
-.q-invoice-page #bank1::before,
-.q-invoice-page #bank2::before{
-    margin: 0.2rem !important;
+@-moz-document url-prefix() {
+    .q-invoice-page #bank1::before,
+    .q-invoice-page #bank2::before{
+        margin: 0.2rem !important;
+    }
 }
-
 .q-invoice-page td.labelsLeftTable {
     width: 30%;
     font-weight: bold;
@@ -515,7 +516,7 @@
 
 }
 
-@media only screen and (max-width:590px){
+@media only screen and (max-width:600px){
 
     .q-invoice-page #invoiceForm div#invoice-sums{
         margin-left: 0px;

@@ -361,7 +361,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $this->addSettingsField("city", "text", "pluginPage", 1);
             
              
-            /*add_settings_field(
+            add_settings_field(
                 'qi_settings' ."logoFileUrl", 
                 null, 
                 [$this, 'hideInput'],
@@ -369,11 +369,12 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 'qi_'.'pluginPage'.'_section',
                 $array = [
                     "name" => "logo File Url",
-                    "type" => "text"
+                    "type" => "text",
+                    "class" => "hide_settings_field"
                 ]
-            );*/
+            );
 
-            /*add_settings_field(
+            add_settings_field(
                 'qi_settings' ."logoFileFile", 
                 null,
                 [$this, 'hideInput'],
@@ -381,9 +382,10 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 'qi_'.'pluginPage'.'_section',
                 $array = [
                     "name" => "logo File File",
-                    "type" => "text"
+                    "type" => "text",
+                    "class" => "hide_settings_field"
                 ]
-            );*/
+            );
 
             add_settings_field(
                 'qi_settingsLogoFile', 
@@ -542,9 +544,6 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
             
             $this->addSettingsField("email", "text", "mailPage");
-            $this->addSettingsField("server", "text", "mailPage");
-            $this->addSettingsField("port", "number", "mailPage");       
-            $this->addSettingsField("password", "password", "mailPage");
 
 
             // SETTINGS SECTION INVOICE TEXTS 

@@ -306,7 +306,7 @@ border: 1px solid #dadce1;
   }
 }
 
-@media only screen and (max-width:590px){
+@media only screen and (max-width:600px){
   .q-invoice-page button#qInvc-add-line{
     margin-left: 0px;
   }
