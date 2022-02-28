@@ -45,12 +45,13 @@ jQuery(function ($) {
     $('div#qinv_settings_deleteLogoOverlay').css('display', 'none');
     qinv_settings_removeLogoFile();
   })
-  $('#qinv_settings_uploadLogo').on('click', function(event){
+  /*$('#qinv_settings_uploadLogo').on('click', function(event){
     $('#qinv_settings_logo_message').css('display', 'block');
-  })
- 
+  })*/
 
-  
+  $('#logoFile').on('change', function(e){
+    $('.submit #saveSettings').click();
+  })
 
   jQuery(document).ready(function ($) {
     const currencySignInput = $('#currencySign').clone()

@@ -361,7 +361,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $this->addSettingsField("city", "text", "pluginPage", 1);
             
              
-            add_settings_field(
+            /*add_settings_field(
                 'qi_settings' ."logoFileUrl", 
                 null, 
                 [$this, 'hideInput'],
@@ -385,7 +385,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                     "type" => "text",
                     "class" => "hide_settings_field"
                 ]
-            );
+            );*/
 
             add_settings_field(
                 'qi_settingsLogoFile', 
