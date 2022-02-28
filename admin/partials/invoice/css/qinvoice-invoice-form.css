@@ -601,3 +601,14 @@
     }
 
 }
+
+@media only screen and (max-width:400px){
+
+    .q-invoice-page #invoiceForm div#invoiceInputTableRight,
+    .q-invoice-page div#invoiceInputTableLeft{
+        min-width: 280px;
+    }
+    .q-invoice-page div#invoiceInputTables{
+        overflow-y: scroll;
+    }
+}

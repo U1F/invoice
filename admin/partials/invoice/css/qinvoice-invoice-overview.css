@@ -300,7 +300,7 @@ q-invoice-page dashicons-download {
     }
 
     .q-invoice-page table#tableInvoices .columnEdit{
-        width: 80px!important;
+        width: 60px!important;
     }
 
 }
