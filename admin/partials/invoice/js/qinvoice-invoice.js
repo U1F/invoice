@@ -894,7 +894,8 @@ jQuery(function ($) {
           writeInvoiceDetailstoFormField('input.itemDescription', 'description', i)
           //write in formatted prices and discounts
           if($('#q-invoice-new-dot-dummy').text() == ','){
-            $('tr.wp-list-table-qInvcLine').eq(i).find('input.itemPrice').val(removeCurrencySign(formatterDE.format(obj[1][i]['amount_plan'])))
+            var currencyPlanDE = removeCurrencySign(formatterDE.format(obj[1][i]['amount_plan']))
+            $('tr.wp-list-table-qInvcLine').eq(i).find('input.itemPrice').val(currencyPlanDE.slice(0, currencyPlanDE.length - 1))
             $('tr.wp-list-table-qInvcLine').eq(i).find('input.itemDiscount').val(removeCurrencySign(formatterDE.format(obj[1][i]['discount'].replace(',', '.'))))
           } else{
             $('tr.wp-list-table-qInvcLine').eq(i).find('input.itemPrice').val(removeCurrencySign(formatterEN.format(obj[1][i]['amount_plan'])))
@@ -1171,12 +1172,12 @@ jQuery(function ($) {
     var newAllTotalTotalString = totalTotalArray[0] + "," + totalTotalArray[1].substring(0,2) + " " + currencySign;
 
 
-    $('#qi_totalSumNetto').html(newAllTotalNet.toString().replace('.', ',') + ' ' + currencySign);
+    /*$('#qi_totalSumNetto').html(newAllTotalNet.toString().replace('.', ',') + ' ' + currencySign);
     $('#qi_openSumNetto').html(newOpenTotalNet.toString().replace('.', ',') + ' ' + currencySign);
     $('#qi_cancelledSumNetto').html(newCancelledTotalNet.toString().replace('.', ',') + ' ' + currencySign);
     $('#qi_dunningSumNetto').html(newDunningTotalNet.toString().replace('.', ',') + ' ' + currencySign);
     $('#qi_paidSumNetto').html(newPaidTotalNet.toString().replace('.', ',') + ' ' + currencySign);
-    $('#qi_totalSumTotal').html(newAllTotalTotalString);
+    //$('#qi_totalSumTotal').html(newAllTotalTotalString);
     $('#qi_openSumTotal').html(newOpenTotalTotal.toString().replace('.', ',') + ' ' + currencySign);
     $('#qi_cancelledSumTotal').html(newCancelledTotalTotal.toString().replace('.', ',') + ' ' + currencySign);
     $('#qi_dunningSumTotal').html(newDunningTotalTotal.toString().replace('.', ',') + ' ' + currencySign);
@@ -1185,7 +1186,7 @@ jQuery(function ($) {
     $('#qi_openSumDunning').html(newOpenTotalDun.toString().replace('.', ',') + ' ' + currencySign);
     $('#qi_cancelledSumDunning').html(newCancelledTotalDun.toString().replace('.', ',') + ' ' + currencySign);
     $('#qi_dunningSumDunning').html(newDunningTotalDun.toString().replace('.', ',') + ' ' + currencySign);
-    $('#qi_paidSumDunning').html(newPaidTotalDun.toString().replace('.', ',') + ' ' + currencySign);
+    $('#qi_paidSumDunning').html(newPaidTotalDun.toString().replace('.', ',') + ' ' + currencySign);*/
   }
 
   function formatDate (date) {
