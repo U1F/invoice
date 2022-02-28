@@ -137,7 +137,30 @@ jQuery(function ($) {
     let lineTax = 0
     $('.wp-list-table-qInvcLine').each(function () {
       const amountOfItems = parseInt($(this).find('input.amountOfItems').val())
-      const itemPrice = parseFloat($(this).find('input.itemPrice').val().replace(',','.'))
+      
+      //get item Price and handle different writing systems like 1.000 = 1000
+      var itemPrice = 0
+      var itemPriceArray = $(this).find('input.itemPrice').val().replace(',','.').split(".")
+      if(itemPriceArray.length > 2){
+        console.log('long')
+        itemPriceString = ''
+        for(i = 0; i < itemPriceArray.length - 1; i++){
+          itemPriceString = itemPriceString + itemPriceArray[i]
+        }
+        itemPrice = parseFloat(itemPriceString + '.' + itemPriceArray[itemPriceArray.length - 1])
+        console.log(itemPriceArray[itemPriceArray.length - 1])
+        console.log(itemPrice)
+      } else {
+        console.log('short')
+        console.log(itemPriceArray[itemPriceArray.length - 1].length)
+        if(itemPriceArray[itemPriceArray.length - 1].length > 2){
+          itemPrice = parseFloat($(this).find('input.itemPrice').val().replace(',','').replace('.', ''))
+        } else{
+          itemPrice = parseFloat($(this).find('input.itemPrice').val().replace(',','.'))
+        }
+        console.log(itemPrice)
+      }
+      
       const discountOnItem = parseFloat($(this).find('input.itemDiscount').val().replace(',', '.'))
       let discountedPrice = 0
       let lineSum = 0
@@ -836,7 +859,8 @@ jQuery(function ($) {
         writeInvoiceDetailstoFormField('input.itemDescription', 'description', 0)
         //write in formatted prices and discounts
         if($('#q-invoice-new-dot-dummy').text() == ','){
-          $('tr.wp-list-table-qInvcLine').eq(0).find('input.itemPrice').val(removeCurrencySign(formatterDE.format(obj[1][0]['amount_plan'])))
+          var currencyPlanDE = removeCurrencySign(formatterDE.format(obj[1][0]['amount_plan']))
+          $('tr.wp-list-table-qInvcLine').eq(0).find('input.itemPrice').val(currencyPlanDE.slice(0, currencyPlanDE.length - 1))
           $('tr.wp-list-table-qInvcLine').eq(0).find('input.itemDiscount').val(removeCurrencySign(formatterDE.format(obj[1][0]['discount'].replace(',', '.'))))
         } else{
           $('tr.wp-list-table-qInvcLine').eq(0).find('input.itemPrice').val(removeCurrencySign(formatterEN.format(obj[1][0]['amount_plan'])))
