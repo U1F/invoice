@@ -9,7 +9,7 @@
 .q-invoice-page #qiContactPopup{
     display: block;
     margin: auto;
-    margin-top: 112px;
+    margin-top: 93px;
     margin-bottom: 78px;
     width:25%;
     padding: 12px 40px;
@@ -164,7 +164,12 @@
 @media only screen and (max-width:782px){
 
     .q-invoice-page #qiContactPopup{
-        width: 70%!important;
+        width: auto;
+        margin-left: 46px;
+        margin-right: 46px;
+        width: auto;
+        min-width: 350px;
+        overflow-y: scroll;
     }
 
     
