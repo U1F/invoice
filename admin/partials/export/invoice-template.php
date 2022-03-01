@@ -68,14 +68,16 @@ td.invoiceItemsHeader {
                 >
                     <?php 
 
-                        $logoImageSource = $_SERVER['DOCUMENT_ROOT']. 
+                        $logoImageFile = $_SERVER['DOCUMENT_ROOT']. 
                             dirname($_SERVER['PHP_SELF']). 
                             "files/none_5002.png";
-
+                        
+                        echo $logoImageFile;
                         if (get_option('qi_settings')['logoFileUrl']) {
                             $logoImageURL = get_option('qi_settings')['logoFileUrl'];
 				    		$logoImageFile = get_option('qi_settings')['logoFileFile'];
                         }
+                        echo $logoImageFile;
                         $mimetype =  wp_get_image_mime( $logoImageFile );
                         $imagedata = file_get_contents($logoImageFile);
              	    	$base64 = base64_encode($imagedata);
