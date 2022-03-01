@@ -36,7 +36,7 @@ jQuery(function ($) {
     //Add Currency Symbols here, that will be added with any currency Formatter like formatterDE or formatterEN
     value = value.replace("€", "");
     value = value.replace("$", "");
-    value = value.replace(" ", "");
+    value = value.replace(/\s+/g, '');
     return value;
 
   }
@@ -142,23 +142,17 @@ jQuery(function ($) {
       var itemPrice = 0
       var itemPriceArray = $(this).find('input.itemPrice').val().replace(',','.').split(".")
       if(itemPriceArray.length > 2){
-        console.log('long')
         itemPriceString = ''
         for(i = 0; i < itemPriceArray.length - 1; i++){
           itemPriceString = itemPriceString + itemPriceArray[i]
         }
         itemPrice = parseFloat(itemPriceString + '.' + itemPriceArray[itemPriceArray.length - 1])
-        console.log(itemPriceArray[itemPriceArray.length - 1])
-        console.log(itemPrice)
       } else {
-        console.log('short')
-        console.log(itemPriceArray[itemPriceArray.length - 1].length)
         if(itemPriceArray[itemPriceArray.length - 1].length > 2){
           itemPrice = parseFloat($(this).find('input.itemPrice').val().replace(',','').replace('.', ''))
         } else{
           itemPrice = parseFloat($(this).find('input.itemPrice').val().replace(',','.'))
         }
-        console.log(itemPrice)
       }
       
       const discountOnItem = parseFloat($(this).find('input.itemDiscount').val().replace(',', '.'))
@@ -831,7 +825,6 @@ jQuery(function ($) {
       },
       success: function (response, textStatus, XMLHttpRequest) {
         obj = JSON.parse(response)
-        console.log(obj[0][0].paydate)
         
         writeInvoiceHeadertoFormField('#invoice_id', 'id')
         writeInvoiceHeadertoFormField('#prefix ', 'prefix')
@@ -847,8 +840,7 @@ jQuery(function ($) {
         if (obj[0][0].bank === '2') {
           $('td.inputsRightTable input#bank2').attr('checked', 'true')
         }
-        //currently you cant open a paid invoice so their is no need for the if
-        if (!(obj[0][0]['paydate'] != '0000-00-00')){
+        if (obj[0][0]['paydate'] != '0000-00-00'){
           $('#invoice_form_paid_toggle').prop("checked", true);
         } else{
           $('#invoice_form_paid_toggle').prop("checked", false);
@@ -879,7 +871,6 @@ jQuery(function ($) {
         //if yes just enter the data; if not show the specific options field with row specific data (not saved in wp-settings)
         if(taxExists){
           writeInvoiceDetailstoFormField('select.itemTax', 'tax', 0);
-          console.log('yes')
           taxTypes[taxTypes.length-1].style.display = 'none';
         } else {
           taxTypes[taxTypes.length-1].style.display = 'block';
@@ -979,11 +970,9 @@ jQuery(function ($) {
           $('#qinv_saveContactCheckbox').val('new');
         }
         if (obj[0][0].paydate == "0000-00-00"){
-          console.log('invoice is open')
           $('#invoiceForm   *').prop('disabled', false )
         }
         else {
-          console.log('invoice is paid')
           //$('#invoiceForm > *').css("color", "blue")
           $('#invoiceForm   *').prop('disabled', true )
           //$('#invoiceForm *').prop('read-only', true )
@@ -1097,12 +1086,49 @@ jQuery(function ($) {
     $('table#tableInvoices tr:last').after(sumRowBackup)
     //hold contact list up to date
     fetchContacts()
-
     q_invoice_RecalcSums(
-      parseFloat(((row.find('td.columnTotal').text()).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.')),
-      parseFloat(((row.find('td.columnNet').text()).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.')),
-      0.0
+      q_invoice_cleanUpNumber(row.find('td.columnTotal').text()),
+      q_invoice_cleanUpNumber(row.find('td.columnNet').text()),
+      0.0      
     );
+  }
+
+/**
+ * Function to clean a String value retrieved from the main Invoice table. This should have the Pattern (N=Number, D=Decimal) NNN[.||,]NNN[.||,]DD[SPACE][€||$].
+ * @return The number as a float value without Thousand dots or currency sign
+ * @param {String from Invoice Main Page holding a number with Currency Sign like: 123.123,44[SPACE][Currency_Sign]} dirtyNumber 
+ */
+  function q_invoice_cleanUpNumber(dirtyNumber){
+    var cleanNumber = 0.0
+    dirtyNumber = dirtyNumber.toString()
+    //remove space and currency Sign --> 123.123,44
+    dirtyNumber = removeCurrencySign(dirtyNumber);
+    //make all dot types to '.' --> 123.123.44
+    dirtyNumber = dirtyNumber.replace(',', '.')
+    //split the array and investigate the pattern of the number -- [123][123][44]
+    var dirtyNumberArray = dirtyNumber.split('.')
+    //min one dot seperator means min two array elements -->  thousands seperated by a dot or decimals seperated by a dot or both
+    if(dirtyNumberArray.length > 1){
+      //last array Element is a thousands seperated when it contains more than two digits or decimals seperated otherwise
+      if(dirtyNumberArray[dirtyNumberArray.length - 1].length > 2){
+        dirtyNumber = dirtyNumberArray[0]
+        for(i = 1; i < dirtyNumberArray.length; i++){
+          dirtyNumber = dirtyNumber + dirtyNumberArray[i]
+        }
+        cleanNumber = parseFloat(dirtyNumber)
+      }else{
+        dirtyNumber = dirtyNumberArray[0]
+        for(i = 1; i < dirtyNumberArray.length - 1; i++){
+          dirtyNumber = dirtyNumber + dirtyNumberArray[i]
+        }
+        dirtyNumber = dirtyNumber + '.' + dirtyNumberArray[dirtyNumberArray.length - 1]
+        cleanNumber = parseFloat(dirtyNumber)
+      }
+    } else{
+      cleanNumber = parseFloat(dirtyNumber)
+    }
+    return cleanNumber;
+    
   }
 
   /**
@@ -1112,7 +1138,7 @@ jQuery(function ($) {
    * @param {*} modifiedDun 
    */
   function q_invoice_RecalcSums(modifiedTotal, modifiedNet, modifiedDun){
-    //Rows haben folgende Attribute: (paid || dunning edit || open edit) && (cancelled || active)
+    //Rows haben folgende Attribute: (paid edit active) || [(dunning edit || open edit) && (cancelled || active)]
 
     //get all rows, that exist on current page for each class attribute
     var openTotalRows = $(".open.active td.columnTotal span");
@@ -1128,65 +1154,88 @@ jQuery(function ($) {
     var paidNetRows = $(".paid td.columnNet span");
     var paidDunRows = $(".paid td.columnDunning span");
 
+    var allTotalRows = $(".q_invoice-content-row td.columnTotal span");
+    var allNetRows = $(".q_invoice-content-row td.columnNet span");
+    var allDunRows = $(".q_invoice-content-row td.columnDun span");
+
     var newOpenTotalNet = modifiedNet;
     var newOpenTotalTotal = modifiedTotal;
     var newOpenTotalDun = modifiedDun;
     for(var i = 0; i < openTotalRows.length; i++){
-      newOpenTotalTotal = newOpenTotalTotal + parseFloat(((openTotalRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
-      newOpenTotalNet = newOpenTotalNet + parseFloat(((openNetRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
-      //newOpenTotalDun = newOpenTotalDun + parseFloat(((openDunRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+      newOpenTotalTotal = newOpenTotalTotal + q_invoice_cleanUpNumber(openTotalRows[i].innerHTML);
+      newOpenTotalNet = newOpenTotalNet + q_invoice_cleanUpNumber(openNetRows[i].innerHTML);
+      //newOpenTotalDun = newOpenTotalDun + q_invoice_cleanUpNumber(openDunRows[i].innerHTML);
     }
 
     var newCancelledTotalNet = 0.00;
     var newCancelledTotalTotal = 0.00;
     var newCancelledTotalDun = 0.00;
     for(var i = 0; i < cancelledTotalRows.length; i++){
-      newCancelledTotalTotal = newCancelledTotalTotal + parseFloat(((cancelledTotalRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
-      newCancelledTotalNet = newCancelledTotalNet + parseFloat(((cancelledNetRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
-      //newCancelledTotalDun = newCancelledTotalDun + parseFloat(((cancelledDunRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+      newCancelledTotalTotal = newCancelledTotalTotal + q_invoice_cleanUpNumber(cancelledTotalRows[i].innerHTML);
+      newCancelledTotalNet = newCancelledTotalNet + q_invoice_cleanUpNumber(cancelledNetRows[i].innerHTML);
+      //newCancelledTotalDun = newCancelledTotalDun + q_invoice_cleanUpNumber(cancelledDunRows[i].innerHTML);
     }
 
     var newDunningTotalNet = 0.00;
     var newDunningTotalTotal = 0.00;
     var newDunningTotalDun = 0.00;
     for(var i = 0; i < dunningTotalRows.length; i++){
-      newDunningTotalTotal = newDunningTotalTotal + parseFloat(((dunningTotalRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
-      newDunningTotalNet = newDunningTotalNet + parseFloat(((dunningNetRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
-      //newDunningTotalDun = newDunningTotalDun + parseFloat(((dunningDunRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+      newDunningTotalTotal = newDunningTotalTotal + q_invoice_cleanUpNumber(dunningTotalRows[i].innerHTML);
+      newDunningTotalNet = newDunningTotalNet + q_invoice_cleanUpNumber(dunningNetRows[i].innerHTML);
+      //newDunningTotalDun = newDunningTotalDun + q_invoice_cleanUpNumber(dunningDunRows[i].innerHTML);
     }
 
     var newPaidTotalNet = 0.00;
     var newPaidTotalTotal = 0.00;
     var newPaidTotalDun = 0.00;
     for(var i = 0; i < paidTotalRows.length; i++){
-      newPaidTotalTotal = newPaidTotalTotal + parseFloat(((paidTotalRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
-      newPaidTotalNet = newPaidTotalNet + parseFloat(((paidNetRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
-      //newPaidTotalDun = newPaidTotalDun + parseFloat(((paidDunRows[i].innerHTML).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.'));
+      newPaidTotalTotal = newPaidTotalTotal + q_invoice_cleanUpNumber(paidTotalRows[i].innerHTML);
+      newPaidTotalNet = newPaidTotalNet + q_invoice_cleanUpNumber(paidNetRows[i].innerHTML);
+      //newPaidTotalDun = newPaidTotalDun + q_invoice_cleanUpNumber(paidDunRows[i].innerHTML);
     }
 
-    var newAllTotalNet = newPaidTotalNet + newDunningTotalNet + newOpenTotalNet + newCancelledTotalNet;
-    var newAllTotalDun = newPaidTotalDun + newDunningTotalDun + newOpenTotalDun + newCancelledTotalDun;
+    var newAllTotalNet = modifiedNet;
+    var newAllTotalDun = modifiedDun;
+    var newAllTotalTotal = modifiedTotal;
+    for(var i = 0; i < allTotalRows.length; i++){
+      newAllTotalTotal = newAllTotalTotal + q_invoice_cleanUpNumber(allTotalRows[i].innerHTML);
+      newAllTotalNet = newAllTotalNet + q_invoice_cleanUpNumber(allNetRows[i].innerHTML);
+      //newAllTotalDun = newAllTotalDun + q_invoice_cleanUpNumber(allDunRows[i].innerHTML);
+    }
 
-    var newAllTotalTotal = newPaidTotalTotal + newDunningTotalTotal + newOpenTotalTotal + newCancelledTotalTotal;
-    var totalTotalArray = (newAllTotalTotal.toString() + '.00').replace('.', ',').split(",");
-    var newAllTotalTotalString = totalTotalArray[0] + "," + totalTotalArray[1].substring(0,2) + " " + currencySign;
-
-
-    /*$('#qi_totalSumNetto').html(newAllTotalNet.toString().replace('.', ',') + ' ' + currencySign);
-    $('#qi_openSumNetto').html(newOpenTotalNet.toString().replace('.', ',') + ' ' + currencySign);
-    $('#qi_cancelledSumNetto').html(newCancelledTotalNet.toString().replace('.', ',') + ' ' + currencySign);
-    $('#qi_dunningSumNetto').html(newDunningTotalNet.toString().replace('.', ',') + ' ' + currencySign);
-    $('#qi_paidSumNetto').html(newPaidTotalNet.toString().replace('.', ',') + ' ' + currencySign);
-    //$('#qi_totalSumTotal').html(newAllTotalTotalString);
-    $('#qi_openSumTotal').html(newOpenTotalTotal.toString().replace('.', ',') + ' ' + currencySign);
-    $('#qi_cancelledSumTotal').html(newCancelledTotalTotal.toString().replace('.', ',') + ' ' + currencySign);
-    $('#qi_dunningSumTotal').html(newDunningTotalTotal.toString().replace('.', ',') + ' ' + currencySign);
-    $('#qi_paidSumTotal').html(newPaidTotalTotal.toString().replace('.', ',') + ' ' + currencySign);
-    $('#qi_totalSumDunning').html(newAllTotalDun.toString().replace('.', ',') + ' ' + currencySign);
-    $('#qi_openSumDunning').html(newOpenTotalDun.toString().replace('.', ',') + ' ' + currencySign);
-    $('#qi_cancelledSumDunning').html(newCancelledTotalDun.toString().replace('.', ',') + ' ' + currencySign);
-    $('#qi_dunningSumDunning').html(newDunningTotalDun.toString().replace('.', ',') + ' ' + currencySign);
-    $('#qi_paidSumDunning').html(newPaidTotalDun.toString().replace('.', ',') + ' ' + currencySign);*/
+    if($('#q-invoice-new-dot-dummy').text() == ','){
+      $('#qi_totalSumNetto').html(removeCurrencySign(formatterDE.format(newAllTotalNet)) + ' ' + currencySign);
+      $('#qi_openSumNetto').html(removeCurrencySign(formatterDE.format(newOpenTotalNet)) + ' ' + currencySign);
+      $('#qi_cancelledSumNetto').html(removeCurrencySign(formatterDE.format(newCancelledTotalNet)) + ' ' + currencySign);
+      $('#qi_dunningSumNetto').html(removeCurrencySign(formatterDE.format(newDunningTotalNet)) + ' ' + currencySign);
+      $('#qi_paidSumNetto').html(removeCurrencySign(formatterDE.format(newPaidTotalNet)) + ' ' + currencySign);
+      $('#qi_totalSumTotal').html(removeCurrencySign(formatterDE.format(newAllTotalTotal)) + ' ' + currencySign);
+      $('#qi_openSumTotal').html(removeCurrencySign(formatterDE.format(newOpenTotalTotal)) + ' ' + currencySign);
+      $('#qi_cancelledSumTotal').html(removeCurrencySign(formatterDE.format(newCancelledTotalTotal)) + ' ' + currencySign);
+      $('#qi_dunningSumTotal').html(removeCurrencySign(formatterDE.format(newDunningTotalTotal)) + ' ' + currencySign);
+      $('#qi_paidSumTotal').html(removeCurrencySign(formatterDE.format(newPaidTotalTotal)) + ' ' + currencySign);
+      $('#qi_totalSumDunning').html(removeCurrencySign(formatterDE.format(newAllTotalDun)) + ' ' + currencySign);
+      $('#qi_openSumDunning').html(removeCurrencySign(formatterDE.format(newOpenTotalDun)) + ' ' + currencySign);
+      $('#qi_cancelledSumDunning').html(removeCurrencySign(formatterDE.format(newCancelledTotalDun)) + ' ' + currencySign);
+      $('#qi_dunningSumDunning').html(removeCurrencySign(formatterDE.format(newDunningTotalDun)) + ' ' + currencySign);
+      $('#qi_paidSumDunning').html(removeCurrencySign(formatterDE.format(newPaidTotalDun)) + ' ' + currencySign);
+    } else{
+      $('#qi_totalSumNetto').html(removeCurrencySign(formatterEN.format(newAllTotalNet)) + ' ' + currencySign);
+      $('#qi_openSumNetto').html(removeCurrencySign(formatterEN.format(newOpenTotalNet)) + ' ' + currencySign);
+      $('#qi_cancelledSumNetto').html(removeCurrencySign(formatterEN.format(newCancelledTotalNet)) + ' ' + currencySign);
+      $('#qi_dunningSumNetto').html(removeCurrencySign(formatterEN.format(newDunningTotalNet)) + ' ' + currencySign);
+      $('#qi_paidSumNetto').html(removeCurrencySign(formatterEN.format(newPaidTotalNet)) + ' ' + currencySign);
+      $('#qi_totalSumTotal').html(removeCurrencySign(formatterEN.format(newAllTotalTotal)) + ' ' + currencySign);
+      $('#qi_openSumTotal').html(removeCurrencySign(formatterEN.format(newOpenTotalTotal)) + ' ' + currencySign);
+      $('#qi_cancelledSumTotal').html(removeCurrencySign(formatterEN.format(newCancelledTotalTotal)) + ' ' + currencySign);
+      $('#qi_dunningSumTotal').html(removeCurrencySign(formatterEN.format(newDunningTotalTotal)) + ' ' + currencySign);
+      $('#qi_paidSumTotal').html(removeCurrencySign(formatterEN.format(newPaidTotalTotal)) + ' ' + currencySign);
+      $('#qi_totalSumDunning').html(removeCurrencySign(formatterEN.format(newAllTotalDun)) + ' ' + currencySign);
+      $('#qi_openSumDunning').html(removeCurrencySign(formatterEN.format(newOpenTotalDun)) + ' ' + currencySign);
+      $('#qi_cancelledSumDunning').html(removeCurrencySign(formatterEN.format(newCancelledTotalDun)) + ' ' + currencySign);
+      $('#qi_dunningSumDunning').html(removeCurrencySign(formatterEN.format(newDunningTotalDun)) + ' ' + currencySign);
+      $('#qi_paidSumDunning').html(removeCurrencySign(formatterEN.format(newPaidTotalDun)) + ' ' + currencySign);
+    }
   }
 
   function formatDate (date) {
@@ -1261,8 +1310,8 @@ jQuery(function ($) {
       clone.find('span.deleteRow').attr('value', id)
 
       q_invoice_RecalcSums(
-        parseFloat(((clone.find('td.columnTotal').text()).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.')),
-        parseFloat(((clone.find('td.columnNet').text()).replace(/\s+/g, '').split(currencySign, 1)[0]).replace(',', '.')),
+        q_invoice_cleanUpNumber(clone.find('td.columnTotal').text()),
+        q_invoice_cleanUpNumber(clone.find('td.columnNet').text()),
         0.0
       );
 
