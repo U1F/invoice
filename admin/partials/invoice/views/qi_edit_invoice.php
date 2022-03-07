@@ -76,11 +76,6 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                         required
                                         
                                     >
-                                    
-                                    <?php /*<span style="display:none"
-                                        id="inputDashiconCompanyRegister" 
-                                        class="dashicons dashicons-admin-users">
-                                    </span>*/ ?>
 
                                     <div id='autocompleteCompany' class='autocompleteDIV' style="display:none;">
                                         <strong>Matching Contacts</strong>

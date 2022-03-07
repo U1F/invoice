@@ -106,10 +106,6 @@ jQuery(function ($) {
     
   })
 
-  /*$('#invoiceFormInputsLeft').on('mouseover', 'div.autocompleteButton', function () {
-    fillContactDataInInvoiceForm($(this).attr('id'))
-  })*/
-
   function fillContactDataInInvoiceForm (id) {
     for (let i = 0; i < contactData[0].length; i++) {
       if (id === contactData[0][i].id) {
@@ -136,32 +132,8 @@ jQuery(function ($) {
 
         $('#contactRegister').css('display', 'none')
       }
-    } /*else if ($(event.target).is('#inputDashiconCompanyRegister')) {
-      // $("#contactRegister").css("display", "block");
-    }*/ else {
+    } else {
       $('#contactRegister').css('display', 'none')
     }
   })
-
-  /*$('#inputDashiconCompanyRegister').click(function (event) {
-    $('#contacts > tbody').empty()
-    $('#contactRegister').css('display', 'block')
-    for (let i = 0; i < contactData[0].length; i++) {
-      $('#contacts > tbody').append(
-        '<tr ' +
-                     "id='" + contactData[0][i].id + "'" +
-                     "class='contactRegisterRow'>" +
-                     "<td class='first contactRegisterData'>" +
-                         contactData[0][i].company +
-                     '</td>' +
-                     "<td class='contactRegisterData'>" +
-                         contactData[0][i].firstname + ' ' +
-                         contactData[0][i].name +
-                     '</td>' +
-                     "<td class='last contactRegisterData'>" +
-                         contactData[0][i].city +
-                     '</td>' +
-                 '</tr>')
-    }
-  })*/
 })

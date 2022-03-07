@@ -41,25 +41,6 @@ jQuery(function ($) {
 
   }
 
-  /*function addPointToThousands (num) {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
-  }*/
-
-  /**
-     *
-     * @param {*} num
-     * @returns num
-     */
-  /*function currencyFormatDE (num) {
-    return (
-      num
-        .toFixed(2)
-        .replace('.', ',') // replace decimal point character with ,
-      // .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
-        .replace(/(\d)(?=(\d{6})+(?!\d))/g, '$1.')
-    )
-  }*/
-
   function recalcTotalSum () {
     const taxes = []
     let netSum = 0
