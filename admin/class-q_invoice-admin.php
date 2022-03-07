@@ -1205,7 +1205,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          *
          * @since 1.0.0
          */
-        public function makeFilename($invoiceID) 
+        public function makeFilename($invoiceID, $fileType='invoice') 
         {
             $invoiceDate = Interface_Invoices::getInvoiceDataItem($invoiceID, "invoice_date");
             $invoiceDate = str_replace('-', '_', $invoiceDate);
@@ -1232,7 +1232,10 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 $invoiceID. "-".
                 $customerName. "-".
                 $invoiceDate;
-
+            if($fileType != 'invoice'){
+                $filename = $filename."-".$fileType;
+            }
+            
             return $filename;
         }
 
@@ -1264,7 +1267,55 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 $html2pdf->Output(
                     INVOICE_ROOT_PATH . 
                     '/pdf/'.
-                    $this->makeFilename($invoiceID).
+                    $this->makeFilename($invoiceID, 'invoice').
+                    '.pdf', 'F'
+                );
+            } catch (Spipu\Html2Pdf\Exception\Html2PdfException $e) {
+                echo $e;
+                return 'fail';
+                //exit;
+            }
+
+            return 'success';
+            
+        }
+
+        /**
+         * Function printDunningTemplate
+         * 
+         * @param int $invoiceID 
+         * 
+         * @return void
+         *
+         * @since 1.0.0
+         */
+        public function printDunningTemplate($invoiceID, $dunningType)
+        {
+            $nameExtension = 'reminder';
+            if($dunningType == 'reminder'){
+                $nameExtension = 'reminder1';
+            } else if($dunningType == 'dunning1'){
+                $nameExtension = 'reminder2';
+            } else if($dunningType == 'dunning2'){
+                $nameExtension = 'reminder3';
+            }
+            ob_start();
+            include_once INVOICE_ROOT_PATH . 
+            "/admin/partials/export/export.php";
+            exportInvoice($invoiceID, $dunningType);             
+            $exportInv= ob_get_contents();
+            ob_end_clean();
+            include  INVOICE_ROOT_PATH . 
+            //'/admin/partials/export/html2pdf.class.php';
+            '/admin/partials/export/html2pdf/vendor/autoload.php';
+            try {
+                $html2pdf = new Spipu\Html2Pdf\Html2Pdf('P', 'A4', 'de');
+                $html2pdf->writeHTML($exportInv, isset($_GET['vuehtml']));
+                // PDF Name : Invoice/Dunning/etc-$prefix$no-Customername_$datum
+                $html2pdf->Output(
+                    INVOICE_ROOT_PATH . 
+                    '/pdf/'.
+                    $this->makeFilename($invoiceID, $nameExtension).
                     '.pdf', 'F'
                 );
             } catch (Spipu\Html2Pdf\Exception\Html2PdfException $e) {
