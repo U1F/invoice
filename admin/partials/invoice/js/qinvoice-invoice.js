@@ -1524,18 +1524,27 @@ jQuery(function ($) {
 
    jQuery(document).ready(function ($) {
     
-    /*var id_length = $("tbody tr:first td:first span").text().replace(/\s+/g, '').length;
-    if (id_length > 2){
-      var id_width = 12 + ((id_length - 2) * 7);
-    } else{
-      var id_width = 20;
+    var id_length = $("tbody tr:first td:first span").text().replace(/\s+/g, '').length;
+    switch (id_length){
+      case 1: var id_width = '15px';
+        break;
+      case 2: var id_width = '15px';
+        break;
+      case 3: var id_width = '20px';
+        break;
+      case 4: var id_width = '26px';
+        break;
+      case 5: var id_width = '32px';
+        break;
+      case 6: var id_width = '39px';
+        break;
+      case 7: var id_width = '45px';
+        break;
+      default:var id_width = '20px';
+        break;
     }
-    id_width_string = 'width: ' + id_width.toString() + 'px';
-    var ids = document.getElementsByClassName('columnInvoiceID');
-    for(var i = 0; i < ids.length; i++){
-      ids[i].setAttribute('style', id_width_string);
-    }*/
-    //$(".q-invoice-page table#tableInvoices .columnInvoiceID").css("width", id_width);
+  
+    $(".q-invoice-page table#tableInvoices .columnInvoiceID").css("width", id_width);
     
    })
 
