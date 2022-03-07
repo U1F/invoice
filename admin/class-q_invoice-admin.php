@@ -180,6 +180,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 ["name" => "invoice", "partial" => "invoice"],
                 ["name" => "invoice-overview", "partial" => "invoice"],
                 ["name" => "invoice-form", "partial" => "invoice"],
+                ["name" => "dunning",  "partial" => "dunning"],
                 ["name" => "settings","partial" => "settings"],
                 ["name" => "export",  "partial" => "export"],
                 ["name" => "contacts",  "partial" => "contacts"]
@@ -271,6 +272,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
 
             $partialScripts =[
                 ["name" => "invoice", "partial" => "invoice", "dependencies" => []],
+                ["name" => "dunning", "partial" => "dunning", "dependencies" => []],
                 ["name" => "invoice-autocomplete", "partial" => "invoice", "dependencies" => []],
                 ["name" => "contacts", "partial" => "contacts", "dependencies" => []],
                 ["name" => "settings", "partial" => "settings", "dependencies" => []],
@@ -1585,6 +1587,15 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
 
             add_submenu_page(
                 'q_invoice',
+                __('Dunning', 'Ev'),
+                __('Dunning', 'Ev'),
+                'manage_options',
+                'q_dunning',
+                array($this, 'loadDunningPage')
+            );
+
+            add_submenu_page(
+                'q_invoice',
                 __('Contacts', 'Ev'),
                 __('Contacts', 'Ev'),
                 'manage_options',
@@ -1619,6 +1630,21 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 'partials/invoice/q_invoice-admin-invoices.php';
 
             invoice_list(); 
+
+        }
+
+        /**
+         * Function loadDunningPage
+         * 
+         * Load the plugin dunning page partial.
+         * 
+         * @return void         
+         */
+        public function loadDunningPage()
+        {
+
+            include_once plugin_dir_path(__FILE__) .
+                'partials/dunning/q_invoice-admin-dunning.php';
 
         }
 
