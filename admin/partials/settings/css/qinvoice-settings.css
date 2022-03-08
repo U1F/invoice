@@ -82,7 +82,7 @@
     vertical-align: middle;
     font-family: sans-serif;
     font-size: 14px;
-    width: 130px;
+    width: 140px;
     font-weight: bold;
     padding: 0 0 17px 0;
 }
@@ -216,6 +216,12 @@ section.invoiceSettings input[id^="tax"] {
 }
 
 .q-invoice-page section.invoiceSettings input#dunning2 {
+    text-align: right;
+    width: 72px;
+}
+.q-invoice-page section.invoiceSettings input#reminderdaylimit,
+.q-invoice-page section.invoiceSettings input#dunning1daylimit,
+.q-invoice-page section.invoiceSettings input#dunning2daylimit {
     text-align: right;
     width: 72px;
 }

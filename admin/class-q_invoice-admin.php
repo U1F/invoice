@@ -481,13 +481,17 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
 
             add_settings_section(
                 'qi_dunningPage_section',
-                __('Dunning Fees', 'ev'),
+                __('Dunning Details', 'ev'),
                 [$this, 'qiSettingsSectionDunningCallback'],
                 'dunningPage'
             );
             $this->addSettingsField("reminder", "text", "dunningPage");
             $this->addSettingsField("dunning 1", "text", "dunningPage");
             $this->addSettingsField("dunning 2", "text", "dunningPage");
+
+            $this->addSettingsField("reminder day limit", "text", "dunningPage");
+            $this->addSettingsField("dunning 1 day limit", "text", "dunningPage");
+            $this->addSettingsField("dunning 2 day limit", "text", "dunningPage");
             
 
             // SETTINGS SECTION BANK 
@@ -730,7 +734,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             
             
             print "<div class='tableSpacer'>"
-                ."<input type='hidden' value='emtpy'"
+                ."<input type='hidden' value='empty'"
                 ." name='qi_settings[".str_replace(' ', '', $arguments['name'])."]'"
                 ."> <div>";
                 
@@ -1638,15 +1642,6 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
 
             add_submenu_page(
                 'q_invoice',
-                __('Dunning', 'Ev'),
-                __('Dunning', 'Ev'),
-                'manage_options',
-                'q_dunning',
-                array($this, 'loadDunningPage')
-            );
-
-            add_submenu_page(
-                'q_invoice',
                 __('Contacts', 'Ev'),
                 __('Contacts', 'Ev'),
                 'manage_options',
@@ -1681,21 +1676,6 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 'partials/invoice/q_invoice-admin-invoices.php';
 
             invoice_list(); 
-
-        }
-
-        /**
-         * Function loadDunningPage
-         * 
-         * Load the plugin dunning page partial.
-         * 
-         * @return void         
-         */
-        public function loadDunningPage()
-        {
-
-            include_once plugin_dir_path(__FILE__) .
-                'partials/dunning/q_invoice-admin-dunning.php';
 
         }
 
