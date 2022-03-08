@@ -15,6 +15,7 @@ jQuery(function ($) {
   });
   let currencySign = ''
   let lastInvoiceIDtoDelete = 0
+  let currentInvoiceID = 0
   let nonceFieldForSaving = ''
   let nonceFieldForUpdating = ''
   let obj = []
@@ -681,6 +682,60 @@ jQuery(function ($) {
     })
   }
 
+  /**
+   * Handles the on click action on the more-ellepsis dashicon:
+   * Open a dropdown to shwo urther options. Save the clicked invoice ID to get specific data.
+   */
+   $('table#tableInvoices').on('click', '.moreInvoiceOptions', function (event) {
+    $(this).parent().parent().find('div.qinv_moreOptionsDropdownBox').css('display', 'block')
+    currentInvoiceID = event.target.id
+  })
+
+  /**
+   * Close Dropdown when clicked anywhere but on the Dropdown itself
+   */
+  $(document).on('mouseup', function(e){
+    if(!$('div.qinv_moreOptionsDropdownBox').is(e.target) && $('div.qinv_moreOptionsDropdownBox').has(e.target).length === 0){
+      $('div.qinv_moreOptionsDropdownBox').css('display', 'none');
+    }
+  })
+
+  /**
+   * Duplicate the current Invoice but put it in the New Invoice Form to insert it as a new one
+   */
+  $('.duplicateInvoice').on('click', function (event) {
+
+    //close the dropdown
+    $('div.qinv_moreOptionsDropdownBox').css('display', 'none');
+
+    //prepare Form as new Invoice
+    $('h2#formHeaderEdit').hide()
+    $('h2#formHeaderCreate').css('display', 'block')
+    $('#heading-invoice').find('.switchForPaidStatus').hide()
+    $('#loc_id').prop('readonly', false)
+    $('#updateInvoice').hide()
+    $('#saveInvoice').css('display', 'inline')
+    $("input[name='action']").val('saveInvoiceServerSide')
+
+    //hide paid bar
+    $('#heading-invoice').find('.switchForPaidStatus').hide()
+    
+    // Common Task for openning the invoice form
+    reopenInvoiceForm()
+    //Only the nonce for saving is needed
+    $('div#nonceFields').html('')
+    $('div#nonceFields').prepend(nonceFieldForSaving)
+
+
+    // fetch id from span attribute id="edit-n", where  n = id of invoice
+    editInvoice(currentInvoiceID, true)
+
+  })
+
+  /**
+   * Handles the on click action on the delete dashicon:
+   * Open an alert to confirm if a invoice should really be archived.
+   */
   $('table#tableInvoices').on('click', '.deleteRow', function (event) {
     $('div#archiveInvoice').css('display', 'block')
     lastInvoiceIDtoDelete = event.target.id
@@ -795,7 +850,7 @@ jQuery(function ($) {
    * Load invoice Data by ajax and prepare form on success
    * @param {Invoice to be edited} invoiceId 
    */
-  function editInvoice (invoiceId) {
+  function editInvoice (invoiceId, duplicate = false) {
     jQuery.ajax({
       type: 'POST',
       url: q_invoice_ajaxObject.ajax_url,
@@ -807,7 +862,12 @@ jQuery(function ($) {
       success: function (response, textStatus, XMLHttpRequest) {
         obj = JSON.parse(response)
         
-        writeInvoiceHeadertoFormField('#invoice_id', 'id')
+        if(duplicate){
+          fetchLastInvoiceID()
+        }else{
+          writeInvoiceHeadertoFormField('#invoice_id', 'id')
+        }
+        
         writeInvoiceHeadertoFormField('#prefix ', 'prefix')
         writeInvoiceHeadertoFormField('#company', 'company')
         writeInvoiceHeadertoFormField('#additional', 'additional')
@@ -950,7 +1010,7 @@ jQuery(function ($) {
           $('#qinv_saveContactRow').css('display', 'table-row');
           $('#qinv_saveContactCheckbox').val('new');
         }
-        if (obj[0][0].paydate == "0000-00-00"){
+        if (obj[0][0].paydate == "0000-00-00" || duplicate){
           $('#invoiceForm   *').prop('disabled', false )
         }
         else {
@@ -1013,8 +1073,10 @@ jQuery(function ($) {
     if ($(event.target).is('.switch > *')) { return }
     if ($(event.target).is('.columnEdit')) { return }
     if ($(event.target).is('.columnEdit > *')) { return }
+    if ($(event.target).is('.columnEdit div > *')) { return }
     if ($(event.target).is('.columnStatusPaid')) { return }
     if ($(event.target).is('.columnStatusPaid > *')) { return }
+    if ($(event.target).is('.qinv_mainDropdownElement')) { return }
 
     //check if clicked line is a cancelled invoice. On yes prevent form from setting paid status by removing the paid toggle in the form
     if($(this).hasClass('cancelled')){
@@ -1289,6 +1351,9 @@ jQuery(function ($) {
 
       clone.find('span.deleteRow').attr('id', id)
       clone.find('span.deleteRow').attr('value', id)
+
+      clone.find('span.moreInvoiceOptions').attr('id', id)
+      $('#edit-'.id).find('.checkboxForPayment').attr('checked', false)
 
       q_invoice_RecalcSums(
         q_invoice_cleanUpNumber(clone.find('td.columnTotal').text()),
