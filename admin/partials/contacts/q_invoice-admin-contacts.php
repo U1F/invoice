@@ -149,7 +149,7 @@
         </table>
     </div>
 
-    <div id="contactOverlay" class="overlay" style="display:none; left: 0px;">
+    <div id="contactOverlay" class="overlay" style="display:none;">
         <div id="qiContactPopup">
             <h2><?php echo __("New Contact", "ev")?></h2>
             <form 
@@ -323,7 +323,7 @@
                         ); ?>
                     </div>
                 </div>
-                <div id="contactFormButtons" style="padding: 20px 20px 20px 20px">
+                <div id="contactFormButtons" style="padding: 20px 20px 20px 20px; display:flex;">
 
                 <button 
                     type="button" 

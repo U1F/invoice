@@ -8,10 +8,10 @@
 /* Div that frames the form - copied from invoices - make it class?*/
 .q-invoice-page #qiContactPopup{
     display: block;
+    margin: auto;
     margin-top: 93px;
-    margin-left: 222px;
-    margin-right: 45px;
-    margin-bottom: 61px;
+    margin-bottom: 78px;
+    width:25%;
     padding: 12px 40px;
     border: 1px solid white;
     background-color: white;
@@ -137,10 +137,10 @@
     display: none;              /* Chrome, Safari, Opera*/
 }
 
-@media only screen and (max-width:1500px){
+@media only screen and (max-width:1300px){
 
-    .q-invoice-page div#qiContactPopup {
-        margin-right: 61px;
+    .q-invoice-page #qiContactPopup{
+        width: 30%;
     }
 
 }
@@ -153,16 +153,6 @@
     
 }
 
-@media only screen and (max-width:960px){
-
-    .q-invoice-page div#qiContactPopup{
-        margin-left: 50px;
-        margin-right: 16px;
-        margin-top: 48px;
-    }
-
-}
-
 @media only screen and (max-width:850px){
 
     .q-invoice-page td.columnEdit{
@@ -173,10 +163,10 @@
 
 @media only screen and (max-width:782px){
 
-    .q-invoice-page div#qiContactPopup{
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-top: 67px;
+    .q-invoice-page #qiContactPopup{
+        width: auto;
+        margin-left: 46px;
+        margin-right: 46px;
         min-width: 350px;
         overflow-y: scroll;
     }
