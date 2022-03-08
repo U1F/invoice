@@ -89,38 +89,38 @@
 }
 
 
-.q-invoice-page td.columnRowID 
+.q-invoice-page td.contactsColumnRowID 
 {
     padding-left: 20px;
     width:1%;
 }
 
-.q-invoice-page td.columnCompany 
+.q-invoice-page td.contactsColumnCompany 
 {
     width:100px;
 }
 
-.q-invoice-page td.columnName
+.q-invoice-page td.contactsColumnName
 {
     width:100px;
 }
 
-.q-invoice-page td.columnCity
+.q-invoice-page td.contactsColumnCity
 {
     width:100px;
 }
 
-.q-invoice-page td.columnEmail
+.q-invoice-page td.contactsColumnEmail
 {
     width:100px;
 }
 
-.q-invoice-page td.columnStatus
+.q-invoice-page td.contactsColumnStatus
 {
     width:10px;
 }
 
-.q-invoice-page td.columnEdit
+.q-invoice-page td.contactsColumnEdit
 {
     text-align: right;
     padding-right: 20px;
