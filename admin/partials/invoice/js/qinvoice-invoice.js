@@ -577,111 +577,6 @@ jQuery(function ($) {
     }
   }
 
-  // ...............................................
-  // ...............................................
-  // ........####...######...####...##..##..........
-  // .......##..##......##..##..##...####...........
-  // .......######......##..######....##............
-  // .......##..##..##..##..##..##...####...........
-  // .......##..##...####...##..##..##..##..........
-  // ...............................................
-  // ...............................................
-
-  function deleteInvoice (invoiceId) {
-    jQuery.ajax({
-      type: 'POST',
-
-      url: q_invoice_ajaxObject.ajax_url,
-
-      data: {
-        action: 'deleteInvoiceServerSide',
-        _ajax_nonce: q_invoice_ajaxObject.nonce,
-        id: invoiceId
-      },
-      success: function (data) {
-        console.log('Archived Invoice succesfully')
-      },
-      error: function (errorThrown) {
-        console.log(errorThrown)
-      }
-    })
-  }
-
-  function reactivateInvoice (invoiceId) {
-    jQuery.ajax({
-      type: 'POST',
-
-      url: q_invoice_ajaxObject.ajax_url,
-
-      data: {
-        action: 'reactivateInvoiceServerSide',
-        _ajax_nonce: q_invoice_ajaxObject.nonce,
-        id: invoiceId
-      },
-      success: function (data) {
-        console.log('Reactivated Invoice succesfully')
-      },
-      error: function (errorThrown) {
-        console.log(errorThrown)
-      }
-    })
-  }
-
-  function updateInvoiceHeaderItem (invoiceId, data) {
-    jQuery.ajax({
-      type: 'POST',
-      url: q_invoice_ajaxObject.ajax_url,
-      data: {
-        action: 'updateInvoiceHeaderServerSide',
-        _ajax_nonce: q_invoice_ajaxObject.nonce,
-        id: invoiceId,
-        data: data
-      },
-      success: function (response) {
-        if (response) {
-          console.log(response)
-        }
-      },
-      error: function (errorThrown) {
-        console.log(errorThrown)
-      }
-    })
-  }
-
-  function fetchLastInvoiceID () {
-    jQuery.ajax({
-      type: 'POST',
-      url: q_invoice_ajaxObject.ajax_url,
-      data: {
-        action: 'fetchLastIDServerSide',
-        _ajax_nonce: q_invoice_ajaxObject.nonce
-      },
-      success: function (invoiceID) {
-        $('input#invoice_id').val(invoiceID)
-      },
-      error: function (errorThrown) {
-        console.log('Error : ' + errorThrown)
-      }
-    })
-  }
-
-  function fetchInvoiceCurrency () {
-    jQuery.ajax({
-      type: 'POST',
-      url: q_invoice_ajaxObject.ajax_url,
-      data: {
-        action: 'fetchCurrencyServerSide',
-        _ajax_nonce: q_invoice_ajaxObject.nonce
-      },
-      success: function (response) {
-        currencySign = response
-      },
-      error: function (errorThrown) {
-        console.log(errorThrown)
-      }
-    })
-  }
-
   /**
    * Handles the on click action on the more-ellepsis dashicon:
    * Open a dropdown to shwo urther options. Save the clicked invoice ID to get specific data.
@@ -705,6 +600,14 @@ jQuery(function ($) {
    */
   $('.duplicateInvoice').on('click', function (event) {
 
+    duplicateInvoice();
+
+  })
+
+  /**
+   * Extracted as function to bind this funciton later on when creating a new row
+   */
+  function duplicateInvoice(){
     //close the dropdown
     $('div.qinv_moreOptionsDropdownBox').css('display', 'none');
 
@@ -729,8 +632,7 @@ jQuery(function ($) {
 
     // fetch id from span attribute id="edit-n", where  n = id of invoice
     editInvoice(currentInvoiceID, true)
-
-  })
+  }
 
   /**
    * Handles the on click action on the delete dashicon:
@@ -842,6 +744,112 @@ jQuery(function ($) {
     $('#qinv_saveContactCheckbox').val('empty');
     
   })
+
+
+  // ...............................................
+  // ...............................................
+  // ........####...######...####...##..##..........
+  // .......##..##......##..##..##...####...........
+  // .......######......##..######....##............
+  // .......##..##..##..##..##..##...####...........
+  // .......##..##...####...##..##..##..##..........
+  // ...............................................
+  // ...............................................
+
+  function deleteInvoice (invoiceId) {
+    jQuery.ajax({
+      type: 'POST',
+
+      url: q_invoice_ajaxObject.ajax_url,
+
+      data: {
+        action: 'deleteInvoiceServerSide',
+        _ajax_nonce: q_invoice_ajaxObject.nonce,
+        id: invoiceId
+      },
+      success: function (data) {
+        console.log('Archived Invoice succesfully')
+      },
+      error: function (errorThrown) {
+        console.log(errorThrown)
+      }
+    })
+  }
+
+  function reactivateInvoice (invoiceId) {
+    jQuery.ajax({
+      type: 'POST',
+
+      url: q_invoice_ajaxObject.ajax_url,
+
+      data: {
+        action: 'reactivateInvoiceServerSide',
+        _ajax_nonce: q_invoice_ajaxObject.nonce,
+        id: invoiceId
+      },
+      success: function (data) {
+        console.log('Reactivated Invoice succesfully')
+      },
+      error: function (errorThrown) {
+        console.log(errorThrown)
+      }
+    })
+  }
+
+  function updateInvoiceHeaderItem (invoiceId, data) {
+    jQuery.ajax({
+      type: 'POST',
+      url: q_invoice_ajaxObject.ajax_url,
+      data: {
+        action: 'updateInvoiceHeaderServerSide',
+        _ajax_nonce: q_invoice_ajaxObject.nonce,
+        id: invoiceId,
+        data: data
+      },
+      success: function (response) {
+        if (response) {
+          console.log(response)
+        }
+      },
+      error: function (errorThrown) {
+        console.log(errorThrown)
+      }
+    })
+  }
+
+  function fetchLastInvoiceID () {
+    jQuery.ajax({
+      type: 'POST',
+      url: q_invoice_ajaxObject.ajax_url,
+      data: {
+        action: 'fetchLastIDServerSide',
+        _ajax_nonce: q_invoice_ajaxObject.nonce
+      },
+      success: function (invoiceID) {
+        $('input#invoice_id').val(invoiceID)
+      },
+      error: function (errorThrown) {
+        console.log('Error : ' + errorThrown)
+      }
+    })
+  }
+
+  function fetchInvoiceCurrency () {
+    jQuery.ajax({
+      type: 'POST',
+      url: q_invoice_ajaxObject.ajax_url,
+      data: {
+        action: 'fetchCurrencyServerSide',
+        _ajax_nonce: q_invoice_ajaxObject.nonce
+      },
+      success: function (response) {
+        currencySign = response
+      },
+      error: function (errorThrown) {
+        console.log(errorThrown)
+      }
+    })
+  }
 
   //Save existing Contacts for further usage
   let contactData = [];
@@ -1302,6 +1310,11 @@ jQuery(function ($) {
     return year + '-' + month + '-' + day
   }
 
+  /**
+   * Adds a new invoice Row in invoice main table
+   * @param {Invoice Details of the new invoice} invoice 
+   * @param {Id of the new Invoice} id 
+   */
   function addNewInvoiceRow (invoice, id) {
 
     if ($('#q-invoice-new-readonly-dummy').text() === '0') {
@@ -1310,7 +1323,9 @@ jQuery(function ($) {
       const clone = $('table#tableInvoices > tbody').find('tr').first().clone()
       clone.attr('id', 'edit-' + id)
       clone.attr('value', id)
-      clone.find('td.columnRowID').text(1 + parseInt(clone.find('td.columnRowID').text()))
+      clone.find('td.columnInvoiceID span').text(id)
+      clone.find('div.invoiceStatusIcon').removeClass('paid')
+      clone.find('div.invoiceStatusIcon').addClass('open')
       if (invoice.company) {
         var pdfName = invoice.company;
         pdfName = pdfName.replace(/\/+/g, "_");
@@ -1329,31 +1344,36 @@ jQuery(function ($) {
       }
 
       clone.find('td.columnDescription').text(invoice.itemDescription[0])
-      clone.find('td.columnNet').text($('.qInvc-total-summe').eq(0).text() + ' ' + currencySign)
-      clone.find('td.columnTotal').text($('.qInvc-total-brutto-summe').eq(0).text() + ' ' + currencySign)
-      document.getElementById('qi_totalSumTotal').value = document.getElementById('qi_totalSumTotal').value + parseInt($('.qInvc-total-brutto-summe').eq(0).text());
-      document.getElementById('qi_totalSumTotal').innerHTML = document.getElementById('qi_totalSumNetto').value + ' ' + currencySign;
 
       const date = invoice.dateOfInvoice
       // change to german date format
       const formattedDate = date.slice(8, 10) + '.' + date.slice(5, 7) + '.' + date.slice(0, 4)
       clone.find('td.columnDate').text(formattedDate)
 
-      clone.find('td.columnInvoiceID span').text(id)
+      clone.find('td.columnNet').text($('.qInvc-total-summe').eq(0).text() + ' ' + currencySign)
+      clone.find('td.columnTotal').text($('.qInvc-total-brutto-summe').eq(0).text() + ' ' + currencySign)
+      document.getElementById('qi_totalSumTotal').value = document.getElementById('qi_totalSumTotal').value + parseInt($('.qInvc-total-brutto-summe').eq(0).text());
+      document.getElementById('qi_totalSumTotal').innerHTML = document.getElementById('qi_totalSumNetto').value + ' ' + currencySign;
 
+      clone.find('td.columnStatusPaid label input').prop('checked', false)
+
+      //modify download button
       clone.find('a.download').attr('id', 'download-' + id)
       clone.find('a.download').attr('value', id)
-
       var datePieces = formattedDate.split('.');
       var datePDF = datePieces[2] + '_' + datePieces[1] + '_' + datePieces[0];
-
       clone.find('a.download').attr('href', '/wp-content/plugins/q_invoice/pdf/Invoice-' + invoice.prefix + id + '-' + pdfName + '-' + datePDF + '.pdf');
 
       clone.find('span.deleteRow').attr('id', id)
       clone.find('span.deleteRow').attr('value', id)
+      clone.find('span.deleteRow').css('display', 'block')
+
+      clone.find('span.reactivateInvoice').css('display', 'none')
 
       clone.find('span.moreInvoiceOptions').attr('id', id)
-      $('#edit-'.id).find('.checkboxForPayment').attr('checked', false)
+      clone.find('li.duplicateInvoice').on('click', function(e){
+        duplicateInvoice();
+      })
 
       q_invoice_RecalcSums(
         q_invoice_cleanUpNumber(clone.find('td.columnTotal').text()),

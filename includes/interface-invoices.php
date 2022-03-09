@@ -402,7 +402,7 @@ class Interface_Invoices
         $GLOBALS['wpdb']->insert( 
             $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_HEADER,
             array(
-                
+                'id' => $invoice_array['invoice_id'],
                 'prefix' => $invoice_array['prefix'],
                 'invoice_date' => $invoice_array['dateOfInvoice'], 
                 'delivery_date' => $invoice_array['performanceDate'],
@@ -429,7 +429,7 @@ class Interface_Invoices
         
         $arrayLength = count($invoice_array['itemDescription']);
 
-        $detailID = $GLOBALS['wpdb']->insert_id;
+        $detailID = $invoice_array['invoice_id'];
         
         for ($i = 0; $i < $arrayLength; $i++) {
             $GLOBALS['wpdb']->show_errors();
