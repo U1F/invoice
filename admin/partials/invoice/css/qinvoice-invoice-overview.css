@@ -137,7 +137,7 @@
 }
 
 
-.q-invoice-page div#filterButtons div.filterButton input[type=text] {
+.q-invoice-page div.filterButtons div.filterButton input[type=text] {
     padding-left: 2px;
     color: #3c434a;
     background-color: white ;
@@ -158,11 +158,11 @@
     top: unset;
 }
 
-.q-invoice-page div#filterButtons div.filterButton span {
+.q-invoice-page div.filterButtons div.filterButton span {
     vertical-align: middle;
 }
 
-.q-invoice-page div#filterButtons div.filterButton input[type=text]:focus {
+.q-invoice-page div.filterButtons div.filterButton input[type=text]:focus {
     border: 0px;
     box-shadow: 0 0 0 0px;
 }
@@ -307,7 +307,7 @@ q-invoice-page dashicons-download {
         width: 90px;
     }
 
-    .q-invoice-page div#filterButtons div.filterButton input[type="text"]{
+    .q-invoice-page div.filterButtons div.filterButton input[type="text"]{
         width: 60%;
     }
 
@@ -330,7 +330,7 @@ q-invoice-page dashicons-download {
 }
 
 @media only screen and (max-width:500px){
-    .q-invoice-page div#filterButtons div.filterButton input[type="text"]{
+    .q-invoice-page div.filterButtons div.filterButton input[type="text"]{
         width: 40%;
     }
     

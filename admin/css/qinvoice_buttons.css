@@ -48,7 +48,7 @@ border: 1px solid #dadce1;
 }
 
 
-.q-invoice-page div#filterButtons {
+.q-invoice-page div.filterButtons {
     display: flex;
     flex-direction: row;
     justify-content:space-between;
@@ -80,15 +80,20 @@ border: 1px solid #dadce1;
     
 }
 
+.q-invoice-page .settingsFilter div.filterButton{
+  min-width: 14%;
+  width: 14.28%;
+}
 
-.q-invoice-page div#filterButtons div.active button.invoiceButton  {
+
+.q-invoice-page div.filterButtons div.active button.invoiceButton  {
 
     background-color: rgb(34, 113, 177);
     color:white;
     
 }
 
-.q-invoice-page div#filterButtons div.filterButton button{
+.q-invoice-page div.filterButtons div.filterButton button{
     height: inherit;
     border: none;
     background-color: white;
@@ -226,7 +231,7 @@ border: 1px solid #dadce1;
   }
 
 /* Mobiles Dropdown CSS*/
-.q-invoice-page div#mobileFilterButtons {
+.q-invoice-page div.mobileFilterButtons {
   display: none;
   flex-direction: row;
   justify-content:space-between;
@@ -287,7 +292,7 @@ border: 1px solid #dadce1;
     margin-right: 5px;
   }
 
-  .q-invoice-page div#mobileFilterButtons {
+  .q-invoice-page div.mobileFilterButtons {
     display:flex;
   }
 
@@ -295,7 +300,7 @@ border: 1px solid #dadce1;
     display: block;
   }
 
-  .q-invoice-page div#filterButtons {
+  .q-invoice-page div.filterButtons {
     display: none;
   }
 }

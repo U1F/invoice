@@ -189,8 +189,8 @@ jQuery(function ($) {
   // ............................................................................................................................
   // ............................................................................................................................
 
-  $("#filterButtons").on("click",function(){
-    console.log("#filterButtons: 'You clicked me!'")
+  $(".filterButtons").on("click",function(){
+    console.log(".filterButtons: 'You clicked me!'")
     //  paginate()
   })
   // sum has to be omitted 
@@ -432,11 +432,11 @@ jQuery(function ($) {
   });
 
   // Manage UI visibility of filter buttons
-  $('#filterButtons').on('click', 'div.inactive', function (event) {
+  $('.filterButtons').on('click', 'div.inactive', function (event) {
     if ($(event.target).parent().attr('id') === 'filterButtons') {
       return;
     }
-    setFilterButtonInactive($('#filterButtons').find('div.active'))
+    setFilterButtonInactive($('.filterButtons').find('div.active'))
     setFilterButtonActive($(event.target).parent())
     if ($(event.target).parent().attr('id') === 'showAllInvoices') {
       filterInvoices('all')

@@ -19,7 +19,7 @@
 ?>
 
  <div class="page_content">
-     <div id="filterButtons" class="qInvMainSearchable">
+     <div class="filterButtons qInvMainSearchable">
         <div class="filterButton active" id="showAllInvoices">
             <button class="invoiceButton">
                 All
@@ -59,7 +59,7 @@
         
 
      </div>
-    <div id="mobileFilterButtons" class="qInvMainSearchable">
+    <div class="mobileFilterButtons qInvMainSearchable">
         <select name="mobileFilterButtonsDropdown" id="mobileFilterButtonsDropdown">
             <option class="mobileFilterButtonsOption" value="all" selected>All</option>
             <option class="mobileFilterButtonsOption" value="open">Open</option>

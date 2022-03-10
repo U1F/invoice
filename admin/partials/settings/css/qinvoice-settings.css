@@ -5,6 +5,21 @@
 
 */
 
+.q-invoice-page .invoiceSettingsRow{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0px 0px 0x 0px;
+    width: 100%;
+}
+
+.q-invoice-page .settingsHalf{
+    width: 50%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
 .q-invoice-page form#qinvoiceSettings {
     border: 1px solid #dadce1;
     background-color: white;
@@ -35,9 +50,9 @@
     align-self: flex-start;
 }
 
-.q-invoice-page #firstColumn .containerFirst {
+/*.q-invoice-page #firstColumn .containerFirst {
     min-height: 520px;
-}
+}*/
 
 .q-invoice-page #secondColumn {
     width: 33%;
@@ -52,9 +67,9 @@
     align-self: center;
 }
 
-.q-invoice-page #secondColumn .containerFirst {
+/*.q-invoice-page #secondColumn .containerFirst {
     margin-right: 0px;
-}
+}*/
 
 .q-invoice-page #thirdColumn {
     width: 33%;
@@ -67,9 +82,9 @@
     align-self: flex-end;
 }
 
-.q-invoice-page #thirdColumn .containerFirst{
+/*.q-invoice-page #thirdColumn .containerFirst{
     min-height: 520px;
-}
+}*/
 
 .q-invoice-page section.invoiceSettings h2 {
     margin-top: 0px;
@@ -321,23 +336,11 @@ section.invoiceSettings input[id^="tax"] {
     color: rgb(34, 113, 177);
 }
 
-.q-invoice-page #qi_contactFormHeightMod {
-    height:520px;
-}
-
 .q-invoice-page .text_details_input_mod textarea{
     min-height: 64px;
 }
 
 @media only screen and (max-width:1320px){
-
-    .q-invoice-page #qi_contactFormHeightMod,
-    .q-invoice-page .containerFirst,
-    .q-invoice-page .containerSecond {
-        height: auto;
-        min-height: unset!important;
-        margin-bottom: 20px;
-    }
 
     .q-invoice-page #secondColumn{
         margin-left: 0;
@@ -397,12 +400,6 @@ section.invoiceSettings input[id^="tax"] {
         width: 100%
     }
 
-    .q-invoice-page #qi_contactFormHeightMod,
-    .q-invoice-page .containerFirst,
-    .q-invoice-page .containerSecond {
-        height: auto;
-    }
-
     .q-invoice-page section#settingsTable,
     .q-invoice-page #firstColumn,
     .q-invoice-page #secondColumn,
@@ -418,10 +415,10 @@ section.invoiceSettings input[id^="tax"] {
         margin-left: 0px;
     }
 
-    .q-invoice-page .containerSecond,
+    /*.q-invoice-page .containerSecond,
     .q-invoice-page .containerFirst{
         padding-left: 0;
-    }
+    }*/
 
     .q-invoice-page section.invoiceSettings th{
         width: 100%;
