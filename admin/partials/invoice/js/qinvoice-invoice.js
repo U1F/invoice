@@ -742,6 +742,8 @@ jQuery(function ($) {
     $('#qinv_saveContactLabel').text('Save as new Contact?');
     $('#qinv_saveContactRow').hide();
     $('#qinv_saveContactCheckbox').val('empty');
+    //if an paid invoice has been opened before, set all input fields enabled
+    $('#invoiceForm   *').prop('disabled', false );
     
   })
 
@@ -1022,9 +1024,8 @@ jQuery(function ($) {
           $('#invoiceForm   *').prop('disabled', false )
         }
         else {
-          //$('#invoiceForm > *').css("color", "blue")
           $('#invoiceForm   *').prop('disabled', true )
-          //$('#invoiceForm *').prop('read-only', true )
+          $('#updateInvoice').css('display', 'none')
         }
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -1366,7 +1367,7 @@ jQuery(function ($) {
 
       clone.find('span.deleteRow').attr('id', id)
       clone.find('span.deleteRow').attr('value', id)
-      clone.find('span.deleteRow').css('display', 'block')
+      clone.find('span.deleteRow').css('display', 'inline-block')
 
       clone.find('span.reactivateInvoice').css('display', 'none')
 
@@ -1519,14 +1520,29 @@ jQuery(function ($) {
    *  */
 
   $('#invoice_form_paid_toggle').on('change', function(){
+    //if invoice was not paid and is toggled to paid
     if (this.checked){
 
       var id = $('#invoice_id').val();
+
+      $('#edit-'+id).find('.sliderForPayment').click();
+      $('#invoiceForm   *').prop('disabled', true );
+      $('#updateInvoice').css('display', 'none');
       
-      setTimeout(function(){
+      /*setTimeout(function(){
         $('#invoiceOverlay').hide();
         $('#edit-'+id).find('.sliderForPayment').click();
-      },800);
+      },800);*/
+
+    } else if (!this.checked){
+
+      var id = $('#invoice_id').val();
+
+      $('#edit-'+id).find('.sliderForPayment').click();
+      $('#invoiceForm   *').prop('disabled', false );
+      $('#updateInvoice').css('display', 'block');
+      
+      
 
     }
   });
