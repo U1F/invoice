@@ -452,7 +452,7 @@ class Interface_Invoices
             $amount = intVal($invoice_array['amountOfItems'][$i]);
             $discount = floatval(str_replace(',', '.', sanitize_text_field($invoice_array['itemDiscount'][$i])));
             $discountType = $invoice_array['discountType'][$i];
-            $discountedPrice = self::discountPrice($price,$discount, $discountType); 
+            $discountedPrice = self::discountPrice($price, $discount, $discountType); 
             $total = $amount * $discountedPrice;
 
             $GLOBALS['wpdb']->insert( 
@@ -463,7 +463,7 @@ class Interface_Invoices
                     'position' => $i + 1,
                     'description' => sanitize_text_field($invoice_array['itemDescription'][$i]),
                     'amount' => sanitize_text_field($invoice_array['amountOfItems'][$i]),
-                    'amount_plan' => $rawprice,
+                    'amount_plan' => $price,
                     'discount' => $discount,
                     'discount_type' => sanitize_text_field($invoice_array['discountType'][$i]),
                     'amount_actual' => sanitize_text_field($discountedPrice),
