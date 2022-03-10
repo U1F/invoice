@@ -205,7 +205,7 @@
 }
 
 .q-invoice-page #invoiceForm table#items input[type=number] {
-    width: 80px;
+    width: 90px;
     height: 32px;
 }
 
@@ -222,8 +222,9 @@
     width: 14px;
 }
 
-.q-invoice-page #invoiceForm table#items td.invoiceItemsAmount {
-    width: 72px;
+.q-invoice-page #invoiceForm table#items td.invoiceItemsAmount,
+.q-invoice-page .itemUnit {
+    width: 90px;
 }
 
 .q-invoice-page #invoiceForm table#items td.invoiceItemsAmount input[type=number][name='anzahl[]'] {
