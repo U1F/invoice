@@ -138,8 +138,8 @@
     
     </div>
     <div class="mobileFilterButtons">
-        <select name="mobileFilterButtonsDropdown" id="settingsMobileFilterButtonsDropdown">
-            <option class="mobileFilterButtonsOption" value="Company" selected>Company</option>
+        <select name="settingsMobileFilterButtonsDropdown" id="settingsMobileFilterButtonsDropdown">
+            <option class="mobileFilterButtonsOption" value="company" selected>Company</option>
             <option class="mobileFilterButtonsOption" value="bank">Bank</option>
             <option class="mobileFilterButtonsOption" value="mail">Mail</option>
             <option class="mobileFilterButtonsOption" value="invoice">Invoice</option>
@@ -174,7 +174,7 @@
              * ###########################################
              */
             ?>
-            <section id="companySettingsTable" class="invoiceSettingsRow">
+            <section id="companySettingsTable" class="invoiceSettingsRow activeSetting">
 
                 <div class="settingsHalf container">
 
@@ -204,7 +204,7 @@
              * ###########################################
              */
             ?>
-            <section id="bankSettingsTable" class="invoiceSettingsRow" style="display:none;">
+            <section id="bankSettingsTable" class="invoiceSettingsRow">
 
                 <div class="settingsThirds container">
 
@@ -243,7 +243,7 @@
              * ###########################################
              */
             ?>
-            <section id="mailSettingsTable" class="invoiceSettingsRow" style="display:none;">
+            <section id="mailSettingsTable" class="invoiceSettingsRow">
 
                 <div class="settingsFull">
 
@@ -267,7 +267,7 @@
              * ###########################################
              */
             ?>
-            <section id="invoiceSettingsTable" class="invoiceSettingsRow" style="display:none;">
+            <section id="invoiceSettingsTable" class="invoiceSettingsRow">
 
                 <div class="settingsThirds">
 
@@ -297,7 +297,7 @@
              * ###########################################
              */
             ?>
-            <section id="dunningSettingsTable" class="invoiceSettingsRow" style="display:none;">
+            <section id="dunningSettingsTable" class="invoiceSettingsRow">
 
                 <div class="settingsThirds">
 
@@ -327,7 +327,7 @@
              * ###########################################
              */
             ?>
-            <section id="offerSettingsTable" class="invoiceSettingsRow" style="display:none;">
+            <section id="offerSettingsTable" class="invoiceSettingsRow">
 
                 <div class="settingsFull">
 
@@ -348,7 +348,7 @@
              * ###########################################
              */
             ?>
-            <section id="creditSettingsTable" class="invoiceSettingsRow" style="display:none;">
+            <section id="creditSettingsTable" class="invoiceSettingsRow">
 
                 <div class="settingsFull">
 

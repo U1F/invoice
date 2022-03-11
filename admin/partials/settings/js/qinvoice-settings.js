@@ -2,14 +2,16 @@
 /* eslint no-undef: "error" */
 jQuery(function ($) {
 
-  /**
-   *  _    _                _           
-   * | |  | |              | |          
-   * | |__| | ___  __ _  __| | ___ _ __ 
-   * |  __  |/ _ \/ _` |/ _` |/ _ \ '__|
-   * | |  | |  __/ (_| | (_| |  __/ |   
-   * |_|  |_|\___|\__,_|\__,_|\___|_|                               
+  /**  _        _
+   *  | |      | |        
+   *  | |_ __ _| |__  ___ 
+   *  | __/ _` | '_ \/ __|
+   *  | || (_| | |_) \__ \
+   *   \__\__,_|_.__/|___/ 
+   * 
+   * The color effect function for the filter buttons is saved in qinvoice-invoice.js                                               
    */
+
   $('.filterButtons').on('click', 'div.inactive', function (event) {
     if ($(event.target).parent().attr('id') === 'filterButtons') {
       return;
@@ -18,37 +20,69 @@ jQuery(function ($) {
     //setFilterButtonActive($(event.target).parent())
 
     //hide all Setting Rows
-    $('.invoiceSettingsRow').css('display', 'none')
+    $('.invoiceSettingsRow').removeClass('activeSetting')
 
     //show only the clicked setting row
     if ($(event.target).parent().attr('id') === 'showCompanySettings') {
-      $('#companySettingsTable').css('display', 'flex')
+      $('#companySettingsTable').addClass('activeSetting')
     }
 
     if ($(event.target).parent().attr('id') === 'showBankSettings') {
-      $('#bankSettingsTable').css('display', 'flex')
+      $('#bankSettingsTable').addClass('activeSetting')
     }
 
     if ($(event.target).parent().attr('id') === 'showMailSettings') {
-      $('#mailSettingsTable').css('display', 'flex')
+      $('#mailSettingsTable').addClass('activeSetting')
     }
 
     if ($(event.target).parent().attr('id') === 'showInvoiceSettings') {
-      $('#invoiceSettingsTable').css('display', 'flex')
+      $('#invoiceSettingsTable').addClass('activeSetting')
     }
 
     if ($(event.target).parent().attr('id') === 'showDunningSettings') {
-      $('#dunningSettingsTable').css('display', 'flex')
+      $('#dunningSettingsTable').addClass('activeSetting')
     }
 
     if ($(event.target).parent().attr('id') === 'showOfferSettings') {
-      $('#offerSettingsTable').css('display', 'flex')
+      $('#offerSettingsTable').addClass('activeSetting')
     }
 
     if ($(event.target).parent().attr('id') === 'showCreditSettings') {
-      $('#creditSettingsTable').css('display', 'flex')
+      $('#creditSettingsTable').addClass('activeSetting')
     }
   })
+
+  //on load reset the mobile menu to default position
+  $('.mobileFilterButtonsOption[value=company]').prop('selected', true)
+
+  // Manage UI visibility of filter buttons mobile version
+  $('#settingsMobileFilterButtonsDropdown').on('change', function (event) {
+    //hide all Setting Rows
+    $('.invoiceSettingsRow').removeClass('activeSetting')
+    //display the selected Setting Row
+    if ($('#settingsMobileFilterButtonsDropdown option:selected').val() === 'company') {
+      $('#companySettingsTable').addClass('activeSetting')
+    }
+    if ($('#settingsMobileFilterButtonsDropdown option:selected').val() === 'bank') {
+      $('#bankSettingsTable').addClass('activeSetting')
+    }
+    if ($('#settingsMobileFilterButtonsDropdown option:selected').val() === 'mail') {
+      $('#mailSettingsTable').addClass('activeSetting')
+    }
+    if ($('#settingsMobileFilterButtonsDropdown option:selected').val() === 'invoice') {
+      $('#invoiceSettingsTable').addClass('activeSetting')
+    }
+    if ($('#settingsMobileFilterButtonsDropdown option:selected').val() === 'dunning') {
+      $('#dunningSettingsTable').addClass('activeSetting')
+    }
+    if ($('#settingsMobileFilterButtonsDropdown option:selected').val() === 'offer') {
+      $('#offerSettingsTable').addClass('activeSetting')
+    }
+    if ($('#settingsMobileFilterButtonsDropdown option:selected').val() === 'credit') {
+      $('#creditSettingsTable').addClass('activeSetting')
+    }
+    $('#settingsMobileFilterButtonsDropdown').blur();
+  });
 
   $('textarea').each(function () {
     this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;')

@@ -459,7 +459,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
 
             add_settings_section(
                 'qi_bankIIIPage_section',
-                __('Further Bank Details', 'ev'),
+                __('Further Details', 'ev'),
                 [$this, 'qiSettingsSectionBankCallback'],
                 'bankIIIPage'
             );
@@ -493,7 +493,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
             
             $this->addSettingsField(
-                "invoice Text Custom Mail", 
+                "invoice Text Invoice Mail", 
                 "textarea", 
                 "mailTemplatePage",
                 0,
@@ -502,7 +502,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
 
             $this->addSettingsField(
-                "dunning Text Custom Mail", 
+                "dunning Text Dunning Mail", 
                 "textarea", 
                 "mailTemplatePage",
                 0,
@@ -511,7 +511,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
 
             $this->addSettingsField(
-                "offer Text Custom Mail", 
+                "offer Text Offer Mail", 
                 "textarea", 
                 "mailTemplatePage",
                 0,
@@ -520,7 +520,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
 
             $this->addSettingsField(
-                "credit Text Custom Mail", 
+                "credit Text Credit Mail", 
                 "textarea", 
                 "mailTemplatePage",
                 0,
