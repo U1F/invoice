@@ -82,7 +82,7 @@
 
     <div style="height: 70px; width: 100%; background-color: yellow; border:dashed 3px;padding:5px;margin:5px 0;">
         <p style="font-size:20px;"><b>Sollten hier Reviews durchgeführt werden: <br>
-        Die Seite befindet sich gerade im Umbau und funktioniert nicht richtig!</b></p>
+        Die Seite befindet sich gerade im Umbau und funktioniert noch nicht richtig!</b></p>
 
     </div>
 
@@ -130,7 +130,7 @@
             </button>
         </div>
 
-        <div class="filterButton inactive" id="showMailSettings">
+        <div class="filterButton inactive" id="showCreditSettings">
             <button class="invoiceButton">
                 Credit
             </button>
@@ -166,15 +166,21 @@
             enctype='multipart/form-data' 
             method='post' >
 
+            <?php
+            /**
+             * ###########################################
+             * 1. Company Settings
+             * --> 50/50 Page: Left Company Details / Right Contact Details
+             * ###########################################
+             */
+            ?>
             <section id="companySettingsTable" class="invoiceSettingsRow">
 
                 <div class="settingsHalf container">
 
                     <?php
                         settings_fields('pluginForm');
-                        do_settings_sections('pluginPage'); 
-                        settings_fields('logoForm');
-                        do_settings_sections('logoPage'); 
+                        do_settings_sections('pluginPage');
                     ?>
 
                 </div>
@@ -190,129 +196,172 @@
 
             </section>
 
-            <section id="bankSettingsTable" class="invoiceSettingsRow">
+            <?php
+            /**
+             * ###########################################
+             * 2. Bank Settings
+             * --> 33/33/33 Page: Bank 1 / Bank 2 / Further
+             * ###########################################
+             */
+            ?>
+            <section id="bankSettingsTable" class="invoiceSettingsRow" style="display:none;">
+
+                <div class="settingsThirds container">
+
+                    <?php
+                        settings_fields('bankIForm');
+                        do_settings_sections('bankIPage');
+                    ?>
+
+                </div>
 
                 <div class="settingsThirds">
 
-                    <div class="container">
-                        <?php
-                            settings_fields('bankForm');
-                            do_settings_sections('bankPage');
-                        ?>
-                    </div>
+                    <?php
+                        settings_fields('bankIIForm');
+                        do_settings_sections('bankIIPage');
+                    ?>
 
                 </div>
 
                 <div class="settingsThirds">
 
-                    
+                    <?php
+                        settings_fields('bankIIIForm');
+                        do_settings_sections('bankIIIPage');
+                    ?>
 
                 </div>
+
+            </section>
+
+            <?php
+            /**
+             * ###########################################
+             * 3. Mail Settings
+             * --> 100 - Mail Data top; Templates bottom;
+             * ###########################################
+             */
+            ?>
+            <section id="mailSettingsTable" class="invoiceSettingsRow" style="display:none;">
+
+                <div class="settingsFull">
+
+                    <?php
+                        settings_fields('mailForm');
+                        do_settings_sections('mailPage');
+
+                        settings_fields('mailTemplateForm');
+                        do_settings_sections('mailTemplatePage');
+                    ?>
+
+                </div>
+
+            </section>
+
+            <?php
+            /**
+             * ###########################################
+             * 4. Invoice Settings
+             * --> 33/66 - Invoice Settings / Invoice PDF Templates
+             * ###########################################
+             */
+            ?>
+            <section id="invoiceSettingsTable" class="invoiceSettingsRow" style="display:none;">
 
                 <div class="settingsThirds">
 
-                    
+                    <?php
+                        settings_fields('invoiceForm');
+                        do_settings_sections('invoicePage');
+                    ?>
+
+                </div>
+
+                <div class="settingsTwoThirds">
+
+                    <?php
+                        settings_fields('invoiceTextForm');
+                        do_settings_sections('invoiceTextPage');
+                    ?>
 
                 </div>
 
             </section>
 
-            <section id="mailSettingsTable" class="invoiceSettings">
+            <?php
+            /**
+             * ###########################################
+             * 5. Dunning Settings
+             * --> 33/66 - Dunning Settings / Dunning PDF Templates
+             * ###########################################
+             */
+            ?>
+            <section id="dunningSettingsTable" class="invoiceSettingsRow" style="display:none;">
+
+                <div class="settingsThirds">
+
+                    <?php
+                        settings_fields('dunningForm');
+                        do_settings_sections('dunningPage');
+                    ?>
+
+                </div>
+
+                <div class="settingsTwoThirds">
+
+                    <?php
+                        settings_fields('dunningTextForm');
+                        do_settings_sections('dunningTextPage');
+                    ?>
+
+                </div>
 
             </section>
 
-            <section id="invoiceSettingsTable" class="invoiceSettings">
+            <?php
+            /**
+             * ###########################################
+             * 6. Offer Settings
+             * --> 100 PDF Template Texts
+             * ###########################################
+             */
+            ?>
+            <section id="offerSettingsTable" class="invoiceSettingsRow" style="display:none;">
+
+                <div class="settingsFull">
+
+                    <?php
+                        settings_fields('offerTemplateForm');
+                        do_settings_sections('offerTemplatePage');
+                    ?>
+
+                </div>
 
             </section>
 
-            <section id="dunningSettingsTable" class="invoiceSettings">
+            <?php
+            /**
+             * ###########################################
+             * 7. Credit Settings
+             * --> 100 PDF Template Texts
+             * ###########################################
+             */
+            ?>
+            <section id="creditSettingsTable" class="invoiceSettingsRow" style="display:none;">
 
-            </section>
+                <div class="settingsFull">
 
-            <section id="offerSettingsTable" class="invoiceSettings">
+                    <?php
+                        settings_fields('creditTemplateForm');
+                        do_settings_sections('creditTemplatePage');
+                    ?>
 
-            </section>
-
-            <section id="creditSettingsTable" class="invoiceSettings">
+                </div>
 
             </section>
             
-        
-            <section id="settingsTable" class="invoiceSettings">
-                
-                <div id="firstColumn">
-                    <?php /*<div class="container containerFirst">
-                        <?php
-                            settings_fields('pluginForm');
-                            do_settings_sections('pluginPage'); 
-                            settings_fields('logoForm');
-                            do_settings_sections('logoPage'); 
-                        ?>
-                    </div>
-        
-                    <div class="container containerSecond">
-                        <?php
-                            settings_fields('invoiceForm');
-                            do_settings_sections('invoicePage');
-        
-                        ?>
-                    </div>*/?>
-        
-                    
-                </div>
-        
-                <div id="secondColumn">
-                    <div class="container containerFirst">
-                        <?php
-                            settings_fields('invoiceForm');
-                            do_settings_sections('invoicePage');
-                        ?>
-                        
-        
-                        <div class="container containerSecond">
-                        <?php
-                            settings_fields('dunningForm');
-                            do_settings_sections('dunningPage'); 
-                        ?>
-                        </div>
-                        
-                    </div>
-                </div>
-                
-                <div id="thirdColumn">
-                    <div class="container containerFirst" >
-                    <?php
-                    settings_fields('bankForm');
-                    do_settings_sections('bankPage');
-                    ?>
-                    </div>
-        
-                    <div class="container containerSecond">
-                    <?php
-                    settings_fields('mailForm');
-                    do_settings_sections('mailPage');
-                    ?>
-                    </div>
-                    
-        
-                    
-                </div>
-                
-                
-        
-            </section>
-            <section class="invoiceSettings">
-            <div >
-                <?php
-                    settings_fields('invoiceTextForm');
-                    do_settings_sections('invoiceTextPage');
-                    
-                ?>
-            </div>  
-            </section>
-            <?php 
-               
-            
+            <?php
             submit_button($text = "Save Settings", $type = "primary", $name = "saveSettings"); 
             ?>
         

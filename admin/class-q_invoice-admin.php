@@ -340,6 +340,12 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         public function qiSettingsInit()
         {
             
+            /**
+             * ###########################################
+             * Company Settings
+             * 
+             * ###########################################
+             */
             register_setting(
                 'pluginForm', 
                 'qi_settings',
@@ -396,9 +402,138 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 'pluginPage',
                 'qi_pluginPage_section'
             );
-            
 
-            // SETTINGS SECTION INVOICE
+            /**
+             * ###########################################
+             * Contact Settings
+             * 
+             * ###########################################
+             */
+            register_setting('contactForm', 'qi_settings');
+
+            add_settings_section(
+                'qi_contactPage_section',
+                __('Contact Details', 'ev'),
+                [$this, 'qiSettingsSectionContactCallback'],
+                'contactPage'
+            );
+            $this->addSettingsField("mail", "email", "contactPage");
+            $this->addSettingsField("phone", "tel", "contactPage");
+            $this->addSettingsField("website", "text", "contactPage");
+            $this->addSettingsField("facebook", "text", "contactPage");
+            $this->addSettingsField("instagram", "text", "contactPage");
+            
+            /**
+             * ###########################################
+             * Bank Settings
+             * 
+             * ###########################################
+             */
+            register_setting('bankIForm', 'qi_settings');
+
+            add_settings_section(
+                'qi_bankIPage_section',
+                __('Bank 1 Details', 'ev'),
+                [$this, 'qiSettingsSectionBankCallback'],
+                'bankIPage'
+            );
+
+            $this->addSettingsField("IBAN", "text", "bankIPage");
+            $this->addSettingsField("BIC", "text", "bankIPage");
+            $this->addSettingsField("bank Name", "text", "bankIPage");
+
+            register_setting('bankFormII', 'qi_settings');
+
+            add_settings_section(
+                'qi_bankIIPage_section',
+                __('Bank 2 Details', 'ev'),
+                [$this, 'qiSettingsSectionBankCallback'],
+                'bankIIPage'
+            );
+
+            $this->addSettingsField("IBAN", "text", "bankIIPage");
+            $this->addSettingsField("BIC", "text", "bankIIPage");
+            $this->addSettingsField("bank Name", "text", "bankIIPage");
+            
+            register_setting('bankIIIForm', 'qi_settings');
+
+            add_settings_section(
+                'qi_bankIIIPage_section',
+                __('Further Bank Details', 'ev'),
+                [$this, 'qiSettingsSectionBankCallback'],
+                'bankIIIPage'
+            );
+
+            $this->addSettingsField("PayPal", "text", "bankIIIPage");
+
+            /**
+             * ###########################################
+             * Mail Settings
+             * 
+             * ###########################################
+             */
+            register_setting('mailForm', 'qi_settings');
+
+            add_settings_section(
+                'qi_mailPage_section',
+                __('Mail Server Details', 'ev'),
+                [$this, 'qiSettingsSectionMailCallback'],
+                'mailPage'
+            );
+            
+            $this->addSettingsField("email", "text", "mailPage");
+
+            register_setting('mailTemplateForm', 'qi_settings');
+
+            add_settings_section(
+                'qi_mailTemplatePage_section',
+                __('Mail Templates', 'ev'),
+                [$this, 'qiSettingsSectionMailCallback'],
+                'mailTemplatePage'
+            );
+            
+            $this->addSettingsField(
+                "invoice Text Custom Mail", 
+                "textarea", 
+                "mailTemplatePage",
+                0,
+                "You can add a full E-Mail template text. This will prefill the Mail field if you want to send an invoice to a customer.",
+                "text_details_input_mod"
+            );
+
+            $this->addSettingsField(
+                "dunning Text Custom Mail", 
+                "textarea", 
+                "mailTemplatePage",
+                0,
+                "You can add a full E-Mail template text. This will prefill the Mail field if you want to send a dunning to a customer.",
+                "text_details_input_mod"
+            );
+
+            $this->addSettingsField(
+                "offer Text Custom Mail", 
+                "textarea", 
+                "mailTemplatePage",
+                0,
+                "You can add a full E-Mail template text. This will prefill the Mail field if you want to send an offer to a customer.",
+                "text_details_input_mod"
+            );
+
+            $this->addSettingsField(
+                "credit Text Custom Mail", 
+                "textarea", 
+                "mailTemplatePage",
+                0,
+                "You can add a full E-Mail template text. This will prefill the Mail field if you want to send a credit to a customer.",
+                "text_details_input_mod"
+            );
+
+            /**
+             * ###########################################
+             * Invoice Settings
+             *
+             * ###########################################
+             */
             register_setting(
                 'invoiceForm', 
                 'qi_settings', 
@@ -415,6 +550,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $this->addSettingsField("prefix", "text", "invoicePage", 1);
             $this->addSettingsField("no Start", "number", "invoicePage", 1);
 
+            //Currency
             add_settings_field(
                 'qi_settingsInvoiceCurrency', 
                 'Invoice Currency', 
@@ -426,9 +562,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             if (get_option('qi_settings')['invoiceCurrency'] == 'Other') {
                 $this->addSettingsField("currency Sign", "text", "invoicePage", 1);
             }
-            
-            
-            //$this->addSettingsField("tax Types", "number", "invoicePage");
+
+            //Taxes
             add_settings_field(
                 'qi_settingsTaxTypes', 
                 'Tax Types', 
@@ -440,8 +575,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator++) {
                 $this->addSettingsField("tax ".($iterator+1), "number", "invoicePage");
             }
-            
 
+            //Units
             add_settings_field(
                 'qi_settingsInvoiceUnit', 
                 'Unit', 
@@ -450,6 +585,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 'qi_invoicePage_section'
             );
 
+            //Dot Types
             add_settings_field(
                 'qi_settingsInvoiceDotType', 
                 'Dottype', 
@@ -457,102 +593,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 'invoicePage',
                 'qi_invoicePage_section'
             );
-         
-            
-           
 
-            // SETTINGS SECTION CONTACTS 
-            register_setting('contactForm', 'qi_settings');
-
-            add_settings_section(
-                'qi_contactPage_section',
-                __('Contact Details', 'ev'),
-                [$this, 'qiSettingsSectionContactCallback'],
-                'contactPage'
-            );
-            $this->addSettingsField("mail", "email", "contactPage");
-            $this->addSettingsField("phone", "tel", "contactPage");
-            $this->addSettingsField("website", "text", "contactPage");
-            $this->addSettingsField("facebook", "text", "contactPage");
-            $this->addSettingsField("instagram", "text", "contactPage");
-
-            // SETTINGS SECTION DUNNING
-            register_setting('dunningForm', 'qi_settings');
-
-            add_settings_section(
-                'qi_dunningPage_section',
-                __('Dunning Details', 'ev'),
-                [$this, 'qiSettingsSectionDunningCallback'],
-                'dunningPage'
-            );
-            $this->addSettingsField("reminder", "text", "dunningPage");
-            $this->addSettingsField("dunning 1", "text", "dunningPage");
-            $this->addSettingsField("dunning 2", "text", "dunningPage");
-
-            $this->addSettingsField("reminder day limit", "text", "dunningPage");
-            $this->addSettingsField("dunning 1 day limit", "text", "dunningPage");
-            $this->addSettingsField("dunning 2 day limit", "text", "dunningPage");
-            
-
-            // SETTINGS SECTION BANK 
-            register_setting('bankForm', 'qi_settings');
-
-            add_settings_section(
-                'qi_bankPage_section',
-                __('Bank Details', 'ev'),
-                [$this, 'qiSettingsSectionBankCallback'],
-                'bankPage'
-            );
-            $this->addSettingsField("IBAN 1", "text", "bankPage", 1);
-            $this->addSettingsField("BIC 1", "text", "bankPage", 1);
-            $this->addSettingsField("bank Name 1", "text", "bankPage", 1);
-            
-            add_settings_field(
-                'qi_settings' ."BankSpacer1", 
-                null, 
-                [$this, 'addSpacerForSetting'],
-                "bankPage",
-                'qi_'.'bankPage'.'_section',
-                [
-                    "name" => "BankSpacer1",
-                    "type" => "hidden"
-                ]
-            );
-            
-            $this->addSettingsField("IBAN 2", "text", "bankPage");
-            $this->addSettingsField("BIC 2", "text", "bankPage");
-            $this->addSettingsField("bank Name 2", "text", "bankPage");
-
-
-            add_settings_field(
-                'qi_settings' ."BankSpacer2", 
-                "", 
-                [$this, 'addSpacerForSetting'],
-                "bankPage",
-                'qi_'.'bankPage'.'_section',
-                [
-                    "name" => "BankSpacer2",
-                    "type" => "hidden"
-                ]
-            );
-
-            $this->addSettingsField("PayPal", "text", "bankPage");
-
-            
-            // SETTINGS SECTION EMAIL 
-            register_setting('mailForm', 'qi_settings');
-
-            add_settings_section(
-                'qi_mailPage_section',
-                __('Mail Server Details', 'ev'),
-                [$this, 'qiSettingsSectionMailCallback'],
-                'mailPage'
-            );
-            
-            $this->addSettingsField("email", "text", "mailPage");
-
-
-            // SETTINGS SECTION INVOICE TEXTS 
+            //PDF Text Templates
             register_setting(
                 'invoiceTextForm', 
                 'qi_settings'
@@ -560,7 +602,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
 
             add_settings_section(
                 'qi_invoiceTextPage_section',
-                __('Invoice Text Details', 'ev'),
+                __('Invoice PDF Templates', 'ev'),
                 null,
                 'invoiceTextPage'
             );
@@ -594,6 +636,183 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 "invoice Text Custom Footer", 
                 "textarea", 
                 "invoiceTextPage",
+                0,
+                "You can add details like your tax ID.",
+                "text_details_input_mod"
+            );
+
+            /**
+             * ###########################################
+             * Dunning Settings
+             * 
+             * ###########################################
+             */
+            register_setting('dunningForm', 'qi_settings');
+
+            add_settings_section(
+                'qi_dunningPage_section',
+                __('Dunning Details', 'ev'),
+                [$this, 'qiSettingsSectionDunningCallback'],
+                'dunningPage'
+            );
+            $this->addSettingsField("reminder", "text", "dunningPage");
+            $this->addSettingsField("dunning 1", "text", "dunningPage");
+            $this->addSettingsField("dunning 2", "text", "dunningPage");
+
+            $this->addSettingsField("reminder day limit", "text", "dunningPage");
+            $this->addSettingsField("dunning 1 day limit", "text", "dunningPage");
+            $this->addSettingsField("dunning 2 day limit", "text", "dunningPage");
+
+            //PDF Text Templates
+            register_setting(
+                'dunningTextForm', 
+                'qi_settings'
+            );
+
+            add_settings_section(
+                'qi_dunningTextPage_section',
+                __('Dunning PDF Templates', 'ev'),
+                null,
+                'dunningTextPage'
+            );
+        
+            $this->addSettingsField(
+                "dunning Text Intro", 
+                "textarea", 
+                "dunningTextPage",
+                0,
+                "This text will be shown above dunning details.",
+                "text_details_input_mod"
+            );
+
+            $this->addSettingsField(
+                "dunning Text Outro", 
+                "textarea", 
+                "dunningTextPage",
+                0,
+                "This text will be shown below dunning details.",
+                "text_details_input_mod"
+            );
+            $this->addSettingsField(
+                "dunning Text Payment Deadline", 
+                "textarea", 
+                "dunningTextPage",
+                0,
+                "You can announce how many further days you will wait for payment.",
+                "text_details_input_mod"
+            );
+            $this->addSettingsField(
+                "dunning Text Custom Footer", 
+                "textarea", 
+                "dunningTextPage",
+                0,
+                "You can add details like your tax ID.",
+                "text_details_input_mod"
+            );
+
+            /**
+             * ###########################################
+             * Offer Settings
+             * 
+             * ###########################################
+             */
+
+            //PDF Text Templates
+            register_setting(
+                'offerTemplateForm', 
+                'qi_settings'
+            );
+
+            add_settings_section(
+                'qi_offerTemplatePage_section',
+                __('Offer PDF Templates', 'ev'),
+                null,
+                'offerTemplatePage'
+            );
+        
+            $this->addSettingsField(
+                "offer Text Intro", 
+                "textarea", 
+                "offerTemplatePage",
+                0,
+                "This text will be shown above offer details.",
+                "text_details_input_mod"
+            );
+
+            $this->addSettingsField(
+                "offer Text Outro", 
+                "textarea", 
+                "offerTemplatePage",
+                0,
+                "This text will be shown below offer details.",
+                "text_details_input_mod"
+            );
+            $this->addSettingsField(
+                "offer Text Payment Deadline", 
+                "textarea", 
+                "offerTemplatePage",
+                0,
+                "You can announce how many further days you will wait for payment.",
+                "text_details_input_mod"
+            );
+            $this->addSettingsField(
+                "offer Text Custom Footer", 
+                "textarea", 
+                "offerTemplatePage",
+                0,
+                "You can add details like your tax ID.",
+                "text_details_input_mod"
+            );
+
+            /**
+             * ###########################################
+             * Credit Settings
+             * 
+             * ###########################################
+             */
+
+            //PDF Text Templates
+            register_setting(
+                'creditTemplateForm', 
+                'qi_settings'
+            );
+
+            add_settings_section(
+                'qi_creditTemplatePage_section',
+                __('Credit PDF Templates', 'ev'),
+                null,
+                'creditTemplatePage'
+            );
+        
+            $this->addSettingsField(
+                "credit Text Intro", 
+                "textarea", 
+                "creditTemplatePage",
+                0,
+                "This text will be shown above credit details.",
+                "text_details_input_mod"
+            );
+
+            $this->addSettingsField(
+                "credit Text Outro", 
+                "textarea", 
+                "creditTemplatePage",
+                0,
+                "This text will be shown below credit details.",
+                "text_details_input_mod"
+            );
+            $this->addSettingsField(
+                "credit Text Payment Deadline", 
+                "textarea", 
+                "creditTemplatePage",
+                0,
+                "You can announce how many further days you will wait for payment.",
+                "text_details_input_mod"
+            );
+            $this->addSettingsField(
+                "credit Text Custom Footer", 
+                "textarea", 
+                "creditTemplatePage",
                 0,
                 "You can add details like your tax ID.",
                 "text_details_input_mod"

@@ -13,8 +13,54 @@
     width: 100%;
 }
 
+.q-invoice-page .invoiceSettingsRow h2{
+    margin-top: 0;
+    font-family: sans-serif;
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+.q-invoice-page .invoiceSettingsRow th{
+    vertical-align: middle;
+    font-family: sans-serif;
+    font-size: 14px;
+    width: 140px;
+    font-weight: bold;
+    padding: 0 0 17px 0;
+}
+
+.q-invoice-page .invoiceSettingsRow table{
+    margin-bottom: 20px;
+}
+
+.q-invoice-page .invoiceSettingsRow td {
+    vertical-align: middle;
+    padding: 0 0 12px 0;
+}
+
+.q-invoice-page .settingsFull{
+    width: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
 .q-invoice-page .settingsHalf{
     width: 50%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.q-invoice-page .settingsThirds{
+    width: 33%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.q-invoice-page .settingsTwoThirds{
+    width: 66%;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
@@ -63,14 +109,6 @@
     margin-right: 20px;
 }
 
-.q-invoice-page #secondColumn .container {
-    align-self: center;
-}
-
-/*.q-invoice-page #secondColumn .containerFirst {
-    margin-right: 0px;
-}*/
-
 .q-invoice-page #thirdColumn {
     width: 33%;
     flex: 1 1 auto;
@@ -82,41 +120,14 @@
     align-self: flex-end;
 }
 
-/*.q-invoice-page #thirdColumn .containerFirst{
-    min-height: 520px;
-}*/
 
-.q-invoice-page section.invoiceSettings h2 {
-    margin-top: 0px;
-    font-family: sans-serif;
-    font-size: 1.6em;
-    font-weight: bold;
-}
-
-.q-invoice-page section.invoiceSettings th {
-    vertical-align: middle;
-    font-family: sans-serif;
-    font-size: 14px;
-    width: 140px;
-    font-weight: bold;
-    padding: 0 0 17px 0;
-}
-
-
-
-.q-invoice-page section.invoiceSettings td {
-    vertical-align: middle;
-    padding: 0 0 12px 0;
-}
-
-
-.q-invoice-page section.invoiceSettings input {
+.q-invoice-page .invoiceSettingsRow input {
     font-family: sans-serif;
     font-size: 14px;
     height: 32px;
 }
 
-.q-invoice-page section.invoiceSettings input[type=text] {
+.q-invoice-page .invoiceSettingsRow input[type=text] {
     padding-left: 8px;
     padding-right: 8px;
     border: 1px solid #dadce1;
@@ -128,7 +139,7 @@
     color: #3c434a;
 }
 
-.q-invoice-page section.invoiceSettings input[type=email] {
+.q-invoice-page .invoiceSettingsRow input[type=email] {
     padding-left: 8px;
     padding-right: 8px;
     border: 1px solid #dadce1;
@@ -142,7 +153,7 @@
 
 
 
-.q-invoice-page section.invoiceSettings input[type=number] {
+.q-invoice-page .invoiceSettingsRow input[type=number] {
     padding-left: 8px;
     padding-right: 8px;
     border: 1px solid #dadce1;
@@ -153,7 +164,7 @@
     color: #3c434a;
 }
 
-.q-invoice-page section.invoiceSettings input[type=tel] {
+.q-invoice-page .invoiceSettingsRow input[type=tel] {
     padding-left: 8px;
     padding-right: 8px;
     border: 1px solid #dadce1;
@@ -164,21 +175,22 @@
     color: #3c434a;
 }
 
-.q-invoice-page section.invoiceSettings select {
+.q-invoice-page .invoiceSettingsRow select {
     border-radius: 4px;
     font-family: sans-serif;
     font-size: 14px;
     color: #3c434a;
     border: 1px solid #dadce1;
     height: 32px;
+    width: 100px;
 }
 
-.q-invoice-page section.invoiceSettings input.error {
+.q-invoice-page .invoiceSettingsRow input.error {
     border-color: red;
    
 }
 
-.q-invoice-page section.invoiceSettings input.error:focus {
+.q-invoice-page .invoiceSettingsRow input.error:focus {
     box-shadow: 0 0 0 0 rgba(0,0,0,0);
     outline:none;
 } 
@@ -191,74 +203,74 @@
     margin-left: auto;
 }
 
-.q-invoice-page section.invoiceSettings input#ZIP {
+.q-invoice-page .invoiceSettingsRow input#ZIP {
     width: 60px;
 }
 
-.q-invoice-page section.invoiceSettings input#prefix {
+.q-invoice-page .invoiceSettingsRow input#prefix {
     width: 60px;
 }
 
-.q-invoice-page section.invoiceSettings input#noStart {
+.q-invoice-page .invoiceSettingsRow input#noStart {
     width: 60px;
 }
 
-section.invoiceSettings input[id^="tax"] {
+.invoiceSettingsRow input[id^="tax"] {
     width: 36px;
 }
 
-.q-invoice-page section.invoiceSettings input#currencySign {
+.q-invoice-page .invoiceSettingsRow input#currencySign {
     display:none;
     width: 36px;
 }
 
-.q-invoice-page section.invoiceSettings input#unit {
+.q-invoice-page .invoiceSettingsRow input#unit {
     width: 84px;
 }
 
-.q-invoice-page section.invoiceSettings input#phone {
+.q-invoice-page .invoiceSettingsRow input#phone {
     width: 144px;
 }
 
-.q-invoice-page section.invoiceSettings input#reminder {
+.q-invoice-page .invoiceSettingsRow input#reminder {
     text-align: right;
     width: 72px;
 }
 
-.q-invoice-page section.invoiceSettings input#dunning1 {
+.q-invoice-page .invoiceSettingsRow input#dunning1 {
     text-align: right;
     width: 72px;
 }
 
-.q-invoice-page section.invoiceSettings input#dunning2 {
+.q-invoice-page .invoiceSettingsRow input#dunning2 {
     text-align: right;
     width: 72px;
 }
-.q-invoice-page section.invoiceSettings input#reminderdaylimit,
-.q-invoice-page section.invoiceSettings input#dunning1daylimit,
-.q-invoice-page section.invoiceSettings input#dunning2daylimit {
+.q-invoice-page .invoiceSettingsRow input#reminderdaylimit,
+.q-invoice-page .invoiceSettingsRow input#dunning1daylimit,
+.q-invoice-page .invoiceSettingsRow input#dunning2daylimit {
     text-align: right;
     width: 72px;
 }
 
-.q-invoice-page section.invoiceSettings input#IP {
+.q-invoice-page .invoiceSettingsRow input#IP {
     width: 144px;
 }
 
-.q-invoice-page section.invoiceSettings input#user {
+.q-invoice-page .invoiceSettingsRow input#user {
     width: 144px;
 }
 
-.q-invoice-page section.invoiceSettings input#password {
+.q-invoice-page .invoiceSettingsRow input#password {
     width: 144px;
     border: 1px solid #dadce1;
 }
 
-.q-invoice-page section.invoiceSettings input#port {
+.q-invoice-page .invoiceSettingsRow input#port {
     width: 72px;
 }
 
-.q-invoice-page section.invoiceSettings div.tableSpacer {
+.q-invoice-page .invoiceSettingsRow div.tableSpacer {
     margin-bottom: 2px;
 }
 
@@ -355,24 +367,24 @@ section.invoiceSettings input[id^="tax"] {
         width: 100%;
     }
 
-    .q-invoice-page section.invoiceSettings th {
+    .q-invoice-page .invoiceSettingsRow th {
         width: 10%;
         min-width: 130px;
     }
 
-    .q-invoice-page section.invoiceSettings input[type=text],
-    .q-invoice-page section.invoiceSettings input[type=email] {
+    .q-invoice-page .invoiceSettingsRow input[type=text],
+    .q-invoice-page .invoiceSettingsRow input[type=email] {
         width: 50%;
         float: right;
     }
 
-    .q-invoice-page section.invoiceSettings input#ZIP,
+    .q-invoice-page .invoiceSettingsRow input#ZIP,
     .q-invoice-page div#showLogoDiv,
-    .q-invoice-page section.invoiceSettings input#noStart,
-    .q-invoice-page section.invoiceSettings select,
-    .q-invoice-page section.invoiceSettings input[type="number"],
-    .q-invoice-page section.invoiceSettings input#phone,
-    .q-invoice-page section.invoiceSettings input#password{
+    .q-invoice-page .invoiceSettingsRow input#noStart,
+    .q-invoice-page .invoiceSettingsRow select,
+    .q-invoice-page .invoiceSettingsRow input[type="number"],
+    .q-invoice-page .invoiceSettingsRow input#phone,
+    .q-invoice-page .invoiceSettingsRow input#password{
         float: right;
     }
     
@@ -380,20 +392,20 @@ section.invoiceSettings input[id^="tax"] {
 
 @media only screen and (max-width:782px){
 
-    .q-invoice-page section.invoiceSettings input#ZIP,
+    .q-invoice-page .invoiceSettingsRow input#ZIP,
     .q-invoice-page div#showLogoDiv,
-    .q-invoice-page section.invoiceSettings input#noStart,
-    .q-invoice-page section.invoiceSettings select,
-    .q-invoice-page section.invoiceSettings input[type="number"],
-    .q-invoice-page section.invoiceSettings input#phone,
-    .q-invoice-page section.invoiceSettings input#password{
+    .q-invoice-page .invoiceSettingsRow input#noStart,
+    .q-invoice-page .invoiceSettingsRow select,
+    .q-invoice-page .invoiceSettingsRow input[type="number"],
+    .q-invoice-page .invoiceSettingsRow input#phone,
+    .q-invoice-page .invoiceSettingsRow input#password{
         float: left;
         margin-left: 0;
         margin-bottom: 15px;
     }
 
-    .q-invoice-page section.invoiceSettings input[type=text],
-    .q-invoice-page section.invoiceSettings input[type=email]{
+    .q-invoice-page .invoiceSettingsRow input[type=text],
+    .q-invoice-page .invoiceSettingsRow input[type=email]{
         float: left;
         margin-left: 0;
         margin-bottom: 20px;
@@ -420,7 +432,7 @@ section.invoiceSettings input[id^="tax"] {
         padding-left: 0;
     }*/
 
-    .q-invoice-page section.invoiceSettings th{
+    .q-invoice-page .invoiceSettingsRow th{
         width: 100%;
     }
     
@@ -437,8 +449,8 @@ section.invoiceSettings input[id^="tax"] {
 @media only screen and (max-width:350px){
 
     .q-invoice-page p.submit input#saveSettings,
-    .q-invoice-page section.invoiceSettings input[type="text"],
-    .q-invoice-page section.invoiceSettings input[type="email"]{
+    .q-invoice-page .invoiceSettingsRow input[type="text"],
+    .q-invoice-page .invoiceSettingsRow input[type="email"]{
         width: 90%;
     }
 

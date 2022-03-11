@@ -1,6 +1,55 @@
 /* global jQuery */
 /* eslint no-undef: "error" */
 jQuery(function ($) {
+
+  /**
+   *  _    _                _           
+   * | |  | |              | |          
+   * | |__| | ___  __ _  __| | ___ _ __ 
+   * |  __  |/ _ \/ _` |/ _` |/ _ \ '__|
+   * | |  | |  __/ (_| | (_| |  __/ |   
+   * |_|  |_|\___|\__,_|\__,_|\___|_|                               
+   */
+  $('.filterButtons').on('click', 'div.inactive', function (event) {
+    if ($(event.target).parent().attr('id') === 'filterButtons') {
+      return;
+    }
+    //setFilterButtonInactive($('.filterButtons').find('div.active'))
+    //setFilterButtonActive($(event.target).parent())
+
+    //hide all Setting Rows
+    $('.invoiceSettingsRow').css('display', 'none')
+
+    //show only the clicked setting row
+    if ($(event.target).parent().attr('id') === 'showCompanySettings') {
+      $('#companySettingsTable').css('display', 'flex')
+    }
+
+    if ($(event.target).parent().attr('id') === 'showBankSettings') {
+      $('#bankSettingsTable').css('display', 'flex')
+    }
+
+    if ($(event.target).parent().attr('id') === 'showMailSettings') {
+      $('#mailSettingsTable').css('display', 'flex')
+    }
+
+    if ($(event.target).parent().attr('id') === 'showInvoiceSettings') {
+      $('#invoiceSettingsTable').css('display', 'flex')
+    }
+
+    if ($(event.target).parent().attr('id') === 'showDunningSettings') {
+      $('#dunningSettingsTable').css('display', 'flex')
+    }
+
+    if ($(event.target).parent().attr('id') === 'showOfferSettings') {
+      $('#offerSettingsTable').css('display', 'flex')
+    }
+
+    if ($(event.target).parent().attr('id') === 'showCreditSettings') {
+      $('#creditSettingsTable').css('display', 'flex')
+    }
+  })
+
   $('textarea').each(function () {
     this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;')
   }).on('input', function () {
