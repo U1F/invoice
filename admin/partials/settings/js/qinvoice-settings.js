@@ -12,12 +12,14 @@ jQuery(function ($) {
    * The color effect function for the filter buttons is saved in qinvoice-invoice.js                                               
    */
 
+  /**
+   * Load the new Settings content by clicking on a filter button
+   */
   $('.filterButtons').on('click', 'div.inactive', function (event) {
+    //if clicked between the filter buttons (prevents strange css bug)
     if ($(event.target).parent().attr('id') === 'filterButtons') {
       return;
     }
-    //setFilterButtonInactive($('.filterButtons').find('div.active'))
-    //setFilterButtonActive($(event.target).parent())
 
     //hide all Setting Rows
     $('.invoiceSettingsRow').removeClass('activeSetting')
@@ -55,7 +57,9 @@ jQuery(function ($) {
   //on load reset the mobile menu to default position
   $('.mobileFilterButtonsOption[value=company]').prop('selected', true)
 
-  // Manage UI visibility of filter buttons mobile version
+  /**
+   * Load the new settings content (mobile) by choosing an option from the mobile dropdown
+   */
   $('#settingsMobileFilterButtonsDropdown').on('change', function (event) {
     //hide all Setting Rows
     $('.invoiceSettingsRow').removeClass('activeSetting')
@@ -81,78 +85,37 @@ jQuery(function ($) {
     if ($('#settingsMobileFilterButtonsDropdown option:selected').val() === 'credit') {
       $('#creditSettingsTable').addClass('activeSetting')
     }
+    //remove the selection color from the selct box
     $('#settingsMobileFilterButtonsDropdown').blur();
   });
 
-  $('textarea').each(function () {
-    this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;')
-  }).on('input', function () {
-    this.style.height = 'auto'
-    this.style.height = (this.scrollHeight) + 'px'
-  })
-
-  $('select#invoiceCurrency').on('change', function (event) {
-    if (this.value === 'Other') {
-      $('#currencySign').css('display', 'inline-block')
-      $('#currencySign').focus()
-      $('#currencySign').select()
-    } else {
-      $('#currencySign').css('display', 'none')
-    }
-  })
-  /*$('button#showLogoButton').click(function () {
-    console.log('mouse was over')
-    $('div#popupLogoImage').css('display', 'inline-block')
-  })*/
-
-  /*$('#qinvoiceSettings').on('click', function (event) {
-    if (!(
-      $(event.target).is('img') ||
-      $(event.target).is('#popupLogoImage') ||
-      $(event.target).is('span.dashicons-format-image') ||
-      $(event.target).is('button#showLogoButton'))) {
-      $('div#popupLogoImage').css('display', 'none')
-    }
-  })*/
-
-  //functions to delete the logo and to open the confirmation alert
+  /**
+   *  _                   
+   * | |                  
+   * | | ___   __ _  ___  
+   * | |/ _ \ / _` |/ _ \ 
+   * | | (_) | (_| | (_) |
+   * |_|\___/ \__, |\___/ 
+   *           __/ |      
+   *          |___/  
+   */
+  //When clicking on cross to delete the logo open the confirmation alert
   $('#qinv_settings_delete_logo').on('click', function (event){
     $('div#qinv_settings_deleteLogoOverlay').css('display', 'block');
   })
+  //When deniing the delete process close the confirmation alert
   $('#cancelRemoveLogo').on('click', function(event){
     $('div#qinv_settings_deleteLogoOverlay').css('display', 'none');
   })
+  //On Submitting the delete process close the alert and start the delete process
   $('#confirmRemoveLogo').on('click', function(event){
-    //$('#showLogoDiv').css('display', 'none');
-    //$('#qinv_settings_uploadLogo').css('display', 'block');
     $('div#qinv_settings_deleteLogoOverlay').css('display', 'none');
     qinv_settings_removeLogoFile();
   })
-  /*$('#qinv_settings_uploadLogo').on('click', function(event){
-    $('#qinv_settings_logo_message').css('display', 'block');
-  })*/
 
-  $('#logoFile').on('change', function(e){
-    $('.submit #saveSettings').click();
-  })
-
-  jQuery(document).ready(function ($) {
-    const currencySignInput = $('#currencySign').clone()
-    $('#currencySign').parent().parent().remove()
-    $('select#invoiceCurrency').parent().append(currencySignInput)
-    if ($('select#invoiceCurrency').val() === 'Other') {
-      $('#currencySign').css('display', 'inline-block')
-    }
-
-    if ($('#q-invoice-readonly-dummy').text() == "0") {
-      $('#prefix').attr('readonly', false)
-      $('#noStart').attr('readonly', false)
-    } else {
-      $('#prefix').attr('readonly', true)
-      $('#noStart').attr('readonly', true)
-    }
-  })
-
+  /**
+   * Function to remove the logo from server and save data by clicking the submit button
+   */
   function qinv_settings_removeLogoFile(){
     jQuery.ajax({
       type: 'POST',
@@ -173,4 +136,43 @@ jQuery(function ($) {
       }
     })
   }
+
+  //Whenever a logo has been uploaded with the upload function click on submit automatically
+  $('#logoFile').on('change', function(e){
+    $('.submit #saveSettings').click();
+  })
+
+  /**
+   *   __            _   _               
+   *  / _|          | | | |              
+   * | |_ _   _ _ __| |_| |__   ___ _ __ 
+   * |  _| | | | '__| __| '_ \ / _ \ '__|
+   * | | | |_| | |  | |_| | | |  __/ |   
+   * |_|  \__,_|_|   \__|_| |_|\___|_|  
+   */
+
+  $('textarea').each(function () {
+    this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;')
+  }).on('input', function () {
+    this.style.height = 'auto'
+    this.style.height = (this.scrollHeight) + 'px'
+  })
+
+  jQuery(document).ready(function ($) {
+    const currencySignInput = $('#currencySign').clone()
+    $('#currencySign').parent().parent().remove()
+    $('select#invoiceCurrency').parent().append(currencySignInput)
+    if ($('select#invoiceCurrency').val() === 'Other') {
+      $('#currencySign').css('display', 'inline-block')
+    }
+
+    if ($('#q-invoice-readonly-dummy').text() == "0") {
+      $('#prefix').attr('readonly', false)
+      $('#noStart').attr('readonly', false)
+    } else {
+      $('#prefix').attr('readonly', true)
+      $('#noStart').attr('readonly', true)
+    }
+  })
+
 })

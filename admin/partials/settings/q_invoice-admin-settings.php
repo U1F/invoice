@@ -56,12 +56,12 @@
      */
     ?>
     <h1 class="headerline">
-    <span id="qinv_settings_title_logo" style="display:flex;">  
-        <img id="imgSnowflake" 
-            src="<?php echo esc_url(
-                plugins_url('../../img/qanuk_snowflake.png', __FILE__)
-        );?>">
-    </span>
+        <span id="qinv_settings_title_logo" style="display:flex;">  
+            <img id="imgSnowflake" 
+                src="<?php echo esc_url(
+                    plugins_url('../../img/qanuk_snowflake.png', __FILE__)
+            );?>">
+        </span>
         <span id="qanuk_title" style="margin-left: 10px;"><?php _e('Settings', 'Ev'); ?></span>
         <span id="qanuk_title_media" style="margin-left: 10px;"><?php _e('Settings', 'Ev'); ?></span>
         <?php
@@ -78,13 +78,7 @@
     <p id="q-invoice-new-readonly-dummy" style="display: none"><?php 
         echo Interface_Invoices::getRowCountDatabase();
         ?>
-    </p> 
-
-    <div style="height: 70px; width: 100%; background-color: yellow; border:dashed 3px;padding:5px;margin:5px 0;">
-        <p style="font-size:20px;"><b>Sollten hier Reviews durchgeführt werden: <br>
-        Die Seite befindet sich gerade im Umbau und funktioniert noch nicht richtig!</b></p>
-
-    </div>
+    </p>
 
     <?php
     /**
@@ -362,6 +356,11 @@
             </section>
             
             <?php
+            /**
+             * ###########################################
+             * SUBMIT Button
+             * ###########################################
+             */
             submit_button($text = "Save Settings", $type = "primary", $name = "saveSettings"); 
             ?>
         
