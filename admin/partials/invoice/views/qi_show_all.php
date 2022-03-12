@@ -527,7 +527,9 @@ function showOpenInvoices()
                     <div class="qinv_moreOptionsDropdownBox">
                         <ul style="margin: 0;">
                             <li class="qinv_mainDropdownElement duplicateInvoice">Duplicate</li>
-                            <li class="qinv_mainDropdownElement">Further</li>
+                            <li class="qinv_mainDropdownElement">Reminder</li>
+                            <li class="qinv_mainDropdownElement">Dunning 1</li>
+                            <li class="qinv_mainDropdownElement">Dunning 2</li>
                         </ul>
                     </div>
                 </td>    
