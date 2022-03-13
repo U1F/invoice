@@ -214,6 +214,8 @@ if (!class_exists('QI_Invoice_Activator')) {
                 email varchar(256) NOT NULL,
                 bank varchar(64),
                 date_changed datetime NOT NULL,
+                reminder int(1),
+                date_reminder datetime,
                 dunning1 int(1),
                 date_dunning1 datetime,
                 dunning2 int(2),
