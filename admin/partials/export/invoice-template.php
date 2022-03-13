@@ -67,27 +67,32 @@ td.invoiceItemsHeader {
                     style="width: 270px; text-align: right; font-size:14px;"
                 >
                     <?php 
-
-                        $logoImageFile = $_SERVER['DOCUMENT_ROOT']. 
-                            dirname($_SERVER['PHP_SELF']). 
-                            "files/none_5002.png";
-                        
-                        //echo $logoImageFile;
                         if (get_option('qi_settings')['logoFileUrl']) {
                             $logoImageURL = get_option('qi_settings')['logoFileUrl'];
 				    		$logoImageFile = get_option('qi_settings')['logoFileFile'];
+                            $mimetype =  wp_get_image_mime( $logoImageFile );
+                            $imagedata = file_get_contents($logoImageFile);
+             	    	    $base64 = base64_encode($imagedata);
+				    	    $logoImageSource = 'data:'. $mimetype .';base64,'.$base64;
+                            ?>
+                            <img 
+                                src="<?php echo $logoImageSource;?>" 
+                                width="250"
+                                style="border:0px; margin-bottom: 10px; margin-top: 10px;">
+                            <?php
+                        }
+                        else 
+                        {
+                            ?>
+                            <div style="height:500px"></div>
+                            <?php
+
                         }
                         
-                        $mimetype =  wp_get_image_mime( $logoImageFile );
-                        $imagedata = file_get_contents($logoImageFile);
-             	    	$base64 = base64_encode($imagedata);
-				    	$logoImageSource = 'data:'. $mimetype .';base64,'.$base64;
+                        
                     
                     ?>
-                    <img 
-                        src="<?php echo $logoImageSource;?>" 
-                        width="250"
-                        style="border:0px; margin-bottom: 10px; margin-top: 10px;">
+                    
 
                     <br>
 
