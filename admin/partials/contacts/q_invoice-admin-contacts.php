@@ -16,19 +16,15 @@
 ?>
 
 
-    <style>
-  
-
-</style>
 
 <div class="q-invoice-page invoice-page">
 
     <div id="deleteContact" class="overlay dialogOverlay">
         <div class="confirmationBox">
-            <div style="margin: 1.5em 0 1em 0; text-align: center;">
-                <h3 style="color:red;" >Do you really want to delete the Contact?</h3>
+            <div id = "confirmationBoxBox">
+                <h3 id = "confirmationBoxHeader3">Do you really want to delete the Contact?</h3>
                 <p>This can not be undone. </p>
-                <div style="text-align: center; margin: 1em 0;">
+                <div id="confirmationBoxButtons">
                     <button class="qInvoiceFormButton cancelButton" id="cancelDeleteContact">
                         Cancel
                     </button>
