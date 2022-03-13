@@ -475,7 +475,7 @@ function showOpenInvoices()
                                 '/q_invoice/pdf/'. 
                                 Interface_Export::makeFilename($invoice_header->id).
                                 '.pdf'."' "
-                            ?>"
+                            ?>
                             id="<?php 
                                 echo 
                                     "download-".
@@ -517,6 +517,14 @@ function showOpenInvoices()
 
                         <span style="font-size: 20px;"
                             id="<?php echo esc_attr($invoice_header->id);?>" 
+                            title="Send Invoice as Mail"
+                            class="mail dashicons dashicons-email-alt"
+                            value="<?php echo esc_html($invoice_header->id);?>"
+                        >
+                        </span>
+
+                        <span style="font-size: 20px;"
+                            id="<?php echo esc_attr($invoice_header->id);?>" 
                             title="More Invoice Options"
                             class="moreInvoiceOptions dashicons dashicons-ellipsis"
                             value="<?php echo esc_html($invoice_header->id);?>"
@@ -527,9 +535,102 @@ function showOpenInvoices()
                     <div class="qinv_moreOptionsDropdownBox">
                         <ul style="margin: 0;">
                             <li class="qinv_mainDropdownElement duplicateInvoice">Duplicate</li>
-                            <li class="qinv_mainDropdownElement">Reminder</li>
-                            <li class="qinv_mainDropdownElement">Dunning 1</li>
-                            <li class="qinv_mainDropdownElement">Dunning 2</li>
+                            <li class="qinv_mainDropdownElement">
+                                Reminder 
+                                <a 
+                                    style="font-size:20px; display:inline" 
+                                    target="_top"
+                                    href=<?php 
+                                    echo "'". plugins_url() .
+                                        '/q_invoice/pdf/'. 
+                                        Interface_Export::makeFilename($invoice_header->id).
+                                        '.pdf'."' "
+                                    ?>
+                                    id="<?php 
+                                        echo 
+                                            "reminderDownload-".
+                                            get_option('qi_settings')['prefix'].'-'.
+                                            $invoice_header->id;
+                                        ?>"
+                                    title="Download Reminder"
+                                    class="downloadReminder download dashicons dashicons-download"
+                                    value="<?php echo esc_html($invoice_header->id);?>"
+                                    download
+                                >
+                                </a>
+
+                                <span style="font-size: 20px;"
+                                    id="<?php echo esc_attr($invoice_header->id);?>" 
+                                    title="Send Reminder as Mail"
+                                    class="mail dashicons dashicons-email-alt"
+                                    value="<?php echo esc_html($invoice_header->id);?>"
+                                >
+                                </span>
+                            </li>
+                            <li class="qinv_mainDropdownElement">
+                                Dunning 1 
+                                <a 
+                                    style="font-size:20px; display:inline" 
+                                    target="_top"
+                                    href=<?php 
+                                    echo "'". plugins_url() .
+                                        '/q_invoice/pdf/'. 
+                                        Interface_Export::makeFilename($invoice_header->id).
+                                        '.pdf'."' "
+                                    ?>
+                                    id="<?php 
+                                        echo 
+                                            "dunningIDownload-".
+                                            get_option('qi_settings')['prefix'].'-'.
+                                            $invoice_header->id;
+                                        ?>"
+                                    title="Download Dunning 1"
+                                    class="downloadDunningI download dashicons dashicons-download"
+                                    value="<?php echo esc_html($invoice_header->id);?>"
+                                    download
+                                >
+                                </a>
+
+                                <span style="font-size: 20px;"
+                                    id="<?php echo esc_attr($invoice_header->id);?>" 
+                                    title="Send First Dunning as Mail"
+                                    class="mail dashicons dashicons-email-alt"
+                                    value="<?php echo esc_html($invoice_header->id);?>"
+                                >
+                                </span>
+                            </li>
+                            <li class="qinv_mainDropdownElement">
+                                Dunning 2 
+                                <a 
+                                    style="font-size:20px; display:inline" 
+                                    target="_top"
+                                    href=<?php 
+                                    echo "'". plugins_url() .
+                                        '/q_invoice/pdf/'. 
+                                        Interface_Export::makeFilename($invoice_header->id).
+                                        '.pdf'."' "
+                                    ?>
+                                    id="<?php 
+                                        echo 
+                                            "dunningIIDownload-".
+                                            get_option('qi_settings')['prefix'].'-'.
+                                            $invoice_header->id;
+                                        ?>"
+                                    title="Download Dunning 2"
+                                    class="downloadDunningII download dashicons dashicons-download"
+                                    value="<?php echo esc_html($invoice_header->id);?>"
+                                    download
+                                >
+                                </a>
+
+                                <span style="font-size: 20px;"
+                                    id="<?php echo esc_attr($invoice_header->id);?>" 
+                                    title="Send Second Dunning as Mail"
+                                    class="mail dashicons dashicons-email-alt"
+                                    value="<?php echo esc_html($invoice_header->id);?>"
+                                >
+                                </span>
+                            </li>
                         </ul>
                     </div>
                 </td>    
