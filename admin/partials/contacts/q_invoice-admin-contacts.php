@@ -65,13 +65,13 @@
     <div id="show-contacts">
         <table class="wp-list-table widefat" id="contacts">
             <thead id="contactTabkeHeader"> 
-                <td class="check-column columnRowID fiftyCol">#</td>
-                <td class="check-column columnCompany twohundredCol">Company</td>
-                <td class="check-column columnName hundredCol">Name</td>
-                <td class="check-column columnCity fiftyCol">City</td>
-                <td class="check-column columnEmail fiftyCol">Email</td>
-                <td class="check-column columnStatus fiftyCol"></td>  
-                <td class="check-column columnEdit eightyCol"></td>  
+                <td class="check-column contactsColumnRowID fiftyCol">#</td>
+                <td class="check-column contactsColumnCompany twohundredCol">Company</td>
+                <td class="check-column contactsColumnName hundredCol">Name</td>
+                <td class="check-column contactsColumnCity fiftyCol">City</td>
+                <td class="check-column contactsColumnEmail fiftyCol">Email</td>
+                <td class="check-column contactsColumnStatus fiftyCol"></td>  
+                <td class="check-column contactsColumnEdit eightyCol"></td>  
             </thead>
             <?php
             $table_name = $GLOBALS['wpdb']->prefix . 
@@ -149,7 +149,7 @@
         </table>
     </div>
 
-    <div id="contactOverlay" class="overlay" style="display:none">
+    <div id="contactOverlay" class="overlay" style="display:none;">
         <div id="qiContactPopup">
             <h2><?php echo __("New Contact", "ev")?></h2>
             <form 
@@ -323,7 +323,7 @@
                         ); ?>
                     </div>
                 </div>
-                <div id="contactFormButtons" style="padding: 20px 20px 20px 20px">
+                <div id="contactFormButtons" style="padding: 20px 20px 20px 20px; display:flex;">
 
                 <button 
                     type="button" 

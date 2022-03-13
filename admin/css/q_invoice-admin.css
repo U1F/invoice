@@ -222,12 +222,12 @@ textarea.error {
     
 }
 
-@media only screen and (max-width:620px){
+/*@media only screen and (max-width:620px){
     .invoice-page{
         padding-top: 60px;
     }
     
-}
+}*/
 
 @media only screen and (max-width:330px){
     .q-invoice-page h1.headerline {

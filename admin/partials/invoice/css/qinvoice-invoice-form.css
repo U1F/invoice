@@ -108,35 +108,6 @@
     width: 48%;
 }
 
-/*.q-invoice-page #invoiceForm #inputDashiconCompanyRegister {
-    position: absolute;
-    bottom: 2px;
-    right: 5px;
-    width: 24px;
-    height: 24px;
-}*/
-
-/*.q-invoice-page #invoiceForm td.inputsLeftTable input#firstname {
-    width: 152px;
-}
-
-.q-invoice-page #invoiceForm td.inputsLeftTable input#lastname {
-    width: 152px;
-}
-
-.q-invoice-page #invoiceForm td.inputsLeftTable input#zip {
-    width: 80px;
-}
-
-.q-invoice-page #invoiceForm td.inputsLeftTable input#city {
-    width: 224px;
-}
-
-.q-invoice-page #invoiceForm td.inputsLeftTable input#loc_id {
-    width: 60px;
-}*/
-
-
 /* Spacer between left and right table using flexbox-layout*/
 
 .q-invoice-page #invoiceForm div#invoiceInputTableSpacer {
@@ -153,7 +124,6 @@
 .q-invoice-page #invoiceForm table#invoiceFormInputsRight {
     font-family: sans-serif;
     font-size: 14px;
-    /*border-spacing: 0 12px;*/
 }
 
 .q-invoice-page #invoiceForm td.labelsRightTable {
@@ -235,7 +205,7 @@
 }
 
 .q-invoice-page #invoiceForm table#items input[type=number] {
-    width: 80px;
+    width: 90px;
     height: 32px;
 }
 
@@ -252,8 +222,9 @@
     width: 14px;
 }
 
-.q-invoice-page #invoiceForm table#items td.invoiceItemsAmount {
-    width: 72px;
+.q-invoice-page #invoiceForm table#items td.invoiceItemsAmount,
+.q-invoice-page .itemUnit {
+    width: 90px;
 }
 
 .q-invoice-page #invoiceForm table#items td.invoiceItemsAmount input[type=number][name='anzahl[]'] {
@@ -328,7 +299,6 @@
 .q-invoice-page #invoiceForm td.invoiceSumsLabel {
     width: 100px;
     text-align: left;
-    /*background-color:white; */
     padding-left: 28px;
 }
 
@@ -347,31 +317,25 @@
     border: 1px solid #dadce1;
 }
 
-
-
-
-
 .q-invoice-page #invoiceForm select.discountType {
     font-family: sans-serif;
     font-size: 14px;
     font-weight: bold;
     height: 32px;
     border-radius: 4px;
-    
     margin-bottom: 2px;
     
 }
 
 .q-invoice-page #invoiceForm div.autocompleteDIV {
     background-color: #fff;
-    width: 320px;
+    width: 100%;
     display: none;
     z-index: 3;
     position: absolute;
     padding: 0px 0px 0px 0px;
     margin-left: 0px;
     border: 1px solid #dadce1;
-    /*border-top: 1px solid white;*/
     border-radius: 5px;
 }
 
@@ -487,7 +451,7 @@
     }
 
     .q-invoice-page #invoiceForm div#autocompleteLastname, .q-invoice-page #invoiceForm div#autocompleteFirstname{
-        margin-top: 40px;
+        margin-top: 36px;
     }
 
 }
@@ -522,6 +486,10 @@
 
     .q-invoice-page .q_inv_mobile_flex_mod{
         display: flex;
+    }
+
+    .q-invoice-page #invoiceForm div#autocompleteLastname, .q-invoice-page #invoiceForm div#autocompleteFirstname{
+        margin-top: 40px;
     }
 
 }

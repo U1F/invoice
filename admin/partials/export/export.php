@@ -19,7 +19,13 @@
  * Function exportInvoice($invoiceID)
  * 
  * @param int    $invoiceID   1
- * @param string $invoiceType 1
+ * @param string $invoiceType -->   currently possible options:
+ *                                  - invoice   -> New Invoice for services
+ *                                  - credit    -> Credit for already paid items
+ *                                  - offer     -> Like an Invoice but not bought yet
+ *                                  - reminder  -> Reminder for an pending invoice
+ *                                  - dunning1  -> First reminder for an pending invoice with costs
+ *                                  - dunning2  -> Second reminder for an pending invoice with further costs
  * 
  * @return void
  */

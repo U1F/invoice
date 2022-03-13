@@ -402,7 +402,7 @@ class Interface_Invoices
         $GLOBALS['wpdb']->insert( 
             $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_HEADER,
             array(
-                
+                'id' => $invoice_array['invoice_id'],
                 'prefix' => $invoice_array['prefix'],
                 'invoice_date' => $invoice_array['dateOfInvoice'], 
                 'delivery_date' => $invoice_array['performanceDate'],
@@ -429,7 +429,7 @@ class Interface_Invoices
         
         $arrayLength = count($invoice_array['itemDescription']);
 
-        $detailID = $GLOBALS['wpdb']->insert_id;
+        $detailID = $invoice_array['invoice_id'];
         
         for ($i = 0; $i < $arrayLength; $i++) {
             $GLOBALS['wpdb']->show_errors();
@@ -452,7 +452,7 @@ class Interface_Invoices
             $amount = intVal($invoice_array['amountOfItems'][$i]);
             $discount = floatval(str_replace(',', '.', sanitize_text_field($invoice_array['itemDiscount'][$i])));
             $discountType = $invoice_array['discountType'][$i];
-            $discountedPrice = self::discountPrice($price,$discount, $discountType); 
+            $discountedPrice = self::discountPrice($price, $discount, $discountType); 
             $total = $amount * $discountedPrice;
 
             $GLOBALS['wpdb']->insert( 
@@ -463,7 +463,7 @@ class Interface_Invoices
                     'position' => $i + 1,
                     'description' => sanitize_text_field($invoice_array['itemDescription'][$i]),
                     'amount' => sanitize_text_field($invoice_array['amountOfItems'][$i]),
-                    'amount_plan' => $rawprice,
+                    'amount_plan' => $price,
                     'discount' => $discount,
                     'discount_type' => sanitize_text_field($invoice_array['discountType'][$i]),
                     'amount_actual' => sanitize_text_field($discountedPrice),

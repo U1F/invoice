@@ -18,39 +18,8 @@
 
 ?>
 
-<?php //Debugging Output
-
-    $table_name = $GLOBALS['wpdb']->prefix . QI_Invoice_Constants::TABLE_QI_HEADER;
-    $query = "SELECT * FROM $table_name ORDER BY id DESC";
-    $invoice_headers = $GLOBALS['wpdb']->get_results($query);
-
-    foreach ($invoice_headers as $invoice_header) {
-        $invoice_details = $GLOBALS['wpdb']->get_results(
-            "SELECT * FROM ".
-            $GLOBALS['wpdb']->prefix . 
-            QI_Invoice_Constants::TABLE_QI_DETAILS . ' '.
-            "WHERE invoice_id = " .
-            $invoice_header->id . " " .  
-            "ORDER BY position ASC"
-        );
-        $netSum = 0;
-        $totalSum = 0;
-        foreach ($invoice_details as $invoice_detail) {
-            $netSum = $netSum + floatval($invoice_detail->sum);
-            $totalSum = $totalSum + 
-                (floatval($invoice_detail->sum) + 
-                (floatval($invoice_detail->sum) * intval($invoice_detail->tax) / 100));
-        }
-        $totalNet = $totalNet + $netSum;
-        $totalTot = $totalTot + $totalSum;
-        echo "<p>Netto Total: ".floatval($totalNet)."-->".$netSum."</p>";
-    }
-
-    echo "<p>Netto Total: ".floatval($totalNet)."</p>";
-    echo "<p>Total Total: ".floatval($totalTot)."</p>";
-?>
  <div class="page_content">
-     <div id="filterButtons" class="qInvMainSearchable">
+     <div class="filterButtons qInvMainSearchable">
         <div class="filterButton active" id="showAllInvoices">
             <button class="invoiceButton">
                 All
@@ -90,7 +59,7 @@
         
 
      </div>
-    <div id="mobileFilterButtons" class="qInvMainSearchable">
+    <div class="mobileFilterButtons qInvMainSearchable">
         <select name="mobileFilterButtonsDropdown" id="mobileFilterButtonsDropdown">
             <option class="mobileFilterButtonsOption" value="all" selected>All</option>
             <option class="mobileFilterButtonsOption" value="open">Open</option>
@@ -497,54 +466,73 @@ function showOpenInvoices()
 
                 <td class="manage-column  columnEdit">
 
-                    <a 
-                        style="font-size:20px; display:inline" 
-                        target="_top"
-                        href=<?php 
-                        echo "'". plugins_url() .
-                            '/q_invoice/pdf/'. 
-                            Interface_Export::makeFilename($invoice_header->id).
-                            '.pdf'."' "
-                        ?>"
-                        id="<?php 
-                            echo 
-                                "download-".
-                                get_option('qi_settings')['prefix'].'-'.
-                                $invoice_header->id;
+                    <div style="width:100%">
+                        <a 
+                            style="font-size:20px; display:inline" 
+                            target="_top"
+                            href=<?php 
+                            echo "'". plugins_url() .
+                                '/q_invoice/pdf/'. 
+                                Interface_Export::makeFilename($invoice_header->id).
+                                '.pdf'."' "
                             ?>"
-                        title="Download Invoice"
-                        class="downloadInvoice download dashicons dashicons-download"
-                        value="<?php echo esc_html($invoice_header->id);?>"
-                        download
-                    >
-                    </a>
-                    
+                            id="<?php 
+                                echo 
+                                    "download-".
+                                    get_option('qi_settings')['prefix'].'-'.
+                                    $invoice_header->id;
+                                ?>"
+                            title="Download Invoice"
+                            class="downloadInvoice download dashicons dashicons-download"
+                            value="<?php echo esc_html($invoice_header->id);?>"
+                            download
+                        >
+                        </a>
+                            
+                        <span style="font-size: 20px; <?php
+                            if ($paid){echo 'color: #dadce1;';} else{echo 'color: #343a40;';}
+                            if ($cancelled){echo ' display: none;';}
+                            ?>"
+                            id="<?php echo esc_attr($invoice_header->id);?>" 
+                            title="Cancel Invoice"
+                            class="delete <?php
+                            if (!$paid){echo 'deleteRow';}
+                            ?> dashicons dashicons-no"
+                            value="<?php echo esc_html($invoice_header->id);?>"
+                        >
+                        </span>
 
-                    <span style="font-size: 20px; <?php
-                        if ($paid){echo 'color: #dadce1;';}
-                        if ($cancelled){echo ' display: none;';}
-                        ?>"
-                        id="<?php echo esc_attr($invoice_header->id);?>" 
-                        title="Cancel Invoice"
-                        class="delete <?php
-                        if (!$paid){echo 'deleteRow';}
-                        ?> dashicons dashicons-no"
-                        value="<?php echo esc_html($invoice_header->id);?>"
-                    >
-                    </span>
+                        <span style="font-size: 20px;<?php 
+                            if ($cancelled){
+                                echo 'display: inline-block;';
+                            } else {
+                                echo 'display: none;';
+                            }?>"
+                            id="<?php echo esc_attr($invoice_header->id);?>" 
+                            title="Reactivate Invoice"
+                            class="reactivateInvoice reactivate dashicons dashicons-undo"
+                            value="<?php echo esc_html($invoice_header->id);?>"
+                        >
+                        </span>
 
-                    <span style="font-size: 20px;<?php 
-                        if ($cancelled){
-                            echo 'display: inline-block;';
-                        } else {
-                            echo 'display: none;';
-                        }?>"
-                        id="<?php echo esc_attr($invoice_header->id);?>" 
-                        title="Reactivate Invoice"
-                        class="reactivateInvoice reactivate dashicons dashicons-undo"
-                        value="<?php echo esc_html($invoice_header->id);?>"
-                    >
-                    </span>
+                        <span style="font-size: 20px;"
+                            id="<?php echo esc_attr($invoice_header->id);?>" 
+                            title="More Invoice Options"
+                            class="moreInvoiceOptions dashicons dashicons-ellipsis"
+                            value="<?php echo esc_html($invoice_header->id);?>"
+                        >
+                        </span>
+                    </div>
+
+                    <div class="qinv_moreOptionsDropdownBox">
+                        <ul style="margin: 0;">
+                            <li class="qinv_mainDropdownElement duplicateInvoice">Duplicate</li>
+                            <li class="qinv_mainDropdownElement">Reminder</li>
+                            <li class="qinv_mainDropdownElement">Dunning 1</li>
+                            <li class="qinv_mainDropdownElement">Dunning 2</li>
+                        </ul>
+                    </div>
+                </td>    
                     
             </tr>            
             
