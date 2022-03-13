@@ -223,9 +223,47 @@ jQuery(function ($) {
     updateInvoiceHeaderItem(invoiceID, data)
   }
 
+  function setInvoiceToPaid (clickedTarget){
+    const invoiceRow = $(clickedTarget).parent().parent().parent()
+    // .. set a paydate to mark as paid
+    const data = { paydate: formatDate(new Date()) }
+    markInvoice(getRowNumber(clickedTarget), data)
+
+    // and mark that row as paid instead of open
+    invoiceRow.removeClass('open')
+    invoiceRow.addClass('paid')
+    
+    invoiceRow.find('.invoiceStatusIcon').addClass('paid')
+    invoiceRow.find('.invoiceStatusIcon').removeClass('open')
+    
+    // paid invoices should not look and be editable
+    invoiceRow.find('.columnEdit').find('.delete').css('color', '#dadce1')
+    invoiceRow.find('.columnEdit').find('.delete').removeClass('deleteRow')
+
+  }
+
+  function setInvoiceToUnpaid (clickedTarget){
+    
+    const invoiceRow = $("tr#"+clickedTarget)
+    
+    // remove paydate, mark as open and make editable
+    const data = { paydate: '' }
+    unmarkInvoice(getRowNumber($("tr#"+clickedTarget)), data)
+    invoiceRow.removeClass('paid')
+    invoiceRow.addClass('open edit')
+    invoiceRow.removeClass('paid')
+    invoiceRow.addClass('open')
+    invoiceRow.find('.invoiceStatusIcon').removeClass('paid')
+    invoiceRow.find('.invoiceStatusIcon').addClass('open')
+    
+    invoiceRow.find('.columnEdit').find('.delete').css('color', '#50575e')
+    invoiceRow.find('.columnEdit').find('.delete').addClass('deleteRow')
+  }
+
   // Clicking on the slider Paid/Unpaid changes UI functionality and updates database
   $('.columnStatusPaid').on('click', '.sliderForPayment', function (event) {
-    // get key elements and save them to variables for later use
+    event.preventDefault()
+
     const sliderBox = $(event.target).parent()
     const invoiceRow = sliderBox.parent().parent()
 
@@ -233,34 +271,16 @@ jQuery(function ($) {
       return;
     }
 
-    // if the slider gets, but was not checked..
     if (!sliderBox.find('input').prop('checked')) {
-      // .. set a paydate to mark as paid
-      const data = { paydate: formatDate(new Date()) }
-      markInvoice(getRowNumber(event.target), data)
-
-      // and mark that row as paid instead of open
-      invoiceRow.removeClass('open')
-      invoiceRow.addClass('paid')
-      invoiceRow.find('.invoiceStatusIcon').addClass('paid')
-      invoiceRow.find('.invoiceStatusIcon').removeClass('open')
-      invoiceRow.addClass('paid')
-      invoiceRow.removeClass('open')
-      // paid invoices should not look and be editable
-      invoiceRow.find('.columnEdit').find('.delete').css('color', '#dadce1')
-      invoiceRow.find('.columnEdit').find('.delete').removeClass('deleteRow')
+      setInvoiceToPaid(event.target)      
+      $(event.target).parent().click();
     } else {
-      // remove paydate, mark as open and make editable
-      const data = { paydate: '' }
-      unmarkInvoice(getRowNumber(event.target), data)
-      invoiceRow.removeClass('paid')
-      invoiceRow.addClass('open edit')
-      invoiceRow.find('.invoiceStatusIcon').removeClass('paid')
-      invoiceRow.find('.invoiceStatusIcon').addClass('open')
-      invoiceRow.removeClass('paid')
-      invoiceRow.addClass('open')
-      invoiceRow.find('.columnEdit').find('.delete').css('color', '#50575e')
-      invoiceRow.find('.columnEdit').find('.delete').addClass('deleteRow')
+      $("#reopenPaidInvoice").show()
+      //zIndex should be set higher in CSS instead:
+      $("#reopenPaidInvoice").css('zIndex', 9999);
+      $("#lastClickedInvoice").show()
+      //console.log($(event.target).parents("tr").attr('id'))
+      $("#lastClickedInvoice").val($(event.target).parents("tr").attr('id'))
     }
 
     q_invoice_RecalcSums(0,0,0);
@@ -268,7 +288,7 @@ jQuery(function ($) {
 
   // Ich denke, das folgende ist nicht mehr nötig:
   $('.columnStatusPaid').on('click', '.markAsPaid', function (event) {
-    $(event.target).closest('tr').find('.sliderForPayment').click()
+    //$(event.target).closest('tr').find('.sliderForPayment').click()
   }) // Bis hier hin.
 
   function getRowNumber (eventsOriginalTarget) {
@@ -301,6 +321,23 @@ jQuery(function ($) {
     if ($(event.target).is('.overlay')) {
       $('.dialogOverlay').hide()
     }
+  })
+
+  $("#reopenPaidInvoice").on("click", ".submitButton", function(event){
+    const currentRow = $("#reopenPaidInvoice #lastClickedInvoice").val()
+    console.log(currentRow)
+    setInvoiceToUnpaid(currentRow)
+    
+    $('#'+currentRow).find('.sliderForPayment').parent().click()
+
+    $("#reopenPaidInvoice").hide()
+    
+    
+  })
+  
+  $("#reopenPaidInvoice").on("click", ".cancelButton", function(event){
+    $("#reopenPaidInvoice").hide()
+    //$('#edit-'+1).find('.sliderForPayment').click();
   })
 
   function setFilterButtonActive (target) {
