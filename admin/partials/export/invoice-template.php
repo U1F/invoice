@@ -84,7 +84,7 @@ td.invoiceItemsHeader {
                         else 
                         {
                             ?>
-                            <div style="height:500px"></div>
+                            <div style="height:100px"></div>
                             <?php
 
                         }
