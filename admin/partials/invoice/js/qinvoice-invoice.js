@@ -179,6 +179,28 @@ jQuery(function ($) {
     })
   }
 
+  /**
+   * Function to add X Working Days on a start Date Y
+   * 
+   * @param {Start date on which the working days have to be added --> use strtotime of the Startdate for example} $timestamp 
+   * @param {Number of Wokring Days that have to be added} $days 
+   * @param {Week Days that have to be skipped --> array (Monday-Sunday) eg. array("Saturday","Sunday")} $skipdays 
+   * @param {Further Dates that have to be skipped --> array (YYYY-mm-dd) eg. array("2012-05-02","2015-08-01")} $skipdates 
+   * @returns date("Y-m-d, $newTime")
+   */
+  function addWorkingDays($timestamp, $days, $skipdays = array("Saturday", "Sunday"), $skipdates = NULL) {
+    $i = 1;
+
+    while ($days >= $i) {
+        $timestamp = strtotime("+1 day", $timestamp);
+        if ( (in_array(date("l", $timestamp), $skipdays)) || (in_array(date("Y-m-d", $timestamp), $skipdates)) ){
+            $days++;
+        }
+        $i++;
+    }
+    return $timestamp;
+  }
+
   // ............................................................................................................................
   // ............................................................................................................................
   // ......##..##...####...######..#####...........######..##..##..######..######..#####...######...####....####...######........

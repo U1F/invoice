@@ -183,6 +183,12 @@ q-invoice-page dashicons-download {
   display: inline-block;
 }
 
+.q-invoice-page .longCircle {
+    background-color: white;
+    padding: 5px 20px;
+    border-radius: 15px;
+  }
+
 .q-invoice-page .circle.paid.active {
     background-color: #1bd89e;
 }
@@ -191,7 +197,8 @@ q-invoice-page dashicons-download {
   background-color: rgba(2,31,63,.57);
 }
 
-.q-invoice-page .circle.dunning {
+.q-invoice-page .circle.dunning,
+.q-invoice-page .longCircle.dunningII {
     background-color: #fe667b;
 }
 
@@ -199,11 +206,13 @@ q-invoice-page dashicons-download {
     background-color: #fb7b26;
 }
 
-.q-invoice-page .circle.open {
+.q-invoice-page .circle.open,
+.q-invoice-page .longCircle.dunningI {
     background-color: #fb7b26;
 }
 
-.q-invoice-page .circle.open.cancelled {
+.q-invoice-page .circle.open.cancelled,
+.q-invoice-page .longCircle.reminder {
     background-color: rgba(2,31,63,.57);
 }
 

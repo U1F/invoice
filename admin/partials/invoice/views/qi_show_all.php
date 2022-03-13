@@ -109,7 +109,7 @@ function showHeader()
                     <?php _e('Name', 'Ev'); ?>
                 </th>
 
-                <th scope="col" id="invoiceDate" 
+                <th scope="col" id="invoiceDescription" 
                     class="manage-column  columnDescription">
                     <?php _e('Description', 'Ev'); ?>
                 </th>
@@ -413,10 +413,41 @@ function showOpenInvoices()
                     </span>
                 </td>
 
-                <td class="manage-column  columnDunning">
-                <span>
-                        <?php 
-                        $dunningFee1 = intVal(get_option('qi_settings')['dunning1']);
+                <td class="manage-column columnDunning">
+                    <?php
+                        /*$invoiceActivatedDate = strtotime($invoice_header->invoice_date);
+                        $currentDate = '2022-06-04';//new date()->format("Y-m-d");
+
+                        $reminderDays = intVal(get_option('qi_settings')['reminder']);
+                        $reminderDate = addWorkingDays($invoiceActivatedDate, $reminderDays);
+
+                        $dunningIDays = intVal(get_option('qi_settings')['dunning1']);
+                        $DunningIDate = addWorkingDays($invoiceActivatedDate, $dunningIDays);
+
+                        $dunningIIDays = intVal(get_option('qi_settings')['dunning2']);
+                        $dunningIIDate = addWorkingDays($invoiceActivatedDate, $dunningIIDays);
+
+                        $circleClass = '';
+                        $numberOfDunningDays = '';
+                        if($dunningIIDate <= $currentDate){
+                            $circleClass = 'dunningII';
+                            $numberOfDunningDays = ceil(abs($currentDate - $dunningIIDate) / 86400);
+                        } else if($dunningIDate <= $currentDate){
+                            $circleClass = 'dunningI';
+                            $numberOfDunningDays = ceil(abs($currentDate - $dunningIDate) / 86400);
+                        } else if($reminderDate <= $currentDate){
+                            $circleClass = 'reminder';
+                            $numberOfDunningDays = ceil(abs($currentDate - $reminderDate) / 86400);
+                        }*/
+
+                        
+                    ?>
+                    <span class="longCircle ">
+                        <?php //echo $numberOfDunningDays; 
+                        ?>
+
+                        <?php //old calculation of total dunning amount to show in invoice main
+                        /*$dunningFee1 = intVal(get_option('qi_settings')['dunning1']);
                         $dunningFee2 = intVal(get_option('qi_settings')['dunning2']);
                             if(intVal($invoice_header->dunning1)){
                                 if(intVal($invoice_header->dunning2)){
@@ -446,7 +477,7 @@ function showOpenInvoices()
                                     }
                                     echo number_format($dunningFee1, 2, $decimalDot, $thousandsDot). " " . $currencySymbol;
                                 }
-                            }
+                            }*/
                          ?>
                     </span>
                 </td>
@@ -718,6 +749,7 @@ function showOpenInvoices()
         </td>
 
         <td class="manage-column  columnDunning">
+            <?php /*
             <span id="qi_totalSumDunning">
                 <?php 
                 echo number_format($dunningTotalSum, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
@@ -743,6 +775,7 @@ function showOpenInvoices()
                 echo number_format($paidDunning, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
                  ?>
             </span>
+            */?>
         </td>
 
         <td class="manage-column  columnStatusPaid"></td>
