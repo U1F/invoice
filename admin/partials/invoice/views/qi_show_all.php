@@ -152,6 +152,27 @@ function showHeader()
     
 }
 
+/**
+ * Function to add X Working Days on a start Date Y
+ * 
+ * @param {Start date on which the working days have to be added --> use strtotime of the Startdate for example} $timestamp 
+ * @param {Number of Wokring Days that have to be added} $days 
+ * @param {Week Days that have to be skipped --> array (Monday-Sunday) eg. array("Saturday","Sunday")} $skipdays 
+ * @param {Further Dates that have to be skipped --> array (YYYY-mm-dd) eg. array("2012-05-02","2015-08-01")} $skipdates 
+ * @returns date("Y-m-d, $newTime")
+ */
+function addWorkingDays($timestamp, $days, $skipdays = array("Saturday", "Sunday"), $skipdates = NULL) {
+  $i = 1;
+  while ($days >= $i) {
+      $timestamp = strtotime("+1 day", $timestamp);
+      if ( (in_array(date("l", $timestamp), $skipdays)) || (in_array(date("Y-m-d", $timestamp), $skipdates)) ){
+          $days++;
+      }
+      $i++;
+  }
+  return $timestamp;
+}
+
 
 
 
@@ -415,22 +436,24 @@ function showOpenInvoices()
 
                 <td class="manage-column columnDunning">
                     <?php
-                        /*$invoiceActivatedDate = strtotime($invoice_header->invoice_date);
-                        $currentDate = '2022-06-04';//new date()->format("Y-m-d");
+                        $invoiceActivatedDate = strtotime($invoice_header->invoice_date);
+                        $currentDate = strtotime(date('Y-m-d'));
 
-                        $reminderDays = intVal(get_option('qi_settings')['reminder']);
+                        $reminderDays = intVal(get_option('qi_settings')['reminderDayLimit']);
                         $reminderDate = addWorkingDays($invoiceActivatedDate, $reminderDays);
 
-                        $dunningIDays = intVal(get_option('qi_settings')['dunning1']);
-                        $DunningIDate = addWorkingDays($invoiceActivatedDate, $dunningIDays);
+                        $dunningIDays = intVal(get_option('qi_settings')['dunning1daylimit']);
+                        $dunningIDate = addWorkingDays($invoiceActivatedDate, $dunningIDays);
 
-                        $dunningIIDays = intVal(get_option('qi_settings')['dunning2']);
+                        $dunningIIDays = intVal(get_option('qi_settings')['dunning2daylimit']);
                         $dunningIIDate = addWorkingDays($invoiceActivatedDate, $dunningIIDays);
-
+                        
                         $circleClass = '';
                         $numberOfDunningDays = '';
+                        //$currentTimeStamp = new DateTime($currentDate);
                         if($dunningIIDate <= $currentDate){
                             $circleClass = 'dunningII';
+                            //$reminderTimeStamp = new DateTime($dunningIIDate)
                             $numberOfDunningDays = ceil(abs($currentDate - $dunningIIDate) / 86400);
                         } else if($dunningIDate <= $currentDate){
                             $circleClass = 'dunningI';
@@ -438,12 +461,13 @@ function showOpenInvoices()
                         } else if($reminderDate <= $currentDate){
                             $circleClass = 'reminder';
                             $numberOfDunningDays = ceil(abs($currentDate - $reminderDate) / 86400);
-                        }*/
+                        }
+                        echo "<script>console.log('Debugging Time Stamps: DII".$dunningIIDate."---DI".$dunningIDate."---R".$reminderDate."----CD".$currentDate."');</script>";
 
                         
                     ?>
-                    <span class="longCircle ">
-                        <?php //echo $numberOfDunningDays; 
+                    <span class="longCircle <?php echo $circleClass; ?>">
+                        <?php echo $numberOfDunningDays; 
                         ?>
 
                         <?php //old calculation of total dunning amount to show in invoice main

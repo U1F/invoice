@@ -171,7 +171,7 @@
 .q-invoice-page .invoiceSettingsRow input#reminder,
 .q-invoice-page .invoiceSettingsRow input#dunning1,
 .q-invoice-page .invoiceSettingsRow input#dunning2,
-.q-invoice-page .invoiceSettingsRow input#reminderdaylimit,
+.q-invoice-page .invoiceSettingsRow input#reminderDayLimit,
 .q-invoice-page .invoiceSettingsRow input#dunning1daylimit,
 .q-invoice-page .invoiceSettingsRow input#dunning2daylimit {
     text-align: right;

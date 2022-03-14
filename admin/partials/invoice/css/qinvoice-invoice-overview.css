@@ -184,9 +184,10 @@ q-invoice-page dashicons-download {
 }
 
 .q-invoice-page .longCircle {
-    background-color: white;
+    background-color: transparent;
     padding: 5px 20px;
     border-radius: 15px;
+    color: white;
   }
 
 .q-invoice-page .circle.paid.active {
