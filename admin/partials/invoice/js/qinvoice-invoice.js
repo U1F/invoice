@@ -213,8 +213,21 @@ jQuery(function ($) {
         }
     }
 
-    function getCellValue(row, index){ return $(row).children('td').eq(index).text() }
+//
+//    ██████  ██    ██ ███████ ██████  ██    ██ ██ ███████ ██     ██ 
+//   ██    ██ ██    ██ ██      ██   ██ ██    ██ ██ ██      ██     ██ 
+//   ██    ██ ██    ██ █████   ██████  ██    ██ ██ █████   ██  █  ██ 
+//   ██    ██  ██  ██  ██      ██   ██  ██  ██  ██ ██      ██ ███ ██ 
+//    ██████    ████   ███████ ██   ██   ████   ██ ███████  ███ ███  
+//
 
+ 
+
+  function getCellValue(row, index){ 
+    return $(row).children('td').eq(index).text() 
+  }
+
+  // These 2 are a bit overengineered
   function markInvoice (invoiceID, data) {
     updateInvoiceHeaderItem(invoiceID, data)
   }
@@ -223,6 +236,11 @@ jQuery(function ($) {
     updateInvoiceHeaderItem(invoiceID, data)
   }
 
+  /**
+   * Change the invoce Row AND database entry to paid status
+   *
+   * @param {string} x The row id to make changes.
+   */
   function setInvoiceToPaid (clickedTarget){
     const invoiceRow = $(clickedTarget).parent().parent().parent()
     // .. set a paydate to mark as paid
@@ -242,6 +260,11 @@ jQuery(function ($) {
 
   }
 
+  /**
+   * Change the invoce Row AND database entry to open (unpaid) status
+   *
+   * @param {string} x The row id to make changes.
+   */
   function setInvoiceToUnpaid (clickedTarget){
     
     const invoiceRow = $("tr#"+clickedTarget)
@@ -251,34 +274,43 @@ jQuery(function ($) {
     unmarkInvoice(getRowNumber($("tr#"+clickedTarget)), data)
     invoiceRow.removeClass('paid')
     invoiceRow.addClass('open edit')
-    invoiceRow.removeClass('paid')
-    invoiceRow.addClass('open')
+
     invoiceRow.find('.invoiceStatusIcon').removeClass('paid')
     invoiceRow.find('.invoiceStatusIcon').addClass('open')
     
     invoiceRow.find('.columnEdit').find('.delete').css('color', '#50575e')
     invoiceRow.find('.columnEdit').find('.delete').addClass('deleteRow')
   }
-
-  // Clicking on the slider Paid/Unpaid changes UI functionality and updates database
+ 
+  /**
+   * Clicking on the slider Paid/Unpaid changes UI functionality 
+   * and updates database
+   *
+   * @param {event} x We use the target of the event to make changes 
+   * on the row that got clicked
+   */
   $('.columnStatusPaid').on('click', '.sliderForPayment', function (event) {
     event.preventDefault()
 
     const sliderBox = $(event.target).parent()
     const invoiceRow = sliderBox.parent().parent()
 
+    // We do not want to make it possible for cancelled invoices
     if(invoiceRow.hasClass('cancelled')){
       return;
     }
 
+    // For already paid invocies a dialoge pops up to ask if the invoice should be reverted to open
     if (!sliderBox.find('input').prop('checked')) {
       setInvoiceToPaid(event.target)      
       $(event.target).parent().click();
     } else {
       $("#reopenPaidInvoice").show()
+
       //zIndex should be set higher in CSS instead:
       $("#reopenPaidInvoice").css('zIndex', 9999);
       $("#lastClickedInvoice").show()
+      
       //console.log($(event.target).parents("tr").attr('id'))
       $("#lastClickedInvoice").val($(event.target).parents("tr").attr('id'))
     }
@@ -295,7 +327,12 @@ jQuery(function ($) {
     return $(eventsOriginalTarget).closest('tr').attr('value')
   }
 
-  // Escape key closes Overlay
+
+  /**
+   * Escape key closes Overlay
+   * 
+   * @param {event} x We check if Escpape has been pressed
+   */
   $(document).on('keydown', function (e) {
     if (e.keyCode === 27) {
       if ($('.dialogOverlay').css('display') === 'block') {
@@ -306,7 +343,13 @@ jQuery(function ($) {
     }
   })
 
-  // Clicking outside of the form or cancel button also closes Overlay
+  
+  /**
+   * Clicking outside of the form or cancel button also closes Overlay
+   * 
+   * @param {event} x We check if the user clickd outside the form 
+   * or the cancel button
+   */
   $('#invoiceOverlay').click(function (event) {
     if ($(event.target).is('.overlay')) {
       $('#invoiceOverlay').hide()
@@ -315,43 +358,61 @@ jQuery(function ($) {
       $('#invoiceOverlay').hide()
     }
   })
-
-  // Closing PopUp "Archive Invoice"
+  /**
+   * Clicking outside of the dialog or closes it
+   * 
+   * @param {event} x We check if the user clicked outside the form 
+   */
   $('.dialogOverlay').click(function (event) {
     if ($(event.target).is('.overlay')) {
       $('.dialogOverlay').hide()
     }
   })
 
-  $("#reopenPaidInvoice").on("click", ".submitButton", function(event){
+  /**
+   * Clicking "OK" in the dialog re-opens the invoice
+   */
+  $("#reopenPaidInvoice").on("click", ".submitButton", function(){
     const currentRow = $("#reopenPaidInvoice #lastClickedInvoice").val()
-    console.log(currentRow)
+
     setInvoiceToUnpaid(currentRow)
     
     $('#'+currentRow).find('.sliderForPayment').parent().click()
-
     $("#reopenPaidInvoice").hide()
     
-    
   })
-  
-  $("#reopenPaidInvoice").on("click", ".cancelButton", function(event){
+  /**
+   * Clicking "Cancel" in the dialog just hides it
+   */
+  $("#reopenPaidInvoice").on("click", ".cancelButton", function(){
     $("#reopenPaidInvoice").hide()
-    //$('#edit-'+1).find('.sliderForPayment').click();
   })
 
-  function setFilterButtonActive (target) {
-    
+
+  /**
+   * Helper function that sets the class of the pressed button to active
+   *  
+   * @param {object} x We submit the target to change 
+   */
+  function setFilterButtonActive (target) { 
     target.attr('class', 'filterButton active')
-    
   }
 
-  function setFilterButtonInactive (target) {
-    
+
+   /**
+   * Helper function that sets the class of the pressed button to inactive
+   *  
+   * @param {object} x We submit the target to change 
+   */
+  function setFilterButtonInactive (target) { 
     target.attr('class', 'filterButton inactive')
-  
   }
 
+
+  /**
+   * Helper function that either shows or hides the switch to mark invocies as paid
+   * @param {boolean} x True=Show, False=Hide 
+   */
   function showPayToggle(doShow){
     if (doShow) {
       $('.switch').show()
@@ -361,6 +422,10 @@ jQuery(function ($) {
     }
   }
 
+  /**
+   * Helper function that either shows or hides the button to mark invoices as deactivated/archived
+   * @param {boolean} x True=Show, False=Hide 
+   */
   function showDeleteButton(doShow){
     if (doShow) {
       $('.delete').show()
@@ -370,6 +435,10 @@ jQuery(function ($) {
     }
   }
 
+  /**
+   * Helper function that either shows or hides the button to mark invoices as active/open
+   * @param {boolean} x True=Show, False=Hide 
+   */
   function showReactivationButton(doShow){
     if (doShow) {
       $('.reactivateInvoice').show()
@@ -379,7 +448,12 @@ jQuery(function ($) {
     }
   }
 
+  /**
+   * Filters invoices and changes UI to that view
+   * @param {string} x We submit the target to change 
+   */
   function filterInvoices(invoiceCategory){
+    // First we hide everything
     $('#tableInvoices tbody tr').hide()
     $('#q_invoice_totalSums span').hide()
     
@@ -442,7 +516,9 @@ jQuery(function ($) {
     $('#q_invoice_totalSums').show()
 
   }
-
+  /*
+   * This modifies cancelled reactivation icons?!?
+   */
   function q_invoice_modify_cancelled_reactivation_icon(){
     $('tr.cancelled').find('.dashicons-no').hide();
     $('tr.cancelled').find('.dashicons-undo').css('display', 'inline-block');
