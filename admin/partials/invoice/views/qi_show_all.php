@@ -109,7 +109,7 @@ function showHeader()
                     <?php _e('Name', 'Ev'); ?>
                 </th>
 
-                <th scope="col" id="invoiceDate" 
+                <th scope="col" id="invoiceDescription" 
                     class="manage-column  columnDescription">
                     <?php _e('Description', 'Ev'); ?>
                 </th>
@@ -150,6 +150,27 @@ function showHeader()
         </thead>
     <?php
     
+}
+
+/**
+ * Function to add X Working Days on a start Date Y
+ * 
+ * @param {Start date on which the working days have to be added --> use strtotime of the Startdate for example} $timestamp 
+ * @param {Number of Wokring Days that have to be added} $days 
+ * @param {Week Days that have to be skipped --> array (Monday-Sunday) eg. array("Saturday","Sunday")} $skipdays 
+ * @param {Further Dates that have to be skipped --> array (YYYY-mm-dd) eg. array("2012-05-02","2015-08-01")} $skipdates 
+ * @returns date("Y-m-d, $newTime")
+ */
+function addWorkingDays($timestamp, $days, $skipdays = array("Saturday", "Sunday"), $skipdates = NULL) {
+  $i = 1;
+  while ($days >= $i) {
+      $timestamp = strtotime("+1 day", $timestamp);
+      if ( (in_array(date("l", $timestamp), $skipdays)) || (in_array(date("Y-m-d", $timestamp), $skipdates)) ){
+          $days++;
+      }
+      $i++;
+  }
+  return $timestamp;
 }
 
 
@@ -413,10 +434,44 @@ function showOpenInvoices()
                     </span>
                 </td>
 
-                <td class="manage-column  columnDunning">
-                <span>
-                        <?php 
-                        $dunningFee1 = intVal(get_option('qi_settings')['dunning1']);
+                <td class="manage-column columnDunning">
+                    <?php
+                        $invoiceActivatedDate = strtotime($invoice_header->invoice_date);
+                        $currentDate = strtotime(date('Y-m-d'));
+
+                        $reminderDays = intVal(get_option('qi_settings')['reminderDayLimit']);
+                        $reminderDate = addWorkingDays($invoiceActivatedDate, $reminderDays);
+
+                        $dunningIDays = intVal(get_option('qi_settings')['dunning1daylimit']);
+                        $dunningIDate = addWorkingDays($invoiceActivatedDate, $dunningIDays);
+
+                        $dunningIIDays = intVal(get_option('qi_settings')['dunning2daylimit']);
+                        $dunningIIDate = addWorkingDays($invoiceActivatedDate, $dunningIIDays);
+                        
+                        $circleClass = '';
+                        $numberOfDunningDays = '';
+                        //$currentTimeStamp = new DateTime($currentDate);
+                        if($dunningIIDate <= $currentDate){
+                            $circleClass = 'dunningII';
+                            //$reminderTimeStamp = new DateTime($dunningIIDate)
+                            $numberOfDunningDays = ceil(abs($currentDate - $dunningIIDate) / 86400);
+                        } else if($dunningIDate <= $currentDate){
+                            $circleClass = 'dunningI';
+                            $numberOfDunningDays = ceil(abs($currentDate - $dunningIDate) / 86400);
+                        } else if($reminderDate <= $currentDate){
+                            $circleClass = 'reminder';
+                            $numberOfDunningDays = ceil(abs($currentDate - $reminderDate) / 86400);
+                        }
+                        echo "<script>console.log('Debugging Time Stamps: DII".$dunningIIDate."---DI".$dunningIDate."---R".$reminderDate."----CD".$currentDate."');</script>";
+
+                        
+                    ?>
+                    <span class="longCircle <?php echo $circleClass; ?>">
+                        <?php echo $numberOfDunningDays; 
+                        ?>
+
+                        <?php //old calculation of total dunning amount to show in invoice main
+                        /*$dunningFee1 = intVal(get_option('qi_settings')['dunning1']);
                         $dunningFee2 = intVal(get_option('qi_settings')['dunning2']);
                             if(intVal($invoice_header->dunning1)){
                                 if(intVal($invoice_header->dunning2)){
@@ -446,7 +501,7 @@ function showOpenInvoices()
                                     }
                                     echo number_format($dunningFee1, 2, $decimalDot, $thousandsDot). " " . $currencySymbol;
                                 }
-                            }
+                            }*/
                          ?>
                     </span>
                 </td>
@@ -475,7 +530,7 @@ function showOpenInvoices()
                                 '/q_invoice/pdf/'. 
                                 Interface_Export::makeFilename($invoice_header->id).
                                 '.pdf'."' "
-                            ?>"
+                            ?>
                             id="<?php 
                                 echo 
                                     "download-".
@@ -517,6 +572,14 @@ function showOpenInvoices()
 
                         <span style="font-size: 20px;"
                             id="<?php echo esc_attr($invoice_header->id);?>" 
+                            title="Send Invoice as Mail"
+                            class="mail dashicons dashicons-email-alt"
+                            value="<?php echo esc_html($invoice_header->id);?>"
+                        >
+                        </span>
+
+                        <span style="font-size: 20px;"
+                            id="<?php echo esc_attr($invoice_header->id);?>" 
                             title="More Invoice Options"
                             class="moreInvoiceOptions dashicons dashicons-ellipsis"
                             value="<?php echo esc_html($invoice_header->id);?>"
@@ -527,9 +590,102 @@ function showOpenInvoices()
                     <div class="qinv_moreOptionsDropdownBox">
                         <ul style="margin: 0;">
                             <li class="qinv_mainDropdownElement duplicateInvoice">Duplicate</li>
-                            <li class="qinv_mainDropdownElement">Reminder</li>
-                            <li class="qinv_mainDropdownElement">Dunning 1</li>
-                            <li class="qinv_mainDropdownElement">Dunning 2</li>
+                            <li class="qinv_mainDropdownElement">
+                                Reminder 
+                                <a 
+                                    style="font-size:20px; display:inline" 
+                                    target="_top"
+                                    href=<?php 
+                                    echo "'". plugins_url() .
+                                        '/q_invoice/pdf/'. 
+                                        Interface_Export::makeFilename($invoice_header->id).
+                                        '.pdf'."' "
+                                    ?>
+                                    id="<?php 
+                                        echo 
+                                            "reminderDownload-".
+                                            get_option('qi_settings')['prefix'].'-'.
+                                            $invoice_header->id;
+                                        ?>"
+                                    title="Download Reminder"
+                                    class="downloadReminder download dashicons dashicons-download"
+                                    value="<?php echo esc_html($invoice_header->id);?>"
+                                    download
+                                >
+                                </a>
+
+                                <span style="font-size: 20px;"
+                                    id="<?php echo esc_attr($invoice_header->id);?>" 
+                                    title="Send Reminder as Mail"
+                                    class="mail dashicons dashicons-email-alt"
+                                    value="<?php echo esc_html($invoice_header->id);?>"
+                                >
+                                </span>
+                            </li>
+                            <li class="qinv_mainDropdownElement">
+                                Dunning 1 
+                                <a 
+                                    style="font-size:20px; display:inline" 
+                                    target="_top"
+                                    href=<?php 
+                                    echo "'". plugins_url() .
+                                        '/q_invoice/pdf/'. 
+                                        Interface_Export::makeFilename($invoice_header->id).
+                                        '.pdf'."' "
+                                    ?>
+                                    id="<?php 
+                                        echo 
+                                            "dunningIDownload-".
+                                            get_option('qi_settings')['prefix'].'-'.
+                                            $invoice_header->id;
+                                        ?>"
+                                    title="Download Dunning 1"
+                                    class="downloadDunningI download dashicons dashicons-download"
+                                    value="<?php echo esc_html($invoice_header->id);?>"
+                                    download
+                                >
+                                </a>
+
+                                <span style="font-size: 20px;"
+                                    id="<?php echo esc_attr($invoice_header->id);?>" 
+                                    title="Send First Dunning as Mail"
+                                    class="mail dashicons dashicons-email-alt"
+                                    value="<?php echo esc_html($invoice_header->id);?>"
+                                >
+                                </span>
+                            </li>
+                            <li class="qinv_mainDropdownElement">
+                                Dunning 2 
+                                <a 
+                                    style="font-size:20px; display:inline" 
+                                    target="_top"
+                                    href=<?php 
+                                    echo "'". plugins_url() .
+                                        '/q_invoice/pdf/'. 
+                                        Interface_Export::makeFilename($invoice_header->id).
+                                        '.pdf'."' "
+                                    ?>
+                                    id="<?php 
+                                        echo 
+                                            "dunningIIDownload-".
+                                            get_option('qi_settings')['prefix'].'-'.
+                                            $invoice_header->id;
+                                        ?>"
+                                    title="Download Dunning 2"
+                                    class="downloadDunningII download dashicons dashicons-download"
+                                    value="<?php echo esc_html($invoice_header->id);?>"
+                                    download
+                                >
+                                </a>
+
+                                <span style="font-size: 20px;"
+                                    id="<?php echo esc_attr($invoice_header->id);?>" 
+                                    title="Send Second Dunning as Mail"
+                                    class="mail dashicons dashicons-email-alt"
+                                    value="<?php echo esc_html($invoice_header->id);?>"
+                                >
+                                </span>
+                            </li>
                         </ul>
                     </div>
                 </td>    
@@ -617,6 +773,7 @@ function showOpenInvoices()
         </td>
 
         <td class="manage-column  columnDunning">
+            <?php /*
             <span id="qi_totalSumDunning">
                 <?php 
                 echo number_format($dunningTotalSum, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
@@ -642,6 +799,7 @@ function showOpenInvoices()
                 echo number_format($paidDunning, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
                  ?>
             </span>
+            */?>
         </td>
 
         <td class="manage-column  columnStatusPaid"></td>

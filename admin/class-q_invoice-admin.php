@@ -659,7 +659,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $this->addSettingsField("dunning 1", "text", "dunningPage");
             $this->addSettingsField("dunning 2", "text", "dunningPage");
 
-            $this->addSettingsField("reminder day limit", "text", "dunningPage");
+            $this->addSettingsField("reminder Day Limit", "text", "dunningPage");
             $this->addSettingsField("dunning 1 day limit", "text", "dunningPage");
             $this->addSettingsField("dunning 2 day limit", "text", "dunningPage");
 

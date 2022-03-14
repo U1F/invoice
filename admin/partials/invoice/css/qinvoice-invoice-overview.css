@@ -112,7 +112,7 @@
 
 .q-invoice-page table#tableInvoices .columnEdit{
     text-align: center;
-    width: 50px;
+    width: 70px;
     padding-right: 20px;
     color: #343a40;
     cursor: pointer;
@@ -183,6 +183,13 @@ q-invoice-page dashicons-download {
   display: inline-block;
 }
 
+.q-invoice-page .longCircle {
+    background-color: transparent;
+    padding: 5px 20px;
+    border-radius: 15px;
+    color: white;
+  }
+
 .q-invoice-page .circle.paid.active {
     background-color: #1bd89e;
 }
@@ -191,7 +198,8 @@ q-invoice-page dashicons-download {
   background-color: rgba(2,31,63,.57);
 }
 
-.q-invoice-page .circle.dunning {
+.q-invoice-page .circle.dunning,
+.q-invoice-page .longCircle.dunningII {
     background-color: #fe667b;
 }
 
@@ -199,11 +207,13 @@ q-invoice-page dashicons-download {
     background-color: #fb7b26;
 }
 
-.q-invoice-page .circle.open {
+.q-invoice-page .circle.open,
+.q-invoice-page .longCircle.dunningI {
     background-color: #fb7b26;
 }
 
-.q-invoice-page .circle.open.cancelled {
+.q-invoice-page .circle.open.cancelled,
+.q-invoice-page .longCircle.reminder {
     background-color: rgba(2,31,63,.57);
 }
 
@@ -260,6 +270,10 @@ q-invoice-page dashicons-download {
 
 @media only screen and (max-width:1300px){
 
+    .q-invoice-page table#tableInvoices .columnEdit{
+        width: 85px;
+    }
+
     @-moz-document url-prefix() {
         .q-invoice-page table#tableInvoices .columnDate{
             width: max-content;
@@ -269,6 +283,10 @@ q-invoice-page dashicons-download {
 }
 
 @media only screen and (max-width:1200px){
+
+    .q-invoice-page table#tableInvoices .columnEdit{
+        width: 70px;
+    }
     .q-invoice-page table#tableInvoices .columnDescription{
         display: none;
     }
@@ -324,7 +342,7 @@ q-invoice-page dashicons-download {
     }
 
     .q-invoice-page table#tableInvoices .columnEdit{
-        width: 70px!important;
+        width: 120px!important;
     }
 
 }
