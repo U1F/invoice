@@ -196,6 +196,23 @@ textarea.error {
     display: none;
 }
 
+.q-invoice-page .dialogOverlay *{
+    background-color: white;
+}
+
+.q-invoice-page .dialogOverlay #confirmationBoxBox {
+    margin: 1.5em 0 1em 0; 
+    text-align: center;
+}
+.q-invoice-page .dialogOverlay #confirmationBoxHeader3 {
+    color:red;
+}
+
+.q-invoice-page .dialogOverlay #confirmationBoxButtons {
+    text-align: center; 
+    margin: 1em 0;
+}
+
 @media only screen and (max-width:1050px){
     .invoice-page{
         padding-top: 20px;

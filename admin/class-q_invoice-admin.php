@@ -368,8 +368,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $this->addSettingsField("ZIP", "number", "pluginPage", 1);
             $this->addSettingsField("city", "text", "pluginPage", 1);
             
-             
-            /*add_settings_field(
+             /*
+            add_settings_field(
                 'qi_settings' ."logoFileUrl", 
                 null, 
                 [$this, 'hideInput'],
@@ -966,6 +966,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          */
         public function showInputForLogo()
         {
+            echo "<script>console.log('B:". get_option('qi_settings')['logoFileUrl'] ."');</script>";
             //if an logog file has already been uploaded
             if (get_option('qi_settings')['logoFileUrl'] != '') {
                 //set the upload field to display:none, because their is already file
@@ -992,6 +993,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 "</label>";
                 //grab the logo image source
                 $logoImageSource = get_option('qi_settings')['logoFileUrl'];
+                echo $logoImageSource;
                 ?>
                 <div id='showLogoDiv'>
                     <div class="qinv_settings_logo_tbBuffer">
@@ -1030,8 +1032,8 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                     "Upload".
                 "</label>";
                 //grab the default image source
-                $logoImageSource = plugin_dir_url(__FILE__).
-                "/files/none_5002.png";
+                //$logoImageSource = plugin_dir_url(__FILE__).
+                //"/files/none_5002.png";
 
                 ?>
                 <div id='showLogoDiv' style='display:none;'>
@@ -1043,7 +1045,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                         >
                     </span>
                     </div>
-                    <img style="width: 220px;" src="<?php echo $logoImageSource;?>">
+                    <img style="width: 220px;" src="<?php ?>">
                     <div class="qinv_settings_logo_tbBuffer" style="height:10px;">
                     </div>
                 </div>
