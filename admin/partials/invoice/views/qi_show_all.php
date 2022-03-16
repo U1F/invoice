@@ -173,9 +173,6 @@ function addWorkingDays($timestamp, $days, $skipdays = array("Saturday", "Sunday
   return $timestamp;
 }
 
-
-
-
 /**
  * Function showOpenInvoices
  * 
@@ -199,11 +196,6 @@ function showOpenInvoices()
     $cancelledTotal = 0.00;
     $dunningTotal = 0.00;
     $paidTotal = 0.00;
-
-    $openDunning = 0.00;
-    $cancelledDunning = 0.00;
-    $dunningDunning = 0.00;
-    $paidDunning = 0.00;
 
     $totalTotalSum = 0.00;
     $nettoTotalSum = 0.00;
@@ -436,6 +428,9 @@ function showOpenInvoices()
 
                 <td class="manage-column columnDunning">
                     <?php
+                    $circleClass = '';
+                    $numberOfDunningDays = '';
+                    if(!$paid && !$cancelled){
                         $invoiceActivatedDate = strtotime($invoice_header->invoice_date);
                         $currentDate = strtotime(date('Y-m-d'));
 
@@ -447,13 +442,8 @@ function showOpenInvoices()
 
                         $dunningIIDays = intVal(get_option('qi_settings')['dunning2daylimit']);
                         $dunningIIDate = addWorkingDays($invoiceActivatedDate, $dunningIIDays);
-                        
-                        $circleClass = '';
-                        $numberOfDunningDays = '';
-                        //$currentTimeStamp = new DateTime($currentDate);
                         if($dunningIIDate <= $currentDate){
                             $circleClass = 'dunningII';
-                            //$reminderTimeStamp = new DateTime($dunningIIDate)
                             $numberOfDunningDays = ceil(abs($currentDate - $dunningIIDate) / 86400);
                         } else if($dunningIDate <= $currentDate){
                             $circleClass = 'dunningI';
@@ -462,47 +452,11 @@ function showOpenInvoices()
                             $circleClass = 'reminder';
                             $numberOfDunningDays = ceil(abs($currentDate - $reminderDate) / 86400);
                         }
-                        echo "<script>console.log('Debugging Time Stamps: DII".$dunningIIDate."---DI".$dunningIDate."---R".$reminderDate."----CD".$currentDate."');</script>";
-
-                        
+                    }  
                     ?>
+                    
                     <span class="longCircle <?php echo $circleClass; ?>">
-                        <?php echo $numberOfDunningDays; 
-                        ?>
-
-                        <?php //old calculation of total dunning amount to show in invoice main
-                        /*$dunningFee1 = intVal(get_option('qi_settings')['dunning1']);
-                        $dunningFee2 = intVal(get_option('qi_settings')['dunning2']);
-                            if(intVal($invoice_header->dunning1)){
-                                if(intVal($invoice_header->dunning2)){
-                                    if ($paid) {
-                                        $paidDunning = $paidDunning + $dunningFee1 + $dunningFee2;
-                                    } else if ($dunning) {
-                                        $dunningDunning = $dunningDunning + $dunningFee1 + $dunningFee2;
-                                    } else if($cancelled == false){
-                                        $openDunning = $openDunning + $dunningFee1 + $dunningFee2;
-                                    } 
-                
-                                    if ($cancelled) {
-                                        $cancelledDunning = $cancelledDunning + $dunningFee1 + $dunningFee2;
-                                    }
-                                    echo number_format($dunningFee1 + $dunningFee2, 2, $decimalDot, $thousandsDot). " " . $currencySymbol;
-                                } else {
-                                    if ($paid) {
-                                        $paidDunning = $paidDunning + $dunningFee1;
-                                    } else if ($dunning) {
-                                        $dunningDunning = $dunningDunning + $dunningFee1;
-                                    } else {
-                                        $openDunning = $openDunning + $dunningFee1;
-                                    } 
-                
-                                    if ($cancelled) {
-                                        $cancelledDunning = $cancelledDunning + $dunningFee1;
-                                    }
-                                    echo number_format($dunningFee1, 2, $decimalDot, $thousandsDot). " " . $currencySymbol;
-                                }
-                            }*/
-                         ?>
+                        <?php echo $numberOfDunningDays; ?>
                     </span>
                 </td>
 
@@ -772,35 +726,7 @@ function showOpenInvoices()
             </span>
         </td>
 
-        <td class="manage-column  columnDunning">
-            <?php /*
-            <span id="qi_totalSumDunning">
-                <?php 
-                echo number_format($dunningTotalSum, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
-                 ?>
-            </span>
-            <span id="qi_openSumDunning" style="display: none;">
-                <?php 
-                echo number_format($openDunning, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
-                 ?>
-            </span>
-            <span id="qi_cancelledSumDunning" style="display: none;">
-                <?php 
-                echo number_format($cancelledDunning, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
-                 ?>
-            </span>
-            <span id="qi_dunningSumDunning" style="display: none;">
-                <?php 
-                echo number_format($dunningDunning, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
-                 ?>
-            </span>
-            <span id="qi_paidSumDunning" style="display: none;">
-                <?php 
-                echo number_format($paidDunning, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
-                 ?>
-            </span>
-            */?>
-        </td>
+        <td class="manage-column  columnDunning"></td>
 
         <td class="manage-column  columnStatusPaid"></td>
 

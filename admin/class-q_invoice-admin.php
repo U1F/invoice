@@ -1568,11 +1568,16 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 $invoiceID = Interface_Invoices::saveArrayToDB($_POST);
 
                 $pdfSuccess = $this->printInvoiceTemplate($invoiceID);
+                $dunningData = getDunningDays(strtotime($_POST['dateOfInvoice']));
+                $dunningDays = $dunningData[1];
+                $dunningClass = $dunningData[0];
                 // NOT TESTING
                 $response['success'] = true;
                 $response['data'] = $_POST;
                 $response['id'] = $invoiceID;
                 $response['pdf'] = $pdfSuccess;
+                $response['dunningclass'] = $dunningClass;
+                $response['dunningdays'] = $dunningDays;
                 //$response['type'] = $_POST['action'];
                 
                 echo json_encode($response);
@@ -1584,6 +1589,63 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             wp_die();
         }
 
+        public function printConsoleLog($text){
+            echo "<script>console.log('".$text."');";
+        }
+
+        /**
+         * Function getDunningDays.
+         * 
+         * @param string $invoiceDate
+         * @return array(dunningClass, numberOfDunningDays)
+         *
+         * @since 1.0.0
+         */
+        function getDunningDays($invoiceDate){
+            $currentDate = strtotime(date('Y-m-d'));
+            $reminderDays = intVal(get_option('qi_settings')['reminderDayLimit']);
+            $reminderDate = addWorkingDays($invoiceDate, $reminderDays);
+            $dunningIDays = intVal(get_option('qi_settings')['dunning1daylimit']);
+            $dunningIDate = addWorkingDays($invoiceDate, $dunningIDays);
+            $dunningIIDays = intVal(get_option('qi_settings')['dunning2daylimit']);
+            $dunningIIDate = addWorkingDays($invoiceDate, $dunningIIDays);
+
+            $circleClass = '';
+            $numberOfDunningDays = '';
+            if($dunningIIDate <= $currentDate){
+                $circleClass = 'dunningII';
+                $numberOfDunningDays = ceil(abs($currentDate - $dunningIIDate) / 86400);
+            } else if($dunningIDate <= $currentDate){
+                $circleClass = 'dunningI';
+                $numberOfDunningDays = ceil(abs($currentDate - $dunningIDate) / 86400);
+            } else if($reminderDate <= $currentDate){
+                $circleClass = 'reminder';
+                $numberOfDunningDays = ceil(abs($currentDate - $reminderDate) / 86400);
+            }
+            return array($circleClass, $numberOfDunningDays);
+        }
+
+        /**
+         * Function to add X Working Days on a start Date Y
+         * 
+         * @param {Start date on which the working days have to be added --> use strtotime of the Startdate for example} $timestamp 
+         * @param {Number of Wokring Days that have to be added} $days 
+         * @param {Week Days that have to be skipped --> array (Monday-Sunday) eg. array("Saturday","Sunday")} $skipdays 
+         * @param {Further Dates that have to be skipped --> array (YYYY-mm-dd) eg. array("2012-05-02","2015-08-01")} $skipdates 
+         * @returns date("Y-m-d, $newTime")
+         */
+        function addWorkingDays($timestamp, $days, $skipdays = array("Saturday", "Sunday"), $skipdates = NULL) {
+            $i = 1;
+            while ($days >= $i) {
+                $timestamp = strtotime("+1 day", $timestamp);
+                if ( (in_array(date("l", $timestamp), $skipdays)) || (in_array(date("Y-m-d", $timestamp), $skipdates)) ){
+                    $days++;
+                }
+                $i++;
+            }
+            return $timestamp;
+          }
+
         /**
          * Describe this
          * 
@@ -1593,6 +1655,13 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          */
         public function updateInvoiceServerSide()
         {
+            $dunningData = getDunningDays(strtotime($_POST['dateOfInvoice']));
+            $dunningDays = $dunningData[1];
+            $dunningClass = $dunningData[0];
+
+            $response['dunningclass'] = $dunningClass;
+            $response['dunningdays'] = $dunningDays;
+
             if (wp_verify_nonce($_POST['q_invoice_nonce'], $_POST['action'])) {
 
                 Interface_Invoices::updateArrayInDB($_POST);

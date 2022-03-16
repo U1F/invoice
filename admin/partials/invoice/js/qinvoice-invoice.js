@@ -249,6 +249,8 @@ jQuery(function ($) {
       // paid invoices should not look and be editable
       invoiceRow.find('.columnEdit').find('.delete').css('color', '#dadce1')
       invoiceRow.find('.columnEdit').find('.delete').removeClass('deleteRow')
+      //hide the dunning status
+      invoiceRow.find('.columnDunning').find('.longCircle').css('display', 'none')
     } else {
       // remove paydate, mark as open and make editable
       const data = { paydate: '' }
@@ -261,6 +263,7 @@ jQuery(function ($) {
       invoiceRow.addClass('open')
       invoiceRow.find('.columnEdit').find('.delete').css('color', '#50575e')
       invoiceRow.find('.columnEdit').find('.delete').addClass('deleteRow')
+      invoiceRow.find('.columnDunning').find('.longCircle').css('display', 'inline-block')
     }
 
     q_invoice_RecalcSums(0,0,0);
@@ -660,6 +663,7 @@ jQuery(function ($) {
     targetRow.find('.deleteRow').css('display', 'inline-block')
     targetRow.find('.switchForPaidStatus').css('opacity', '100')
     targetRow.find('.switchForPaidStatus > *').css('opacity', '100')
+    targetRow.find('.columnDunning').find('.longCircle').css('display', 'inline-block')
     q_invoice_RecalcSums(0,0,0);
   })
 
@@ -684,6 +688,7 @@ jQuery(function ($) {
     targetRow.find('.switchForPaidStatus').css('opacity', '0')
     targetRow.find('.switchForPaidStatus > *').css('opacity', '0')
     targetRow.find('.reactivateInvoice').attr('class', 'reactivateInvoice reactivate dashicons dashicons-undo')
+    targetRow.find('.columnDunning').find('.longCircle').css('display', 'none')
     q_invoice_RecalcSums(0,0,0);
   })
 
@@ -1111,7 +1116,7 @@ jQuery(function ($) {
     editInvoice(jQuery(this).attr('id').split('-')[1])
   })
 
-  function changeUpdatedInvoiceRow (invoice) {
+  function changeUpdatedInvoiceRow (invoice, dunningData) {
     // backup sum row, to avoid first ID bug
     let sumRowBackup = ''
     sumRowBackup = $('table#tableInvoices > tbody > tr#q_invoice_totalSums').clone()
@@ -1129,6 +1134,10 @@ jQuery(function ($) {
     row.find('td.columnDescription').text(invoice.itemDescription[0])
     row.find('td.columnNet').text($('.qInvc-total-summe').eq(0).text() + ' ' + currencySign)
     row.find('td.columnTotal').text($('.qInvc-total-brutto-summe').eq(0).text() + ' ' + currencySign)
+    //add dunning circle
+    row.find('td.columnDunning span').removeClass()
+    row.find('td.columnDunning span').addClass('longCircle ' + dunnignData[0])
+    row.find('td.columnDunning span').innerHTML(dunningData[1])
 
     const date = invoice.dateOfInvoice
     // change to german date format
@@ -1144,6 +1153,18 @@ jQuery(function ($) {
       0.0      
     );
   }
+
+  /*function getWorkingDays(startDate, endDate) {
+      let count = 0;
+      var currentDate = new Date(startDate.getTime());
+      while (currentDate <= endDate) {
+          const dayOfWeek = currentDate.getDay();
+          if(dayOfWeek !== 0 && dayOfWeek !== 6) count++;
+          currentDate.setDate(currentDate.getDate() + 1);
+      }
+      console.log(count);
+      return count;
+  }*/
 
 /**
  * Function to clean a String value retrieved from the main Invoice table. This should have the Pattern (N=Number, D=Decimal) NNN[.||,]NNN[.||,]DD[SPACE][€||$].
@@ -1315,8 +1336,9 @@ jQuery(function ($) {
    * Adds a new invoice Row in invoice main table
    * @param {Invoice Details of the new invoice} invoice 
    * @param {Id of the new Invoice} id 
+   * @param {Array with Dunning Class and Days, calculated server side} dunningData
    */
-  function addNewInvoiceRow (invoice, id) {
+  function addNewInvoiceRow (invoice, id, dunningData) {
 
     if ($('#q-invoice-new-readonly-dummy').text() === '0') {
       location.reload();
@@ -1376,6 +1398,11 @@ jQuery(function ($) {
         duplicateInvoice();
       })
 
+      clone.find('td.columnDunning span').removeClass()
+      clone.find('td.columnDunning span').addClass('longCircle ' + dunnignData[0])
+      clone.find('td.columnDunning span').innerHTML(dunningData[1])
+
+
       q_invoice_RecalcSums(
         q_invoice_cleanUpNumber(clone.find('td.columnTotal').text()),
         q_invoice_cleanUpNumber(clone.find('td.columnNet').text()),
@@ -1420,13 +1447,14 @@ jQuery(function ($) {
       success: function (response) {
         console.log (response)
         var serverResponse = JSON.parse(response).data
+        var dunningData = [JSON.parse(response).dunningclass, JSON.parse(response).dunningdays]
         var invoiceID = JSON.parse(response).id
 
         if (serverResponse.action === 'updateInvoiceServerSide') {
-          changeUpdatedInvoiceRow(serverResponse)
+          changeUpdatedInvoiceRow(serverResponse, dunningData)
         }
         if (serverResponse.action === 'saveInvoiceServerSide') {
-          addNewInvoiceRow(serverResponse, invoiceID)
+          addNewInvoiceRow(serverResponse, invoiceID, dunningData)
         }
 
         $('#invoiceOverlay').hide()
