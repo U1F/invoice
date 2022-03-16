@@ -1082,10 +1082,6 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             return $option;
         }
 
-          
-        
-
-
         /**
          * Function handleInputForInvoiceSettings
          * 
@@ -1570,7 +1566,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 $invoiceID = Interface_Invoices::saveArrayToDB($_POST);
 
                 $pdfSuccess = $this->printInvoiceTemplate($invoiceID);
-                $dunningData = getDunningDays(strtotime($_POST['dateOfInvoice']));
+                $dunningData = $this->getDunningDays(strtotime($_POST['dateOfInvoice']));
                 $dunningDays = $dunningData[1];
                 $dunningClass = $dunningData[0];
                 // NOT TESTING
@@ -1606,11 +1602,11 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         function getDunningDays($invoiceDate){
             $currentDate = strtotime(date('Y-m-d'));
             $reminderDays = intVal(get_option('qi_settings')['reminderDayLimit']);
-            $reminderDate = addWorkingDays($invoiceDate, $reminderDays);
+            $reminderDate = $this->addWorkingDays($invoiceDate, $reminderDays);
             $dunningIDays = intVal(get_option('qi_settings')['dunning1daylimit']);
-            $dunningIDate = addWorkingDays($invoiceDate, $dunningIDays);
+            $dunningIDate = $this->addWorkingDays($invoiceDate, $dunningIDays);
             $dunningIIDays = intVal(get_option('qi_settings')['dunning2daylimit']);
-            $dunningIIDate = addWorkingDays($invoiceDate, $dunningIIDays);
+            $dunningIIDate = $this->addWorkingDays($invoiceDate, $dunningIIDays);
 
             $circleClass = '';
             $numberOfDunningDays = '';
@@ -1657,7 +1653,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          */
         public function updateInvoiceServerSide()
         {
-            $dunningData = getDunningDays(strtotime($_POST['dateOfInvoice']));
+            $dunningData = $this->getDunningDays(strtotime($_POST['dateOfInvoice']));
             $dunningDays = $dunningData[1];
             $dunningClass = $dunningData[0];
 

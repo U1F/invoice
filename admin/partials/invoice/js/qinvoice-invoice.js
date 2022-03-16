@@ -1250,8 +1250,8 @@ jQuery(function ($) {
     row.find('td.columnTotal').text($('.qInvc-total-brutto-summe').eq(0).text() + ' ' + currencySign)
     //add dunning circle
     row.find('td.columnDunning span').removeClass()
-    row.find('td.columnDunning span').addClass('longCircle ' + dunnignData[0])
-    row.find('td.columnDunning span').innerHTML(dunningData[1])
+    row.find('td.columnDunning span').addClass('longCircle ' + dunningData[0])
+    row.find('td.columnDunning span').text(dunningData[1])
 
     const date = invoice.dateOfInvoice
     // change to german date format
@@ -1512,9 +1512,10 @@ jQuery(function ($) {
         duplicateInvoice();
       })
 
+      //add dunning
       clone.find('td.columnDunning span').removeClass()
-      clone.find('td.columnDunning span').addClass('longCircle ' + dunnignData[0])
-      clone.find('td.columnDunning span').innerHTML(dunningData[1])
+      clone.find('td.columnDunning span').addClass('longCircle ' + dunningData[0])
+      clone.find('td.columnDunning span').text(dunningData[1])
 
 
       q_invoice_RecalcSums(
