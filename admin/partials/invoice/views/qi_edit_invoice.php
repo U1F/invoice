@@ -29,6 +29,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
 }
 ?>
 
+
 <div id="invoiceOverlay" class="overlay" style="left:0;">
     
     <div id="edit-invoice"> 
@@ -37,9 +38,9 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
             <h2 id="formHeaderEdit" style="width:50%; margin-top:0"><?php echo __('Edit Invoice', 'Ev'); ?></h2>
             <h2 id="formHeaderCreate" style="width:50%;"><?php echo __('New Invoice', 'Ev'); ?></h2>
             <div style="text-align: right; width: 50%;">
-            <label class="switch switchForPaidStatus large" style="align-self:end; margin: 0 0 1em 0;">
+            <label class="switch switchForPaidStatusWithinForm large" style="align-self:end; margin: 0 0 1em 0;">
                 <input id="invoice_form_paid_toggle" type="checkbox" class="checkboxForPayment">
-                <span class="sliderForPayment invoiceSlider round large"></span>
+                <span class="sliderForPaymentWithinForm invoiceSlider round large"></span>
             </label>
             </div>
         </div>

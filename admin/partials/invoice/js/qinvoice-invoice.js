@@ -307,10 +307,6 @@ jQuery(function ($) {
     } else {
       $("#reopenPaidInvoice").show()
 
-      //zIndex should be set higher in CSS instead:
-      $("#reopenPaidInvoice").css('zIndex', 9999);
-      $("#lastClickedInvoice").show()
-      
       //console.log($(event.target).parents("tr").attr('id'))
       $("#lastClickedInvoice").val($(event.target).parents("tr").attr('id'))
     }
@@ -1623,47 +1619,54 @@ jQuery(function ($) {
     });
   })
 
-  /**
+  function disableInvoiceForm(){
+    $('#invoiceForm   *').prop('disabled', true );
+    $('#updateInvoice').css('display', 'none');
+  }
+
+  function enableInvoiceForm(){
+    $('#invoiceForm   *').prop('disabled', false );
+    $('#updateInvoice').css('display', 'block');
+  }
+   /*
    * Switch function for toggle in Invoice Form:
    * 
-   * - The toggle is unchecked if the Invoice Form is shown (Invoice Form Popup will be deactivated if the Invoice is already Paid --> Toggle would be checked)
-   * - When the Toggle is checked the Invoice Form can not be modified until you uncheck the paid toggle in the list --> checking the toggle closes the Popup and prohibits further modifications
+   * - The toggle is unchecked if the Invoice Form is shown (Invoice Form Popup 
+   *   will be deactivated if the Invoice is already Paid --> Toggle would be checked)
+   * 
+   * - When the Toggle is checked the Invoice Form can not be modified until you 
+   *   uncheck the paid toggle in the list --> checking the toggle closes 
+   *   the Popup and prohibits further modifications
+   * 
    * - The toggle will be observed by an on change evnt listener
-   * - If this listener detects the Toggle to be checked, a click action in the paid toggle in the overview is simulated and the popup will be closed
+   * 
+   * - If this listener detects the Toggle to be checked, a click action 
+   *   in the paid toggle in the overview 
+   *   is simulated and the popup will be closed
    *  */
-
-  $('#invoice_form_paid_toggle').on('change', function(){
-    //if invoice was not paid and is toggled to paid
-    if (this.checked){
-
-      var id = $('#invoice_id').val();
-
-      $('#edit-'+id).find('.sliderForPayment').click();
-      $('#invoiceForm   *').prop('disabled', true );
-      $('#updateInvoice').css('display', 'none');
+  $(".switch").on('click', '.sliderForPaymentWithinForm', function (event) {
+    
+    const invoiceID = $('#invoice_id').val()
+    const sliderBox = $(event.target).parent()
+    
+    if (sliderBox.find('input').prop('checked') == false){ disableInvoiceForm(invoiceID) } 
+    
+    else {
       
-      /*setTimeout(function(){
-        $('#invoiceOverlay').hide();
-        $('#edit-'+id).find('.sliderForPayment').click();
-      },800);*/
+      // show dialog
+      //$("#reopenPaidInvoiceWithinForm").show()
+      //$("#reopenPaidInvoice").css('zIndex', 9999);
+      //$("#lastClickedInvoice").val(invoiceID)
 
-    } else if (!this.checked){
-
-      var id = $('#invoice_id').val();
-
-      $('#edit-'+id).find('.sliderForPayment').click();
-      $('#invoiceForm   *').prop('disabled', false );
-      $('#updateInvoice').css('display', 'block');
+      if (confirm("Really re-enable Invocie?")){ enableInvoiceForm(invoiceID) }
       
-      
-
+      else { event.preventDefault() }      
     }
-  });
+  })
 
   /**
    * Function to set the "Save as new Contact" / "Update Contact on Save" row visible, which includes some text and a checkbox
    */
-
   $('.checkForModificationField').on('change', function(){
     if(!$(this).val()){
       var cFMFallEmpty = true;
