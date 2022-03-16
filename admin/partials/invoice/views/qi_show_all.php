@@ -444,13 +444,13 @@ function showOpenInvoices()
                         $dunningIIDate = addWorkingDays($invoiceActivatedDate, $dunningIIDays);
                         if($dunningIIDate <= $currentDate){
                             $circleClass = 'dunningII';
-                            $numberOfDunningDays = ceil(abs($currentDate - $dunningIIDate) / 86400);
+                            $numberOfDunningDays = ceil(abs($currentDate - $dunningIIDate) / 86400) . ' days';
                         } else if($dunningIDate <= $currentDate){
                             $circleClass = 'dunningI';
-                            $numberOfDunningDays = ceil(abs($currentDate - $dunningIDate) / 86400);
+                            $numberOfDunningDays = ceil(abs($currentDate - $dunningIDate) / 86400) . ' days';
                         } else if($reminderDate <= $currentDate){
                             $circleClass = 'reminder';
-                            $numberOfDunningDays = ceil(abs($currentDate - $reminderDate) / 86400);
+                            $numberOfDunningDays = ceil(abs($currentDate - $reminderDate) / 86400) . ' days';
                         }
                     }  
                     ?>

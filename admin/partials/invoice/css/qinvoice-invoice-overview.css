@@ -100,11 +100,9 @@
 }
 
 .q-invoice-page table#tableInvoices .columnDunning{
-    width:40px;
+    width: 40px;
     text-align: center;
 }
-
-
 
 .q-invoice-page table#tableInvoices .columnStatusPaid{
     text-align: center;
@@ -114,7 +112,7 @@
 .q-invoice-page table#tableInvoices .columnEdit{
     text-align: center;
     width: 70px;
-    padding-right: 20px;
+    padding-right: 0px;
     color: #343a40;
     cursor: pointer;
 }
@@ -186,13 +184,9 @@ q-invoice-page dashicons-download {
 
 .q-invoice-page .longCircle {
     background-color: transparent;
-    border-radius: 100px;
+    padding: 0px 3px;
+    border-radius: 15px;
     color: white;
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    vertical-align: middle;
   }
 
 .q-invoice-page .circle.paid.active {
