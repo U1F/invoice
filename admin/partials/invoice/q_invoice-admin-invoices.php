@@ -27,12 +27,13 @@ function Invoice_list()
     ?>
 <div class="q-invoice-page invoice-page">
     <!-- This file should primarily consist of HTML with a little bit of PHP. -->
+    
     <div id="archiveInvoice" class="overlay dialogOverlay">
         <div class="confirmationBox">
-            <div style="margin: 1.5em 0 1em 0; text-align: center;">
-                <h3 style="color:red;" >Do you want to cancel the invoice?</h3>
+            <div id = "confirmationBoxBox">
+                <h3 id = "confirmationBoxHeader3">Do you want to cancel the invoice?</h3>
                 <p>This will not delete the invoice. <br> It will be moved to the status "cancelled". </p>
-                <div style="text-align: center; margin: 1em 0;">
+                <div id="confirmationBoxButtons">
                     <button class="qInvoiceFormButton cancelButton" id="cancelRemoveInvoice">
                         Cancel
                     </button>
@@ -45,9 +46,29 @@ function Invoice_list()
         
     </div>
 
+
+    <div id="reopenPaidInvoice" class="overlay dialogOverlay">
+        <input id="lastClickedInvoice" style="display:none">
+        <div class="confirmationBox">
+            <div id = "confirmationBoxBox">
+                <h3 id = "confirmationBoxHeader3">Do you really reopen the paid invoice?</h3>
+                <p> This will be documented somewhere in the database, but you will not be able to find that information on your own <br> You have been warned! </p>
+                <div id="confirmationBoxButtons">
+                    <button class="qInvoiceFormButton cancelButton" id="cancelRemoveInvoice">
+                        Cancel
+                    </button>
+                    <button class="qInvoiceFormButton submitButton" id="confirmRemoveInvoice">
+                        Reopen
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+
     <div style="height: 70px; width: 100%; background-color: yellow; border:dashed 3px;padding:5px;margin:5px 0;">
         <p style="font-size:20px;"><b>Sollten hier Reviews durchgeführt werden: <br>
         Der Dunning Bereich und das Dropdown befinden sich gerade im Umbau und funktionieren ggfalls nicht richtig!</b></p>
+
 
     </div>
 
