@@ -291,6 +291,37 @@ function showOpenInvoices()
         $totalTotalSum = $totalTotalSum + $totalSum;
         $nettoTotalSum = $nettoTotalSum + $netSum;
         $dunningTotalSum = $dunningTotalSum + $dunningSum;
+
+        //Dunning Calculations
+        $circleClass = '';
+        $numberOfDunningDays = '';
+        if(!$paid && !$cancelled){
+            $invoiceActivatedDate = strtotime($invoice_header->invoice_date);
+            $currentDate = strtotime(date('Y-m-d'));
+
+            $reminderDays = intVal(get_option('qi_settings')['reminderDayLimit']);
+            $reminderDate = addWorkingDays($invoiceActivatedDate, $reminderDays);
+
+            $dunningIDays = intVal(get_option('qi_settings')['dunning1daylimit']);
+            $dunningIDate = addWorkingDays($invoiceActivatedDate, $dunningIDays);
+
+            $dunningIIDays = intVal(get_option('qi_settings')['dunning2daylimit']);
+            $dunningIIDate = addWorkingDays($invoiceActivatedDate, $dunningIIDays);
+            if($dunningIIDate <= $currentDate){
+                $circleClass = 'dunningII';
+                $numberOfDunningDays = ceil(abs($currentDate - $dunningIIDate) / 86400) . ' days';
+                $dunning = true;
+            } else if($dunningIDate <= $currentDate){
+                $circleClass = 'dunningI';
+                $numberOfDunningDays = ceil(abs($currentDate - $dunningIDate) / 86400) . ' days';
+                $dunning = true;
+            } else if($reminderDate <= $currentDate){
+                $circleClass = 'reminder';
+                $numberOfDunningDays = ceil(abs($currentDate - $reminderDate) / 86400) . ' days';
+                $dunning = true;
+            }
+        }  
+
         ?>
         <tr  
                 class="<?php //edit = you can open the invoice; paid = shown on page all&paid; dunning = shown on page all&dunning; open = shown on page all&open
@@ -426,35 +457,7 @@ function showOpenInvoices()
                     </span>
                 </td>
 
-                <td class="manage-column columnDunning">
-                    <?php
-                    $circleClass = '';
-                    $numberOfDunningDays = '';
-                    if(!$paid && !$cancelled){
-                        $invoiceActivatedDate = strtotime($invoice_header->invoice_date);
-                        $currentDate = strtotime(date('Y-m-d'));
-
-                        $reminderDays = intVal(get_option('qi_settings')['reminderDayLimit']);
-                        $reminderDate = addWorkingDays($invoiceActivatedDate, $reminderDays);
-
-                        $dunningIDays = intVal(get_option('qi_settings')['dunning1daylimit']);
-                        $dunningIDate = addWorkingDays($invoiceActivatedDate, $dunningIDays);
-
-                        $dunningIIDays = intVal(get_option('qi_settings')['dunning2daylimit']);
-                        $dunningIIDate = addWorkingDays($invoiceActivatedDate, $dunningIIDays);
-                        if($dunningIIDate <= $currentDate){
-                            $circleClass = 'dunningII';
-                            $numberOfDunningDays = ceil(abs($currentDate - $dunningIIDate) / 86400) . ' days';
-                        } else if($dunningIDate <= $currentDate){
-                            $circleClass = 'dunningI';
-                            $numberOfDunningDays = ceil(abs($currentDate - $dunningIDate) / 86400) . ' days';
-                        } else if($reminderDate <= $currentDate){
-                            $circleClass = 'reminder';
-                            $numberOfDunningDays = ceil(abs($currentDate - $reminderDate) / 86400) . ' days';
-                        }
-                    }  
-                    ?>
-                    
+                <td class="manage-column columnDunning">                
                     <span class="longCircle <?php echo $circleClass; ?>">
                         <?php echo $numberOfDunningDays; ?>
                     </span>

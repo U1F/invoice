@@ -472,7 +472,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                         </td>
                     </tr>
 
-                    <tr class="wp-list-table-qInvcLine">
+                    <tr class="wp-list-table-qInvcLine invoiceSpecificRow">
                         <td class="invoiceMoveButton">
                             <span 
                             class="sortHandle dashicons dashicons-menu"> 
@@ -623,7 +623,8 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                     <tr id="editInvoiceReminderRow" class="wp-list-table-qInvcLine">
                         <td class="invoiceMoveButton"></td>
                         <td class="invoiceItemsNo"></td>
-                        <td class="invoiceItemsAmount"></td>
+                        <td class="invoiceItemsAmount">
+                            <input type="number" style="display:none;" name="amountOfItems[]" class="amountOfItems" value="1"></td>
 
                         <td class="invoiceItemsDescription">
                             <input 
@@ -650,7 +651,14 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             </nobr>     
                         </td>
 
-                        <td class="invoiceItemsDiscount"></td>
+                        <td class="invoiceItemsDiscount">
+                            <input type="text" name="itemDiscount[]" value="0" class="itemDiscount" style="display:none;" step="0.01">
+                            <select name="discountType[]" class="discountType" style="display:none;">
+                                    <option value="discountPercent" selected>%</option>
+                                </select>
+
+                                <input style="display:none" type="text" name="amountActual[]" class="amountActual" value="0">
+                        </td>
 
                         <td class="invoiceItemsTax"></td>
 
@@ -687,7 +695,8 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                     <tr id="editInvoiceDunningIRow" class="wp-list-table-qInvcLine">
                         <td class="invoiceMoveButton"></td>
                         <td class="invoiceItemsNo"></td>
-                        <td class="invoiceItemsAmount"></td>
+                        <td class="invoiceItemsAmount">
+                            <input type="number" style="display:none;" name="amountOfItems[]" class="amountOfItems" value="1"></td>
 
                         <td class="invoiceItemsDescription">
                             <input 
@@ -714,7 +723,14 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             </nobr>     
                         </td>
 
-                        <td class="invoiceItemsDiscount"></td>
+                        <td class="invoiceItemsDiscount">
+                            <input type="text" name="itemDiscount[]" value="0" class="itemDiscount" style="display:none;" step="0.01">
+                            <select name="discountType[]" class="discountType" style="display:none;">
+                                    <option value="discountPercent" selected>%</option>
+                                </select>
+
+                                <input style="display:none" type="text" name="amountActual[]" class="amountActual" value="0">
+                        </td>
 
                         <td class="invoiceItemsTax"></td>
 
@@ -751,7 +767,8 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                     <tr id="editInvoiceDunningIIRow" class="wp-list-table-qInvcLine">
                         <td class="invoiceMoveButton"></td>
                         <td class="invoiceItemsNo"></td>
-                        <td class="invoiceItemsAmount"></td>
+                        <td class="invoiceItemsAmount">
+                            <input type="number" style="display:none;" name="amountOfItems[]" class="amountOfItems" value="1"></td>
 
                         <td class="invoiceItemsDescription">
                             <input 
@@ -778,7 +795,14 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             </nobr>     
                         </td>
 
-                        <td class="invoiceItemsDiscount"></td>
+                        <td class="invoiceItemsDiscount">
+                            <input type="text" name="itemDiscount[]" value="0" class="itemDiscount" style="display:none;" step="0.01">
+                            <select name="discountType[]" class="discountType" style="display:none;">
+                                    <option value="discountPercent" selected>%</option>
+                                </select>
+
+                                <input style="display:none" type="text" name="amountActual[]" class="amountActual" value="0">
+                        </td>
 
                         <td class="invoiceItemsTax"></td>
 

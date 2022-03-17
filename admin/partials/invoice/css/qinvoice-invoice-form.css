@@ -270,6 +270,13 @@
 .q-invoice-page #invoiceForm tr.wp-list-table-qInvcLine {
     border-bottom: 1px solid #dadce1;
     background-color: white;
+    display: table-row;
+}
+
+.q-invoice-page #editInvoiceReminderRow,
+.q-invoice-page #editInvoiceDunningIRow,
+.q-invoice-page #editInvoiceDunningIIRow{
+    display: none;
 }
 
 

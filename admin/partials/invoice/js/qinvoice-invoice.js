@@ -474,8 +474,8 @@ jQuery(function ($) {
         break
 
       case "open":
-        showDeleteButton(false)
-        showReactivationButton(false)
+        showDeleteButton(true)
+        showReactivationButton(true)
         showPayToggle(true)
         // The next 2 need work:
         $('#tableInvoices tbody tr.open').slice(0, invoicesOnPage).show()
@@ -496,9 +496,9 @@ jQuery(function ($) {
         break
 
       case "dunning":
-        showDeleteButton(false)
-        showReactivationButton(false)
-        showPayToggle(false)
+        showDeleteButton(true)
+        showReactivationButton(true)
+        showPayToggle(true)
         $('#tableInvoices tbody tr.dunning').slice(0, invoicesOnPage).show();
         $('#qi_dunningSumNetto').show()
         $('#qi_dunningSumDunning').show()
@@ -508,7 +508,7 @@ jQuery(function ($) {
       case "paid":
         showDeleteButton(false)
         showReactivationButton(false)
-        showPayToggle(false)
+        showPayToggle(true)
         $('#tableInvoices tbody tr.paid').slice(0, invoicesOnPage).show();
         $('#qi_paidSumDunning').show()
         $('#qi_paidSumTotal').show()
@@ -645,7 +645,7 @@ jQuery(function ($) {
   $('#qInvc-add-line').click(function (e) {
     e.preventDefault()
 
-    const Row = $('.wp-list-table-qInvcLine:last-child')
+    const Row = $('.wp-list-table-qInvcLine:first')
     const Clone = Row.clone()
 
     Clone.find('input:text').val('')
@@ -863,6 +863,11 @@ jQuery(function ($) {
     $('#qinv_saveContactCheckbox').val('empty');
     //if an paid invoice has been opened before, set all input fields enabled
     $('#invoiceForm   *').prop('disabled', false );
+
+    //hide dunning rows
+    $('#editInvoiceReminderRow').removeClass('wp-list-table-qInvcLine');
+    $('#editInvoiceDunningIRow').removeClass('wp-list-table-qInvcLine');
+    $('#editInvoiceDunningIIRow').removeClass('wp-list-table-qInvcLine');
     
   })
 
@@ -979,7 +984,7 @@ jQuery(function ($) {
    * Load invoice Data by ajax and prepare form on success
    * @param {Invoice to be edited} invoiceId 
    */
-  function editInvoice (invoiceId, duplicate = false) {
+  function editInvoice(invoiceId, duplicate = false) {
     jQuery.ajax({
       type: 'POST',
       url: q_invoice_ajaxObject.ajax_url,
@@ -1084,6 +1089,23 @@ jQuery(function ($) {
           }
         }
 
+        $currentInvoiceID = '#edit-' + obj[1][0]['invoice_id']
+        console.log($currentInvoiceID);
+        //show specific dunning rows
+        $('#editInvoiceReminderRow').removeClass('wp-list-table-qInvcLine');
+        $('#editInvoiceDunningIRow').removeClass('wp-list-table-qInvcLine');
+        $('#editInvoiceDunningIIRow').removeClass('wp-list-table-qInvcLine');
+        if($($currentInvoiceID).find('.columnDunning span').hasClass('dunningII')){
+          $('#editInvoiceDunningIIRow').addClass('wp-list-table-qInvcLine');
+          $('#editInvoiceDunningIRow').addClass('wp-list-table-qInvcLine');
+          $('#editInvoiceReminderRow').addClass('wp-list-table-qInvcLine');
+        } else if($($currentInvoiceID).find('.columnDunning span').hasClass('dunningI')){
+          $('#editInvoiceDunningIRow').addClass('wp-list-table-qInvcLine');
+          $('#editInvoiceReminderRow').addClass('wp-list-table-qInvcLine');
+        } else if($($currentInvoiceID).find('.columnDunning span').hasClass('reminder')){
+          $('#editInvoiceReminderRow').addClass('wp-list-table-qInvcLine');
+        }
+
         fetchInvoiceCurrency()
         recalcPos()
         recalcLineSum()
@@ -1186,7 +1208,7 @@ jQuery(function ($) {
     // Reset Form Data
     $('#invoiceForm')[0].reset()
     // Remove old form details from previously edited Invoices
-    $('.wp-list-table-qInvcLine:not(:first)').remove()
+    $('.wp-list-table-qInvcLine.invoiceSpecificRow:not(:first)').remove()
     // Show the Form
     $('#invoiceOverlay').css('display', 'block')
     // Set Customer ID to readonly
@@ -1212,6 +1234,7 @@ jQuery(function ($) {
     } else{
       $('#heading-invoice').find('.switchForPaidStatus').css('display', 'inline-block')
     }
+
     
     // Common Task for openning the invoice form
     reopenInvoiceForm()
