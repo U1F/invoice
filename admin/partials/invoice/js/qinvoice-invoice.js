@@ -1274,7 +1274,7 @@ jQuery(function ($) {
     //add dunning circle
     row.find('td.columnDunning span').removeClass()
     row.find('td.columnDunning span').addClass('longCircle ' + dunningData[0])
-    row.find('td.columnDunning span').text(dunningData[1])
+    row.find('td.columnDunning span').text(dunningData[1] + ' days')
 
     const date = invoice.dateOfInvoice
     // change to german date format

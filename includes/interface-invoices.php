@@ -255,41 +255,43 @@ class Interface_Invoices
         $arrayLength = count($invoice_array['itemDescription']);
 
         for ($i = 0; $i < $arrayLength; $i++) {
-            $rawprice = str_replace(',', '.', $invoice_array['itemPrice'][$i]);
-            $pricearray = explode('.', $rawprice);
-            if(sizeof($pricearray)<=2){
-                $price = $rawprice;
-            }else{
-                $price = '';
-                for($counter = 0; $counter < sizeof($pricearray); $counter++){
-                    if($counter + 1 == sizeof($pricearray)){
-                        $price = $price . '.';
-                    }
-                    $price = $price . $pricearray[$counter];
+            if($invoice_array['insertInDatabase'][$i] == 1){
+                $rawprice = str_replace(',', '.', $invoice_array['itemPrice'][$i]);
+                $pricearray = explode('.', $rawprice);
+                if(sizeof($pricearray)<=2){
+                    $price = $rawprice;
+                }else{
+                    $price = '';
+                    for($counter = 0; $counter < sizeof($pricearray); $counter++){
+                        if($counter + 1 == sizeof($pricearray)){
+                            $price = $price . '.';
+                        }
+                        $price = $price . $pricearray[$counter];
 
+                    }
                 }
+                $amount = intVal($invoice_array['amountOfItems'][$i]);
+                $discount = floatval(str_replace(',', '.', sanitize_text_field($invoice_array['itemDiscount'][$i])));
+                $discountType = $invoice_array['discountType'][$i];
+                $discountedPrice = self::discountPrice($price, $discount, $discountType); 
+                $total = $amount * $discountedPrice;
+
+                $GLOBALS['wpdb']->insert( 
+                    $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_DETAILS,
+                    array(
+                        'invoice_id' => sanitize_text_field($invoice_array['invoice_id']),
+                        'position' => $i + 1,
+                        'description' => sanitize_text_field($invoice_array['itemDescription'][$i]),
+                        'amount' => sanitize_text_field($invoice_array['amountOfItems'][$i]),
+                        'amount_plan' => $price,
+                        'discount' => $discount,
+                        'discount_type' => sanitize_text_field($invoice_array['discountType'][$i]),
+                        'amount_actual' => sanitize_text_field($discountedPrice),
+                        'tax' => sanitize_text_field($invoice_array['itemTax'][$i]),
+                        'sum' => sanitize_text_field($total)
+                    )
+                );
             }
-            $amount = intVal($invoice_array['amountOfItems'][$i]);
-            $discount = floatval(str_replace(',', '.', sanitize_text_field($invoice_array['itemDiscount'][$i])));
-            $discountType = $invoice_array['discountType'][$i];
-            $discountedPrice = self::discountPrice($price, $discount, $discountType); 
-            $total = $amount * $discountedPrice;
-            
-            $GLOBALS['wpdb']->insert( 
-                $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_DETAILS,
-                array(
-                    'invoice_id' => sanitize_text_field($invoice_array['invoice_id']),
-                    'position' => $i + 1,
-                    'description' => sanitize_text_field($invoice_array['itemDescription'][$i]),
-                    'amount' => sanitize_text_field($invoice_array['amountOfItems'][$i]),
-                    'amount_plan' => $price,
-                    'discount' => $discount,
-                    'discount_type' => sanitize_text_field($invoice_array['discountType'][$i]),
-                    'amount_actual' => sanitize_text_field($discountedPrice),
-                    'tax' => sanitize_text_field($invoice_array['itemTax'][$i]),
-                    'sum' => sanitize_text_field($total)
-                )
-            );
         }
 
         //check if the used contact has to be inserted

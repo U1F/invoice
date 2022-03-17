@@ -244,42 +244,15 @@ td.invoiceItemsHeader {
             id="invoiceHeader" 
             style="height:100px; vertical-align: bottom; font-size: 40px;"
         >
-            <?php 
-            $heading=__("Invoice", "ev");
-            $invoiceText = get_option('qi_settings')['invoiceTextIntro'];
-            if ($invoiceType =="invoice") {
-                $heading=__("Invoice", "ev");
-                if (get_option('qi_settings')['invoiceTextIntro']) {
-                    $invoiceText = get_option('qi_settings')['invoiceTextIntro'];   
-                } else {
-                    $invoiceText = __("We are invoicing for the following services:", "ev");
-                }
-                
-            } else if ($invoiceType =="credit") {
-                $heading=__("Credit Note", "ev");
-                $invoiceText ="Folgende Leistung schreiben wir Ihnen gut.";
-            } else if ($invoiceType =="dunning1") {
-                $heading=__("Payment Reminder", "ev");
-                $invoiceText ="Wahrscheinlich ist unsere Rechnung untergegangen".
-                " - daher möchten wir noch einmal um <br>".
-                "eine erneute Prüfung bitten.";
-            } else if ($invoiceType =="dunning2") {
-                $heading=__("Dunning", "ev");
-                $invoiceText ="Wir bitten folgende Leistung ".
-                "unverzüglich zu begleichen.".
-                "<br>(auch im Zusammenhang mit dem nächsten gemeinsamen Event)";
-            }
-            echo '<p style="font-size: 24px;"><b>'.$heading.'</b> </p>';
-            ?>
             
         </div>
 
         <div 
-            id=invoiceText" 
+            id="invoiceText" 
             style="font-size: 14px; height: 40px; vertical-align: middle; width: 640px;"
         >
             <p class="invoiceText" id="invoiceTextRegular" style="display:inline;"> 
-                <?php echo $invoiceText;?>
+                <?php echo $invoiceTextIntro;?>
             </p>
         </div>
 
@@ -688,32 +661,8 @@ td.invoiceItemsHeader {
         </table>
 
         <br><br><br>
-        <?php if ($invoiceType=="invoice") {
-            if (get_option('qi_settings')['invoiceTextOutro']) {
-                echo '<div style="font-size:14px;  width: 640px;">';
-                echo get_option('qi_settings')['invoiceTextOutro'];
-                echo '<br>'. get_option('qi_settings')['invoiceTextPaymentDeadline'];
-                echo '</div>';
-            } else {
-                ?>
-                <div style="font-size:14px;  width: 640px;">
-                Thank you for the excellent co-operation.<br>
-                <br>
-                <?php echo get_option('qi_settings')['invoiceTextPaymentDeadline']; ?> 
-                </div>
-                <?php
-            }
-        }
-        
-        if ($invoiceType=="dunning") {
-            ?>
-
-        <div style="font-size:12px; display:none; width: 640px;">
-            Sollten Sie den offenen Betrag bereits beglichen haben, 
-            betrachten Sie dieses Schreiben als gegenstandslos.
-        </div>
-            <?php
-        }
+        <?php 
+        echo $invoiceTextOutro;
         ?>
         
         </div>

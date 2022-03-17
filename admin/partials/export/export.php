@@ -61,6 +61,79 @@ function exportInvoice($invoiceID, $invoiceType)
         $thousandsDot = '.';
     }
 
+    /**
+     * PDF TEXTS
+     */
+
+    //default
+    $heading=__("Invoice", "ev");
+    $invoiceTextIntro = __("We are invoicing for the following services:", "ev");
+    $invoiceTextOutro =  __("Ein Outro:", "ev");
+
+    /*Folgender Code dient der Bildung von invoiceTextOutro
+    if ($invoiceType=="invoice") {
+        if (get_option('qi_settings')['invoiceTextOutro']) {
+            echo '<div style="font-size:14px;  width: 640px;">';
+            echo get_option('qi_settings')['invoiceTextOutro'];
+            echo '<br>'. get_option('qi_settings')['invoiceTextPaymentDeadline'];
+            echo '</div>';
+        } else {
+            ?>
+            <div style="font-size:14px;  width: 640px;">
+            Thank you for the excellent co-operation.<br>
+            <br>
+            <?php echo get_option('qi_settings')['invoiceTextPaymentDeadline']; ?> 
+            </div>
+            <?php
+        }
+    }
+    
+    if ($invoiceType=="dunning") {
+        ?>
+
+    <div style="font-size:12px; display:none; width: 640px;">
+        Sollten Sie den offenen Betrag bereits beglichen haben, 
+        betrachten Sie dieses Schreiben als gegenstandslos.
+    </div>
+        <?php
+    }*/
+
+    //invoice
+    if ($invoiceType =="invoice") {
+        //header
+        $heading=__("Invoice", "ev");
+
+        //text intro (settings)
+        if (get_option('qi_settings')['invoiceTextIntro']) {
+            $invoiceTextIntro = get_option('qi_settings')['invoiceTextIntro'];   
+        } else {
+            $invoiceTextIntro = __("We are invoicing for the following services:", "ev");
+        }
+
+        //text outro (settings)
+        if (get_option('qi_settings')['invoiceTextIntro']) {
+            $invoiceTextIntro = get_option('qi_settings')['invoiceTextIntro'];   
+        } else {
+            $invoiceTextIntro = __("We are invoicing for the following services:", "ev");
+        }
+
+
+    } else if ($invoiceType =="credit") {
+        $heading=__("Credit Note", "ev");
+        $invoiceTextIntro ="Folgende Leistung schreiben wir Ihnen gut.";
+    } else if ($invoiceType =="dunning1") {
+        $heading=__("Payment Reminder", "ev");
+        $invoiceTextIntro ="Wahrscheinlich ist unsere Rechnung untergegangen".
+        " - daher möchten wir noch einmal um <br>".
+        "eine erneute Prüfung bitten.";
+    } else if ($invoiceType =="dunning2") {
+        $heading=__("Dunning", "ev");
+        $invoiceTextIntro ="Wir bitten folgende Leistung ".
+        "unverzüglich zu begleichen.".
+        "<br>(auch im Zusammenhang mit dem nächsten gemeinsamen Event)";
+    }
+    echo '<p style="font-size: 24px;"><b>'.$heading.'</b> </p>';
+
     
     include_once "invoice-template.php";
 

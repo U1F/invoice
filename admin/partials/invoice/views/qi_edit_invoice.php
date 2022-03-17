@@ -489,6 +489,10 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                 name="position[]"
                                 class="position invoicePositionHidden" 
                                 value="">
+                            <input type="text"
+                                style="display:none;"
+                                name="insertInDatabase[]"
+                                class="insertInDatabase" value="1">
                         </td>
 
                         <td class="invoiceItemsAmount">
@@ -622,7 +626,9 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                     ?>
                     <tr id="editInvoiceReminderRow" class="wp-list-table-qInvcLine">
                         <td class="invoiceMoveButton"></td>
-                        <td class="invoiceItemsNo"></td>
+                        <td class="invoiceItemsNo">
+                            <input type="text" style="display:none;" name="insertInDatabase[]" class="insertInDatabase" value="0"></td>
+                        </td>
                         <td class="invoiceItemsAmount">
                             <input type="number" style="display:none;" name="amountOfItems[]" class="amountOfItems" value="1"></td>
 
@@ -694,7 +700,9 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
 
                     <tr id="editInvoiceDunningIRow" class="wp-list-table-qInvcLine">
                         <td class="invoiceMoveButton"></td>
-                        <td class="invoiceItemsNo"></td>
+                        <td class="invoiceItemsNo">
+                            <input type="text" style="display:none;" name="insertInDatabase[]" class="insertInDatabase" value="0"></td>
+                        </td>
                         <td class="invoiceItemsAmount">
                             <input type="number" style="display:none;" name="amountOfItems[]" class="amountOfItems" value="1"></td>
 
@@ -766,7 +774,9 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
 
                     <tr id="editInvoiceDunningIIRow" class="wp-list-table-qInvcLine">
                         <td class="invoiceMoveButton"></td>
-                        <td class="invoiceItemsNo"></td>
+                        <td class="invoiceItemsNo">
+                            <input type="text" style="display:none;" name="insertInDatabase[]" class="insertInDatabase" value="0"></td>
+                        </td>
                         <td class="invoiceItemsAmount">
                             <input type="number" style="display:none;" name="amountOfItems[]" class="amountOfItems" value="1"></td>
 
