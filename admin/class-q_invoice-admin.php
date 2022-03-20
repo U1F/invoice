@@ -675,6 +675,41 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 null,
                 'dunningTextPage'
             );
+
+            $this->addSettingsField(
+                "reminder Text Reminder Intro", 
+                "textarea", 
+                "dunningTextPage",
+                0,
+                "This text will be shown above reminder details.",
+                "text_details_input_mod"
+            );
+
+            $this->addSettingsField(
+                "reminder Text Reminder Outro", 
+                "textarea", 
+                "dunningTextPage",
+                0,
+                "This text will be shown below reminder details.",
+                "text_details_input_mod"
+            );
+            
+            $this->addSettingsField(
+                "reminder Text Reminder Payment Deadline", 
+                "textarea", 
+                "dunningTextPage",
+                0,
+                "You can announce how many further days you will wait for payment.",
+                "text_details_input_mod"
+            );
+            $this->addSettingsField(
+                "reminder Text Reminder Custom Footer", 
+                "textarea", 
+                "dunningTextPage",
+                0,
+                "You can add details like your tax ID.",
+                "text_details_input_mod"
+            );
         
             $this->addSettingsField(
                 "dunning Text Dunning Intro", 
@@ -693,6 +728,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 "This text will be shown below dunning details.",
                 "text_details_input_mod"
             );
+
             $this->addSettingsField(
                 "dunning Text Dunning Payment Deadline", 
                 "textarea", 
