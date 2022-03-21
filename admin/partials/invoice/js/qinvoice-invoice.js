@@ -748,7 +748,7 @@ jQuery(function ($) {
 
 
     // fetch id from span attribute id="edit-n", where  n = id of invoice
-    editInvoice(currentInvoiceID, true)
+    editInvoice(currentInvoiceID, true, '')
   }
 
   /**
@@ -984,7 +984,7 @@ jQuery(function ($) {
    * Load invoice Data by ajax and prepare form on success
    * @param {Invoice to be edited} invoiceId 
    */
-  function editInvoice(invoiceId, duplicate = false) {
+  function editInvoice(invoiceId, duplicate = false, dunning = '') {
     jQuery.ajax({
       type: 'POST',
       url: q_invoice_ajaxObject.ajax_url,
@@ -1090,19 +1090,18 @@ jQuery(function ($) {
         }
 
         $currentInvoiceID = '#edit-' + obj[1][0]['invoice_id']
-        console.log($currentInvoiceID);
         //show specific dunning rows
         $('#editInvoiceReminderRow').removeClass('wp-list-table-qInvcLine');
         $('#editInvoiceDunningIRow').removeClass('wp-list-table-qInvcLine');
         $('#editInvoiceDunningIIRow').removeClass('wp-list-table-qInvcLine');
-        if($($currentInvoiceID).find('.columnDunning span').hasClass('dunningII')){
+        if($($currentInvoiceID).find('.columnDunning span').hasClass('dunningII') && (dunning == 'd2')){
           $('#editInvoiceDunningIIRow').addClass('wp-list-table-qInvcLine');
           $('#editInvoiceDunningIRow').addClass('wp-list-table-qInvcLine');
           $('#editInvoiceReminderRow').addClass('wp-list-table-qInvcLine');
-        } else if($($currentInvoiceID).find('.columnDunning span').hasClass('dunningI')){
+        } else if($($currentInvoiceID).find('.columnDunning span').hasClass('dunningI') && (dunning == 'd2' || dunning == 'd1')){
           $('#editInvoiceDunningIRow').addClass('wp-list-table-qInvcLine');
           $('#editInvoiceReminderRow').addClass('wp-list-table-qInvcLine');
-        } else if($($currentInvoiceID).find('.columnDunning span').hasClass('reminder')){
+        } else if($($currentInvoiceID).find('.columnDunning span').hasClass('reminder') && (dunning == 'd2' || dunning == 'd1' || dunning == 'rem')){
           $('#editInvoiceReminderRow').addClass('wp-list-table-qInvcLine');
         }
 
@@ -1250,7 +1249,7 @@ jQuery(function ($) {
     // Only the nonce for saving is needed
     $('div#nonceFields').prepend(nonceFieldForUpdating)
     // fetch id from span attribute id="edit-n", where  n = id of invoice
-    editInvoice(jQuery(this).attr('id').split('-')[1])
+    editInvoice(jQuery(this).attr('id').split('-')[1], false, '')
   })
 
   function changeUpdatedInvoiceRow (invoice, dunningData) {

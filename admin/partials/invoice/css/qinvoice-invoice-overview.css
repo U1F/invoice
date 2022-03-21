@@ -151,6 +151,19 @@
     box-shadow: 0 0 0 0px;
 }
 
+.q-invoice-page .listPointerEventsMod{
+    pointer-events: none;
+}
+
+.q-invoice-page .qinv_mainDropdownElement.deactivatedListElement{
+    cursor: context-menu;
+    color: #d4d4d4;
+}
+
+.q-invoice-page .qinv_mainDropdownElement.deactivatedListElement:hover{
+    background-color: white;
+}
+
 .q-invoice-page td.manage-column.columnEdit > * {vertical-align: middle; color: #343a40;}
 
 .q-invoice-page td.manage-column.columnEdit span::before{

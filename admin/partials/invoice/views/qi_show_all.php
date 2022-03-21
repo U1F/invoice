@@ -547,9 +547,10 @@ function showOpenInvoices()
                     <div class="qinv_moreOptionsDropdownBox">
                         <ul style="margin: 0;">
                             <li class="qinv_mainDropdownElement duplicateInvoice">Duplicate</li>
-                            <li class="qinv_mainDropdownElement">
+                            <li class="qinv_mainDropdownElement<?php if(!($circleClass == 'reminder' || $circleClass == 'dunningI' || $circleClass == 'dunningII')){ echo ' deactivatedListElement';} ?>">
+                                <div class="<?php if(!($circleClass == 'reminder' || $circleClass == 'dunningI' || $circleClass == 'dunningII')){ echo 'listPointerEventsMod';} ?>">
                                 Reminder 
-                                <a 
+                                <span 
                                     style="font-size:20px; display:inline" 
                                     target="_top"
                                     href=<?php 
@@ -569,7 +570,7 @@ function showOpenInvoices()
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                     download
                                 >
-                                </a>
+                                </span>
 
                                 <span style="font-size: 20px;"
                                     id="<?php echo esc_attr($invoice_header->id);?>" 
@@ -578,10 +579,12 @@ function showOpenInvoices()
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                 >
                                 </span>
+                            </div>
                             </li>
-                            <li class="qinv_mainDropdownElement">
+                            <li class="qinv_mainDropdownElement<?php if(!($circleClass == 'dunningI' || $circleClass == 'dunningII')){ echo ' deactivatedListElement';} ?>">
+                                <div class="<?php if(!($circleClass == 'dunningI' || $circleClass == 'dunningII')){ echo 'listPointerEventsMod';} ?>">
                                 Dunning 1 
-                                <a 
+                                <span 
                                     style="font-size:20px; display:inline" 
                                     target="_top"
                                     href=<?php 
@@ -601,7 +604,7 @@ function showOpenInvoices()
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                     download
                                 >
-                                </a>
+                                </span>
 
                                 <span style="font-size: 20px;"
                                     id="<?php echo esc_attr($invoice_header->id);?>" 
@@ -610,10 +613,12 @@ function showOpenInvoices()
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                 >
                                 </span>
+                            </div>
                             </li>
-                            <li class="qinv_mainDropdownElement">
+                            <li class="qinv_mainDropdownElement<?php if($circleClass != 'dunningII'){ echo ' deactivatedListElement';} ?>">
+                                <div class="<?php if($circleClass != 'dunningII'){ echo 'listPointerEventsMod';} ?>">
                                 Dunning 2 
-                                <a 
+                                <span 
                                     style="font-size:20px; display:inline" 
                                     target="_top"
                                     href=<?php 
@@ -633,7 +638,7 @@ function showOpenInvoices()
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                     download
                                 >
-                                </a>
+                                </span>
 
                                 <span style="font-size: 20px;"
                                     id="<?php echo esc_attr($invoice_header->id);?>" 
@@ -642,6 +647,7 @@ function showOpenInvoices()
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                 >
                                 </span>
+                            </div>
                             </li>
                         </ul>
                     </div>
