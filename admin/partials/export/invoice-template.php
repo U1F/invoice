@@ -505,7 +505,7 @@ td.invoiceItemsHeader {
 
                 <td>
                     <div style="width:371px;font-size:14px; word-wrap: break-word;">
-                        <?php echo echo __("First Dunning Fee", "ev");;?>
+                        <?php echo __("First Dunning Fee", "ev");?>
                     </div>
                 </td>
 
@@ -541,7 +541,7 @@ td.invoiceItemsHeader {
 
                 <td>
                     <div style="width:371px;font-size:14px; word-wrap: break-word;">
-                        <?php echo echo __("Second Dunning Fee", "ev");;?>
+                        <?php echo __("Second Dunning Fee", "ev");?>
                     </div>
                 </td>
 
@@ -567,26 +567,44 @@ td.invoiceItemsHeader {
         }
         ?>
             
-            <tr>
-                <td 
-                    colspan="<?php echo 5 + $InvoiceHasAtLeastOneDiscount;?>" 
-                    style="border-bottom: 1px solid; height:0px">
-                </td>
-            </tr>
+        <tr>
+            <td 
+                colspan="<?php echo 5 + $InvoiceHasAtLeastOneDiscount;?>" 
+                style="border-bottom: 1px solid; height:0px">
+            </td>
+        </tr>
+        <tr>
+            <td 
+                style="font-size:10px;" 
+                colspan="<?php echo 4 + $InvoiceHasAtLeastOneDiscount;?>"><?php 
+                echo __("Subtotal without Tax", "ev"); ?>
+            </td>
+            <td style="font-size:10px; text-align:right; padding-right:8px;" >
+                <?php echo 
+                    number_format($totalNet, 2, $decimalDot, $thousandsDot). 
+                    " " . $currencySign;
+                ?>
+            </td>
+        </tr>
 
+        <?php
+        if ( $invoiceType == 'reminder' || $invoiceType == 'dunning1' ||$invoiceType == 'dunning2'){
+        ?>
             <tr>
                 <td 
                     style="font-size:10px;" 
                     colspan="<?php echo 4 + $InvoiceHasAtLeastOneDiscount;?>"><?php 
-                    echo __("Subtotal without Tax", "ev"); ?>
+                    echo __("Dunning Fees", "ev"); ?>
                 </td>
                 <td style="font-size:10px; text-align:right; padding-right:8px;" >
                     <?php echo 
-                        number_format($totalNet, 2, $decimalDot, $thousandsDot). 
+                        number_format($totalDunningFee, 2, $decimalDot, $thousandsDot). 
                         " " . $currencySign;
                     ?>
                 </td>
             </tr>
+        <?php
+        } ?>
             
         <?php 
         $taxTotal = 0;
@@ -619,8 +637,6 @@ td.invoiceItemsHeader {
             }
         }
         ?>
-        <?php
-        if ()
 
             <tr>
                 <td 
@@ -640,7 +656,7 @@ td.invoiceItemsHeader {
                 <td style="padding-right:8px; font-size:14px;" align="right">
                     <b> 
                         <?php 
-                            echo number_format($taxTotal+$totalNet, 2, $decimalDot, $thousandsDot)." ".
+                            echo number_format($taxTotal+$totalNet+$totalDunningFee, 2, $decimalDot, $thousandsDot)." ".
                             $currencySign;
                         ?>
                     </b>
@@ -652,64 +668,35 @@ td.invoiceItemsHeader {
         <?php 
         echo $invoiceTextOutro;
         ?>
-        
-        </div>
-        <page_footer>
-            <div class="footer" style=" margin-left:70px; margin-right:70px;">
-                <div 
-                    style="
-                        height:4px; 
-                        border-top: 1px solid #000000; 
-                        margin-top:30px;">
-                </div>
-
-                <div style="font-size:12px; text-align: center;"> 
-                <?php 
-                
-                $bankIndex = $invoiceData[0][0]->bank;
-                
-                $ibanFromDatabase = get_option('qi_settings')["IBAN{$bankIndex}"];
-
-                // Get rid of spaces if exist
-                $ibanArray = explode(' ', $ibanFromDatabase);
-                $iban = implode('' , $ibanArray);
-
-                // Seperate blz and kto
-                $blz = substr($iban, 4, 8);
-                $kto = strVal(intVal(substr($iban, 12, 10))); 
-
-                //Fill with spaces if not exist for IBAN in second line
-                $ibanArray = str_split($iban);
-                $iban = '';
-                $counter = 0;
-                for($i = 0; $i < sizeof($ibanArray); $i++){
-                    $iban = $iban.$ibanArray[$i];
-                    if($counter == 3){
-                        $iban = $iban.' ';
-                        $counter = 0;
-                    } else{
-                        $counter++;
-                    }
-
-                }
-
-                echo 
-                    __("Bank Details: ", "ev"). 
-                    get_option('qi_settings')["bankName{$bankIndex}"].
-                    ' (BLZ '.$blz. ', Kto '. $kto . ')'.
-                    '<br>'.
-                    'IBAN: '. $iban.
-                    ' - '.
-                    'BIC: '.  get_option('qi_settings')["BIC{$bankIndex}"].
-                    '<br>';
-                
-                if (get_option('qi_settings')['invoiceTextCustomFooter']) {
-                    echo get_option('qi_settings')['invoiceTextCustomFooter'];
-                }
-    
-                ?>
-                </div>
+         
+    </div>
+    <page_footer>
+        <div class="footer" style=" margin-left:70px; margin-right:70px;">
+            <div 
+                style="
+                    height:4px; 
+                    border-top: 1px solid #000000; 
+                    margin-top:30px;">
             </div>
-        </page_footer>
+            <div style="font-size:12px; text-align: center;"> 
+            <?php 
+            echo 
+                __("Bank Details: ", "ev"). 
+                get_option('qi_settings')["bankName{$bankIndex}"].
+                ' (BLZ '.$blz. ', Kto '. $kto . ')'.
+                '<br>'.
+                'IBAN: '. $iban.
+                ' - '.
+                'BIC: '.  get_option('qi_settings')["BIC{$bankIndex}"].
+                '<br>';
+            
+            if (get_option('qi_settings')['invoiceTextCustomFooter']) {
+                echo get_option('qi_settings')['invoiceTextCustomFooter'];
+            }
+
+            ?>
+            </div>
+        </div>
+    </page_footer>
     
 </page>

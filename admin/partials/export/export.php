@@ -37,7 +37,7 @@ function exportInvoice($invoiceID, $invoiceType)
     //TODO - change data input for credit and offer
     if($invoiceType == "offer"){
         $invoiceData = Interface_Invoices::getInvoiceData($invoiceID);
-    } else if ($invoiceType == "credit"{
+    } else if ($invoiceType == "credit"){
         $invoiceData = Interface_Invoices::getInvoiceData($invoiceID);
     } else {
         $invoiceData = Interface_Invoices::getInvoiceData($invoiceID);
@@ -106,7 +106,7 @@ function exportInvoice($invoiceID, $invoiceType)
         $logoImageSource = 'data:'. $mimetype .';base64,'.$base64;
         
         $finaleImageData = "<img 
-                                src='" echo $logoImageSource;". 
+                                src='" . $logoImageSource . ".'
                                 width='200'
                                 style='border:0px; margin-bottom: 10px; margin-top: 10px;'
                             >";
@@ -156,6 +156,30 @@ function exportInvoice($invoiceID, $invoiceType)
     if (get_option('qi_settings')['invoiceUnit'] == "Liter") {
         $invoiceUnit = __("Litre", "ev");
     }
+
+    //prepare footer data
+    $bankIndex = $invoiceData[0][0]->bank;
+    $ibanFromDatabase = get_option('qi_settings')["IBAN{$bankIndex}"];
+    // Get rid of spaces if exist
+    $ibanArray = explode(' ', $ibanFromDatabase);
+    $iban = implode('' , $ibanArray);
+    // Seperate blz and kto
+    $blz = substr($iban, 4, 8);
+    $kto = strVal(intVal(substr($iban, 12, 10))); 
+    //Fill with spaces if not exist for IBAN in second line
+    $ibanArray = str_split($iban);
+    $iban = '';
+    $counter = 0;
+    for($i = 0; $i < sizeof($ibanArray); $i++){
+        $iban = $iban.$ibanArray[$i];
+        if($counter == 3){
+            $iban = $iban.' ';
+            $counter = 0;
+        } else{
+            $counter++;
+        }
+    }
+
 
     /**
      * PDF TEXTS
@@ -322,41 +346,8 @@ function exportInvoice($invoiceID, $invoiceType)
         }
 
     }
-
-    //echo '<p style="font-size: 24px;"><b>'.$heading.'</b> </p>';
-
     
     include_once "invoice-template.php";
-
-
-    /*Folgender Code dient der Bildung von invoiceTextOutro
-    if ($invoiceType=="invoice") {
-        if (get_option('qi_settings')['invoiceTextOutro']) {
-            echo '<div style="font-size:14px;  width: 640px;">';
-            echo get_option('qi_settings')['invoiceTextOutro'];
-            echo '<br>'. get_option('qi_settings')['invoiceTextPaymentDeadline'];
-            echo '</div>';
-        } else {
-            ?>
-            <div style="font-size:14px;  width: 640px;">
-            Thank you for the excellent co-operation.<br>
-            <br>
-            <?php echo get_option('qi_settings')['invoiceTextPaymentDeadline']; ?> 
-            </div>
-            <?php
-        }
-    }
-    
-    if ($invoiceType=="dunning") {
-        ?>
-
-    <div style="font-size:12px; display:none; width: 640px;">
-        Sollten Sie den offenen Betrag bereits beglichen haben, 
-        betrachten Sie dieses Schreiben als gegenstandslos.
-    </div>
-        <?php
-    }*/
-
     ?>
 
     <?php
