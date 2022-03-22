@@ -227,13 +227,19 @@ jQuery(function ($) {
     return $(row).children('td').eq(index).text() 
   }
 
-  // These 2 are a bit overengineered
-  function markInvoice (invoiceID, data) {
-    updateInvoiceHeaderItem(invoiceID, data)
+  function getRowNumber (eventsOriginalTarget) {
+    return $(eventsOriginalTarget).closest('tr').attr('value')
   }
 
-  function unmarkInvoice (invoiceID, data) {
-    updateInvoiceHeaderItem(invoiceID, data)
+  // Which of them is sucessfull?
+  function markInvoiceAsPaidInDB(clickedTarget){
+    const data = { paydate: formatDate(new Date()) }
+    updateInvoiceHeaderItem(getRowNumber('tr#'+clickedTarget), data)
+  }
+
+  function markInvoiceAsOpenInDB(clickedTarget){
+    const data = { paydate: '' }
+    updateInvoiceHeaderItem(getRowNumber('tr#'+clickedTarget), data)
   }
 
   /**
@@ -242,11 +248,8 @@ jQuery(function ($) {
    * @param {string} x The row id to make changes.
    */
   function setInvoiceToPaid (clickedTarget){
-    const invoiceRow = $(clickedTarget).parent().parent().parent()
-    // .. set a paydate to mark as paid
-    const data = { paydate: formatDate(new Date()) }
-    markInvoice(getRowNumber(clickedTarget), data)
-
+    const invoiceRow = $('tr#'+clickedTarget)
+    
     // and mark that row as paid instead of open
     invoiceRow.removeClass('open')
     invoiceRow.addClass('paid')
@@ -255,8 +258,11 @@ jQuery(function ($) {
     invoiceRow.find('.invoiceStatusIcon').removeClass('open')
     
     // paid invoices should not look and be editable
-    invoiceRow.find('.columnEdit').find('.delete').css('color', '#dadce1')
+    invoiceRow.find('.columnEdit').find('.delete').css('color', '#dadce1') // do this within a class?
     invoiceRow.find('.columnEdit').find('.delete').removeClass('deleteRow')
+    
+    // .. set a paydate to mark as paid in database
+    markInvoiceAsPaidInDB(clickedTarget)
 
   }
 
@@ -266,22 +272,23 @@ jQuery(function ($) {
    * @param {string} x The row id to make changes.
    */
   function setInvoiceToUnpaid (clickedTarget){
-    
-    const invoiceRow = $("tr#"+clickedTarget)
-    
-    // remove paydate, mark as open and make editable
-    const data = { paydate: '' }
-    unmarkInvoice(getRowNumber($("tr#"+clickedTarget)), data)
+    const invoiceRow = $('tr#'+clickedTarget)
+  
     invoiceRow.removeClass('paid')
     invoiceRow.addClass('open edit')
-
+    
     invoiceRow.find('.invoiceStatusIcon').removeClass('paid')
     invoiceRow.find('.invoiceStatusIcon').addClass('open')
     
-    invoiceRow.find('.columnEdit').find('.delete').css('color', '#50575e')
+    invoiceRow.find('.columnEdit').find('.delete').css('color', '#50575e') // do this within a class?
+  
     invoiceRow.find('.columnEdit').find('.delete').addClass('deleteRow')
+    
+    // remove paydate, mark as open in database
+    markInvoiceAsOpenInDB(clickedTarget)
   }
  
+  
   /**
    * Clicking on the slider Paid/Unpaid changes UI functionality 
    * and updates database
@@ -289,39 +296,37 @@ jQuery(function ($) {
    * @param {event} x We use the target of the event to make changes 
    * on the row that got clicked
    */
-  $('.columnStatusPaid').on('click', '.sliderForPayment', function (event) {
-    event.preventDefault()
-
-    const sliderBox = $(event.target).parent()
-    const invoiceRow = sliderBox.parent().parent()
-
+  $('.sliderForPayment').on('click', function (event) {
+    const clickTarget = event.currentTarget
+    const sliderBox = $(clickTarget).parent()
+    const invoiceRow = $(clickTarget).closest('tr')
+    
     // We do not want to make it possible for cancelled invoices
     if(invoiceRow.hasClass('cancelled')){
       return;
     }
 
     // For already paid invocies a dialoge pops up to ask if the invoice should be reverted to open
-    if (!sliderBox.find('input').prop('checked')) {
-      setInvoiceToPaid(event.target)      
-      $(event.target).parent().click();
+    if (sliderBox.find('input').prop('checked') === false) {
+      setInvoiceToPaid(invoiceRow.attr('id'))        
     } else {
-      $("#reopenPaidInvoice").show()
+      if (confirm("Really?")) {
+        setInvoiceToUnpaid(invoiceRow.attr('id'))
+      } else { 
+        // Do not click the slider and return
+        event.preventDefault()
+        return
+      }
 
-      //console.log($(event.target).parents("tr").attr('id'))
-      $("#lastClickedInvoice").val($(event.target).parents("tr").attr('id'))
+      /*
+       * $("#lastClickedInvoice").val($(clickTarget).parents("tr").attr('id'))
+       * $("#reopenPaidInvoice").show()
+       */
     }
-
     q_invoice_RecalcSums(0,0,0);
   })
 
-  // Ich denke, das folgende ist nicht mehr nötig:
-  $('.columnStatusPaid').on('click', '.markAsPaid', function (event) {
-    //$(event.target).closest('tr').find('.sliderForPayment').click()
-  }) // Bis hier hin.
-
-  function getRowNumber (eventsOriginalTarget) {
-    return $(eventsOriginalTarget).closest('tr').attr('value')
-  }
+  
 
 
   /**
@@ -1649,7 +1654,11 @@ jQuery(function ($) {
     const invoiceID = $('#invoice_id').val()
     const sliderBox = $(event.target).parent()
     
-    if (sliderBox.find('input').prop('checked') == false){ disableInvoiceForm(invoiceID) } 
+    if (sliderBox.find('input').prop('checked') == false){ 
+      disableInvoiceForm(invoiceID) 
+      //markInvoiceAsPaidInDB()
+
+    } 
     
     else {
       
@@ -1658,9 +1667,15 @@ jQuery(function ($) {
       //$("#reopenPaidInvoice").css('zIndex', 9999);
       //$("#lastClickedInvoice").val(invoiceID)
 
-      if (confirm("Really re-enable Invocie?")){ enableInvoiceForm(invoiceID) }
+      if (confirm("Really re-enable Invocie?")){ 
+        enableInvoiceForm(invoiceID) 
+        //markInvoiceAsOpenInDB()
+      }
       
-      else { event.preventDefault() }      
+      else { // do "nothing"
+
+        event.preventDefault() 
+      }      
     }
   })
 
