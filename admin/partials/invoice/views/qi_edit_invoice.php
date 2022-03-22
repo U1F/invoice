@@ -356,7 +356,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                         <tr id="tableRowBank1">
                             <td class="labelsRightTable">
                                 <?php echo (
-                                    get_option('qi_settings')['bankName1']
+                                    get_option('qi_settings')['FirstBankName']
                                 );?>  
                             </td>
 
@@ -377,7 +377,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             <td 
                                 class="labelsRightTable" 
                             ><?php
-                                echo get_option('qi_settings')['bankName2']; 
+                                echo get_option('qi_settings')['SecondBankName']; 
                             ?></td>
         
                             <td class="inputsRightTable">
@@ -473,7 +473,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                         </td>
                     </tr>
 
-                    <tr class="wp-list-table-qInvcLine">
+                    <tr class="wp-list-table-qInvcLine invoiceSpecificRow">
                         <td class="invoiceMoveButton">
                             <span 
                             class="sortHandle dashicons dashicons-menu"> 
@@ -490,6 +490,11 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                                 name="position[]"
                                 class="position invoicePositionHidden" 
                                 value="">
+                            <input type="text"
+                                style="display:none;"
+                                name="insertInDatabase[]"
+                                class="insertInDatabase" value="1">
+                            <input type="text" style="display:none;" name="positionTypeIsDunning[]" class="positionTypeIsDunning" value="0"></td>
                         </td>
 
                         <td class="invoiceItemsAmount">
@@ -619,6 +624,233 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                         </td>
 
                     </tr>
+                    <?php //-------------------------Dunning Rows: 1. Reminder, 2. DunningI, 3. DunningII
+                    ?>
+                    <tr id="editInvoiceReminderRow" class="wp-list-table-qInvcLine">
+                        <td class="invoiceMoveButton"></td>
+                        <td class="invoiceItemsNo">
+                            <input type="text" style="display:none;" name="insertInDatabase[]" class="insertInDatabase" value="0">
+                            <input type="text" style="display:none;" name="positionTypeIsDunning[]" class="positionTypeIsDunning" value="1"></td>
+                        </td>
+                        <td class="invoiceItemsAmount">
+                            <input type="number" style="display:none;" name="amountOfItems[]" class="amountOfItems" value="1"></td>
+
+                        <td class="invoiceItemsDescription">
+                            <input 
+                                type="text"  
+                                name="itemDescription[]" 
+                                class="itemDescription"
+                                value="Reminder Fee"
+                                required
+                            >
+                        </td>
+
+                        <td class="invoiceItemsPrice">
+                            <nobr class="q_inv_mobile_flex_mod">
+                                <input 
+                                    type="text"  
+                                    class="itemPrice"
+                                    style="width: 80px"
+                                    name="itemPrice[]" 
+                                    value="<?php echo get_option('qi_settings')['reminder'];?>" 
+                                    step="0.01"
+                                    required
+                                >
+                                <span id="q_imv_item_price_currency"><?php echo esc_html($currencySymbol) ?></span>
+                            </nobr>     
+                        </td>
+
+                        <td class="invoiceItemsDiscount">
+                            <input type="text" name="itemDiscount[]" value="0" class="itemDiscount" style="display:none;" step="0.01">
+                            <select name="discountType[]" class="discountType" style="display:none;">
+                                    <option value="discountPercent" selected>%</option>
+                                </select>
+
+                                <input style="display:none" type="text" name="amountActual[]" class="amountActual" value="0">
+                        </td>
+
+                        <td class="invoiceItemsTax"></td>
+
+                        <td class="invoiceItemsTotal" style="text-align: right;"> 
+                            
+                            <nobr> 
+                                <span 
+                                    class="qInvcLine-total"> 
+                                </span>
+                                
+                                <?php echo esc_html($currencySymbol) ?>
+                            </nobr>
+
+                            <input 
+                                style="display:none"
+                                type="number" 
+                                name="invoiceTotal[]"
+                                class="invoiceTotal" 
+                                value="0"
+                                step="0.01" 
+                            > 
+                        </td>
+
+                        <td class="invoiceItemsButtons" style="text-align: center;">
+
+                            <span 
+                                class="qInvc-delete-line dashicons dashicons-no-alt">
+                            </span>
+                            
+                        </td>
+
+                    </tr>
+
+                    <tr id="editInvoiceDunningIRow" class="wp-list-table-qInvcLine">
+                        <td class="invoiceMoveButton"></td>
+                        <td class="invoiceItemsNo">
+                            <input type="text" style="display:none;" name="insertInDatabase[]" class="insertInDatabase" value="0">
+                            <input type="text" style="display:none;" name="positionTypeIsDunning[]" class="positionTypeIsDunning" value="1"></td>
+                        </td>
+                        <td class="invoiceItemsAmount">
+                            <input type="number" style="display:none;" name="amountOfItems[]" class="amountOfItems" value="1"></td>
+
+                        <td class="invoiceItemsDescription">
+                            <input 
+                                type="text"  
+                                name="itemDescription[]" 
+                                class="itemDescription"
+                                value="First Dunning Fee"
+                                required
+                            >
+                        </td>
+
+                        <td class="invoiceItemsPrice">
+                            <nobr class="q_inv_mobile_flex_mod">
+                                <input 
+                                    type="text"  
+                                    class="itemPrice"
+                                    style="width: 80px"
+                                    name="itemPrice[]" 
+                                    value="<?php echo get_option('qi_settings')['dunning1'];?>" 
+                                    step="0.01"
+                                    required
+                                >
+                                <span id="q_imv_item_price_currency"><?php echo esc_html($currencySymbol) ?></span>
+                            </nobr>     
+                        </td>
+
+                        <td class="invoiceItemsDiscount">
+                            <input type="text" name="itemDiscount[]" value="0" class="itemDiscount" style="display:none;" step="0.01">
+                            <select name="discountType[]" class="discountType" style="display:none;">
+                                    <option value="discountPercent" selected>%</option>
+                                </select>
+
+                                <input style="display:none" type="text" name="amountActual[]" class="amountActual" value="0">
+                        </td>
+
+                        <td class="invoiceItemsTax"></td>
+
+                        <td class="invoiceItemsTotal" style="text-align: right;"> 
+                            
+                            <nobr> 
+                                <span 
+                                    class="qInvcLine-total"> 
+                                </span>
+                                
+                                <?php echo esc_html($currencySymbol) ?>
+                            </nobr>
+
+                            <input 
+                                style="display:none"
+                                type="number" 
+                                name="invoiceTotal[]"
+                                class="invoiceTotal" 
+                                value="0"
+                                step="0.01" 
+                            > 
+                        </td>
+
+                        <td class="invoiceItemsButtons" style="text-align: center;">
+
+                            <span 
+                                class="qInvc-delete-line dashicons dashicons-no-alt">
+                            </span>
+                            
+                        </td>
+
+                    </tr>
+
+                    <tr id="editInvoiceDunningIIRow" class="wp-list-table-qInvcLine">
+                        <td class="invoiceMoveButton"></td>
+                        <td class="invoiceItemsNo">
+                            <input type="text" style="display:none;" name="insertInDatabase[]" class="insertInDatabase" value="0">
+                            <input type="text" style="display:none;" name="positionTypeIsDunning[]" class="positionTypeIsDunning" value="1"></td>
+                        </td>
+                        <td class="invoiceItemsAmount">
+                            <input type="number" style="display:none;" name="amountOfItems[]" class="amountOfItems" value="1"></td>
+
+                        <td class="invoiceItemsDescription">
+                            <input 
+                                type="text"  
+                                name="itemDescription[]" 
+                                class="itemDescription"
+                                value="Second Dunning Fee"
+                                required
+                            >
+                        </td>
+
+                        <td class="invoiceItemsPrice">
+                            <nobr class="q_inv_mobile_flex_mod">
+                                <input 
+                                    type="text"  
+                                    class="itemPrice"
+                                    style="width: 80px"
+                                    name="itemPrice[]" 
+                                    value="<?php echo get_option('qi_settings')['dunning2'];?>" 
+                                    step="0.01"
+                                    required
+                                >
+                                <span id="q_imv_item_price_currency"><?php echo esc_html($currencySymbol) ?></span>
+                            </nobr>     
+                        </td>
+
+                        <td class="invoiceItemsDiscount">
+                            <input type="text" name="itemDiscount[]" value="0" class="itemDiscount" style="display:none;" step="0.01">
+                            <select name="discountType[]" class="discountType" style="display:none;">
+                                    <option value="discountPercent" selected>%</option>
+                                </select>
+
+                                <input style="display:none" type="text" name="amountActual[]" class="amountActual" value="0">
+                        </td>
+
+                        <td class="invoiceItemsTax"></td>
+
+                        <td class="invoiceItemsTotal" style="text-align: right;"> 
+                            
+                            <nobr> 
+                                <span 
+                                    class="qInvcLine-total"> 
+                                </span>
+                                
+                                <?php echo esc_html($currencySymbol) ?>
+                            </nobr>
+
+                            <input 
+                                style="display:none"
+                                type="number" 
+                                name="invoiceTotal[]"
+                                class="invoiceTotal" 
+                                value="0"
+                                step="0.01" 
+                            > 
+                        </td>
+
+                        <td class="invoiceItemsButtons" style="text-align: center;">
+
+                            <span 
+                                class="qInvc-delete-line dashicons dashicons-no-alt">
+                            </span>
+                            
+                        </td>
+
+                    </tr>
+
                     </table>
                 </div>
                 <!-- ----------------------------------------------------------- -->

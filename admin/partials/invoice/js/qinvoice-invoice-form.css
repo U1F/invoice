@@ -273,12 +273,6 @@
     display: table-row;
 }
 
-.q-invoice-page #editInvoiceReminderRow,
-.q-invoice-page #editInvoiceDunningIRow,
-.q-invoice-page #editInvoiceDunningIIRow{
-    display: none;
-}
-
 
 .q-invoice-page #invoiceForm div#invoice-sums {
     font-family: sans-serif;

@@ -1,7 +1,7 @@
 <?php
 /**
- * This file contains the template for the auto generated invoices.
- * +invoice, +rechnung, +pdf
+ * This file contains the template for the auto generated
+ * invoices/reminder/dunning/offer/credit.
  */
 ?>
 
@@ -66,34 +66,9 @@ td.invoiceItemsHeader {
                     rowspan="3" 
                     style="width: 270px; text-align: right; font-size:14px;"
                 >
-                    <?php 
-                        if (get_option('qi_settings')['logoFileUrl']) {
-                            $logoImageURL = get_option('qi_settings')['logoFileUrl'];
-				    		$logoImageFile = get_option('qi_settings')['logoFileFile'];
-                            $mimetype =  wp_get_image_mime( $logoImageFile );
-                            $imagedata = file_get_contents($logoImageFile);
-             	    	    $base64 = base64_encode($imagedata);
-				    	    $logoImageSource = 'data:'. $mimetype .';base64,'.$base64;
-                            ?>
-                            <img 
-                                src="<?php echo $logoImageSource;?>" 
-                                width="200"
-                                style="border:0px; margin-bottom: 10px; margin-top: 10px;">
-                            <?php
-                        }
-                        else 
-                        {
-                            ?>
-                            <div style="height:100px"></div>
-                            <?php
-
-                        }
-                        
-                        
+                    <?php //insert logo image
+                    echo $finalImageData; ?>                        
                     
-                    ?>
-                    
-
                     <br>
 
                     <?php // Sender Adress from Settings - Top right corner ?>
@@ -164,10 +139,10 @@ td.invoiceItemsHeader {
                     </p>
                     
                     <?php 
-                    if ($invoiceType=="dunning") {
+                    if ($invoiceType == "reminder" || $invoiceType == "dunning1" || $invoiceType == "dunning2") {
                         ?>
-                            <p class="invoiceSender" id="ZAHLUNGSERINNERUNG">
-                                ZAHLUNGSERINNERUNG
+                            <p class="invoiceSender" id="explainingHeading">
+                                <?php echo $explainingHeading; ?>
                             </p>
                         <?php 
                     }
@@ -182,19 +157,7 @@ td.invoiceItemsHeader {
                     id="small" 
                     style="font-size:9px; vertical-align: bottom;">
                     <u>
-                    <?php 
-                    if (get_option('qi_settings')['company']) {
-                        echo get_option('qi_settings')['company'] . " | " ;
-                    } else {
-                        echo get_option('qi_settings')['firstName']. " "; 
-                        echo get_option('qi_settings')['lastName']. " | ";
-                    }
-
-                    echo   
-                        get_option('qi_settings')['street']. " | ".  
-                        get_option('qi_settings')['ZIP'] . " ". 
-                        get_option('qi_settings')['city']; 
-                    ?>
+                    <?php echo $headerOverReceiver; ?>
                     </u>
                 </td>
             </tr>
@@ -244,80 +207,34 @@ td.invoiceItemsHeader {
             id="invoiceHeader" 
             style="height:100px; vertical-align: bottom; font-size: 40px;"
         >
-            <?php 
-            $heading=__("Invoice", "ev");
-            $invoiceText = get_option('qi_settings')['invoiceTextIntro'];
-            if ($invoiceType =="invoice") {
-                $heading=__("Invoice", "ev");
-                if (get_option('qi_settings')['invoiceTextIntro']) {
-                    $invoiceText = get_option('qi_settings')['invoiceTextIntro'];   
-                } else {
-                    $invoiceText = __("We are invoicing for the following services:", "ev");
-                }
-                
-            } else if ($invoiceType =="credit") {
-                $heading=__("Credit Note", "ev");
-                $invoiceText ="Folgende Leistung schreiben wir Ihnen gut.";
-            } else if ($invoiceType =="dunning1") {
-                $heading=__("Payment Reminder", "ev");
-                $invoiceText ="Wahrscheinlich ist unsere Rechnung untergegangen".
-                " - daher möchten wir noch einmal um <br>".
-                "eine erneute Prüfung bitten.";
-            } else if ($invoiceType =="dunning2") {
-                $heading=__("Dunning", "ev");
-                $invoiceText ="Wir bitten folgende Leistung ".
-                "unverzüglich zu begleichen.".
-                "<br>(auch im Zusammenhang mit dem nächsten gemeinsamen Event)";
-            }
-            echo '<p style="font-size: 24px;"><b>'.$heading.'</b> </p>';
-            ?>
+            <p style="font-size: 24px;">
+                <b> <?php echo $heading;?> </b>
+            </p>
             
         </div>
 
         <div 
-            id=invoiceText" 
+            id="invoiceText" 
             style="font-size: 14px; height: 40px; vertical-align: middle; width: 640px;"
         >
             <p class="invoiceText" id="invoiceTextRegular" style="display:inline;"> 
-                <?php echo $invoiceText;?>
+                <?php echo $invoiceTextIntro;?>
             </p>
         </div>
-
-
-        <?php 
-        $deliveryDate = date_parse_from_format(
-            "Y-m-d", 
-            $invoiceData[0][0]->delivery_date
-        );
-        
-        $deliveryDateIsSet = 0;
-        $tableWidthOfInvoiceHead = 180;
-        
-        if (checkdate(
-            $deliveryDate['month'],
-            $deliveryDate['day'], 
-            $deliveryDate['year']
-        )
-        ) {
-            
-            $deliveryDateIsSet = 1;
-            $tableWidthOfInvoiceHead = 127;
-        }
-        ?>
 
         <table 
             class="table_rg_head" 
             style="border-collapse: collapse; padding: 8px;"
         >
 
-        <!-- Wenn es noch kein Leistungsdatum gibt, soll die Spalte dafür 
-        leer sein und die Tabelle entsprechend angepasst-->
-        <!-- Die Breite liegt dann bei 127 statt 180, 3 statt 4 (colspan)Spalten -->
+        <!-- Wenn es noch kein Lieferungsdatum gibt, soll die Spalte dafür 
+        leer sein und die Tabelle entsprechend angepasst.
+        Die Breite liegt dann bei 127 statt 180, 3 statt 4 (colspan) Spalten -->
         
             <tr id="lineBefore">
                 <td 
                     style="border-bottom: solid 1px #000000;" 
-                    colspan="<?php echo 3+$deliveryDateIsSet;?>"
+                    colspan="<?php echo 3 + $deliveryDateIsSet;?>"
                 >
                 </td>
             </tr>
@@ -327,7 +244,7 @@ td.invoiceItemsHeader {
                     class="invoiceInfoHeader" 
                     width="<?php echo $tableWidthOfInvoiceHead;?>"
                 >
-                    <b><?php echo __("Invoice ID", "ev");?></b><br>
+                    <b><?php echo $heading . ' ID';?></b><br>
                     <span id="invoiceID"><?php echo $invoiceID;?></span>
                 </td>
 
@@ -386,25 +303,8 @@ td.invoiceItemsHeader {
                 </td>
             </tr>
         </table>
-        <!-- -------------------------------------------------- -->
-        <?php 
-        $sumOfInvoiceDiscounts = 0;
-        $InvoiceHasAtLeastOneDiscount = false;
-        $invoiceDetailDescriptionWidthHeader = "371";  
-        $InvoiceDetailDescriptionWidth = "369";
-        
-        foreach ($invoiceData[1] as $invoiceDetail) {
-            $sumOfInvoiceDiscounts += intval($invoiceDetail->discount);
-        }
-        
-        if ($sumOfInvoiceDiscounts > 0) {
-            $InvoiceHasAtLeastOneDiscount = true;
-            $invoiceDetailDescriptionWidthHeader = "295";  
-            $InvoiceDetailDescriptionWidth = "261";  
-            
-        }
-        
-        ?>
+
+        <!-- List of invoice positions ------------------------------------>
         
         <table width="100%" class="table_rg_content" style="padding:4px;">
             <tr>
@@ -417,17 +317,7 @@ td.invoiceItemsHeader {
                 <td 
                     class="invoiceItemsHeader" 
                     style="width:35px;  font-size:12px; text-align: right;">
-                    <?php 
-                    if (get_option('qi_settings')['invoiceUnit'] == "Amount") {
-                        echo __("Quantity", "ev");
-                    }
-                    if (get_option('qi_settings')['invoiceUnit'] == "Hours") {
-                        echo __("Hours", "ev");
-                    }
-                    if (get_option('qi_settings')['invoiceUnit'] == "Liter") {
-                        echo __("Litre", "ev");
-                    }
-                    ?>
+                    <?php echo $invoiceUnit; ?>
 
                 </td>
                 
@@ -436,7 +326,7 @@ td.invoiceItemsHeader {
                     style="
                         width:<?php echo $invoiceDetailDescriptionWidthHeader;?>px; 
                         font-size:12px;">
-                    <?php echo __("Desciption", "ev");?>
+                    <?php echo __("Description", "ev");?>
                 </td>
                 
                 <td 
@@ -563,24 +453,95 @@ td.invoiceItemsHeader {
                 <?php 
                 $totalNet += $invoiceDetail->sum;
                 $taxSums[strval($invoiceDetail->tax)] += intval($invoiceDetail->sum);
-                
-                
-                
+                   
             }
             ?>
             
 
-        <?php 
-        if ($invoiceType == "dunning2") {
+        <?php
+        $totalDunningFee = 0;
+        if ($invoiceType == "dunning1" ||  $invoiceType == "dunning2" || $invoiceType == "reminder") {
             ?>
             <tr>
-                <td align="center" style="font-size:14px;">9</td>
+                <td align="center" style="font-size:14px;">R</td>
 
                 <td align="center" style="font-size:14px;">1</td>
 
                 <td>
                     <div style="width:371px;font-size:14px; word-wrap: break-word;">
-                        <?php echo __("dunning fee", "ev");?>
+                        <?php echo __("Reminder Fee", "ev");?>
+                    </div>
+                </td>
+
+                <td style="text-align: center;font-size:14px;">
+                    
+                    <?php
+                        echo get_option('qi_settings')['reminder'] . " ".
+                        $currencySign;
+                        $totalDunningFee = $totalDunningFee + get_option('qi_settings')['reminder'];
+                    ?>
+                </td>
+
+                <td style="text-align: center;font-size:14px; display:none"></td>
+
+                <td style="text-align: right;font-size:14px; padding-right:8px;">
+                    <?php
+                        echo get_option('qi_settings')['reminder'] . " ".
+                        $currencySign;
+                    ?>
+                </td>
+            </tr>
+            <?php
+        }
+        ?>
+
+        <?php 
+        if ($invoiceType == "dunning1" ||  $invoiceType == "dunning2") {
+            ?>
+            <tr>
+                <td align="center" style="font-size:14px;">D1</td>
+
+                <td align="center" style="font-size:14px;">1</td>
+
+                <td>
+                    <div style="width:371px;font-size:14px; word-wrap: break-word;">
+                        <?php echo __("First Dunning Fee", "ev");?>
+                    </div>
+                </td>
+
+                <td style="text-align: center;font-size:14px;">
+                    
+                    <?php
+                        echo get_option('qi_settings')['dunning1'] . " ".
+                        $currencySign;
+                        $totalDunningFee = $totalDunningFee + get_option('qi_settings')['reminder'];
+                    ?>
+                </td>
+
+                <td style="text-align: center;font-size:14px; display:none"></td>
+
+                <td style="text-align: right;font-size:14px; padding-right:8px;">
+                    <?php
+                        echo get_option('qi_settings')['dunning1'] . " ".
+                        $currencySign;
+                    ?>
+                </td>
+            </tr>
+            <?php
+        }
+        ?>
+
+        <?php 
+        if ($invoiceType == "dunning2") {
+            ?>
+            <tr>
+                <td align="center" style="font-size:14px;">D2</td>
+
+                <td align="center" style="font-size:14px;">1</td>
+
+                <td>
+                    <div style="width:371px;font-size:14px; word-wrap: break-word;">
+                        <?php echo __("Second Dunning Fee", "ev");?>
                     </div>
                 </td>
 
@@ -589,6 +550,7 @@ td.invoiceItemsHeader {
                     <?php
                         echo get_option('qi_settings')['dunning2'] . " ".
                         $currencySign;
+                        $totalDunningFee = $totalDunningFee + get_option('qi_settings')['reminder'];
                     ?>
                 </td>
 
@@ -605,26 +567,44 @@ td.invoiceItemsHeader {
         }
         ?>
             
-            <tr>
-                <td 
-                    colspan="<?php echo 5 + $InvoiceHasAtLeastOneDiscount;?>" 
-                    style="border-bottom: 1px solid; height:0px">
-                </td>
-            </tr>
+        <tr>
+            <td 
+                colspan="<?php echo 5 + $InvoiceHasAtLeastOneDiscount;?>" 
+                style="border-bottom: 1px solid; height:0px">
+            </td>
+        </tr>
+        <tr>
+            <td 
+                style="font-size:10px;" 
+                colspan="<?php echo 4 + $InvoiceHasAtLeastOneDiscount;?>"><?php 
+                echo __("Subtotal without Tax", "ev"); ?>
+            </td>
+            <td style="font-size:10px; text-align:right; padding-right:8px;" >
+                <?php echo 
+                    number_format($totalNet, 2, $decimalDot, $thousandsDot). 
+                    " " . $currencySign;
+                ?>
+            </td>
+        </tr>
 
+        <?php
+        if ( $invoiceType == 'reminder' || $invoiceType == 'dunning1' ||$invoiceType == 'dunning2'){
+        ?>
             <tr>
                 <td 
                     style="font-size:10px;" 
                     colspan="<?php echo 4 + $InvoiceHasAtLeastOneDiscount;?>"><?php 
-                    echo __("Subtotal without Tax", "ev"); ?>
+                    echo __("Dunning Fees", "ev"); ?>
                 </td>
                 <td style="font-size:10px; text-align:right; padding-right:8px;" >
                     <?php echo 
-                        number_format($totalNet, 2, $decimalDot, $thousandsDot). 
+                        number_format($totalDunningFee, 2, $decimalDot, $thousandsDot). 
                         " " . $currencySign;
                     ?>
                 </td>
             </tr>
+        <?php
+        } ?>
             
         <?php 
         $taxTotal = 0;
@@ -657,10 +637,7 @@ td.invoiceItemsHeader {
             }
         }
         ?>
-            
-            
-            
-            
+
             <tr>
                 <td 
                     colspan="<?php echo 5 + $InvoiceHasAtLeastOneDiscount;?>" 
@@ -679,7 +656,7 @@ td.invoiceItemsHeader {
                 <td style="padding-right:8px; font-size:14px;" align="right">
                     <b> 
                         <?php 
-                            echo number_format($taxTotal+$totalNet, 2, $decimalDot, $thousandsDot)." ".
+                            echo number_format($taxTotal+$totalNet+$totalDunningFee, 2, $decimalDot, $thousandsDot)." ".
                             $currencySign;
                         ?>
                     </b>
@@ -688,91 +665,38 @@ td.invoiceItemsHeader {
         </table>
 
         <br><br><br>
-        <?php if ($invoiceType=="invoice") {
-            if (get_option('qi_settings')['invoiceTextOutro']) {
-                echo '<div style="font-size:14px;  width: 640px;">';
-                echo get_option('qi_settings')['invoiceTextOutro'];
-                echo '<br>'. get_option('qi_settings')['invoiceTextPaymentDeadline'];
-                echo '</div>';
-            } else {
-                ?>
-                <div style="font-size:14px;  width: 640px;">
-                Thank you for the excellent co-operation.<br>
-                <br>
-                <?php echo get_option('qi_settings')['invoiceTextPaymentDeadline']; ?> 
-                </div>
-                <?php
-            }
-        }
-        
-        if ($invoiceType=="dunning") {
-            ?>
-
-        <div style="font-size:12px; display:none; width: 640px;">
-            Sollten Sie den offenen Betrag bereits beglichen haben, 
-            betrachten Sie dieses Schreiben als gegenstandslos.
-        </div>
-            <?php
-        }
+        <?php 
+        echo $invoiceTextOutro;
         ?>
-        
-        </div>
-        <page_footer>
-            <div class="footer" style=" margin-left:70px; margin-right:70px;">
-                <div 
-                    style="
-                        height:4px; 
-                        border-top: 1px solid #000000; 
-                        margin-top:30px;">
-                </div>
-
-                <div style="font-size:12px; text-align: center;"> 
-                <?php 
-                
-                $bankIndex = $invoiceData[0][0]->bank;
-                
-                $ibanFromDatabase = get_option('qi_settings')["IBAN{$bankIndex}"];
-
-                // Get rid of spaces if exist
-                $ibanArray = explode(' ', $ibanFromDatabase);
-                $iban = implode('' , $ibanArray);
-
-                // Seperate blz and kto
-                $blz = substr($iban, 4, 8);
-                $kto = strVal(intVal(substr($iban, 12, 10))); 
-
-                //Fill with spaces if not exist for IBAN in second line
-                $ibanArray = str_split($iban);
-                $iban = '';
-                $counter = 0;
-                for($i = 0; $i < sizeof($ibanArray); $i++){
-                    $iban = $iban.$ibanArray[$i];
-                    if($counter == 3){
-                        $iban = $iban.' ';
-                        $counter = 0;
-                    } else{
-                        $counter++;
-                    }
-
-                }
-
-                echo 
-                    __("Bank Details: ", "ev"). 
-                    get_option('qi_settings')["bankName{$bankIndex}"].
-                    ' (BLZ '.$blz. ', Kto '. $kto . ')'.
-                    '<br>'.
-                    'IBAN: '. $iban.
-                    ' - '.
-                    'BIC: '.  get_option('qi_settings')["BIC{$bankIndex}"].
-                    '<br>';
-                
-                if (get_option('qi_settings')['invoiceTextCustomFooter']) {
-                    echo get_option('qi_settings')['invoiceTextCustomFooter'];
-                }
-    
-                ?>
-                </div>
+         
+    </div>
+    <page_footer>
+        <div class="footer" style=" margin-left:70px; margin-right:70px;">
+            <div 
+                style="
+                    height:4px; 
+                    border-top: 1px solid #000000; 
+                    margin-top:30px;">
             </div>
-        </page_footer>
+            <div style="font-size:12px; text-align: center;"> 
+            <?php 
+            echo 
+                __("Bank Details: ", "ev"). 
+                get_option('qi_settings')["bankName{$bankIndex}"].
+                ' (BLZ '.$blz. ', Kto '. $kto . ')'.
+                '<br>'.
+                'IBAN: '. $iban.
+                ' - '.
+                'BIC: '.  get_option('qi_settings')["BIC{$bankIndex}"].
+                '<br>';
+            
+            if (get_option('qi_settings')['invoiceTextCustomFooter']) {
+                echo get_option('qi_settings')['invoiceTextCustomFooter'];
+            }
+
+            ?>
+            </div>
+        </div>
+    </page_footer>
     
 </page>

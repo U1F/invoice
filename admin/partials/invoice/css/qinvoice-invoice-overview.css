@@ -100,10 +100,9 @@
 }
 
 .q-invoice-page table#tableInvoices .columnDunning{
-    width:40px;
-    text-align: right;
+    width: 40px;
+    text-align: center;
 }
-
 
 .q-invoice-page table#tableInvoices .columnStatusPaid{
     text-align: center;
@@ -113,7 +112,7 @@
 .q-invoice-page table#tableInvoices .columnEdit{
     text-align: center;
     width: 70px;
-    padding-right: 20px;
+    padding-right: 0px;
     color: #343a40;
     cursor: pointer;
 }
@@ -152,6 +151,19 @@
     box-shadow: 0 0 0 0px;
 }
 
+.q-invoice-page .listPointerEventsMod{
+    pointer-events: none;
+}
+
+.q-invoice-page .qinv_mainDropdownElement.deactivatedListElement{
+    cursor: context-menu;
+    color: #d4d4d4;
+}
+
+.q-invoice-page .qinv_mainDropdownElement.deactivatedListElement:hover{
+    background-color: white;
+}
+
 .q-invoice-page td.manage-column.columnEdit > * {vertical-align: middle; color: #343a40;}
 
 .q-invoice-page td.manage-column.columnEdit span::before{
@@ -185,7 +197,7 @@ q-invoice-page dashicons-download {
 
 .q-invoice-page .longCircle {
     background-color: transparent;
-    padding: 5px 20px;
+    padding: 0px 3px;
     border-radius: 15px;
     color: white;
   }

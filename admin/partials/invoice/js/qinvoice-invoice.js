@@ -260,9 +260,14 @@ jQuery(function ($) {
     // paid invoices should not look and be editable
     invoiceRow.find('.columnEdit').find('.delete').css('color', '#dadce1') // do this within a class?
     invoiceRow.find('.columnEdit').find('.delete').removeClass('deleteRow')
+
     
     // .. set a paydate to mark as paid in database
     markInvoiceAsPaidInDB(clickedTarget)
+
+    //hide dunning circle
+    invoiceRow.find('.columnDunning').find('.longCircle').css('display', 'none')
+
 
   }
 
@@ -306,9 +311,11 @@ jQuery(function ($) {
       return;
     }
 
+
     // For already paid invocies a dialoge pops up to ask if the invoice should be reverted to open
     if (sliderBox.find('input').prop('checked') === false) {
       setInvoiceToPaid(invoiceRow.attr('id'))        
+
     } else {
       if (confirm("Really?")) {
         setInvoiceToUnpaid(invoiceRow.attr('id'))
@@ -322,6 +329,7 @@ jQuery(function ($) {
        * $("#lastClickedInvoice").val($(clickTarget).parents("tr").attr('id'))
        * $("#reopenPaidInvoice").show()
        */
+
     }
     q_invoice_RecalcSums(0,0,0);
   })
@@ -471,8 +479,8 @@ jQuery(function ($) {
         break
 
       case "open":
-        showDeleteButton(false)
-        showReactivationButton(false)
+        showDeleteButton(true)
+        showReactivationButton(true)
         showPayToggle(true)
         // The next 2 need work:
         $('#tableInvoices tbody tr.open').slice(0, invoicesOnPage).show()
@@ -493,9 +501,9 @@ jQuery(function ($) {
         break
 
       case "dunning":
-        showDeleteButton(false)
-        showReactivationButton(false)
-        showPayToggle(false)
+        showDeleteButton(true)
+        showReactivationButton(true)
+        showPayToggle(true)
         $('#tableInvoices tbody tr.dunning').slice(0, invoicesOnPage).show();
         $('#qi_dunningSumNetto').show()
         $('#qi_dunningSumDunning').show()
@@ -505,7 +513,7 @@ jQuery(function ($) {
       case "paid":
         showDeleteButton(false)
         showReactivationButton(false)
-        showPayToggle(false)
+        showPayToggle(true)
         $('#tableInvoices tbody tr.paid').slice(0, invoicesOnPage).show();
         $('#qi_paidSumDunning').show()
         $('#qi_paidSumTotal').show()
@@ -642,7 +650,7 @@ jQuery(function ($) {
   $('#qInvc-add-line').click(function (e) {
     e.preventDefault()
 
-    const Row = $('.wp-list-table-qInvcLine:last-child')
+    const Row = $('.wp-list-table-qInvcLine:first')
     const Clone = Row.clone()
 
     Clone.find('input:text').val('')
@@ -710,6 +718,117 @@ jQuery(function ($) {
   })
 
   /**
+   * Open an edit invoice form but add the reminder row. When this form is submitted the ivoice is now in state dunning.
+   */
+   $('.reminderRow').on('click', function (event) {
+
+    if ($(event.target).hasClass('listPointerEventsMod')) { return }
+    if ($(this).find('div').hasClass('listPointerEventsMod')) { return }
+
+    //close the dropdown
+    $('div.qinv_moreOptionsDropdownBox').css('display', 'none');
+
+    //check if clicked line is a cancelled invoice. On yes prevent form from setting paid status by removing the paid toggle in the form
+    if($(this).hasClass('cancelled')){
+      $('#heading-invoice').find('.switchForPaidStatus').hide()
+    } else{
+      $('#heading-invoice').find('.switchForPaidStatus').css('display', 'inline-block')
+    }
+
+    
+    // Common Task for openning the invoice form
+    reopenInvoiceForm()
+
+    // Show the header for Editing only
+    $('h2#formHeaderEdit').css('display', 'block')
+    $('h2#formHeaderCreate').hide()
+    // Show the button for Editing only
+    $('#updateInvoice').css('display', 'inline')
+    $('#saveInvoice').hide()
+    // Prepare AJAX Function
+    $("input[name='action']").val('updateInvoiceServerSide')
+    // Only the nonce for saving is needed
+    $('div#nonceFields').prepend(nonceFieldForUpdating)
+
+    editInvoice(currentInvoiceID, false, 'rem');
+
+  })
+
+  /**
+   * Open an edit invoice form but add the dunning1 and reminder row. When this form is submitted the ivoice is now in state dunning.
+   */
+   $('.dunningIRow').on('click', function (event) {
+
+    if ($(event.target).hasClass('listPointerEventsMod')) { return }
+    if ($(this).find('div').hasClass('listPointerEventsMod')) { return }
+
+    //close the dropdown
+    $('div.qinv_moreOptionsDropdownBox').css('display', 'none');
+
+    //check if clicked line is a cancelled invoice. On yes prevent form from setting paid status by removing the paid toggle in the form
+    if($(this).hasClass('cancelled')){
+      $('#heading-invoice').find('.switchForPaidStatus').hide()
+    } else{
+      $('#heading-invoice').find('.switchForPaidStatus').css('display', 'inline-block')
+    }
+
+    
+    // Common Task for openning the invoice form
+    reopenInvoiceForm()
+
+    // Show the header for Editing only
+    $('h2#formHeaderEdit').css('display', 'block')
+    $('h2#formHeaderCreate').hide()
+    // Show the button for Editing only
+    $('#updateInvoice').css('display', 'inline')
+    $('#saveInvoice').hide()
+    // Prepare AJAX Function
+    $("input[name='action']").val('updateInvoiceServerSide')
+    // Only the nonce for saving is needed
+    $('div#nonceFields').prepend(nonceFieldForUpdating)
+
+    editInvoice(currentInvoiceID, false, 'd1');
+
+  })
+
+  /**
+   * Open an edit invoice form but add the dunning 2 and dunning1 and reminder row. When this form is submitted the ivoice is now in state dunning.
+   */
+   $('.dunningIIRow').on('click', function (event) {
+
+    if ($(event.target).hasClass('listPointerEventsMod')) { return }
+    if ($(this).find('div').hasClass('listPointerEventsMod')) { return }
+
+    //close the dropdown
+    $('div.qinv_moreOptionsDropdownBox').css('display', 'none');
+
+    //check if clicked line is a cancelled invoice. On yes prevent form from setting paid status by removing the paid toggle in the form
+    if($(this).hasClass('cancelled')){
+      $('#heading-invoice').find('.switchForPaidStatus').hide()
+    } else{
+      $('#heading-invoice').find('.switchForPaidStatus').css('display', 'inline-block')
+    }
+
+    
+    // Common Task for openning the invoice form
+    reopenInvoiceForm()
+
+    // Show the header for Editing only
+    $('h2#formHeaderEdit').css('display', 'block')
+    $('h2#formHeaderCreate').hide()
+    // Show the button for Editing only
+    $('#updateInvoice').css('display', 'inline')
+    $('#saveInvoice').hide()
+    // Prepare AJAX Function
+    $("input[name='action']").val('updateInvoiceServerSide')
+    // Only the nonce for saving is needed
+    $('div#nonceFields').prepend(nonceFieldForUpdating)
+
+    editInvoice(currentInvoiceID, false, 'd2');
+
+  })
+
+  /**
    * Duplicate the current Invoice but put it in the New Invoice Form to insert it as a new one
    */
   $('.duplicateInvoice').on('click', function (event) {
@@ -745,7 +864,7 @@ jQuery(function ($) {
 
 
     // fetch id from span attribute id="edit-n", where  n = id of invoice
-    editInvoice(currentInvoiceID, true)
+    editInvoice(currentInvoiceID, true, '')
   }
 
   /**
@@ -774,6 +893,7 @@ jQuery(function ($) {
     targetRow.find('.deleteRow').css('display', 'inline-block')
     targetRow.find('.switchForPaidStatus').css('opacity', '100')
     targetRow.find('.switchForPaidStatus > *').css('opacity', '100')
+    targetRow.find('.columnDunning').find('.longCircle').css('display', 'inline-block')
     q_invoice_RecalcSums(0,0,0);
   })
 
@@ -798,6 +918,7 @@ jQuery(function ($) {
     targetRow.find('.switchForPaidStatus').css('opacity', '0')
     targetRow.find('.switchForPaidStatus > *').css('opacity', '0')
     targetRow.find('.reactivateInvoice').attr('class', 'reactivateInvoice reactivate dashicons dashicons-undo')
+    targetRow.find('.columnDunning').find('.longCircle').css('display', 'none')
     q_invoice_RecalcSums(0,0,0);
   })
 
@@ -858,6 +979,11 @@ jQuery(function ($) {
     $('#qinv_saveContactCheckbox').val('empty');
     //if an paid invoice has been opened before, set all input fields enabled
     $('#invoiceForm   *').prop('disabled', false );
+
+    //hide dunning rows
+    $('#editInvoiceReminderRow').removeClass('wp-list-table-qInvcLine');
+    $('#editInvoiceDunningIRow').removeClass('wp-list-table-qInvcLine');
+    $('#editInvoiceDunningIIRow').removeClass('wp-list-table-qInvcLine');
     
   })
 
@@ -974,7 +1100,7 @@ jQuery(function ($) {
    * Load invoice Data by ajax and prepare form on success
    * @param {Invoice to be edited} invoiceId 
    */
-  function editInvoice (invoiceId, duplicate = false) {
+  function editInvoice(invoiceId, duplicate = false, dunning = '') {
     jQuery.ajax({
       type: 'POST',
       url: q_invoice_ajaxObject.ajax_url,
@@ -1079,6 +1205,44 @@ jQuery(function ($) {
           }
         }
 
+        /*
+        * Show the reminder / dunningI / dunningII row only if the dunning button is clicked or has already been clicked
+        */
+        $currInvoiceID = '#edit-' + obj[1][0]['invoice_id']
+        //retrieve dunning fee from database if exist
+        if($($currInvoiceID).find('#q_invc_reminderActiveVal').val()){
+          $('#editInvoiceReminderRow').find('.invoiceItemsPrice input').val() = $($currInvoiceID).find('#q_inv_reminderValue').val();
+        }
+        if($($currInvoiceID).find('#q_invc_dunningIActiveVal').val()){
+          $('#editInvoiceDunningIRow').find('.invoiceItemsPrice input').val() = $($currInvoiceID).find('#q_inv_dunningIValue').val();
+        }
+        if($($currInvoiceID).find('#q_invc_dunningIIActiveVal').val()){
+          $('#editInvoiceDunningIIRow').find('.invoiceItemsPrice input').val() = $($currInvoiceID).find('#q_inv_dunningIIValue').val();
+        }
+        //show specific dunning rows
+        $('#editInvoiceReminderRow').removeClass('wp-list-table-qInvcLine');
+        $('#editInvoiceDunningIRow').removeClass('wp-list-table-qInvcLine');
+        $('#editInvoiceDunningIIRow').removeClass('wp-list-table-qInvcLine');
+        $('#editInvoiceDunningIIRow').find('.insertInDatabase').val('0');
+        $('#editInvoiceDunningIRow').find('.insertInDatabase').val('0');
+        $('#editInvoiceReminderRow').find('.insertInDatabase').val('0');
+        if($($currInvoiceID).find('.columnEdit ul li div#q_invc_dunningIIActiveVal').val() || (dunning == 'd2')){
+          $('#editInvoiceDunningIIRow').addClass('wp-list-table-qInvcLine');
+          $('#editInvoiceDunningIRow').addClass('wp-list-table-qInvcLine');
+          $('#editInvoiceReminderRow').addClass('wp-list-table-qInvcLine');
+          $('#editInvoiceDunningIIRow').find('.insertInDatabase').val('1');
+          $('#editInvoiceDunningIRow').find('.insertInDatabase').val('1');
+          $('#editInvoiceReminderRow').find('.insertInDatabase').val('1');
+        } else if($($currInvoiceID).find('.columnEdit ul li div#q_invc_dunningIActiveVal').val() || (dunning == 'd2' || dunning == 'd1')){
+          $('#editInvoiceDunningIRow').addClass('wp-list-table-qInvcLine');
+          $('#editInvoiceReminderRow').addClass('wp-list-table-qInvcLine');
+          $('#editInvoiceDunningIRow').find('.insertInDatabase').val('1');
+          $('#editInvoiceReminderRow').find('.insertInDatabase').val('1');
+        } else if($($currInvoiceID).find('.columnEdit ul li div#q_invc_reminderActiveVal').val() || (dunning == 'd2' || dunning == 'd1' || dunning == 'rem')){
+          $('#editInvoiceReminderRow').addClass('wp-list-table-qInvcLine');
+          $('#editInvoiceReminderRow').find('.insertInDatabase').val('1');
+        }
+
         fetchInvoiceCurrency()
         recalcPos()
         recalcLineSum()
@@ -1181,7 +1345,7 @@ jQuery(function ($) {
     // Reset Form Data
     $('#invoiceForm')[0].reset()
     // Remove old form details from previously edited Invoices
-    $('.wp-list-table-qInvcLine:not(:first)').remove()
+    $('.wp-list-table-qInvcLine.invoiceSpecificRow:not(:first)').remove()
     // Show the Form
     $('#invoiceOverlay').css('display', 'block')
     // Set Customer ID to readonly
@@ -1197,6 +1361,8 @@ jQuery(function ($) {
     if ($(event.target).is('.columnEdit')) { return }
     if ($(event.target).is('.columnEdit > *')) { return }
     if ($(event.target).is('.columnEdit div > *')) { return }
+    if ($(event.target).is('.columnEdit div ul li > *')) { return }
+    if ($(event.target).is('.columnEdit div ul li div > *')) { return }
     if ($(event.target).is('.columnStatusPaid')) { return }
     if ($(event.target).is('.columnStatusPaid > *')) { return }
     if ($(event.target).is('.qinv_mainDropdownElement')) { return }
@@ -1207,6 +1373,7 @@ jQuery(function ($) {
     } else{
       $('#heading-invoice').find('.switchForPaidStatus').css('display', 'inline-block')
     }
+
     
     // Common Task for openning the invoice form
     reopenInvoiceForm()
@@ -1222,10 +1389,10 @@ jQuery(function ($) {
     // Only the nonce for saving is needed
     $('div#nonceFields').prepend(nonceFieldForUpdating)
     // fetch id from span attribute id="edit-n", where  n = id of invoice
-    editInvoice(jQuery(this).attr('id').split('-')[1])
+    editInvoice(jQuery(this).attr('id').split('-')[1], false, '')
   })
 
-  function changeUpdatedInvoiceRow (invoice) {
+  function changeUpdatedInvoiceRow (invoice, dunningData) {
     // backup sum row, to avoid first ID bug
     let sumRowBackup = ''
     sumRowBackup = $('table#tableInvoices > tbody > tr#q_invoice_totalSums').clone()
@@ -1243,6 +1410,10 @@ jQuery(function ($) {
     row.find('td.columnDescription').text(invoice.itemDescription[0])
     row.find('td.columnNet').text($('.qInvc-total-summe').eq(0).text() + ' ' + currencySign)
     row.find('td.columnTotal').text($('.qInvc-total-brutto-summe').eq(0).text() + ' ' + currencySign)
+    //add dunning circle
+    row.find('td.columnDunning span').removeClass()
+    row.find('td.columnDunning span').addClass('longCircle ' + dunningData[0])
+    row.find('td.columnDunning span').text(dunningData[1] + ' days')
 
     const date = invoice.dateOfInvoice
     // change to german date format
@@ -1258,6 +1429,18 @@ jQuery(function ($) {
       0.0      
     );
   }
+
+  /*function getWorkingDays(startDate, endDate) {
+      let count = 0;
+      var currentDate = new Date(startDate.getTime());
+      while (currentDate <= endDate) {
+          const dayOfWeek = currentDate.getDay();
+          if(dayOfWeek !== 0 && dayOfWeek !== 6) count++;
+          currentDate.setDate(currentDate.getDate() + 1);
+      }
+      console.log(count);
+      return count;
+  }*/
 
 /**
  * Function to clean a String value retrieved from the main Invoice table. This should have the Pattern (N=Number, D=Decimal) NNN[.||,]NNN[.||,]DD[SPACE][€||$].
@@ -1429,8 +1612,9 @@ jQuery(function ($) {
    * Adds a new invoice Row in invoice main table
    * @param {Invoice Details of the new invoice} invoice 
    * @param {Id of the new Invoice} id 
+   * @param {Array with Dunning Class and Days, calculated server side} dunningData
    */
-  function addNewInvoiceRow (invoice, id) {
+  function addNewInvoiceRow (invoice, id, dunningData) {
 
     if ($('#q-invoice-new-readonly-dummy').text() === '0') {
       location.reload();
@@ -1490,6 +1674,12 @@ jQuery(function ($) {
         duplicateInvoice();
       })
 
+      //add dunning
+      clone.find('td.columnDunning span').removeClass()
+      clone.find('td.columnDunning span').addClass('longCircle ' + dunningData[0])
+      clone.find('td.columnDunning span').text(dunningData[1])
+
+
       q_invoice_RecalcSums(
         q_invoice_cleanUpNumber(clone.find('td.columnTotal').text()),
         q_invoice_cleanUpNumber(clone.find('td.columnNet').text()),
@@ -1534,13 +1724,14 @@ jQuery(function ($) {
       success: function (response) {
         console.log (response)
         var serverResponse = JSON.parse(response).data
+        var dunningData = [JSON.parse(response).dunningclass, JSON.parse(response).dunningdays]
         var invoiceID = JSON.parse(response).id
 
         if (serverResponse.action === 'updateInvoiceServerSide') {
-          changeUpdatedInvoiceRow(serverResponse)
+          changeUpdatedInvoiceRow(serverResponse, dunningData)
         }
         if (serverResponse.action === 'saveInvoiceServerSide') {
-          addNewInvoiceRow(serverResponse, invoiceID)
+          addNewInvoiceRow(serverResponse, invoiceID, dunningData)
         }
 
         $('#invoiceOverlay').hide()
