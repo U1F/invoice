@@ -63,7 +63,7 @@ function Invoice_list()
                 </div>
             </div>
         </div>
-        
+    </div>
 
     <div style="height: 70px; width: 100%; background-color: yellow; border:dashed 3px;padding:5px;margin:5px 0;">
         <p style="font-size:20px;"><b>Sollten hier Reviews durchgeführt werden: <br>
