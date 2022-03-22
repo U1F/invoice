@@ -302,7 +302,7 @@ jQuery(function ($) {
       return;
     }
 
-    // For already paid invocies a dialoge pops up to ask if the invoice should be reverted to open
+    // For already paid invoices a dialoge pops up to ask if the invoice should be reverted to open
     if (!sliderBox.find('input').prop('checked')) {
       setInvoiceToPaid(event.target)      
       $(event.target).parent().click();
@@ -713,6 +713,117 @@ jQuery(function ($) {
   })
 
   /**
+   * Open an edit invoice form but add the reminder row. When this form is submitted the ivoice is now in state dunning.
+   */
+   $('.reminderRow').on('click', function (event) {
+
+    if ($(event.target).hasClass('listPointerEventsMod')) { return }
+    if ($(this).find('div').hasClass('listPointerEventsMod')) { return }
+
+    //close the dropdown
+    $('div.qinv_moreOptionsDropdownBox').css('display', 'none');
+
+    //check if clicked line is a cancelled invoice. On yes prevent form from setting paid status by removing the paid toggle in the form
+    if($(this).hasClass('cancelled')){
+      $('#heading-invoice').find('.switchForPaidStatus').hide()
+    } else{
+      $('#heading-invoice').find('.switchForPaidStatus').css('display', 'inline-block')
+    }
+
+    
+    // Common Task for openning the invoice form
+    reopenInvoiceForm()
+
+    // Show the header for Editing only
+    $('h2#formHeaderEdit').css('display', 'block')
+    $('h2#formHeaderCreate').hide()
+    // Show the button for Editing only
+    $('#updateInvoice').css('display', 'inline')
+    $('#saveInvoice').hide()
+    // Prepare AJAX Function
+    $("input[name='action']").val('updateInvoiceServerSide')
+    // Only the nonce for saving is needed
+    $('div#nonceFields').prepend(nonceFieldForUpdating)
+
+    editInvoice(currentInvoiceID, false, 'rem');
+
+  })
+
+  /**
+   * Open an edit invoice form but add the dunning1 and reminder row. When this form is submitted the ivoice is now in state dunning.
+   */
+   $('.dunningIRow').on('click', function (event) {
+
+    if ($(event.target).hasClass('listPointerEventsMod')) { return }
+    if ($(this).find('div').hasClass('listPointerEventsMod')) { return }
+
+    //close the dropdown
+    $('div.qinv_moreOptionsDropdownBox').css('display', 'none');
+
+    //check if clicked line is a cancelled invoice. On yes prevent form from setting paid status by removing the paid toggle in the form
+    if($(this).hasClass('cancelled')){
+      $('#heading-invoice').find('.switchForPaidStatus').hide()
+    } else{
+      $('#heading-invoice').find('.switchForPaidStatus').css('display', 'inline-block')
+    }
+
+    
+    // Common Task for openning the invoice form
+    reopenInvoiceForm()
+
+    // Show the header for Editing only
+    $('h2#formHeaderEdit').css('display', 'block')
+    $('h2#formHeaderCreate').hide()
+    // Show the button for Editing only
+    $('#updateInvoice').css('display', 'inline')
+    $('#saveInvoice').hide()
+    // Prepare AJAX Function
+    $("input[name='action']").val('updateInvoiceServerSide')
+    // Only the nonce for saving is needed
+    $('div#nonceFields').prepend(nonceFieldForUpdating)
+
+    editInvoice(currentInvoiceID, false, 'd1');
+
+  })
+
+  /**
+   * Open an edit invoice form but add the dunning 2 and dunning1 and reminder row. When this form is submitted the ivoice is now in state dunning.
+   */
+   $('.dunningIIRow').on('click', function (event) {
+
+    if ($(event.target).hasClass('listPointerEventsMod')) { return }
+    if ($(this).find('div').hasClass('listPointerEventsMod')) { return }
+
+    //close the dropdown
+    $('div.qinv_moreOptionsDropdownBox').css('display', 'none');
+
+    //check if clicked line is a cancelled invoice. On yes prevent form from setting paid status by removing the paid toggle in the form
+    if($(this).hasClass('cancelled')){
+      $('#heading-invoice').find('.switchForPaidStatus').hide()
+    } else{
+      $('#heading-invoice').find('.switchForPaidStatus').css('display', 'inline-block')
+    }
+
+    
+    // Common Task for openning the invoice form
+    reopenInvoiceForm()
+
+    // Show the header for Editing only
+    $('h2#formHeaderEdit').css('display', 'block')
+    $('h2#formHeaderCreate').hide()
+    // Show the button for Editing only
+    $('#updateInvoice').css('display', 'inline')
+    $('#saveInvoice').hide()
+    // Prepare AJAX Function
+    $("input[name='action']").val('updateInvoiceServerSide')
+    // Only the nonce for saving is needed
+    $('div#nonceFields').prepend(nonceFieldForUpdating)
+
+    editInvoice(currentInvoiceID, false, 'd2');
+
+  })
+
+  /**
    * Duplicate the current Invoice but put it in the New Invoice Form to insert it as a new one
    */
   $('.duplicateInvoice').on('click', function (event) {
@@ -1089,20 +1200,42 @@ jQuery(function ($) {
           }
         }
 
-        $currentInvoiceID = '#edit-' + obj[1][0]['invoice_id']
+        /*
+        * Show the reminder / dunningI / dunningII row only if the dunning button is clicked or has already been clicked
+        */
+        $currInvoiceID = '#edit-' + obj[1][0]['invoice_id']
+        //retrieve dunning fee from database if exist
+        if($($currInvoiceID).find('#q_invc_reminderActiveVal').val()){
+          $('#editInvoiceReminderRow').find('.invoiceItemsPrice input').val() = $($currInvoiceID).find('#q_inv_reminderValue').val();
+        }
+        if($($currInvoiceID).find('#q_invc_dunningIActiveVal').val()){
+          $('#editInvoiceDunningIRow').find('.invoiceItemsPrice input').val() = $($currInvoiceID).find('#q_inv_dunningIValue').val();
+        }
+        if($($currInvoiceID).find('#q_invc_dunningIIActiveVal').val()){
+          $('#editInvoiceDunningIIRow').find('.invoiceItemsPrice input').val() = $($currInvoiceID).find('#q_inv_dunningIIValue').val();
+        }
         //show specific dunning rows
         $('#editInvoiceReminderRow').removeClass('wp-list-table-qInvcLine');
         $('#editInvoiceDunningIRow').removeClass('wp-list-table-qInvcLine');
         $('#editInvoiceDunningIIRow').removeClass('wp-list-table-qInvcLine');
-        if($($currentInvoiceID).find('.columnDunning span').hasClass('dunningII') && (dunning == 'd2')){
+        $('#editInvoiceDunningIIRow').find('.insertInDatabase').val('0');
+        $('#editInvoiceDunningIRow').find('.insertInDatabase').val('0');
+        $('#editInvoiceReminderRow').find('.insertInDatabase').val('0');
+        if($($currInvoiceID).find('.columnEdit ul li div#q_invc_dunningIIActiveVal').val() || (dunning == 'd2')){
           $('#editInvoiceDunningIIRow').addClass('wp-list-table-qInvcLine');
           $('#editInvoiceDunningIRow').addClass('wp-list-table-qInvcLine');
           $('#editInvoiceReminderRow').addClass('wp-list-table-qInvcLine');
-        } else if($($currentInvoiceID).find('.columnDunning span').hasClass('dunningI') && (dunning == 'd2' || dunning == 'd1')){
+          $('#editInvoiceDunningIIRow').find('.insertInDatabase').val('1');
+          $('#editInvoiceDunningIRow').find('.insertInDatabase').val('1');
+          $('#editInvoiceReminderRow').find('.insertInDatabase').val('1');
+        } else if($($currInvoiceID).find('.columnEdit ul li div#q_invc_dunningIActiveVal').val() || (dunning == 'd2' || dunning == 'd1')){
           $('#editInvoiceDunningIRow').addClass('wp-list-table-qInvcLine');
           $('#editInvoiceReminderRow').addClass('wp-list-table-qInvcLine');
-        } else if($($currentInvoiceID).find('.columnDunning span').hasClass('reminder') && (dunning == 'd2' || dunning == 'd1' || dunning == 'rem')){
+          $('#editInvoiceDunningIRow').find('.insertInDatabase').val('1');
+          $('#editInvoiceReminderRow').find('.insertInDatabase').val('1');
+        } else if($($currInvoiceID).find('.columnEdit ul li div#q_invc_reminderActiveVal').val() || (dunning == 'd2' || dunning == 'd1' || dunning == 'rem')){
           $('#editInvoiceReminderRow').addClass('wp-list-table-qInvcLine');
+          $('#editInvoiceReminderRow').find('.insertInDatabase').val('1');
         }
 
         fetchInvoiceCurrency()
@@ -1223,6 +1356,8 @@ jQuery(function ($) {
     if ($(event.target).is('.columnEdit')) { return }
     if ($(event.target).is('.columnEdit > *')) { return }
     if ($(event.target).is('.columnEdit div > *')) { return }
+    if ($(event.target).is('.columnEdit div ul li > *')) { return }
+    if ($(event.target).is('.columnEdit div ul li div > *')) { return }
     if ($(event.target).is('.columnStatusPaid')) { return }
     if ($(event.target).is('.columnStatusPaid > *')) { return }
     if ($(event.target).is('.qinv_mainDropdownElement')) { return }

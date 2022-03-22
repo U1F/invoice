@@ -261,9 +261,34 @@ function showOpenInvoices()
         }
 
         /*
-        Check if Invoice has a Dunning
+        Check if Reminder is activated
         */
-        if ($invoice_header->dunning1) {
+        $reminderActive = 0;
+        $reminderDate = date_parse_from_format("Y-m-d", $invoice_header->date_reminder);
+        if (checkdate($reminderDate['month'],$reminderDate['day'], $reminderDate['year'])) {
+            $reminderActive=1;
+        }
+        /*
+        Check if dunning 1 is activated
+        */
+        $dunningIDate = date_parse_from_format("Y-m-d", $invoice_header->date_dunning1);
+        $dunningIActive = 0;
+        if (checkdate($dunningIDate['month'],$dunningIDate['day'], $dunningIDate['year'])) {
+            $dunningIActive=1;
+        }
+        /*
+        Check if dunning 2 is activated
+        */
+        $dunningIIActive = 0;
+        $dunningIIDate = date_parse_from_format("Y-m-d", $invoice_header->date_dunning2);
+        if (checkdate($dunningIIDate['month'],$dunningIIDate['day'], $dunningIIDate['year'])) {
+            $dunningIIActive=1;
+        }
+
+        /*
+        Check if Invoice has a Dunning --> Status button will be set into dunning state
+        */
+        if ($dunningIIActive || $dunningIActive || $reminderActive){//$invoice_header->dunning1) {
             $dunning=true;
         }
 
@@ -547,8 +572,8 @@ function showOpenInvoices()
                     <div class="qinv_moreOptionsDropdownBox">
                         <ul style="margin: 0;">
                             <li class="qinv_mainDropdownElement duplicateInvoice">Duplicate</li>
-                            <li class="qinv_mainDropdownElement<?php if(!($circleClass == 'reminder' || $circleClass == 'dunningI' || $circleClass == 'dunningII')){ echo ' deactivatedListElement';} ?>">
-                                <div class="<?php if(!($circleClass == 'reminder' || $circleClass == 'dunningI' || $circleClass == 'dunningII')){ echo 'listPointerEventsMod';} ?>">
+                            <li id="q_invc_reminderValue" value="<?php echo $invoice_header->reminder; ?>" class="qinv_mainDropdownElement reminderRow<?php if(!($circleClass == 'reminder' || $circleClass == 'dunningI' || $circleClass == 'dunningII') || $paid || $cancelled){ echo ' deactivatedListElement';} ?>">
+                                <div id="q_invc_reminderActiveVal" value="<?php echo $reminderActive; ?>" class="<?php if(!($circleClass == 'reminder' || $circleClass == 'dunningI' || $circleClass == 'dunningII') || $paid || $cancelled){ echo 'listPointerEventsMod';} ?>">
                                 Reminder 
                                 <span 
                                     style="font-size:20px; display:inline" 
@@ -581,8 +606,8 @@ function showOpenInvoices()
                                 </span>
                             </div>
                             </li>
-                            <li class="qinv_mainDropdownElement<?php if(!($circleClass == 'dunningI' || $circleClass == 'dunningII')){ echo ' deactivatedListElement';} ?>">
-                                <div class="<?php if(!($circleClass == 'dunningI' || $circleClass == 'dunningII')){ echo 'listPointerEventsMod';} ?>">
+                            <li id="q_invc_dunningIValue" value="<?php echo $invoice_header->dunning1; ?>" class="qinv_mainDropdownElement dunningIRow<?php if(!($circleClass == 'dunningI' || $circleClass == 'dunningII') || $paid || $cancelled){ echo ' deactivatedListElement';} ?>">
+                                <div id="q_invc_dunningIActiveVal" value="<?php echo $dunningIActive; ?>" class="<?php if(!($circleClass == 'dunningI' || $circleClass == 'dunningII') || $paid || $cancelled){ echo 'listPointerEventsMod';} ?>">
                                 Dunning 1 
                                 <span 
                                     style="font-size:20px; display:inline" 
@@ -615,8 +640,8 @@ function showOpenInvoices()
                                 </span>
                             </div>
                             </li>
-                            <li class="qinv_mainDropdownElement<?php if($circleClass != 'dunningII'){ echo ' deactivatedListElement';} ?>">
-                                <div class="<?php if($circleClass != 'dunningII'){ echo 'listPointerEventsMod';} ?>">
+                            <li id="q_invc_dunningIIValue" value="<?php echo $invoice_header->dunning2; ?>" class="qinv_mainDropdownElement dunningIIRow<?php if($circleClass != 'dunningII' || $paid || $cancelled){ echo ' deactivatedListElement';} ?>">
+                                <div id="q_invc_dunningIIActiveVal" value="<?php echo $dunningIIActive; ?>" class="<?php if($circleClass != 'dunningII' || $paid || $cancelled){ echo 'listPointerEventsMod';} ?>">
                                 Dunning 2 
                                 <span 
                                     style="font-size:20px; display:inline" 

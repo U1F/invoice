@@ -199,6 +199,47 @@ class Interface_Invoices
     static private function _updateDBwithInvoice($invoice_array)
     {
         $GLOBALS['wpdb']->show_errors();
+
+        // Delete old details after looking for their count
+        $rowcount = $GLOBALS['wpdb']->get_var(
+            "SELECT COUNT(*) FROM ".
+            $GLOBALS['wpdb']->prefix . 
+            \QI_Invoice_Constants::TABLE_QI_DETAILS.
+            " WHERE invoice_id = ".
+            $invoice_array['invoice_id']
+        );
+
+        for ($i = 0 ; $i < $rowcount; $i++ ) {
+            $GLOBALS['wpdb']->query(
+                "DELETE FROM ". 
+                $GLOBALS['wpdb']->prefix . 
+                \QI_Invoice_Constants::TABLE_QI_DETAILS . 
+                " WHERE invoice_id = " . 
+                $invoice_array['invoice_id']
+            );
+        }
+
+        // Look for the count of new invoice details
+        $arrayLength = count($invoice_array['itemDescription']);
+
+        $newDunningIIFee = '';
+        $newDunningIIDate = '';
+        $newDunningIFee = '';
+        $newDunningIDate = '';
+        $newReminderFee = '';
+        $newReminderDate = '';
+        if($invoice_array['positionTypeIsDunning'][$arrayLength - 1] == 1 && $invoice_array['insertInDatabase'][$arrayLength - 1] == 1){
+            $newDunningIIFee = sanitize_text_field($invoice_array['itemPrice'][$arrayLength - 1]);
+            $newDunningIIDate = date('Y-m-d');
+        }
+        if($invoice_array['positionTypeIsDunning'][$arrayLength - 2] == 1 && $invoice_array['insertInDatabase'][$arrayLength - 2] == 1){
+            $newDunningIFee = sanitize_text_field($invoice_array['itemPrice'][$arrayLength - 2]);
+            $newDunningIDate = date('Y-m-d');
+        }
+        if($invoice_array['positionTypeIsDunning'][$arrayLength - 3] == 1 && $invoice_array['insertInDatabase'][$arrayLength - 3] == 1){
+            $newReminderFee = sanitize_text_field($invoice_array['itemPrice'][$arrayLength - 3]);
+            $newReminderDate = date('Y-m-d');
+        }
         
         $GLOBALS['wpdb']->update( 
             $GLOBALS['wpdb']->prefix . \QI_Invoice_Constants::TABLE_QI_HEADER,
@@ -216,13 +257,13 @@ class Interface_Invoices
                 'city'  => sanitize_text_field($invoice_array['city']),
                 'email'  => "",
                 'bank' => sanitize_text_field($invoice_array['bank']),
-                'date_changed'  => "",
-                'reminder' => "",
-                'date_reminder' => "",
-                'dunning1'  => "",
-                'date_dunning1'  => "",
-                'dunning2'  => "",
-                'date_dunning2'  => "",
+                'date_changed'  => date('Y-m-d'),
+                'reminder' => $newReminderFee,
+                'date_reminder' => $newReminderDate,
+                'dunning1'  => $newDunningIFee,
+                'date_dunning1'  => $newDunningIDate,
+                'dunning2'  => $newDunningIIFee,
+                'date_dunning2'  => $newDunningIIDate,
                 'cancellation'  => "",
                 'date_cancellation'  => "",
                 'paydate'  => ""
@@ -251,11 +292,8 @@ class Interface_Invoices
             );
         }
 
-        // Look for the count of new invoice details
-        $arrayLength = count($invoice_array['itemDescription']);
-
         for ($i = 0; $i < $arrayLength; $i++) {
-            if($invoice_array['insertInDatabase'][$i] == 1){
+            if($invoice_array['insertInDatabase'][$i] == 1 && $invoice_array['positionTypeIsDunning'][$i] == 0){
                 $rawprice = str_replace(',', '.', $invoice_array['itemPrice'][$i]);
                 $pricearray = explode('.', $rawprice);
                 if(sizeof($pricearray)<=2){
