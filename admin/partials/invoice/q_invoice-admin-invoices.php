@@ -54,10 +54,28 @@ function Invoice_list()
                 <h3 id = "confirmationBoxHeader3">Do you really reopen the paid invoice?</h3>
                 <p> This will be documented somewhere in the database, but you will not be able to find that information on your own <br> You have been warned! </p>
                 <div id="confirmationBoxButtons">
-                    <button class="qInvoiceFormButton cancelButton" id="cancelRemoveInvoice">
+                    <button class="qInvoiceFormButton cancelButton" id="cancelReopenInvoice">
                         Cancel
                     </button>
-                    <button class="qInvoiceFormButton submitButton" id="confirmRemoveInvoice">
+                    <button class="qInvoiceFormButton submitButton" id="confirmReopenInvoice">
+                        Reopen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="reopenPaidInvoiceWithinForm" class="overlay dialogOverlay">
+        <input id="lastOpenedInvoiceWithinForm" style="display:none">
+        <div class="confirmationBox">
+            <div id = "confirmationBoxBox">
+                <h3 id = "confirmationBoxHeader3">Do you really reopen the paid invoice?</h3>
+                <p> This will be documented somewhere in the database, but you will not be able to find that information on your own <br> You have been warned! </p>
+                <div id="confirmationBoxButtons">
+                    <button class="qInvoiceFormButton cancelButton" id="cancelReopenInvoiceFromWithinForm">
+                        Cancel
+                    </button>
+                    <button class="qInvoiceFormButton submitButton" id="confirmReopenInvoiceFromWithinForm">
                         Reopen
                     </button>
                 </div>
