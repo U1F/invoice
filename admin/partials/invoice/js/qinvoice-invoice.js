@@ -301,7 +301,11 @@ jQuery(function ($) {
    * @param {event} x We use the target of the event to make changes 
    * on the row that got clicked
    */
-  $('.sliderForPayment').on('click', function (event) {
+  $('#tableInvoices').on('click', '.sliderForPayment', function (event) {
+    // We want to click the button from within the confirm dialog in a purely cosmetic sense:
+    if ($("#reopenPaidInvoiceWithinForm").is(":visible")) {return}
+    if ($("#reopenPaidInvoice").is(":visible")) {return}
+    
     const clickTarget = event.currentTarget
     const sliderBox = $(clickTarget).parent()
     const invoiceRow = $(clickTarget).closest('tr')
@@ -310,26 +314,14 @@ jQuery(function ($) {
     if(invoiceRow.hasClass('cancelled')){
       return;
     }
-
-
     // For already paid invocies a dialoge pops up to ask if the invoice should be reverted to open
     if (sliderBox.find('input').prop('checked') === false) {
       setInvoiceToPaid(invoiceRow.attr('id'))        
 
     } else {
-      if (confirm("Really?")) {
-        setInvoiceToUnpaid(invoiceRow.attr('id'))
-      } else { 
-        // Do not click the slider and return
-        event.preventDefault()
-        return
-      }
-
-      /*
-       * $("#lastClickedInvoice").val($(clickTarget).parents("tr").attr('id'))
-       * $("#reopenPaidInvoice").show()
-       */
-
+      $("#lastClickedInvoice").val($(clickTarget).closest("tr").attr('id'))
+      $("#reopenPaidInvoice").show()
+      event.preventDefault()
     }
     q_invoice_RecalcSums(0,0,0);
   })
@@ -383,10 +375,10 @@ jQuery(function ($) {
    */
   $("#reopenPaidInvoice").on("click", ".submitButton", function(){
     const currentRow = $("#reopenPaidInvoice #lastClickedInvoice").val()
-
+    console.log ('currentRow = ' + currentRow)
     setInvoiceToUnpaid(currentRow)
     
-    $('#'+currentRow).find('.sliderForPayment').parent().click()
+    $('#'+currentRow).find('.sliderForPayment').click()
     $("#reopenPaidInvoice").hide()
     
   })
@@ -397,6 +389,25 @@ jQuery(function ($) {
     $("#reopenPaidInvoice").hide()
   })
 
+
+  /**
+   * Clicking "OK" in the dialog re-opens the invoice
+   */
+  $("#reopenPaidInvoiceWithinForm").on("click", ".submitButton", function(){
+    const currentRow = $("#reopenPaidInvoiceWithinForm #lastOpenedInvoiceWithinForm").val()
+    // In this case we have to prepend 'edit-' because setInvoiceToPaid expects it.
+    setInvoiceToUnpaid('edit-'+currentRow)
+    $('#edit-'+currentRow).find('.sliderForPayment').click()
+    $('.sliderForPaymentWithinForm').click()
+    $("#reopenPaidInvoiceWithinForm").hide()
+    
+  })
+  /**
+   * Clicking "Cancel" in the dialog just hides it
+   */
+  $("#reopenPaidInvoiceWithinForm").on("click", ".cancelButton", function(){
+    $("#reopenPaidInvoiceWithinForm").hide()
+  })
 
   /**
    * Helper function that sets the class of the pressed button to active
@@ -1841,32 +1852,27 @@ jQuery(function ($) {
    *   is simulated and the popup will be closed
    *  */
   $(".switch").on('click', '.sliderForPaymentWithinForm', function (event) {
-    
+    if ($("#reopenPaidInvoiceWithinForm").is(":visible")) {return}
     const invoiceID = $('#invoice_id').val()
     const sliderBox = $(event.target).parent()
     
     if (sliderBox.find('input').prop('checked') == false){ 
-      disableInvoiceForm(invoiceID) 
-      //markInvoiceAsPaidInDB()
+      disableInvoiceForm(invoiceID)
+      
+
+      $('#edit-'+invoiceID).find('.sliderForPayment').click()
+      markInvoiceAsPaidInDB('edit-'+invoiceID)
 
     } 
     
     else {
-      
+      enableInvoiceForm(invoiceID)
       // show dialog
-      //$("#reopenPaidInvoiceWithinForm").show()
-      //$("#reopenPaidInvoice").css('zIndex', 9999);
-      //$("#lastClickedInvoice").val(invoiceID)
+      $("#reopenPaidInvoiceWithinForm").show()
+      $("#reopenPaidInvoiceWithinForm").css('zIndex', 9999);
+      $("#lastOpenedInvoiceWithinForm").val(invoiceID)
+      event.preventDefault()
 
-      if (confirm("Really re-enable Invocie?")){ 
-        enableInvoiceForm(invoiceID) 
-        //markInvoiceAsOpenInDB()
-      }
-      
-      else { // do "nothing"
-
-        event.preventDefault() 
-      }      
     }
   })
 
