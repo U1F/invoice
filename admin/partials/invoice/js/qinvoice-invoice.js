@@ -288,6 +288,11 @@ jQuery(function ($) {
     invoiceRow.find('.columnEdit').find('.delete').css('color', '#50575e') // do this within a class?
   
     invoiceRow.find('.columnEdit').find('.delete').addClass('deleteRow')
+
+    invoiceRow.find('.columnDunning').find('.longCircle').css('display', 'inline-block')
+    invoiceRow.find('td.columnDunning span').removeClass()
+    invoiceRow.find('td.columnDunning span').addClass('longCircle ' + invoiceRow.find('td.columnDunning').attr('value'))
+    invoiceRow.find('td.columnDunning span').text(invoiceRow.find('td.columnDunning span').attr('value'))
     
     // remove paydate, mark as open in database
     markInvoiceAsOpenInDB(clickedTarget)
@@ -378,7 +383,7 @@ jQuery(function ($) {
     console.log ('currentRow = ' + currentRow)
     setInvoiceToUnpaid(currentRow)
     
-    $('#'+currentRow).find('.sliderForPayment').click()
+    $('#'+currentRow).find('td.columnStatusPaid input').prop('checked', false)
     $("#reopenPaidInvoice").hide()
     
   })
@@ -397,8 +402,8 @@ jQuery(function ($) {
     const currentRow = $("#reopenPaidInvoiceWithinForm #lastOpenedInvoiceWithinForm").val()
     // In this case we have to prepend 'edit-' because setInvoiceToPaid expects it.
     setInvoiceToUnpaid('edit-'+currentRow)
-    $('#edit-'+currentRow).find('.sliderForPayment').click()
-    $('.sliderForPaymentWithinForm').click()
+    $('#edit-'+currentRow).find('td.columnStatusPaid input').prop('checked', false)
+    $('#invoice_form_paid_toggle').prop('checked', false)
     $("#reopenPaidInvoiceWithinForm").hide()
     
   })
@@ -683,7 +688,13 @@ jQuery(function ($) {
     const parent = $(this).parent().parent()
 
     if ($('.wp-list-table-qInvcLine').length > 1) {
-      parent.remove()
+      if(parent.attr('id') == ('editInvoiceReminderRow') || parent.attr('id') == ('editInvoiceDunningIRow') || parent.attr('id') == ('editIneditInvoiceDunningIIRowvoiceReminderRow')){
+        parent.removeClass('wp-list-table-qInvcLine');
+        parent.find('.insertInDatabase').attr('value', '0');
+      } else{
+        parent.remove()
+      }
+      
     }
 
     recalcPos()
@@ -734,6 +745,8 @@ jQuery(function ($) {
    $('.reminderRow').on('click', function (event) {
 
     if ($(event.target).hasClass('listPointerEventsMod')) { return }
+    if ($(event.target).hasClass('download')) { return }
+    if ($(event.target).hasClass('mail')) { return }
     if ($(this).find('div').hasClass('listPointerEventsMod')) { return }
 
     //close the dropdown
@@ -771,6 +784,8 @@ jQuery(function ($) {
    $('.dunningIRow').on('click', function (event) {
 
     if ($(event.target).hasClass('listPointerEventsMod')) { return }
+    if ($(event.target).hasClass('download')) { return }
+    if ($(event.target).hasClass('mail')) { return }
     if ($(this).find('div').hasClass('listPointerEventsMod')) { return }
 
     //close the dropdown
@@ -808,6 +823,8 @@ jQuery(function ($) {
    $('.dunningIIRow').on('click', function (event) {
 
     if ($(event.target).hasClass('listPointerEventsMod')) { return }
+    if ($(event.target).hasClass('download')) { return }
+    if ($(event.target).hasClass('mail')) { return }
     if ($(this).find('div').hasClass('listPointerEventsMod')) { return }
 
     //close the dropdown
@@ -905,6 +922,9 @@ jQuery(function ($) {
     targetRow.find('.switchForPaidStatus').css('opacity', '100')
     targetRow.find('.switchForPaidStatus > *').css('opacity', '100')
     targetRow.find('.columnDunning').find('.longCircle').css('display', 'inline-block')
+    targetRow.find('td.columnDunning span').removeClass()
+    targetRow.find('td.columnDunning span').addClass('longCircle ' + targetRow.find('td.columnDunning').attr('value'))
+    targetRow.find('td.columnDunning span').text(targetRow.find('td.columnDunning span').attr('value'))
     q_invoice_RecalcSums(0,0,0);
   })
 
@@ -1219,39 +1239,39 @@ jQuery(function ($) {
         /*
         * Show the reminder / dunningI / dunningII row only if the dunning button is clicked or has already been clicked
         */
-        $currInvoiceID = '#edit-' + obj[1][0]['invoice_id']
+        var currInvoiceID = '#edit-' + obj[1][0]['invoice_id']
         //retrieve dunning fee from database if exist
-        if($($currInvoiceID).find('#q_invc_reminderActiveVal').val()){
-          $('#editInvoiceReminderRow').find('.invoiceItemsPrice input').val() = $($currInvoiceID).find('#q_inv_reminderValue').val();
+        if($(currInvoiceID).find('#q_invc_reminderActiveVal').attr('value') == '1'){
+          $('#editInvoiceReminderRow').find('.invoiceItemsPrice input').val($(currInvoiceID).find('#q_invc_reminderValue').attr('value'));
         }
-        if($($currInvoiceID).find('#q_invc_dunningIActiveVal').val()){
-          $('#editInvoiceDunningIRow').find('.invoiceItemsPrice input').val() = $($currInvoiceID).find('#q_inv_dunningIValue').val();
+        if($(currInvoiceID).find('#q_invc_dunningIActiveVal').attr('value') == '1'){
+          $('#editInvoiceDunningIRow').find('.invoiceItemsPrice input').val($(currInvoiceID).find('#q_invc_dunningIValue').attr('value'));
         }
-        if($($currInvoiceID).find('#q_invc_dunningIIActiveVal').val()){
-          $('#editInvoiceDunningIIRow').find('.invoiceItemsPrice input').val() = $($currInvoiceID).find('#q_inv_dunningIIValue').val();
+        if($(currInvoiceID).find('#q_invc_dunningIIActiveVal').attr('value') == '1'){
+          $('#editInvoiceDunningIIRow').find('.invoiceItemsPrice input').val($(currInvoiceID).find('#q_invc_dunningIIValue').attr('value'));
         }
         //show specific dunning rows
         $('#editInvoiceReminderRow').removeClass('wp-list-table-qInvcLine');
         $('#editInvoiceDunningIRow').removeClass('wp-list-table-qInvcLine');
         $('#editInvoiceDunningIIRow').removeClass('wp-list-table-qInvcLine');
-        $('#editInvoiceDunningIIRow').find('.insertInDatabase').val('0');
-        $('#editInvoiceDunningIRow').find('.insertInDatabase').val('0');
-        $('#editInvoiceReminderRow').find('.insertInDatabase').val('0');
-        if($($currInvoiceID).find('.columnEdit ul li div#q_invc_dunningIIActiveVal').val() || (dunning == 'd2')){
+        $('#editInvoiceDunningIIRow').find('.insertInDatabase').attr('value', '0');
+        $('#editInvoiceDunningIRow').find('.insertInDatabase').attr('value', '0');
+        $('#editInvoiceReminderRow').find('.insertInDatabase').attr('value', '0');
+        if($(currInvoiceID).find('#q_invc_dunningIIActiveVal').attr('value') == '1' || (dunning == 'd2')){
           $('#editInvoiceDunningIIRow').addClass('wp-list-table-qInvcLine');
           $('#editInvoiceDunningIRow').addClass('wp-list-table-qInvcLine');
           $('#editInvoiceReminderRow').addClass('wp-list-table-qInvcLine');
-          $('#editInvoiceDunningIIRow').find('.insertInDatabase').val('1');
-          $('#editInvoiceDunningIRow').find('.insertInDatabase').val('1');
-          $('#editInvoiceReminderRow').find('.insertInDatabase').val('1');
-        } else if($($currInvoiceID).find('.columnEdit ul li div#q_invc_dunningIActiveVal').val() || (dunning == 'd2' || dunning == 'd1')){
+          $('#editInvoiceDunningIIRow').find('.insertInDatabase').attr('value', '1');
+          $('#editInvoiceDunningIRow').find('.insertInDatabase').attr('value', '1');
+          $('#editInvoiceReminderRow').find('.insertInDatabase').attr('value', '1');
+        } else if($(currInvoiceID).find('#q_invc_dunningIActiveVal').attr('value') == '1' || (dunning == 'd2' || dunning == 'd1')){
           $('#editInvoiceDunningIRow').addClass('wp-list-table-qInvcLine');
           $('#editInvoiceReminderRow').addClass('wp-list-table-qInvcLine');
-          $('#editInvoiceDunningIRow').find('.insertInDatabase').val('1');
-          $('#editInvoiceReminderRow').find('.insertInDatabase').val('1');
-        } else if($($currInvoiceID).find('.columnEdit ul li div#q_invc_reminderActiveVal').val() || (dunning == 'd2' || dunning == 'd1' || dunning == 'rem')){
+          $('#editInvoiceDunningIRow').find('.insertInDatabase').attr('value', '1');
+          $('#editInvoiceReminderRow').find('.insertInDatabase').attr('value', '1');
+        } else if($(currInvoiceID).find('#q_invc_reminderActiveVal').attr('value') == '1' || (dunning == 'd2' || dunning == 'd1' || dunning == 'rem')){
           $('#editInvoiceReminderRow').addClass('wp-list-table-qInvcLine');
-          $('#editInvoiceReminderRow').find('.insertInDatabase').val('1');
+          $('#editInvoiceReminderRow').find('.insertInDatabase').attr('value', '1');
         }
 
         fetchInvoiceCurrency()
@@ -1425,6 +1445,13 @@ jQuery(function ($) {
     row.find('td.columnDunning span').removeClass()
     row.find('td.columnDunning span').addClass('longCircle ' + dunningData[0])
     row.find('td.columnDunning span').text(dunningData[1] + ' days')
+    var numberOfItems = invoice.itemPrice.length
+    row.find('#q_invc_reminderValue').attr('value', invoice.itemPrice[numberOfItems - 3])
+    row.find('#q_invc_dunningIValue').attr('value', invoice.itemPrice[numberOfItems - 2])
+    row.find('#q_invc_dunningIIValue').attr('value', invoice.itemPrice[numberOfItems - 1])
+    row.find('#q_invc_reminderActiveVal').attr('value', invoice.insertInDatabase[numberOfItems - 3])
+    row.find('#q_invc_dunningIActiveVal').attr('value', invoice.insertInDatabase[numberOfItems - 2])
+    row.find('#q_invc_dunningIIActiveVal').attr('value', invoice.insertInDatabase[numberOfItems - 1])
 
     const date = invoice.dateOfInvoice
     // change to german date format

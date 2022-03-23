@@ -320,32 +320,46 @@ function showOpenInvoices()
         //Dunning Calculations
         $circleClass = '';
         $numberOfDunningDays = '';
-        if(!$paid && !$cancelled){
-            $invoiceActivatedDate = strtotime($invoice_header->invoice_date);
-            $currentDate = strtotime(date('Y-m-d'));
+        $circleClassDummy = '';
+        $numberOfDunningDaysDummy = '';
+        
+        $invoiceActivatedDate = strtotime($invoice_header->invoice_date);
+        $currentDate = strtotime(date('Y-m-d'));
 
-            $reminderDays = intVal(get_option('qi_settings')['reminderDayLimit']);
-            $reminderDate = addWorkingDays($invoiceActivatedDate, $reminderDays);
+        $reminderDays = intVal(get_option('qi_settings')['reminderDayLimit']);
+        $reminderDate = addWorkingDays($invoiceActivatedDate, $reminderDays);
 
-            $dunningIDays = intVal(get_option('qi_settings')['dunning1daylimit']);
-            $dunningIDate = addWorkingDays($invoiceActivatedDate, $dunningIDays);
+        $dunningIDays = intVal(get_option('qi_settings')['dunning1daylimit']);
+        $dunningIDate = addWorkingDays($invoiceActivatedDate, $dunningIDays);
 
-            $dunningIIDays = intVal(get_option('qi_settings')['dunning2daylimit']);
-            $dunningIIDate = addWorkingDays($invoiceActivatedDate, $dunningIIDays);
-            if($dunningIIDate <= $currentDate){
+        $dunningIIDays = intVal(get_option('qi_settings')['dunning2daylimit']);
+        $dunningIIDate = addWorkingDays($invoiceActivatedDate, $dunningIIDays);
+        if($dunningIIDate <= $currentDate){
+            if(!$paid && !$cancelled){
                 $circleClass = 'dunningII';
                 $numberOfDunningDays = ceil(abs($currentDate - $dunningIIDate) / 86400) . ' days';
                 $dunning = true;
-            } else if($dunningIDate <= $currentDate){
+            }
+            $circleClassDummy = 'dunningII';
+            $numberOfDunningDaysDummy =ceil(abs($currentDate - $dunningIIDate) / 86400) . ' days';;
+        } else if($dunningIDate <= $currentDate){
+            if(!$paid && !$cancelled){
                 $circleClass = 'dunningI';
                 $numberOfDunningDays = ceil(abs($currentDate - $dunningIDate) / 86400) . ' days';
                 $dunning = true;
-            } else if($reminderDate <= $currentDate){
+            }
+            $circleClassDummy = 'dunningI';
+            $numberOfDunningDaysDummy = ceil(abs($currentDate - $dunningIDate) / 86400) . ' days'; 
+        } else if($reminderDate <= $currentDate){
+            if(!$paid && !$cancelled){
                 $circleClass = 'reminder';
                 $numberOfDunningDays = ceil(abs($currentDate - $reminderDate) / 86400) . ' days';
                 $dunning = true;
             }
-        }  
+            $circleClassDummy = 'reminder';
+            $numberOfDunningDaysDummy = ceil(abs($currentDate - $reminderDate) / 86400) . ' days';
+        }
+     
 
         ?>
         <tr  
@@ -482,18 +496,17 @@ function showOpenInvoices()
                     </span>
                 </td>
 
-                <td class="manage-column columnDunning">                
-                    <span class="longCircle <?php echo $circleClass; ?>">
+                <td class="manage-column columnDunning" value="<?php echo $circleClassDummy; ?>">                
+                    <span value="<?php echo $numberOfDunningDaysDummy; ?>" class="longCircle <?php echo $circleClass; ?>">
                         <?php echo $numberOfDunningDays; ?>
                     </span>
                 </td>
 
                 <td class="manage-column  columnStatusPaid">
-                
 
                     <label class="switch switchForPaidStatus large" style="<?php if($cancelled){echo 'opacity:0;';}?>">
                     <input type="checkbox" class="checkboxForPayment" style="<?php if($cancelled){echo 'opacity:0;';}?>"
-                        <?php if ($paid){ echo "checked";}?>
+                        <?php if ($paid){ echo "checked";} else?>
                     >
                     <span class="sliderForPayment invoiceSlider round large" style="<?php if($cancelled){echo 'opacity:0;';}?>"></span>
                     </label>
@@ -510,7 +523,7 @@ function showOpenInvoices()
                             href=<?php 
                             echo "'". plugins_url() .
                                 '/q_invoice/pdf/'. 
-                                Interface_Export::makeFilename($invoice_header->id).
+                                Interface_Export::makeFilename($invoice_header->id, 'invoice').
                                 '.pdf'."' "
                             ?>
                             id="<?php 
@@ -575,13 +588,13 @@ function showOpenInvoices()
                             <li id="q_invc_reminderValue" value="<?php echo $invoice_header->reminder; ?>" class="qinv_mainDropdownElement reminderRow<?php if(!($circleClass == 'reminder' || $circleClass == 'dunningI' || $circleClass == 'dunningII') || $paid || $cancelled){ echo ' deactivatedListElement';} ?>">
                                 <div id="q_invc_reminderActiveVal" value="<?php echo $reminderActive; ?>" class="<?php if(!($circleClass == 'reminder' || $circleClass == 'dunningI' || $circleClass == 'dunningII') || $paid || $cancelled){ echo 'listPointerEventsMod';} ?>">
                                 Reminder 
-                                <span 
+                                <a 
                                     style="font-size:20px; display:inline" 
                                     target="_top"
                                     href=<?php 
                                     echo "'". plugins_url() .
                                         '/q_invoice/pdf/'. 
-                                        Interface_Export::makeFilename($invoice_header->id).
+                                        Interface_Export::makeFilename($invoice_header->id, 'reminder1').
                                         '.pdf'."' "
                                     ?>
                                     id="<?php 
@@ -595,7 +608,7 @@ function showOpenInvoices()
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                     download
                                 >
-                                </span>
+                                </a>
 
                                 <span style="font-size: 20px;"
                                     id="<?php echo esc_attr($invoice_header->id);?>" 
@@ -609,13 +622,13 @@ function showOpenInvoices()
                             <li id="q_invc_dunningIValue" value="<?php echo $invoice_header->dunning1; ?>" class="qinv_mainDropdownElement dunningIRow<?php if(!($circleClass == 'dunningI' || $circleClass == 'dunningII') || $paid || $cancelled){ echo ' deactivatedListElement';} ?>">
                                 <div id="q_invc_dunningIActiveVal" value="<?php echo $dunningIActive; ?>" class="<?php if(!($circleClass == 'dunningI' || $circleClass == 'dunningII') || $paid || $cancelled){ echo 'listPointerEventsMod';} ?>">
                                 Dunning 1 
-                                <span 
+                                <a 
                                     style="font-size:20px; display:inline" 
                                     target="_top"
                                     href=<?php 
                                     echo "'". plugins_url() .
                                         '/q_invoice/pdf/'. 
-                                        Interface_Export::makeFilename($invoice_header->id).
+                                        Interface_Export::makeFilename($invoice_header->id, 'reminder2').
                                         '.pdf'."' "
                                     ?>
                                     id="<?php 
@@ -629,7 +642,7 @@ function showOpenInvoices()
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                     download
                                 >
-                                </span>
+                                </a>
 
                                 <span style="font-size: 20px;"
                                     id="<?php echo esc_attr($invoice_header->id);?>" 
@@ -643,13 +656,13 @@ function showOpenInvoices()
                             <li id="q_invc_dunningIIValue" value="<?php echo $invoice_header->dunning2; ?>" class="qinv_mainDropdownElement dunningIIRow<?php if($circleClass != 'dunningII' || $paid || $cancelled){ echo ' deactivatedListElement';} ?>">
                                 <div id="q_invc_dunningIIActiveVal" value="<?php echo $dunningIIActive; ?>" class="<?php if($circleClass != 'dunningII' || $paid || $cancelled){ echo 'listPointerEventsMod';} ?>">
                                 Dunning 2 
-                                <span 
+                                <a 
                                     style="font-size:20px; display:inline" 
                                     target="_top"
                                     href=<?php 
                                     echo "'". plugins_url() .
                                         '/q_invoice/pdf/'. 
-                                        Interface_Export::makeFilename($invoice_header->id).
+                                        Interface_Export::makeFilename($invoice_header->id, 'reminder3').
                                         '.pdf'."' "
                                     ?>
                                     id="<?php 
@@ -663,7 +676,7 @@ function showOpenInvoices()
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                     download
                                 >
-                                </span>
+                                </a>
 
                                 <span style="font-size: 20px;"
                                     id="<?php echo esc_attr($invoice_header->id);?>" 

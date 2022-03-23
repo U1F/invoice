@@ -83,13 +83,6 @@ function Invoice_list()
         </div>
     </div>
 
-    <div style="height: 70px; width: 100%; background-color: yellow; border:dashed 3px;padding:5px;margin:5px 0;">
-        <p style="font-size:20px;"><b>Sollten hier Reviews durchgeführt werden: <br>
-        Der Dunning Bereich und das Dropdown befinden sich gerade im Umbau und funktionieren ggfalls nicht richtig!</b></p>
-
-
-    </div>
-
     <h1 class="headerline" style="display:flex;">
 
         <span id="qinv_main_title_logo" style="display:flex;">

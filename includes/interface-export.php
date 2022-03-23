@@ -9,7 +9,7 @@ class Interface_Export {
          *
          * @since 1.0.0
          */
-        static function makeFilename($invoiceID) 
+        static function makeFilename($invoiceID, $type='invoice') 
         {
             $invoiceDate = Interface_Invoices::getInvoiceDataItem($invoiceID, "invoice_date");
             $invoiceDate = str_replace('-', '_', $invoiceDate);
@@ -36,6 +36,11 @@ class Interface_Export {
                 $invoiceID. "-".
                 $customerName. "-".
                 $invoiceDate;
+                
+            if($type != 'invoice'){
+                $filename = $filename."-".$type;
+            }
+            
 
             return $filename;
         }
