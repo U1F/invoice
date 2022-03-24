@@ -1629,17 +1629,15 @@ jQuery(function ($) {
     let day = '0'
 
     if (parseInt(unformattedDate.getMonth()) < 10) {
-      month = '0' + (unformattedDate.getMonth() + 1)
+      month = '0' + parseInt(unformattedDate.getMonth() + 1)
     } else {
       month = unformattedDate.getMonth() + 1
     }
-
     if (parseInt(unformattedDate.getDate()) < 10) {
-      day = '0' + unformattedDate.getDate()
+      day = '0' + parseInt(unformattedDate.getDate())
     } else {
-      day = unformattedDate.getMonth()
+      day = parseInt(unformattedDate.getDate())
     }
-
     return year + '-' + month + '-' + day
   }
 
