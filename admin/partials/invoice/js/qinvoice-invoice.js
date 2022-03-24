@@ -725,9 +725,13 @@ jQuery(function ($) {
    * Handles the on click action on the more-ellepsis dashicon:
    * Open a dropdown to shwo urther options. Save the clicked invoice ID to get specific data.
    */
-   $('table#tableInvoices').on('click', '.moreInvoiceOptions', function (event) {
-    $(this).parent().parent().find('div.qinv_moreOptionsDropdownBox').css('display', 'block')
-    currentInvoiceID = event.target.id
+  $('table#tableInvoices').on('click', '.moreInvoiceOptions', function (event) {
+    if($(this).parent().parent().find('div.qinv_moreOptionsDropdownBox').css('display') == 'block'){
+      $(this).parent().parent().find('div.qinv_moreOptionsDropdownBox').css('display', 'none')
+    } else{
+      $(this).parent().parent().find('div.qinv_moreOptionsDropdownBox').css('display', 'block')
+      currentInvoiceID = event.target.id
+    }
   })
 
   /**
@@ -735,6 +739,7 @@ jQuery(function ($) {
    */
   $(document).on('mouseup', function(e){
     if(!$('div.qinv_moreOptionsDropdownBox').is(e.target) && $('div.qinv_moreOptionsDropdownBox').has(e.target).length === 0){
+      if($(e.target).hasClass('moreInvoiceOptions')){return;}
       $('div.qinv_moreOptionsDropdownBox').css('display', 'none');
     }
   })
