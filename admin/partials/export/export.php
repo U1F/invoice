@@ -106,7 +106,7 @@ function exportInvoice($invoiceID, $invoiceType)
         $base64 = base64_encode($imagedata);
         $logoImageSource = 'data:'. $mimetype .';base64,'.$base64;
         
-        $finaleImageData = "<img 
+        $finalImageData = "<img 
                                 src='" . $logoImageSource . ".'
                                 width='200'
                                 style='border:0px; margin-bottom: 10px; margin-top: 10px;'
@@ -114,7 +114,7 @@ function exportInvoice($invoiceID, $invoiceType)
 
     } else {
 
-        $finaleImageData = "<div style='height:100px'></div>";
+        $finalImageData = "<div style='height:100px'></div>";
 
     }
 
@@ -201,29 +201,29 @@ function exportInvoice($invoiceID, $invoiceType)
         $heading = __("Invoice", "ev");
 
         //text intro (settings)
-        if (get_option('qi_settings')['invoiceTextIntro']) {
-            $invoiceTextIntro = get_option('qi_settings')['invoiceTextIntro'];   
+        if (get_option('qi_settings')['TextInvoiceIntro']) {
+            $invoiceTextIntro = get_option('qi_settings')['TextInvoiceIntro'];   
         } else {
             $invoiceTextIntro = __("We are invoicing for the following services:", "ev");
         }
 
         //text outro (settings)
-        if (get_option('qi_settings')['invoiceTextOutro']) {
-            $invoiceTextOutro = get_option('qi_settings')['invoiceTextOutro'];   
+        if (get_option('qi_settings')['TextInvoiceOutro']) {
+            $invoiceTextOutro = get_option('qi_settings')['TextInvoiceOutro'];   
         } else {
             $invoiceTextOutro = __("Thank you for the excellent co-operation.", "ev");
         }
 
         //text payment deadlines (settings)
-        if (get_option('qi_settings')['invoiceTextPaymentDeadline']) {
-            $invoicePaymentDeadline = get_option('qi_settings')['invoiceTextPaymentDeadline'];   
+        if (get_option('qi_settings')['TextInvoicePaymentDeadline']) {
+            $invoicePaymentDeadline = get_option('qi_settings')['TextInvoicePaymentDeadline'];   
         } else {
             $invoicePaymentDeadline = "";
         }
 
         //text custom footer (settings)
-        if (get_option('qi_settings')['invoiceTextCustomFooter']) {
-            $invoiceCustomFooter = get_option('qi_settings')['invoiceTextCustomFooter'];   
+        if (get_option('qi_settings')['TextInvoiceCustomFooter']) {
+            $invoiceCustomFooter = get_option('qi_settings')['TextInvoiceCustomFooter'];   
         } else {
             $invoiceCustomFooter = "";
         }
@@ -239,23 +239,23 @@ function exportInvoice($invoiceID, $invoiceType)
         $invoiceCustomFooter = "";
 
         //text intro (settings)
-        if (get_option('qi_settings')['reminderTextIntro']) {
-            $invoiceTextIntro = get_option('qi_settings')['dunningTextIntro'];   
+        if (get_option('qi_settings')['TextReminderIntro']) {
+            $invoiceTextIntro = get_option('qi_settings')['TextReminderIntro'];   
         }
 
         //text outro (settings)
-        if (get_option('qi_settings')['reminderTextOutro']) {
-            $invoiceTextOutro = get_option('qi_settings')['dunningTextOutro'];   
+        if (get_option('qi_settings')['TextReminderOutro']) {
+            $invoiceTextOutro = get_option('qi_settings')['TextReminderOutro'];   
         }
 
         //text payment deadlines (settings)
-        if (get_option('qi_settings')['reminderTextPaymentDeadline']) {
-            $invoicePaymentDeadline = get_option('qi_settings')['dunningTextPaymentDeadline'];   
+        if (get_option('qi_settings')['TextReminderPaymentDeadline']) {
+            $invoicePaymentDeadline = get_option('qi_settings')['TextReminderPaymentDeadline'];   
         }
 
         //text custom footer (settings)
-        if (get_option('qi_settings')['reminderTextCustomFooter']) {
-            $invoiceCustomFooter = get_option('qi_settings')['dunningTextCustomFooter'];   
+        if (get_option('qi_settings')['TextReminderCustomFooter']) {
+            $invoiceCustomFooter = get_option('qi_settings')['TextReminderCustomFooter'];   
         }
 
     } else if ($invoiceType =="dunning1" || $invoiceType="dunning2") {
@@ -271,23 +271,23 @@ function exportInvoice($invoiceID, $invoiceType)
         $invoiceCustomFooter = "";
 
         //text intro (settings)
-        if (get_option('qi_settings')['dunningTextIntro']) {
-            $invoiceTextIntro = get_option('qi_settings')['dunningTextIntro'];   
+        if (get_option('qi_settings')['TextDunningIntro']) {
+            $invoiceTextIntro = get_option('qi_settings')['TextDunningIntro'];   
         }
 
         //text outro (settings)
-        if (get_option('qi_settings')['dunningTextOutro']) {
-            $invoiceTextOutro = get_option('qi_settings')['dunningTextOutro'];   
+        if (get_option('qi_settings')['TextDunningOutro']) {
+            $invoiceTextOutro = get_option('qi_settings')['TextDunningOutro'];   
         }
 
         //text payment deadlines (settings)
-        if (get_option('qi_settings')['dunningTextPaymentDeadline']) {
-            $invoicePaymentDeadline = get_option('qi_settings')['dunningTextPaymentDeadline'];   
+        if (get_option('qi_settings')['TextDunningPaymentDeadline']) {
+            $invoicePaymentDeadline = get_option('qi_settings')['TextDunningPaymentDeadline'];   
         }
 
         //text custom footer (settings)
-        if (get_option('qi_settings')['dunningTextCustomFooter']) {
-            $invoiceCustomFooter = get_option('qi_settings')['dunningTextCustomFooter'];   
+        if (get_option('qi_settings')['TextDunningCustomFooter']) {
+            $invoiceCustomFooter = get_option('qi_settings')['TextDunningCustomFooter'];   
         }
 
     } else if ($invoiceType =="offer") {
@@ -300,22 +300,22 @@ function exportInvoice($invoiceID, $invoiceType)
 
         //text intro (settings)
         if (get_option('qi_settings')['dunningTextIntro']) {
-            $invoiceTextIntro = get_option('qi_settings')['offerTextIntro'];   
+            $invoiceTextIntro = get_option('qi_settings')['TextOfferIntro'];   
         }
 
         //text outro (settings)
         if (get_option('qi_settings')['dunningTextOutro']) {
-            $invoiceTextOutro = get_option('qi_settings')['offerTextOutro'];   
+            $invoiceTextOutro = get_option('qi_settings')['TextOfferOutro'];   
         }
 
         //text payment deadlines (settings)
         if (get_option('qi_settings')['dunningTextPaymentDeadline']) {
-            $invoicePaymentDeadline = get_option('qi_settings')['offerTextPaymentDeadline'];   
+            $invoicePaymentDeadline = get_option('qi_settings')['TextOfferPaymentDeadline'];   
         }
 
         //text custom footer (settings)
         if (get_option('qi_settings')['dunningTextCustomFooter']) {
-            $invoiceCustomFooter = get_option('qi_settings')['offerTextCustomFooter'];   
+            $invoiceCustomFooter = get_option('qi_settings')['TextOfferCustomFooter'];   
         }
 
     } else if ($invoiceType =="credit") {
@@ -328,22 +328,22 @@ function exportInvoice($invoiceID, $invoiceType)
 
         //text intro (settings)
         if (get_option('qi_settings')['dunningTextIntro']) {
-            $invoiceTextIntro = get_option('qi_settings')['creditTextIntro'];   
+            $invoiceTextIntro = get_option('qi_settings')['TextCreditIntro'];   
         }
 
         //text outro (settings)
         if (get_option('qi_settings')['dunningTextOutro']) {
-            $invoiceTextOutro = get_option('qi_settings')['creditTextOutro'];   
+            $invoiceTextOutro = get_option('qi_settings')['TextCreditOutro'];   
         }
 
         //text payment deadlines (settings)
         if (get_option('qi_settings')['dunningTextPaymentDeadline']) {
-            $invoicePaymentDeadline = get_option('qi_settings')['creditTextPaymentDeadline'];   
+            $invoicePaymentDeadline = get_option('qi_settings')['TextCreditPaymentDeadline'];   
         }
 
         //text custom footer (settings)
         if (get_option('qi_settings')['dunningTextCustomFooter']) {
-            $invoiceCustomFooter = get_option('qi_settings')['creditTextCustomFooter'];   
+            $invoiceCustomFooter = get_option('qi_settings')['TextCreditCustomFooter'];   
         }
 
     }

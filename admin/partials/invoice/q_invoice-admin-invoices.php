@@ -121,19 +121,24 @@ function Invoice_list()
         
         
         
-    <?php 
+    <?php
+
         ob_start();
         include_once INVOICE_ROOT_PATH . 
         "/admin/partials/invoice/views/qi_show_all.php";
-
         showHeader();
-
         showOpenInvoices();
-        
         closeTable();
         $showAll= ob_get_contents();
         ob_end_clean();
         echo $showAll;
+
+        /*ob_start();
+        include_once INVOICE_ROOT_PATH . 
+        "/admin/partials/invoice/views/qi_mail_content.php";
+        $mailContent= ob_get_contents();
+        ob_end_clean();
+        echo $mailContent;*/
 
         ob_start();
         include_once INVOICE_ROOT_PATH . 
@@ -143,7 +148,7 @@ function Invoice_list()
         echo $editInv;
 
         //DEBUG TESTING
-    if (get_option('wporg_setting_name')) {
+    if (true){//get_option('wporg_setting_name')) {
         echo "qi_settings:";
         $options = get_option('qi_settings');
         echo '<pre>';
@@ -151,7 +156,7 @@ function Invoice_list()
         echo '</pre>';
         include_once INVOICE_ROOT_PATH . 
         "/admin/partials/export/export.php";  
-        exportInvoice(2, "invoice");          
+        exportInvoice(42, "dunningII");          
     }
     
 }

@@ -690,9 +690,7 @@ td.invoiceItemsHeader {
                 'BIC: '.  get_option('qi_settings')["BIC{$bankIndex}"].
                 '<br>';
             
-            if (get_option('qi_settings')['invoiceTextCustomFooter']) {
-                echo get_option('qi_settings')['invoiceTextCustomFooter'];
-            }
+            echo $invoiceCustomFooter;
 
             ?>
             </div>

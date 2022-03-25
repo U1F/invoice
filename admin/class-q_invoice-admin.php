@@ -440,7 +440,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
 
             $this->addSettingsField("IBAN 1", "text", "bankIPage");
             $this->addSettingsField("BIC 1", "text", "bankIPage");
-            $this->addSettingsField("First Bank Name", "text", "bankIPage");
+            $this->addSettingsField("Bank Name 1", "text", "bankIPage");
 
             register_setting('bankFormII', 'qi_settings');
 
@@ -453,7 +453,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
 
             $this->addSettingsField("IBAN 2", "text", "bankIIPage");
             $this->addSettingsField("BIC 2", "text", "bankIIPage");
-            $this->addSettingsField("Second Bank Name", "text", "bankIIPage");
+            $this->addSettingsField("Bank Name 2", "text", "bankIIPage");
             
             register_setting('bankIIIForm', 'qi_settings');
 
@@ -608,7 +608,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
         
             $this->addSettingsField(
-                "invoice Text Invoice Intro", 
+                "Text Invoice Intro", 
                 "textarea", 
                 "invoiceTextPage",
                 0,
@@ -617,7 +617,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
 
             $this->addSettingsField(
-                "invoice Text Invoice Outro", 
+                "Text Invoice Outro", 
                 "textarea", 
                 "invoiceTextPage",
                 0,
@@ -625,7 +625,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 "text_details_input_mod"
             );
             $this->addSettingsField(
-                "invoice Text Invoice Payment Deadline", 
+                "Text Invoice Payment Deadline", 
                 "textarea", 
                 "invoiceTextPage",
                 0,
@@ -633,7 +633,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 "text_details_input_mod"
             );
             $this->addSettingsField(
-                "invoice Text Invoice Custom Footer", 
+                "Text Invoice Custom Footer", 
                 "textarea", 
                 "invoiceTextPage",
                 0,
@@ -677,7 +677,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
 
             $this->addSettingsField(
-                "reminder Text Reminder Intro", 
+                "Text Reminder Intro", 
                 "textarea", 
                 "dunningTextPage",
                 0,
@@ -686,7 +686,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
 
             $this->addSettingsField(
-                "reminder Text Reminder Outro", 
+                "Text Reminder Outro", 
                 "textarea", 
                 "dunningTextPage",
                 0,
@@ -695,7 +695,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
             
             $this->addSettingsField(
-                "reminder Text Reminder Payment Deadline", 
+                "Text Reminder Payment Deadline", 
                 "textarea", 
                 "dunningTextPage",
                 0,
@@ -703,7 +703,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 "text_details_input_mod"
             );
             $this->addSettingsField(
-                "reminder Text Reminder Custom Footer", 
+                "Text Reminder Custom Footer", 
                 "textarea", 
                 "dunningTextPage",
                 0,
@@ -712,7 +712,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
         
             $this->addSettingsField(
-                "dunning Text Dunning Intro", 
+                "Text Dunning Intro", 
                 "textarea", 
                 "dunningTextPage",
                 0,
@@ -721,7 +721,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
 
             $this->addSettingsField(
-                "dunning Text Dunning Outro", 
+                "Text Dunning Outro", 
                 "textarea", 
                 "dunningTextPage",
                 0,
@@ -730,7 +730,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
 
             $this->addSettingsField(
-                "dunning Text Dunning Payment Deadline", 
+                "Text Dunning Payment Deadline", 
                 "textarea", 
                 "dunningTextPage",
                 0,
@@ -738,7 +738,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 "text_details_input_mod"
             );
             $this->addSettingsField(
-                "dunning Text Dunning Custom Footer", 
+                "Text Dunning Custom Footer", 
                 "textarea", 
                 "dunningTextPage",
                 0,
@@ -767,7 +767,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
         
             $this->addSettingsField(
-                "offer Text Offer Intro", 
+                "Text Offer Intro", 
                 "textarea", 
                 "offerTemplatePage",
                 0,
@@ -776,7 +776,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
 
             $this->addSettingsField(
-                "offer Text Offer Outro", 
+                "Text Offer Outro", 
                 "textarea", 
                 "offerTemplatePage",
                 0,
@@ -784,7 +784,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 "text_details_input_mod"
             );
             $this->addSettingsField(
-                "offer Text Offer Payment Deadline", 
+                "Text Offer Payment Deadline", 
                 "textarea", 
                 "offerTemplatePage",
                 0,
@@ -792,7 +792,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 "text_details_input_mod"
             );
             $this->addSettingsField(
-                "offer Text Offer Custom Footer", 
+                "Text Offer Custom Footer", 
                 "textarea", 
                 "offerTemplatePage",
                 0,
@@ -821,7 +821,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
         
             $this->addSettingsField(
-                "credit Text Credit Intro", 
+                "Text Credit Intro", 
                 "textarea", 
                 "creditTemplatePage",
                 0,
@@ -830,7 +830,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
 
             $this->addSettingsField(
-                "credit Text Credit Outro", 
+                "Text Credit Outro", 
                 "textarea", 
                 "creditTemplatePage",
                 0,
@@ -838,7 +838,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 "text_details_input_mod"
             );
             $this->addSettingsField(
-                "credit Text Credit Payment Deadline", 
+                "Text Credit Payment Deadline", 
                 "textarea", 
                 "creditTemplatePage",
                 0,
@@ -846,7 +846,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 "text_details_input_mod"
             );
             $this->addSettingsField(
-                "credit Text Credit Custom Footer", 
+                "Text Credit Custom Footer", 
                 "textarea", 
                 "creditTemplatePage",
                 0,
@@ -1552,7 +1552,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             ob_start();
             include_once INVOICE_ROOT_PATH . 
             "/admin/partials/export/export.php";
-            exportInvoice($invoiceID, $dunningType);             
+            exportInvoice('42', "dunningII");             
             $exportInv= ob_get_contents();
             ob_end_clean();
             
