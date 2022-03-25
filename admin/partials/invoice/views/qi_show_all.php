@@ -402,14 +402,6 @@ function showOpenInvoices()
                 <div class="circle invoiceStatusIcon<?php 
                         if ($paid) {
                             echo ' paid active';
-                        } else if ($dunning) {
-                            echo ' dunning ';
-                            if ($cancelled) {
-                                echo ' cancelled ';
-                            }
-                            else {
-                                echo ' active ';
-                            } 
                         } else {
                             echo ' open ';
                             if ($cancelled) {
