@@ -31,6 +31,7 @@
  */
 function exportInvoice($invoiceID, $invoiceType)
 {
+ 
     /**
      * PDF Settings and Data
      */
@@ -194,7 +195,7 @@ function exportInvoice($invoiceID, $invoiceType)
     $invoiceCustomFooter = "";
 
     //invoice
-    if ($invoiceType =="invoice") {
+    if ($invoiceType == "invoice") {
 
         //header
         $heading = __("Invoice", "ev");

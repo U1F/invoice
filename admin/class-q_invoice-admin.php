@@ -1548,6 +1548,17 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          */
         public function printDunningTemplate($invoiceID, $dunningType)
         {
+            
+            ob_start();
+            include_once INVOICE_ROOT_PATH . 
+            "/admin/partials/export/export.php";
+            exportInvoice($invoiceID, $dunningType);             
+            $exportInv= ob_get_contents();
+            ob_end_clean();
+            
+            include  INVOICE_ROOT_PATH . 
+            //'/admin/partials/export/html2pdf.class.php';
+            '/admin/partials/export/html2pdf/vendor/autoload.php';
             $nameExtension = 'reminder';
             if($dunningType == 'reminder'){
                 $nameExtension = 'reminder1';
@@ -1556,15 +1567,6 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             } else if($dunningType == 'dunningII'){
                 $nameExtension = 'reminder3';
             }
-            ob_start();
-            include_once INVOICE_ROOT_PATH . 
-            "/admin/partials/export/export.php";
-            exportInvoice($invoiceID, $dunningType);             
-            $exportInv= ob_get_contents();
-            ob_end_clean();
-            include  INVOICE_ROOT_PATH . 
-            //'/admin/partials/export/html2pdf.class.php';
-            '/admin/partials/export/html2pdf/vendor/autoload.php';
             try {
                 $html2pdf = new Spipu\Html2Pdf\Html2Pdf('P', 'A4', 'de');
                 $html2pdf->writeHTML($exportInv, isset($_GET['vuehtml']));
@@ -1706,11 +1708,11 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 
                 $this->printInvoiceTemplate($_POST['invoice_id']);
                 if($reminderPDF){
-                    $this->printDunningTemplate($_POST['invoice_id'], $dunningClass);
+                    $this->printDunningTemplate($_POST['invoice_id'], 'reminder');
                 } else if($dunIPDF){
-                    $this->printDunningTemplate($_POST['invoice_id'], $dunningClass);
+                    $this->printDunningTemplate($_POST['invoice_id'], 'dunningI');
                 } else if($dunIIPDF){
-                    $this->printDunningTemplate($_POST['invoice_id'], $dunningClass);
+                    $this->printDunningTemplate($_POST['invoice_id'], 'dunningII');
                 }
                 $response['success'] = true;
                 $response['data'] = $_POST;
