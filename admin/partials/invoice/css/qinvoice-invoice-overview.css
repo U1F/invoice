@@ -270,6 +270,15 @@ q-invoice-page dashicons-download {
     z-index: 10;
 }
 
+.q-invoice-page .qinv_close-item-mod{
+    float: right;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    text-align: right;
+    height: 0px;
+}
+
 .q-invoice-page .qinv_mainDropdownElement:hover{
     background: rgba(150, 150, 150, 0.1);
 }

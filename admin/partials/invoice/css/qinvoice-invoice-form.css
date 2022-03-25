@@ -1,7 +1,7 @@
 
 /* Div that frames the form*/
 
-.q-invoice-page div#edit-invoice {
+.q-invoice-page div.edit-popup {
     margin-top: 93px;
     margin-left: 222px;
     margin-right: 45px;
@@ -385,7 +385,7 @@
 
 @media only screen and (max-width:1500px){
 
-    .q-invoice-page div#edit-invoice {
+    .q-invoice-page div.edit-popup {
         margin-right: 61px;
     }
 
@@ -409,7 +409,7 @@
 
 @media only screen and (max-width:960px){
 
-    .q-invoice-page div#edit-invoice{
+    .q-invoice-page div.edit-popup{
         margin-left: 50px;
         margin-right: 16px;
         margin-top: 48px;
@@ -470,7 +470,7 @@
         margin: 0.4375rem !important;
     }
 
-    .q-invoice-page div#edit-invoice{
+    .q-invoice-page div.edit-popup{
         margin-left: 20px;
         margin-right: 20px;
         margin-top:67px;

@@ -32,7 +32,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
 
 <div id="invoiceOverlay" class="overlay" style="left:0;">
     
-    <div id="edit-invoice"> 
+    <div id="edit-invoice" class="edit-popup"> 
 
         <div id="heading-invoice" style="display:flex;">
             <h2 id="formHeaderEdit" style="width:50%; margin-top:0"><?php echo __('Edit Invoice', 'Ev'); ?></h2>
