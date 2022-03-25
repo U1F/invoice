@@ -596,7 +596,7 @@ function showOpenInvoices()
                                             $invoice_header->id;
                                         ?>"
                                     title="Download Reminder"
-                                    class="downloadReminder download dashicons dashicons-download"
+                                    class="downloadReminder download dashicons dashicons-download <?php if(!$reminderActive){echo 'iconInactiveColor';}?>"
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                     download
                                 >
@@ -630,7 +630,7 @@ function showOpenInvoices()
                                             $invoice_header->id;
                                         ?>"
                                     title="Download Dunning 1"
-                                    class="downloadDunningI download dashicons dashicons-download"
+                                    class="downloadDunningI download dashicons dashicons-download <?php if(!$dunningIActiv){echo 'iconInactiveColor';}?>"
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                     download
                                 >
@@ -664,7 +664,7 @@ function showOpenInvoices()
                                             $invoice_header->id;
                                         ?>"
                                     title="Download Dunning 2"
-                                    class="downloadDunningII download dashicons dashicons-download"
+                                    class="downloadDunningII download dashicons dashicons-download <?php if(!$dunningIIActive){echo 'iconInactiveColor';}?>"
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                     download
                                 >

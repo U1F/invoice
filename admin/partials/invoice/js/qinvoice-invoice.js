@@ -739,6 +739,7 @@ jQuery(function ($) {
    */
   $(document).on('mouseup', function(e){
     if(!$('div.qinv_moreOptionsDropdownBox').is(e.target) && $('div.qinv_moreOptionsDropdownBox').has(e.target).length === 0){
+      //return if clcked on ellipsis icon to close the dropdown on second click
       if($(e.target).hasClass('moreInvoiceOptions')){return;}
       $('div.qinv_moreOptionsDropdownBox').css('display', 'none');
     }
@@ -1457,6 +1458,16 @@ jQuery(function ($) {
     row.find('#q_invc_reminderActiveVal').attr('value', invoice.insertInDatabase[numberOfItems - 3])
     row.find('#q_invc_dunningIActiveVal').attr('value', invoice.insertInDatabase[numberOfItems - 2])
     row.find('#q_invc_dunningIIActiveVal').attr('value', invoice.insertInDatabase[numberOfItems - 1])
+
+    if(invoice.insertInDatabase[numberOfItems - 3]){
+      row.find('.downloadReminder').removeClass('iconInactiveColor');
+    }
+    if(invoice.insertInDatabase[numberOfItems - 2]){
+      row.find('.downloadDunningI').removeClass('iconInactiveColor');
+    }
+    if(invoice.insertInDatabase[numberOfItems - 1]){
+      row.find('.downloadDunningII').removeClass('iconInactiveColor');
+    }
 
     const date = invoice.dateOfInvoice
     // change to german date format

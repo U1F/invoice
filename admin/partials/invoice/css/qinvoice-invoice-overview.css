@@ -274,6 +274,10 @@ q-invoice-page dashicons-download {
     background: rgba(150, 150, 150, 0.1);
 }
 
+.q-invoice-page .iconInactiveColor{
+    color: #d4d4d4;
+}
+
 .q-invoice-page .qinv_mainDropdownElement{
     margin-bottom: 0;
     padding-bottom: 6px;
