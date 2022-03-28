@@ -137,28 +137,30 @@
     display: none;              /* Chrome, Safari, Opera*/
 }
 
+.q-invoice-page td.columnEdit{
+    text-align: end;
+    width: 5%;
+    display: flex;
+}
+
+.q-invoice-page td.columnStatus{
+    width: 10%;
+}
+
+.q-invoice-page .columnRowID{
+    width: 5%;
+}
+
+.q-invoice-page .contactContentColumn{
+    width: 20%;
+}
+
 @media only screen and (max-width:1300px){
 
     .q-invoice-page #qiContactPopup{
         width: 30%;
     }
 
-}
-
-@media only screen and (max-width:1100px){
-
-    .q-invoice-page td.columnEdit{
-        width: 31px!important;
-    }
-    
-}
-
-@media only screen and (max-width:850px){
-
-    .q-invoice-page td.columnEdit{
-        width: 37px!important;
-    }
-    
 }
 
 @media only screen and (max-width:782px){

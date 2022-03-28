@@ -61,13 +61,13 @@
     <div id="show-contacts">
         <table class="wp-list-table widefat" id="contacts">
             <thead id="contactTabkeHeader"> 
-                <td class="check-column contactsColumnRowID fiftyCol">#</td>
-                <td class="check-column contactsColumnCompany twohundredCol">Company</td>
-                <td class="check-column contactsColumnName hundredCol">Name</td>
-                <td class="check-column contactsColumnCity fiftyCol">City</td>
-                <td class="check-column contactsColumnEmail fiftyCol">Email</td>
-                <td class="check-column contactsColumnStatus fiftyCol"></td>  
-                <td class="check-column contactsColumnEdit eightyCol"></td>  
+                <td class="check-column contactsColumnRowID">#</td>
+                <td class="check-column contactsColumnCompany contactContentColumn">Company</td>
+                <td class="check-column contactsColumnName contactContentColumn">Name</td>
+                <td class="check-column contactsColumnCity contactContentColumn">City</td>
+                <td class="check-column contactsColumnEmail contactContentColumn">Email</td>
+                <td class="check-column contactsColumnStatus"></td>  
+                <td class="check-column contactsColumnEdit"></td>  
             </thead>
             <?php
             $table_name = $GLOBALS['wpdb']->prefix . 
@@ -85,15 +85,15 @@
                 <tr value="<?php echo esc_html($contact->id);?>">
                
 
-                <td class="check-column manage-column fiftyCol columnRowID">
+                <td class="check-column manage-column columnRowID">
                     <?php echo esc_html($count); ?>
                 </td>
 
-                <td class="check-column manage-column twohundredCol columnCompany">
+                <td class="check-column manage-column columnCompany contactContentColumn">
                     <?php echo esc_html($contact->company); ?> 
                 </td>
 
-                <td class="check-column manage-column hundredCol columnName">
+                <td class="check-column manage-column columnName contactContentColumn">
                     
                     <span class="columnFirstName">
                         <?php echo  esc_html($contact->firstname); ?>
@@ -105,23 +105,23 @@
 
                 </td>
 
-                <td class="check-column manage-column fiftyCol columnCity">
+                <td class="check-column manage-column columnCity contactContentColumn">
                     <span>
                         <?php echo esc_html($contact->city); ?>
                     </span>
                     
                 </td>
 
-                <td class="check-column manage-column fiftyCol columnEmail">
+                <td class="check-column manage-column columnEmail contactContentColumn">
                 <span>
                         <?php echo esc_html($contact->email); ?>
                     </span>
                 </td>
 
-                <td class="check-column manage-column fiftyCol columnStatus">
+                <td class="check-column manage-column columnStatus">
                 </td>
 
-                <td class="check-column manage-column eightyCol columnEdit">
+                <td class="check-column manage-column columnEdit">
                     
                     <span style="font-size: 20px"
                         id="<?php echo "edit-".$contact->id;?>"
