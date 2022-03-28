@@ -750,6 +750,11 @@ jQuery(function ($) {
    */
    $('.reminderRow').on('click', function (event) {
 
+    openReminderPopup(event);
+
+  })
+
+  function openReminderPopup(event){
     if ($(event.target).hasClass('listPointerEventsMod')) { return }
     if ($(event.target).hasClass('download')) { return }
     if ($(event.target).hasClass('mail')) { return }
@@ -781,13 +786,18 @@ jQuery(function ($) {
     $('div#nonceFields').prepend(nonceFieldForUpdating)
 
     editInvoice(currentInvoiceID, false, 'rem');
-
-  })
+  }
 
   /**
    * Open an edit invoice form but add the dunning1 and reminder row. When this form is submitted the ivoice is now in state dunning.
    */
    $('.dunningIRow').on('click', function (event) {
+
+    openDunningIPopup(event);
+
+  })
+
+  function openDunningIPopup(event){
 
     if ($(event.target).hasClass('listPointerEventsMod')) { return }
     if ($(event.target).hasClass('download')) { return }
@@ -821,12 +831,18 @@ jQuery(function ($) {
 
     editInvoice(currentInvoiceID, false, 'd1');
 
-  })
+  }
 
   /**
    * Open an edit invoice form but add the dunning 2 and dunning1 and reminder row. When this form is submitted the ivoice is now in state dunning.
    */
    $('.dunningIIRow').on('click', function (event) {
+
+    openDunningIIPopup(event);
+
+  })
+
+  function openDunningIIPopup(event){
 
     if ($(event.target).hasClass('listPointerEventsMod')) { return }
     if ($(event.target).hasClass('download')) { return }
@@ -859,8 +875,8 @@ jQuery(function ($) {
     $('div#nonceFields').prepend(nonceFieldForUpdating)
 
     editInvoice(currentInvoiceID, false, 'd2');
-
-  })
+    
+  }
 
   /**
    * Duplicate the current Invoice but put it in the New Invoice Form to insert it as a new one
@@ -1447,10 +1463,13 @@ jQuery(function ($) {
     row.find('td.columnDescription').text(invoice.itemDescription[0])
     row.find('td.columnNet').text($('.qInvc-total-summe').eq(0).text() + ' ' + currencySign)
     row.find('td.columnTotal').text($('.qInvc-total-brutto-summe').eq(0).text() + ' ' + currencySign)
-    //add dunning circle
+    
+    //modify dunning
+    //dunning status circle
     row.find('td.columnDunning span').removeClass()
     row.find('td.columnDunning span').addClass('longCircle ' + dunningData[0])
     row.find('td.columnDunning span').text(dunningData[1] + ' days')
+    //dunning dropdown values
     var numberOfItems = invoice.itemPrice.length
     row.find('#q_invc_reminderValue').attr('value', invoice.itemPrice[numberOfItems - 3])
     row.find('#q_invc_dunningIValue').attr('value', invoice.itemPrice[numberOfItems - 2])
@@ -1458,7 +1477,7 @@ jQuery(function ($) {
     row.find('#q_invc_reminderActiveVal').attr('value', invoice.insertInDatabase[numberOfItems - 3])
     row.find('#q_invc_dunningIActiveVal').attr('value', invoice.insertInDatabase[numberOfItems - 2])
     row.find('#q_invc_dunningIIActiveVal').attr('value', invoice.insertInDatabase[numberOfItems - 1])
-
+    //dunning dropdown download status
     if(invoice.insertInDatabase[numberOfItems - 3]){
       row.find('.downloadReminder').removeClass('iconInactiveColor');
     }
@@ -1729,9 +1748,42 @@ jQuery(function ($) {
       })
 
       //add dunning
+      //add dunning status
       clone.find('td.columnDunning span').removeClass()
       clone.find('td.columnDunning span').addClass('longCircle ' + dunningData[0])
-      clone.find('td.columnDunning span').text(dunningData[1])
+      clone.find('td.columnDunning span').text(dunningData[1] + ' days')
+      //deactivate and activate dunning in dropwdown
+      clone.find('td.columnEdit li#q_invc_reminderValue').addClass('deactivatedListElement');
+      clone.find('td.columnEdit li#q_invc_dunningIValue').addClass('deactivatedListElement');
+      clone.find('td.columnEdit li#q_invc_dunningIIValue').addClass('deactivatedListElement');
+      if(dunningData[0] == 'reminder'){
+        clone.find('td.columnEdit li#q_invc_reminderValue').removeClass('deactivatedListElement');
+        clone.find('td.columnEdit li#q_invc_reminderValue').on('click', function(event){
+          openReminderPopup(event);
+        });
+      } else if(dunningData[0] == 'dunningI'){
+        clone.find('td.columnEdit li#q_invc_reminderValue').removeClass('deactivatedListElement');
+        clone.find('td.columnEdit li#q_invc_dunningIValue').removeClass('deactivatedListElement');
+        clone.find('td.columnEdit li#q_invc_reminderValue').on('click', function(event){
+          openReminderPopup(event);
+        });
+        clone.find('td.columnEdit li#q_invc_dunningIValue').on('click', function(event){
+          openDunningIPopup(event);
+        });
+      } else if(dunningData[0] == 'dunningII'){
+        clone.find('td.columnEdit li#q_invc_reminderValue').removeClass('deactivatedListElement');
+        clone.find('td.columnEdit li#q_invc_dunningIValue').removeClass('deactivatedListElement');
+        clone.find('td.columnEdit li#q_invc_dunningIIValue').removeClass('deactivatedListElement');
+        clone.find('td.columnEdit li#q_invc_reminderValue').on('click', function(event){
+          openReminderPopup(event);
+        });
+        clone.find('td.columnEdit li#q_invc_dunningIValue').on('click', function(event){
+          openDunningIPopup(event);
+        });
+        clone.find('td.columnEdit li#q_invc_dunningIIValue').on('click', function(event){
+          openDunningIIPopup(event);
+        });
+      }
 
 
       q_invoice_RecalcSums(
