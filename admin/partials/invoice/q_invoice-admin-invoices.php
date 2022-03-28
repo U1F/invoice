@@ -156,7 +156,7 @@ function Invoice_list()
         echo '</pre>';
         include_once INVOICE_ROOT_PATH . 
         "/admin/partials/export/export.php";  
-        exportInvoice(42, "dunningII");          
+        exportInvoice(39, "dunningII");          
     }
     
 }

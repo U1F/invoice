@@ -44,6 +44,29 @@ function exportInvoice($invoiceID, $invoiceType)
         $invoiceData = Interface_Invoices::getInvoiceData($invoiceID);
     }
 
+    //prepare footer data
+    $bankIndex = $invoiceData[0][0]->bank;
+    $ibanFromDatabase = get_option('qi_settings')["IBAN{$bankIndex}"];
+    // Get rid of spaces if exist
+    $ibanArray = explode(' ', $ibanFromDatabase);
+    $iban = implode('' , $ibanArray);
+    // Seperate blz and kto
+    $blz = substr($iban, 4, 8);
+    $kto = strVal(intVal(substr($iban, 12, 10))); 
+    //Fill with spaces if not exist for IBAN in second line
+    $ibanArray = str_split($iban);
+    $iban = '';
+    $counter = 0;
+    for($i = 0; $i < sizeof($ibanArray); $i++){
+        $iban = $iban.$ibanArray[$i];
+        if($counter == 3){
+            $iban = $iban.' ';
+            $counter = 0;
+        } else{
+            $counter++;
+        }
+    }
+
     //prepare currency sign; default €
     $currencySign = "€";
     if (get_option('qi_settings')['invoiceCurrency'] == "Euro") {
@@ -79,22 +102,22 @@ function exportInvoice($invoiceID, $invoiceType)
 
     //prepare invoice details row size by checking if a delivery date has been set
     //$deliveryDateIsSet has to be an int, cause its not only used as a flag
-    $deliveryDate = date_parse_from_format(
+    /*$deliveryDate = date_parse_from_format(
         "Y-m-d", 
         $invoiceData[0][0]->delivery_date
-    );
+    );*/
 
     $deliveryDateIsSet = 0;
     $tableWidthOfInvoiceHead = 180;
     
-    if (checkdate(
+    /*if (checkdate(
         $deliveryDate['month'],
         $deliveryDate['day'], 
         $deliveryDate['year']
     )) {
         $deliveryDateIsSet = 1;
         $tableWidthOfInvoiceHead = 127;
-    }
+    }*/
 
     //prepare logo image from settings or leave it empty on default
     if (get_option('qi_settings')['logoFileUrl']) {
@@ -156,29 +179,6 @@ function exportInvoice($invoiceID, $invoiceType)
     }
     if (get_option('qi_settings')['invoiceUnit'] == "Liter") {
         $invoiceUnit = __("Litre", "ev");
-    }
-
-    //prepare footer data
-    $bankIndex = $invoiceData[0][0]->bank;
-    $ibanFromDatabase = get_option('qi_settings')["IBAN{$bankIndex}"];
-    // Get rid of spaces if exist
-    $ibanArray = explode(' ', $ibanFromDatabase);
-    $iban = implode('' , $ibanArray);
-    // Seperate blz and kto
-    $blz = substr($iban, 4, 8);
-    $kto = strVal(intVal(substr($iban, 12, 10))); 
-    //Fill with spaces if not exist for IBAN in second line
-    $ibanArray = str_split($iban);
-    $iban = '';
-    $counter = 0;
-    for($i = 0; $i < sizeof($ibanArray); $i++){
-        $iban = $iban.$ibanArray[$i];
-        if($counter == 3){
-            $iban = $iban.' ';
-            $counter = 0;
-        } else{
-            $counter++;
-        }
     }
 
 

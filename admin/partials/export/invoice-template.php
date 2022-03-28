@@ -288,8 +288,8 @@ td.invoiceItemsHeader {
                         
                         <span id="serviceDate">
                             <?php
-                                $date = new DateTime($invoiceData[0][0]->delivery_date);
-                                echo $date->format('d.m.y');
+                                /*$date = new DateTime($invoiceData[0][0]->delivery_date);
+                                echo $date->format('d.m.y');*/
                             ?>
                         </span>
                     </td>
@@ -682,7 +682,7 @@ td.invoiceItemsHeader {
             <?php 
             echo 
                 __("Bank Details: ", "ev"). 
-                get_option('qi_settings')["bankName{$bankIndex}"].
+                get_option('qi_settings')["BankName{$bankIndex}"].
                 ' (BLZ '.$blz. ', Kto '. $kto . ')'.
                 '<br>'.
                 'IBAN: '. $iban.

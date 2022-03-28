@@ -1552,7 +1552,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             ob_start();
             include_once INVOICE_ROOT_PATH . 
             "/admin/partials/export/export.php";
-            exportInvoice('42', "dunningII");             
+            exportInvoice($invoiceID, "dunningII");             
             $exportInv= ob_get_contents();
             ob_end_clean();
             
@@ -1706,7 +1706,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
 
                 Interface_Invoices::updateArrayInDB($_POST);
                 
-                $this->printInvoiceTemplate($_POST['invoice_id']);
+                //$this->printInvoiceTemplate($_POST['invoice_id']);
                 if($reminderPDF){
                     $this->printDunningTemplate($_POST['invoice_id'], 'reminder');
                 } else if($dunIPDF){

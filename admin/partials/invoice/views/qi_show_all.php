@@ -56,9 +56,8 @@
             </input>
             <span class="dashicons dashicons-search"></span>
         </div>
-        
-
      </div>
+     
     <div class="mobileFilterButtons qInvMainSearchable">
         <select name="mobileFilterButtonsDropdown" id="mobileFilterButtonsDropdown">
             <option class="mobileFilterButtonsOption" value="all" selected>All</option>
@@ -75,7 +74,6 @@
     </div>
     <div id="q-invoice-TableContentWrapper" class="tab_content_wrapper" style="border-top:none">
 <?php 
-
 
 
 /**
@@ -630,7 +628,7 @@ function showOpenInvoices()
                                             $invoice_header->id;
                                         ?>"
                                     title="Download Dunning 1"
-                                    class="downloadDunningI download dashicons dashicons-download <?php if(!$dunningIActiv){echo 'iconInactiveColor';}?>"
+                                    class="downloadDunningI download dashicons dashicons-download <?php if(!$dunningIActive){echo 'iconInactiveColor';}?>"
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                     download
                                 >
