@@ -60,7 +60,7 @@
     
     <div id="show-contacts">
         <table class="wp-list-table widefat" id="contacts">
-            <thead id="contactTabkeHeader"> 
+            <thead id="contactTableHeader"> 
                 <td class="check-column contactsColumnRowID">#</td>
                 <td class="check-column contactsColumnCompany contactContentColumn">Company</td>
                 <td class="check-column contactsColumnName contactContentColumn">Name</td>
@@ -85,15 +85,15 @@
                 <tr value="<?php echo esc_html($contact->id);?>">
                
 
-                <td class="check-column manage-column columnRowID">
+                <td class="check-column manage-column contactColumnRowID">
                     <?php echo esc_html($count); ?>
                 </td>
 
-                <td class="check-column manage-column columnCompany contactContentColumn">
+                <td class="check-column manage-column contactColumnCompany contactContentColumn">
                     <?php echo esc_html($contact->company); ?> 
                 </td>
 
-                <td class="check-column manage-column columnName contactContentColumn">
+                <td class="check-column manage-column contactColumnName contactContentColumn">
                     
                     <span class="columnFirstName">
                         <?php echo  esc_html($contact->firstname); ?>
@@ -105,23 +105,23 @@
 
                 </td>
 
-                <td class="check-column manage-column columnCity contactContentColumn">
+                <td class="check-column manage-column contactColumnCity contactContentColumn">
                     <span>
                         <?php echo esc_html($contact->city); ?>
                     </span>
                     
                 </td>
 
-                <td class="check-column manage-column columnEmail contactContentColumn">
+                <td class="check-column manage-column contactColumnEmail contactContentColumn">
                 <span>
                         <?php echo esc_html($contact->email); ?>
                     </span>
                 </td>
 
-                <td class="check-column manage-column columnStatus">
+                <td class="check-column manage-column contactColumnStatus">
                 </td>
 
-                <td class="check-column manage-column columnEdit">
+                <td class="check-column manage-column contactColumnEdit">
                     
                     <span style="font-size: 20px"
                         id="<?php echo "edit-".$contact->id;?>"
