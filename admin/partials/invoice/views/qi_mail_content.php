@@ -14,46 +14,59 @@
  */
 ?>
 
+<?php
+$editor_id = 'templateEditor';
+$settings = array('media_buttons' => false, 'wpautop' => false);
+?>
+
 <!-- POPUP DESIGN
     Pops Up when editing a mail template or insert a new mail template. Consists of:
     - Header which says Neuer Eintrag per default (changed by javascript) and shows a button to close the popup (see bsCloseUebersichtPopup)
-    -
     - two buttons to save/update and to go back
 -->
-<div class="overlay" id="qinv_mail-popup" style="left:0;">
-	<div class="edit-popup">
-		
-		<div class="popup-content">
-		    <div class="dashicons dashicons-no-alt qinv_close-icon-mod" onClick="qinvCloseMailPopup()"></div>
+<div id="qinv_mail-popup" class="overlay" style="left: 0;">
+	<div id="send-invoice-as-mail" class="edit-popup">
 
-		    	<!--Form with Textfields-
-		    	<form class="uebersicht-form" action="" method="POST">-->
+		<!--Form with Textfields-
+		<form class="uebersicht-form" action="" method="POST">-->
 
-		    		<fieldset id="qinv_mail-info" class="justify-left lbl-pre-w100">
+		<fieldset id="qinv_mail-info" class="">
 
-		    			<div class="border-bottom-grey flex-cont">
-		    				<label for="qinv_mail-name" id="qinv_mail-name-label" class="form-label-pre form-label-font" style="width:10%;">Name:</label>
-		    				<input name="mail-name" id="qinv_mail-name" class="backend-einstellungen-input-style form-input bsCheckableInput bs-ninty100"></input>
-		    			</div>
+			<div class="qinvc_mailContentRow">
+				<label for="qinv_mail-name" id="qinv_mail-name-label" class="qinvc_mailContentLabel" style="width:10%;">Name:</label>
+				<input name="mail-name" id="qinv_mail-name" class="qinvc_mailContentInput"></input>
+			</div>
 
-		    			<div class="border-bottom-grey flex-cont">
-		    				<label for="qinv_mail-subject" id="qinv_mail-subject-label" class="form-label-pre form-label-font" style="width:10%;">Betreff:</label>
-		    				<input name="mail-subject" id="qinv_mail-subject" class="backend-einstellungen-input-style form-input bsCheckableInput bs-ninty100"></input>
-		    			</div>
+			<div class="qinvc_mailContentRow">
+				<label for="qinv_mail-subject" id="qinv_mail-subject-label" class="qinvc_mailContentLabel" style="width:10%;">Betreff:</label>
+				<input name="mail-subject" id="qinv_mail-subject" class="qinvc_mailContentInput"></input>
+			</div>
 
-		    			<div class="" style="margin-top:1.4em;">
-		    				<?php wp_editor("", $editor_id, $settings);?>
-		    			</div>
+			<div class="" style="margin-top:1.4em;">
+				<?php wp_editor("", $editor_id, $settings);?>
+			</div>
 
-		    		</fieldset>
+		</fieldset>
 
-		    		<div id="mail-popup-controls">
-		    			<button id="qinv_mail-popup-return" class="button button-primary bs-mobile-primary-mod" style="@media screen and (max-width: 1500px){margin:0em 1.4em 0em 1.4em!important}" onClick="bsCloseMailPopup()">Zurück</button>
-		    			<button id="qinv_mail-popup-submit" class="button button-primary bs-popup-yes bs-mobile-primary-mod" style="@media screen and (max-width: 1500px){margin:0em 1.4em 0em 1.4em!important}" type="submit" name="submit">Speichern</button>
-		    		</div>
+		<div id="qinv_mail-popup-controls" style="padding: 20px 20px 0 20px;">
+			<button
+				id="qinv_mail-popup-return"
+				class="qInvoiceFormButton cancelButton"
+				type="button"
+				style="">
+				Cancel
+			</button>
+			<button
+				id="qinv_mail-popup-submit"
+				class="qInvoiceFormButton submitButton"
+				style="float: right;"
+				type="button"
+				name="submit">
+				Senden
+			</button>
+		</div>
 
-		    	<!--</form>-->
+		<!--</form>-->
 
-		    </div>
 	</div>
 </div>

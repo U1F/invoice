@@ -2070,6 +2070,36 @@ jQuery(function ($) {
     }
   });
 
+  // Editor functionality gets modified
+  function qpModifyWPEditor(id){
+    document.getElementById(id+"-tmce").click();
+    qpModifyWPEditorCSS(id);
+    document.getElementById(id+"-html").click();
+    let vis = document.getElementById(id+"-tmce");
+    document.getElementById("qt_"+id+"_toolbar").appendChild(vis);
+    document.getElementById(id+"-tmce").click();
+    let txt = document.getElementById(id+"-html");
+    document.getElementById("mceu_28-body").appendChild(txt);
+    document.getElementById("mceu_27").appendChild(txt);
+    document.getElementById("mceu_29-body").appendChild(txt); // Louis: text-to-visual button is inserted into the toolbar
+  }
+
+  // Editor style gets modified
+
+  function qpModifyWPEditorCSS(id){
+    document.getElementById(id+"-tmce").click();
+    document.getElementById("mceu_27").classList.add("bs-white-background", "bs-no-border");
+    document.getElementById("mceu_26").classList.add("bs-white-background", "bs-no-border");
+    document.getElementById("qt_"+id+"_toolbar").classList.add("bs-white-background");
+    document.getElementById("mceu_5").classList.add("bs-hide-element");
+    document.getElementById("mceu_10").classList.add("bs-hide-element");
+    document.getElementById("mceu_11").classList.add("bs-hide-element");
+    document.getElementById("mceu_12").classList.add("bs-hide-element");
+    document.getElementById(id+"-html").classList.add("bs-margin-mod");
+    document.getElementById(id+"-tmce").classList.add("bs-margin-mod");
+    document.getElementById(id+"_ifr").style.minHeight = "16em"; //for height of WP-Editor-field
+  }
+
 
   /**
    * Function to simulate a dynamic ID size depending on the ID length:
@@ -2099,6 +2129,10 @@ jQuery(function ($) {
     }
   
     $(".q-invoice-page table#tableInvoices .columnInvoiceID").css("width", id_width);
+
+    qpModifyWPEditor('templateEditor');
+
+    
     
    })
 

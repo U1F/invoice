@@ -1,0 +1,42 @@
+.q-invoice-page .qinvc_mailContentRow{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e6e6e6 !important;
+    padding: 5px 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.q-invoice-page .qinvc_mailContentLabel{
+    width: 10%;
+    font-size: 1em;
+    margin-bottom: 0;
+}
+
+.q-invoice-page .qinvc_mailContentInput{
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #8c8f94;
+    overflow: auto;
+    padding: 2px 6px;
+    margin: 1em 0 1em 0;
+    height: 40px !important;
+}
+
+/*
+Following CSS Mods modyfies the wordpress Text Editor
+*/
+.q-invoice-page .bs-white-background{
+    background: #fff!important;
+}
+.q-invoice-page .bs-no-border{
+    border-bottom: 0!important;
+}
+.q-invoice-page .bs-hide-element{
+    display: none!important;
+}
+.q-invoice-page .bs-margin-mod{
+    margin: 0 5px 0 5px!important;
+    float: right!important;
+}
