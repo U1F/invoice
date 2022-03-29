@@ -285,7 +285,6 @@
     font-size: 14px;
     width: 420px;
     margin-left: auto;
-    margin-right: 44px;
     margin-top: 4px;
     margin-bottom: 20px;
     border: 1px solid #dadce1;
@@ -449,8 +448,7 @@
 
     .q-invoice-page #invoiceForm div#invoice-sums{
         margin-top: 12px;
-        margin-left: 12px;
-        margin-right: 12px;
+        width: auto;
     }
 
     .qi_mobileFlex{
@@ -503,12 +501,18 @@
 
 @media only screen and (max-width:600px){
 
-    .q-invoice-page #invoiceForm div#invoice-sums{
-        margin-left: 0px;
+    .q-invoice-page #invoiceForm td.invoiceSumsLabel{
+        width:50%;
+    }
+
+    .q-invoice-page #invoiceForm td.invoiceSumsAccounts{
+        width:50%;
     }
 
     .q-invoice-page #invoiceForm div#invoice-sums{
-        width:265px;
+        width:auto;
+        min-width: 265px;
+        margin-left: 0px;
     }
 
     #qi_invoiceFormButtons{
