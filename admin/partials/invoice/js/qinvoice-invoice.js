@@ -209,43 +209,51 @@ jQuery(function ($) {
   // ............................................................................................................................
   // ............................................................................................................................
 
-  $(".filterButtons").on("click",function(){
-    console.log(".filterButtons: 'You clicked me!'")
-    //  paginate()
-  })
-  // sum has to be omitted 
-  // For most rows we need a special sort function.
-  // Sums would have to be added below
-  // Every Caption would need its own algorithm (comparer)
-    $('th').click(function(){
-      return; // for now, I do not want this function to work
-      var table = $(this).parents('table').eq(0)
-      var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
-      this.asc = !this.asc
-      if (!this.asc){rows = rows.reverse()}
-      for (var i = 0; i < rows.length; i++){table.append(rows[i])}
-    })
-
-    function comparer(index) {
-        return function(a, b) {
-            var valA = getCellValue(a, index), valB = getCellValue(b, index)
-            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
-        }
-    }
-
-//
-//    ██████  ██    ██ ███████ ██████  ██    ██ ██ ███████ ██     ██ 
-//   ██    ██ ██    ██ ██      ██   ██ ██    ██ ██ ██      ██     ██ 
-//   ██    ██ ██    ██ █████   ██████  ██    ██ ██ █████   ██  █  ██ 
-//   ██    ██  ██  ██  ██      ██   ██  ██  ██  ██ ██      ██ ███ ██ 
-//    ██████    ████   ███████ ██   ██   ████   ██ ███████  ███ ███  
-//
-
- 
 
   function getCellValue(row, index){ 
     return $(row).children('td').eq(index).text() 
   }
+
+  $('.paginationButton').on('click', (event) => {
+    event.preventDefault()
+    //right now this is deactivated
+    return
+    const clickedButton = event.currentTarget
+    const selectedYear = $(clickedButton).html()
+    
+    $(clickedButton).siblings().removeClass('active')
+    $(clickedButton).addClass('active')
+    $("#tableInvoices tbody tr").hide()
+    $("#tableInvoices tbody tr td:contains("+selectedYear+")").closest('tr').show()
+
+  })
+
+  filterInvoicesByYear = (selectedYear) => {
+    $("#tableInvoices tbody tr").hide()
+    $("#tableInvoices tbody tr td:contains(" + selectedYear +")").closest('tr').show()
+  }
+
+  $('.operateOnYear').on('click', (event) => {
+    event.preventDefault()
+    const clickedButton = event.currentTarget
+    const operateOnYear = $(clickedButton).html()
+    const activeYear = parseInt($('button.paginationButton#selectYearForPagination').html()) 
+
+    $("#tableInvoices tbody tr").hide()
+
+    if (operateOnYear === '+') { 
+      $('button.paginationButton#selectYearForPagination').html(activeYear+1)
+      filterInvoicesByYear(activeYear+1)
+    }
+    
+    if (operateOnYear === '-') { 
+      $('button.paginationButton#selectYearForPagination').html(activeYear-1)
+      filterInvoicesByYear(activeYear-1)
+     }
+
+    
+  })
+
 
   function getRowNumber (eventsOriginalTarget) {
     return $(eventsOriginalTarget).closest('tr').attr('value')
@@ -424,6 +432,7 @@ jQuery(function ($) {
     displaySuccess ("Old Invoice Data saved!")
     
   })
+  
   /**
    * Clicking "Cancel" in the dialog just hides it
    */
@@ -2075,8 +2084,12 @@ jQuery(function ($) {
    * Function to simulate a dynamic ID size depending on the ID length:
    * Each Number will receive 7px + 11px for the first
    */
+  fireOnPageLoad = () => {
+    filterInvoicesByYear('2022')
+  }
 
    jQuery(document).ready(function ($) {
+     fireOnPageLoad()
     
     var id_length = $("tbody tr:first td:first span").text().replace(/\s+/g, '').length;
     switch (id_length){

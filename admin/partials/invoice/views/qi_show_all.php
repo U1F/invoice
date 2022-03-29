@@ -19,6 +19,12 @@
 ?>
 
  <div class="page_content">
+     <div id='paginationButtonRow'>
+         <button class='paginationButton operateOnYear' id='subYearForPagination'>-</button>
+         <button class='paginationButton' id='selectYearForPagination'>2022</button>
+         <button class='paginationButton operateOnYear' id='addYearForPagination'>+</button>
+         
+     </div>
      <div class="filterButtons qInvMainSearchable">
         <div class="filterButton active" id="showAllInvoices">
             <button class="invoiceButton">
