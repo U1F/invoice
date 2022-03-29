@@ -144,22 +144,22 @@ jQuery(function ($) {
 
   function changeUpdatedContactRow (contact) {
     // Change Infos in the right table row.
-    $('table#contacts > tbody > tr[value=' + contact.qiContactID + ']').find('td.columnCompany').text(contact.qiContactCompany)
+    $('table#contacts > tbody > tr[value=' + contact.qiContactID + ']').find('td.contactColumnCompany').text(contact.qiContactCompany)
     $('table#contacts > tbody > tr[value=' + contact.qiContactID + ']').find('span.columnFirstName').text(contact.qiContactFirstname)
     $('table#contacts > tbody > tr[value=' + contact.qiContactID + ']').find('span.columnLastName').text(contact.qiContactName)
-    $('table#contacts > tbody > tr[value=' + contact.qiContactID + ']').find('td.columnCity').text(contact.qiContactCity)
-    $('table#contacts > tbody > tr[value=' + contact.qiContactID + ']').find('td.columnEmail').text(contact.qiContactEmail)
+    $('table#contacts > tbody > tr[value=' + contact.qiContactID + ']').find('td.contactColumnCity').text(contact.qiContactCity)
+    $('table#contacts > tbody > tr[value=' + contact.qiContactID + ']').find('td.contactColumnEmail').text(contact.qiContactEmail)
   }
 
   function addNewContactRow (contact, id) {
     const clone = $('table#contacts > tbody').find('tr').last().clone()
 
-    clone.find('td.columnRowID').text(1 + parseInt(clone.find('td.columnRowID').text()))
-    clone.find('td.columnCompany').text(contact.qiContactCompany)
+    clone.find('td.contactColumnRowID').text(1 + parseInt(clone.find('td.contactColumnRowID').text()))
+    clone.find('td.contactColumnCompany').text(contact.qiContactCompany)
     clone.find('span.columnFirstName').text(contact.qiContactFirstname)
     clone.find('span.columnLastName').text(contact.qiContactName)
-    clone.find('td.columnCity').text(contact.qiContactCity)
-    clone.find('td.columnEmail').text(contact.qiContactEmail)
+    clone.find('td.contactColumnCity').text(contact.qiContactCity)
+    clone.find('td.contactColumnEmail').text(contact.qiContactEmail)
     //Check Point
     console.log(id.toString())
     console.log(clone.val())
