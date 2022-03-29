@@ -1709,9 +1709,11 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 //$this->printInvoiceTemplate($_POST['invoice_id']);
                 if($reminderPDF){
                     $this->printDunningTemplate($_POST['invoice_id'], 'reminder');
-                } else if($dunIPDF){
+                }
+                if($dunIPDF){
                     $this->printDunningTemplate($_POST['invoice_id'], 'dunningI');
-                } else if($dunIIPDF){
+                }
+                if($dunIIPDF){
                     $this->printDunningTemplate($_POST['invoice_id'], 'dunningII');
                 }
                 $response['success'] = true;
