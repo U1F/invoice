@@ -356,7 +356,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                         <tr id="tableRowBank1">
                             <td class="labelsRightTable">
                                 <?php echo (
-                                    get_option('qi_settings')['FirstBankName']
+                                    get_option('qi_settings')['BankName1']
                                 );?>  
                             </td>
 
@@ -377,7 +377,7 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
                             <td 
                                 class="labelsRightTable" 
                             ><?php
-                                echo get_option('qi_settings')['SecondBankName']; 
+                                echo get_option('qi_settings')['BankName2']; 
                             ?></td>
         
                             <td class="inputsRightTable">
