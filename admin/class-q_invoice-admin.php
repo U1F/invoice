@@ -1825,14 +1825,28 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         public function updateInvoiceHeaderServerSide()
         {
             check_ajax_referer($this->_plugin_name . "_nonce");
+            
+            if (json_encode($_POST["data"]) == '{"paydate":""}') {
+                //echo json_encode(Interface_Invoices::getInvoiceData($_POST["id"]));
+                $random = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(5/strlen($x)) )),1,5);
+                $newArchivedInvoice = fopen(plugin_dir_path(__FILE__)."00-". $random . "-archivedInvoice-". $_POST["id"] .".txt", "w") or die("Unable to open file!");
+                $txt = json_encode(Interface_Invoices::getInvoiceData($_POST["id"]));
+                fwrite($newArchivedInvoice, $txt);
+                fclose($newArchivedInvoice);
+
+            
+                
+            } else {
+                
+                echo json_encode($_POST["data"]);
+                //echo "success";
+            }
 
             Interface_Invoices::updateInvoiceHeaderItem(
                 $_POST["id"], 
                 $_POST["data"]
             );
-        
-            echo "success";
-
+             
             wp_die();
         }
 
