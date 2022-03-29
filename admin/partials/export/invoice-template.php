@@ -206,7 +206,7 @@ td.invoiceItemsHeader {
         <?php //invoice content ?>
         <div 
             id="invoiceHeader" 
-            style="height:100px; vertical-align: bottom; font-size: 40px;"
+            style="height:100px; vertical-align: bottom; margin-left: -8px;"
         >
             <p style="font-size: 24px;">
                 <b> <?php echo $heading;?> </b>
@@ -216,9 +216,9 @@ td.invoiceItemsHeader {
 
         <div 
             id="invoiceText" 
-            style="font-size: 14px; height: 40px; vertical-align: bottom; width: 640px;"
+            style="font-size: 14px; vertical-align: bottom; width: 640px;"
         >
-            <p class="invoiceText" id="invoiceTextRegular" style="display:inline;"> 
+            <p class="invoiceText" id="invoiceTextRegular"> 
                 <?php echo $invoiceTextIntro;?>
             </p>
         </div>
