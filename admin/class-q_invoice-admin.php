@@ -180,6 +180,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 ["name" => "invoice", "partial" => "invoice"],
                 ["name" => "invoice-overview", "partial" => "invoice"],
                 ["name" => "invoice-form", "partial" => "invoice"],
+                ["name" => "invoice-mail", "partial" => "invoice"],
                 ["name" => "dunning",  "partial" => "dunning"],
                 ["name" => "settings","partial" => "settings"],
                 ["name" => "export",  "partial" => "export"],

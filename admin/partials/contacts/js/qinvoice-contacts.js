@@ -160,9 +160,6 @@ jQuery(function ($) {
     clone.find('span.columnLastName').text(contact.qiContactName)
     clone.find('td.contactColumnCity').text(contact.qiContactCity)
     clone.find('td.contactColumnEmail').text(contact.qiContactEmail)
-    //Check Point
-    console.log(id.toString())
-    console.log(clone.val())
     clone.attr('value', id.toString())
     clone.find('span.editContact').attr('id', 'edit-' + id)
     clone.find('span.deleteContact').attr('id', id)
