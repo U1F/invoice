@@ -350,14 +350,10 @@ jQuery(function ($) {
     }
     q_invoice_RecalcSums(0,0,0);
   })
-
-  
-
-
   /**
    * Escape key closes Overlay
    * 
-   * @param {event} x We check if Escpape has been pressed
+   * @param {event} x We check if Escape has been pressed
    */
   $(document).on('keydown', function (e) {
     if (e.keyCode === 27) {
@@ -400,11 +396,11 @@ jQuery(function ($) {
    */
   $("#reopenPaidInvoice").on("click", ".submitButton", function(){
     const currentRow = $("#reopenPaidInvoice #lastClickedInvoice").val()
-    console.log ('currentRow = ' + currentRow)
     setInvoiceToUnpaid(currentRow)
     
     $('#'+currentRow).find('td.columnStatusPaid input').prop('checked', false)
     $("#reopenPaidInvoice").hide()
+    displaySuccess("Old Inoice Data sucessfully saved")
     
   })
   /**
@@ -425,6 +421,7 @@ jQuery(function ($) {
     $('#edit-'+currentRow).find('td.columnStatusPaid input').prop('checked', false)
     $('#invoice_form_paid_toggle').prop('checked', false)
     $("#reopenPaidInvoiceWithinForm").hide()
+    displaySuccess ("Old Invoice Data saved!")
     
   })
   /**
@@ -1716,17 +1713,15 @@ jQuery(function ($) {
     let day = '0'
 
     if (parseInt(unformattedDate.getMonth()) < 10) {
-      month = '0' + (unformattedDate.getMonth() + 1)
+      month = '0' + parseInt(unformattedDate.getMonth() + 1)
     } else {
       month = unformattedDate.getMonth() + 1
     }
-
     if (parseInt(unformattedDate.getDate()) < 10) {
-      day = '0' + unformattedDate.getDate()
+      day = '0' + parseInt(unformattedDate.getDate())
     } else {
-      day = unformattedDate.getMonth()
+      day = parseInt(unformattedDate.getDate())
     }
-
     return year + '-' + month + '-' + day
   }
 
@@ -1845,16 +1840,21 @@ jQuery(function ($) {
       //keep invoice contacts up to date
       fetchContacts()
     }
-  
-
   }
 
-  function displaySuccess () {
+  function displaySuccess (messageContent) {
+    // remove older Messages if they exist
+    if ($('.messageSuccess').length == true) {
+      $('.messageSuccess').detach()
+    }
+    
+    
     $('#wpbody-content').prepend(
-      '<div class="qinvoiceMessage messageSuccess">' +
-      '<span> Invoice succesfully saved! </span>' +
-      '</div>')
-
+      '<div class="messageSuccess qinvoiceMessage"> ' +
+        '<span>' + messageContent + '</span>' +
+      '</div>'
+    )
+       
     $('.messageSuccess').delay(1000).fadeOut(800)
   }
 
@@ -1894,7 +1894,7 @@ jQuery(function ($) {
         // $('#invoiceForm').trigger('reset')
         $('#saveInvoice').prop('disabled', false);
 
-        displaySuccess()
+        displaySuccess('Invoice succesfully saved!')
       },
       error: function (response){
         $('#saveInvoice').prop('disabled', false);
