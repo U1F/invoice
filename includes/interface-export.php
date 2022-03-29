@@ -98,7 +98,7 @@ class Interface_Export {
             include_once INVOICE_ROOT_PATH . 
             "/admin/partials/export/export.php";  
             exportInvoice($invoiceID, $dunningType);             
-            $exportInv= ob_get_contents();
+            $exportDun= ob_get_contents();
             ob_end_clean();
 
             include  INVOICE_ROOT_PATH . 
@@ -113,7 +113,7 @@ class Interface_Export {
             }
             try {
                 $html2pdf = new HTML2PDF('P', 'A4', 'de');
-                $html2pdf->writeHTML($exportInv, isset($_GET['vuehtml']));
+                $html2pdf->writeHTML($exportDun, isset($_GET['vuehtml']));
                 // PDF Name : Invoice/Dunning/etc-$prefix$no-Customername_$datum
                 $html2pdf->Output(
                     INVOICE_ROOT_PATH . 

@@ -144,12 +144,12 @@ function Invoice_list()
         ob_end_clean();
         echo $showAll;
 
-        /*ob_start();
+        ob_start();
         include_once INVOICE_ROOT_PATH . 
         "/admin/partials/invoice/views/qi_mail_content.php";
         $mailContent= ob_get_contents();
         ob_end_clean();
-        echo $mailContent;*/
+        echo $mailContent;
 
         ob_start();
         include_once INVOICE_ROOT_PATH . 

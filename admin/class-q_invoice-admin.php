@@ -1706,7 +1706,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
 
                 Interface_Invoices::updateArrayInDB($_POST);
                 
-                //$this->printInvoiceTemplate($_POST['invoice_id']);
+                $this->printInvoiceTemplate($_POST['invoice_id']);
                 if($reminderPDF){
                     $this->printDunningTemplate($_POST['invoice_id'], 'reminder');
                 }
