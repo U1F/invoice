@@ -51,8 +51,19 @@ function Invoice_list()
         <input id="lastClickedInvoice" style="display:none">
         <div class="confirmationBox">
             <div id = "confirmationBoxBox">
-                <h3 id = "confirmationBoxHeader3">Do you really reopen the paid invoice?</h3>
-                <p> This will be documented somewhere in the database, but you will not be able to find that information on your own <br> You have been warned! </p>
+                <h3 id = "confirmationBoxHeader3">
+                    <?php
+                        _e("Do you want to reopen the paid invoice?","ev");
+                    ?>
+                </h3>
+                <p> 
+                    <?php 
+                        _e("Data of the original invoice will be stored, but restoring it, is a bit tedious in this version", "ev");
+                    ?> <br> 
+                    <?php 
+                        _e("You have been warned!","ev");
+                    ?> 
+                </p>
                 <div id="confirmationBoxButtons">
                     <button class="qInvoiceFormButton cancelButton" id="cancelReopenInvoice">
                         Cancel
@@ -156,7 +167,7 @@ function Invoice_list()
         echo '</pre>';
         include_once INVOICE_ROOT_PATH . 
         "/admin/partials/export/export.php";  
-        exportInvoice(39, "dunning1");          
+        exportInvoice(1, "dunning1");          
     }
     
 }
