@@ -137,6 +137,7 @@ td.invoiceItemsHeader {
                         }
                         ?>
                     </p>
+                    <br>
                     
                     <?php 
                     if ($invoiceType == "reminder" || $invoiceType == "dunning1" || $invoiceType == "dunning2") {
@@ -215,7 +216,7 @@ td.invoiceItemsHeader {
 
         <div 
             id="invoiceText" 
-            style="font-size: 14px; height: 40px; vertical-align: middle; width: 640px;"
+            style="font-size: 14px; height: 40px; vertical-align: bottom; width: 640px;"
         >
             <p class="invoiceText" id="invoiceTextRegular" style="display:inline;"> 
                 <?php echo $invoiceTextIntro;?>
@@ -370,14 +371,12 @@ td.invoiceItemsHeader {
                 <tr>
                     <td 
                         name="invoiceItemPosition" 
-                        
                         style="font-size:12px; text-align: right;"> 
                         <?php echo $invoiceDetail->position;?>
                     </td>
 
                     <td 
                         name="invoiceItemAmount" 
-                        
                         style="font-size:12px; text-align: right;"> 
                         <?php echo $invoiceDetail->amount;?>    
                     </td>
@@ -463,30 +462,35 @@ td.invoiceItemsHeader {
         if ($invoiceType == "dunning1" ||  $invoiceType == "dunning2" || $invoiceType == "reminder") {
             ?>
             <tr>
-                <td align="center" style="font-size:14px;">R</td>
+                <td name="invoiceItemPosition" style="font-size:12px; text-align: right;">R</td>
 
-                <td align="center" style="font-size:14px;">1</td>
+                <td name="invoiceItemAmount" style="font-size:12px; text-align: right;">1</td>
 
                 <td>
-                    <div style="width:371px;font-size:14px; word-wrap: break-word;">
+                    <div style="width:371px;font-size:12px; word-wrap: break-word;">
                         <?php echo __("Reminder Fee", "ev");?>
                     </div>
                 </td>
 
-                <td style="text-align: center;font-size:14px;">
+                <td style="text-align: right; font-size:12px;">
                     
                     <?php
-                        echo get_option('qi_settings')['reminder'] . " ".
+                        echo $reminderFee . " ".
                         $currencySign;
-                        $totalDunningFee = $totalDunningFee + get_option('qi_settings')['reminder'];
+                        $totalDunningFee = $totalDunningFee + $reminderFee;
                     ?>
                 </td>
 
-                <td style="text-align: center;font-size:14px; display:none"></td>
+                <?php 
+                if ($InvoiceHasAtLeastOneDiscount) {
+                ?>
+                    <td style="text-align: right; font-size:12px;"></td>
+                <?php 
+                } ?>
 
-                <td style="text-align: right;font-size:14px; padding-right:8px;">
+                <td style="text-align: right;font-size:12px; padding-right:8px;">
                     <?php
-                        echo get_option('qi_settings')['reminder'] . " ".
+                        echo $reminderFee . " ".
                         $currencySign;
                     ?>
                 </td>
@@ -499,30 +503,35 @@ td.invoiceItemsHeader {
         if ($invoiceType == "dunning1" ||  $invoiceType == "dunning2") {
             ?>
             <tr>
-                <td align="center" style="font-size:14px;">D1</td>
+                <td name="invoiceItemPosition" style="font-size:12px; text-align: right;">D1</td>
 
-                <td align="center" style="font-size:14px;">1</td>
+                <td name="invoiceItemAmount" style="font-size:12px; text-align: right;">1</td>
 
                 <td>
-                    <div style="width:371px;font-size:14px; word-wrap: break-word;">
+                    <div style="width:371px;font-size:12px; word-wrap: break-word;">
                         <?php echo __("First Dunning Fee", "ev");?>
                     </div>
                 </td>
 
-                <td style="text-align: center;font-size:14px;">
+                <td style="text-align: right; font-size:12px;">
                     
                     <?php
-                        echo get_option('qi_settings')['dunning1'] . " ".
+                        echo $dunIFee . " ".
                         $currencySign;
-                        $totalDunningFee = $totalDunningFee + get_option('qi_settings')['reminder'];
+                        $totalDunningFee = $totalDunningFee + $dunIFee;
                     ?>
                 </td>
 
-                <td style="text-align: center;font-size:14px; display:none"></td>
+                <?php 
+                if ($InvoiceHasAtLeastOneDiscount) {
+                ?>
+                    <td style="text-align: right; font-size:12px;"></td>
+                <?php 
+                } ?>
 
-                <td style="text-align: right;font-size:14px; padding-right:8px;">
+                <td style="text-align: right;font-size:12px; padding-right:8px;">
                     <?php
-                        echo get_option('qi_settings')['dunning1'] . " ".
+                        echo $dunIFee . " ".
                         $currencySign;
                     ?>
                 </td>
@@ -535,30 +544,35 @@ td.invoiceItemsHeader {
         if ($invoiceType == "dunning2") {
             ?>
             <tr>
-                <td align="center" style="font-size:14px;">D2</td>
+                <td name="invoiceItemPosition" style="font-size:12px; text-align: right;">D2</td>
 
-                <td align="center" style="font-size:14px;">1</td>
+                <td name="invoiceItemAmount" style="font-size:12px; text-align: right;">1</td>
 
                 <td>
-                    <div style="width:371px;font-size:14px; word-wrap: break-word;">
+                    <div style="width:371px;font-size:12px; word-wrap: break-word;">
                         <?php echo __("Second Dunning Fee", "ev");?>
                     </div>
                 </td>
 
-                <td style="text-align: center;font-size:14px;">
+                <td style="text-align: right; font-size:12px;">
                     
                     <?php
-                        echo get_option('qi_settings')['dunning2'] . " ".
+                        echo $dunIIFee . " ".
                         $currencySign;
-                        $totalDunningFee = $totalDunningFee + get_option('qi_settings')['reminder'];
+                        $totalDunningFee = $totalDunningFee + $dunIIFee;
                     ?>
                 </td>
 
-                <td style="text-align: center;font-size:14px; display:none"></td>
+                <?php 
+                if ($InvoiceHasAtLeastOneDiscount) {
+                ?>
+                    <td style="text-align: right; font-size:12px;"></td>
+                <?php 
+                } ?>
 
-                <td style="text-align: right;font-size:14px; padding-right:8px;">
+                <td style="text-align: right; font-size:12px; padding-right:8px;">
                     <?php
-                        echo get_option('qi_settings')['dunning2'] . " ".
+                        echo $dunIIFee . " ".
                         $currencySign;
                     ?>
                 </td>

@@ -67,6 +67,11 @@ function exportInvoice($invoiceID, $invoiceType)
         }
     }
 
+    //prepare dunning fees
+    $reminderFee = $invoiceData[0][0]->reminder;
+    $dunIFee = $invoiceData[0][0]->dunning1;
+    $dunIIFee = $invoiceData[0][0]->dunning2;
+
     //prepare currency sign; default €
     $currencySign = "€";
     if (get_option('qi_settings')['invoiceCurrency'] == "Euro") {
@@ -232,9 +237,9 @@ function exportInvoice($invoiceID, $invoiceType)
 
         //defaults
         $explainingHeading = __("PAYMENT REMINDER", "ev");
-        $invoiceTextIntro = __("Wahrscheinlich ist unsere Rechnung untergegangen - daher möchten wir noch einmal um <br> eine erneute Prüfung bitten.", "ev");
-        $invoiceTextOutro = __("Sollten Sie den offenen Betrag bereits beglichen haben, 
-        betrachten Sie dieses Schreiben als gegenstandslos.", "ev");
+        $invoiceTextIntro = __("In case that you have missed our last invoice - we want to ask you <br> to check this invoice again.", "ev");
+        $invoiceTextOutro = __("In case that you have already payed this invoice, 
+        please ignore this form.", "ev");
         $invoicePaymentDeadline = "";
         $invoiceCustomFooter = "";
 
@@ -262,11 +267,10 @@ function exportInvoice($invoiceID, $invoiceType)
 
         //defaults
         $explainingHeading = __("DUNNING", "ev");
-        $invoiceTextIntro ="Wir bitten folgende Leistung ".
-        "unverzüglich zu begleichen.".
-        "<br>(auch im Zusammenhang mit dem nächsten gemeinsamen Event)";
-        $invoiceTextOutro = __("Sollten Sie den offenen Betrag bereits beglichen haben, 
-        betrachten Sie dieses Schreiben als gegenstandslos.", "ev");
+        $invoiceTextIntro ="We request you to pay this invoice as soon as possible.".
+        "<br>(especially for further cooperations)";
+        $invoiceTextOutro = __("In case that you have already payed this invoice, 
+        please ignore this form.", "ev");
         $invoicePaymentDeadline = "";
         $invoiceCustomFooter = "";
 
@@ -293,7 +297,7 @@ function exportInvoice($invoiceID, $invoiceType)
     } else if ($invoiceType =="offer") {
 
         $heading=__("Offer", "ev");
-        $invoiceTextIntro ="Folgende Leistungen möchten wir Ihnen anbieten.";
+        $invoiceTextIntro ="We want to offer you the following goods and services.";
         $invoiceTextOutro = __("Thank you for the excellent co-operation.", "ev");
         $invoicePaymentDeadline = "";
         $invoiceCustomFooter = "";
@@ -321,7 +325,7 @@ function exportInvoice($invoiceID, $invoiceType)
     } else if ($invoiceType =="credit") {
 
         $heading = __("Credit", "ev");
-        $invoiceTextIntro ="Folgende Leistung schreiben wir Ihnen gut.";
+        $invoiceTextIntro ="We want to credit you the following positions.";
         $invoiceTextOutro = __("Thank you for the excellent co-operation.", "ev");
         $invoicePaymentDeadline = "";
         $invoiceCustomFooter = "";

@@ -1552,7 +1552,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             ob_start();
             include_once INVOICE_ROOT_PATH . 
             "/admin/partials/export/export.php";
-            exportInvoice($invoiceID, "dunningII");             
+            exportInvoice($invoiceID, $dunningType);             
             $exportInv= ob_get_contents();
             ob_end_clean();
             
@@ -1670,7 +1670,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          * @param {Further Dates that have to be skipped --> array (YYYY-mm-dd) eg. array("2012-05-02","2015-08-01")} $skipdates 
          * @returns date("Y-m-d, $newTime")
          */
-        function addWorkingDays($timestamp, $days, $skipdays = array("Saturday", "Sunday"), $skipdates = NULL) {
+        function addWorkingDays($timestamp, $days, $skipdays = array("Saturday", "Sunday"), $skipdates = array("")) {
             $i = 1;
             while ($days >= $i) {
                 $timestamp = strtotime("+1 day", $timestamp);
