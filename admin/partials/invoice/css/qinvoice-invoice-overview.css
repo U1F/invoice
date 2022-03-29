@@ -3,6 +3,35 @@
     height:30px;
     line-height:unset;
 }
+.q-invoice-page #paginationButtonRow {
+    padding:10px;
+}
+.q-invoice-page .paginationButton {
+    flex: 0 1 auto;
+    min-width: 10%;
+    width: auto;
+    color: #3c434a;
+    background-color: white;
+    height: 36px;
+    padding: 0px;
+    margin: 0px;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: bold !important;
+    text-align: center;
+    padding-left: 0px;
+    padding-right: 0px;
+    border-top: none;
+    border-right: 1px solid #dadce1;
+    border-bottom: none;
+    border-left: none;
+}
+
+
+.q-invoice-page .paginationButton.active {
+background-color: rgb(34, 113, 177);
+color: white;
+}
 
 .q-invoice-page td.column-edit span.edit {
     cursor: pointer;
