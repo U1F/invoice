@@ -107,22 +107,22 @@ function exportInvoice($invoiceID, $invoiceType)
 
     //prepare invoice details row size by checking if a delivery date has been set
     //$deliveryDateIsSet has to be an int, cause its not only used as a flag
-    /*$deliveryDate = date_parse_from_format(
+    $deliveryDate = date_parse_from_format(
         "Y-m-d", 
         $invoiceData[0][0]->delivery_date
-    );*/
+    );
 
     $deliveryDateIsSet = 0;
     $tableWidthOfInvoiceHead = 180;
     
-    /*if (checkdate(
+    if (checkdate(
         $deliveryDate['month'],
         $deliveryDate['day'], 
         $deliveryDate['year']
     )) {
         $deliveryDateIsSet = 1;
         $tableWidthOfInvoiceHead = 127;
-    }*/
+    }
 
     //prepare logo image from settings or leave it empty on default
     if (get_option('qi_settings')['logoFileUrl']) {
