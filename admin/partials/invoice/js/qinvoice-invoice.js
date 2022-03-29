@@ -1478,14 +1478,20 @@ jQuery(function ($) {
     row.find('#q_invc_dunningIActiveVal').attr('value', invoice.insertInDatabase[numberOfItems - 2])
     row.find('#q_invc_dunningIIActiveVal').attr('value', invoice.insertInDatabase[numberOfItems - 1])
     //dunning dropdown download status
-    if(invoice.insertInDatabase[numberOfItems - 3]){
+    if(invoice.insertInDatabase[numberOfItems - 3] == '1'){
       row.find('.downloadReminder').removeClass('iconInactiveColor');
+    } else {
+      row.find('.downloadReminder').addClass('iconInactiveColor');
     }
-    if(invoice.insertInDatabase[numberOfItems - 2]){
+    if(invoice.insertInDatabase[numberOfItems - 2] == '1'){
       row.find('.downloadDunningI').removeClass('iconInactiveColor');
+    } else {
+      row.find('.downloadDunningI').addClass('iconInactiveColor');
     }
-    if(invoice.insertInDatabase[numberOfItems - 1]){
+    if(invoice.insertInDatabase[numberOfItems - 1] == '1'){
       row.find('.downloadDunningII').removeClass('iconInactiveColor');
+    } else {
+      row.find('.downloadDunningII').addClass('iconInactiveColor');
     }
 
     const date = invoice.dateOfInvoice
