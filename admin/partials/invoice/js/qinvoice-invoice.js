@@ -208,7 +208,40 @@ jQuery(function ($) {
   // .......####....####...######..##..##..........######..##..##....##....######..##..##..##......##..##...####...######........
   // ............................................................................................................................
   // ............................................................................................................................
+  $('input#uploadLogoButton').on('click', (event) => {
+    event.preventDefault()
+    //tb_show('Upload a logo', 'media-upload.php?referer=wptuts-settings&type=image&TB_iframe=true&post_id=0', false);
+    var logoFrame
+    
 
+
+    const title = 'Select Logo Image'
+    logoFrame = wp.media({
+      title: title,
+      multiple : false,
+      library : {
+           type : 'image',
+       }
+     })
+
+     logoFrame.on('close', () => {
+      
+      var selectedImage = logoFrame.state().get('selection').first().toJSON();
+      jQuery('input#companyLogo').val(selectedImage.id);
+      // would be nice to refresh images
+   })
+
+     logoFrame.on('open',function() {
+      var selection =  logoFrame.state().get('selection')
+      var id = jQuery('input#companyLogo').val()
+      var attachment = wp.media.attachment(id)
+      attachment.fetch()
+      selection.add( attachment ? [ attachment ] : [] )
+    })
+    
+    logoFrame.open();
+
+  })
 
   function getCellValue(row, index){ 
     return $(row).children('td').eq(index).text() 

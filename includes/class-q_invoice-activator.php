@@ -42,8 +42,8 @@ if (!class_exists('QI_Invoice_Activator')) {
             "street" => "",
             "ZIP" => "",
             "city" => "",
-            "logoFileUrl" => "",
-            "logoFileFile" => "",
+            //"logoFileUrl" => "",
+            //"logoFileFile" => "",
             "invoiceCurrency" => "",
             "invoiceUnit" => "",
             "taxTypes" => 2,
@@ -298,8 +298,8 @@ if (!class_exists('QI_Invoice_Activator')) {
                 street varchar(64), 
                 ZIP int(6),
                 city varchar(64),
-                logoFileUrl varchar(256),
-                logoFileFile varchar(64),
+                
+                
                 prefix varchar(64),
                 noStart int(5),
                 invoiceCurrency varchar(64),

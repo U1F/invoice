@@ -211,6 +211,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
             */
             wp_enqueue_style('wp-jquery-ui-dialog');
+            wp_enqueue_script('media-upload');
         }
         /**
          * Register the JavaScript for the admin area.
@@ -369,33 +370,6 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $this->addSettingsField("ZIP", "number", "pluginPage", 1);
             $this->addSettingsField("city", "text", "pluginPage", 1);
             
-             /*
-            add_settings_field(
-                'qi_settings' ."logoFileUrl", 
-                null, 
-                [$this, 'hideInput'],
-                "pluginPage",
-                'qi_'.'pluginPage'.'_section',
-                $array = [
-                    "name" => "logo File Url",
-                    "type" => "text",
-                    "class" => "hide_settings_field"
-                ]
-            );
-
-            add_settings_field(
-                'qi_settings' ."logoFileFile", 
-                null,
-                [$this, 'hideInput'],
-                "pluginPage",
-                'qi_'.'pluginPage'.'_section',
-                $array = [
-                    "name" => "logo File File",
-                    "type" => "text",
-                    "class" => "hide_settings_field"
-                ]
-            );*/
-
             add_settings_field(
                 'qi_settingsLogoFile', 
                 'Logo', 
@@ -1002,10 +976,63 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          * @return void
          */
         public function showInputForLogo()
-        {
-            echo "<script>console.log('B:". get_option('qi_settings')['logoFileUrl'] ."');</script>";
+        {   
+                $logoName = get_option('qi_settings')['companyLogo'];
+                ?>
+                <input 
+                    type="text" 
+                    id="companyLogo" 
+                    name='qi_settings[companyLogo]'
+                    value="<?php 
+                        echo esc_url(get_option('qi_settings')['companyLogo'] ); 
+                    ?>" 
+                />
+
+                <input 
+                    id="uploadLogoButton" 
+                    type="button" 
+                    class="button" 
+                    value="<?php _e( 'Upload Logo', 'ev' ); ?>" />
+                
+                 
+                <?php
+                return;
+
+                echo "<input ".
+                    "id='companyLogo' ".
+                    "name='qi_settings[companyLogo]' ".
+                    "type='text' ".
+                    "style='display:none'".
+                    "value='". $logoName .           
+                "' />";
+                echo "<script>console.log('A:". json_encode(get_option('qi_settings')['companyLogo']) ."');</script>";
+                
+            return;
+            
             //if an logog file has already been uploaded
-            if (get_option('qi_settings')['logoFileUrl'] != '') {
+            
+            echo "<label ".
+                "id='qinv_settings_uploadLogo'".
+                "class='fileUpload'".
+                "style='".
+                    "display:none; ".
+                    "border:solid 1px #dadce1; ".
+                    "border-radius:4px; ".
+                    "padding:7px; ".
+                "'".
+            ">".
+                "<input ".
+                    "id='logoFile' ".
+                    "name='logoFile' ".
+                    "type='file' ".
+                    "style='display:none'".
+                    "value='".         
+                "' />".
+
+                "Upload".
+            "</label>";
+            
+            if (get_option('qi_settings')['Logo'] != '') {
                 //set the upload field to display:none, because their is already file
                 echo 
                 "<label ".
@@ -1101,22 +1128,12 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          * 
          * @return $option
          */
-        public function handleFileUploadForLogo($option)
+        public function handleFileUploadForLogo($input)
         {
-            
-            if (!empty($_FILES['logoFile']["tmp_name"])) {
-               
-                $urls = wp_handle_upload(
-                    $_FILES['logoFile'],
-                    array('test_form' => false)
-                );
-
-                $option['logoFileUrl'] = $urls["url"];
-                $option['logoFileFile'] = $urls["file"];
-                
-            }
-
-            return $option;
+            // normally you do something here
+            $validInput = $input;
+            return $validInput;
+        
         }
 
         /**
@@ -1682,7 +1699,12 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             }
             return $timestamp;
           }
-
+        
+          public function dumpFile($content, $filename){
+            $myfile = fopen($filename, "w") or die("Unable to open file!");
+            fwrite($myfile, $content);
+            fclose($myfile);
+          }
         /**
          * Describe this
          * 
@@ -1692,6 +1714,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          */
         public function updateInvoiceServerSide()
         {
+            $this-> dumpFile(json_encode($_POST), "updateInvoiceServerSide_POST.txt");
             $dunningData = $this->getDunningDays(strtotime($_POST['dateOfInvoice']));
             $extraDunningPDFArray = $_POST['insertInDatabase'];
             $reminderPDF = $extraDunningPDFArray[sizeof($extraDunningPDFArray)-3];
@@ -1704,7 +1727,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $response['dunningdays'] = $dunningDays;
 
             if (wp_verify_nonce($_POST['q_invoice_nonce'], $_POST['action'])) {
-
+                $this-> dumpFile("Success", "verified.txt");
                 Interface_Invoices::updateArrayInDB($_POST);
                 
                 $this->printInvoiceTemplate($_POST['invoice_id']);
@@ -1719,6 +1742,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 }
                 $response['success'] = true;
                 $response['data'] = $_POST;
+                $this-> dumpFile(json_encode($response), "updateInvoiceServerSide.txt");
                 echo json_encode($response);
 
 
