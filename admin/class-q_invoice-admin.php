@@ -494,7 +494,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
             
             $this->addSettingsField(
-                "invoice Text Invoice Mail", 
+                "Text Invoice Mail", 
                 "textarea", 
                 "mailTemplatePage",
                 0,
@@ -503,7 +503,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
 
             $this->addSettingsField(
-                "dunning Text Dunning Mail", 
+                "Text Dunning Mail", 
                 "textarea", 
                 "mailTemplatePage",
                 0,
@@ -512,7 +512,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
 
             $this->addSettingsField(
-                "offer Text Offer Mail", 
+                "Text Offer Mail", 
                 "textarea", 
                 "mailTemplatePage",
                 0,
@@ -521,7 +521,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             );
 
             $this->addSettingsField(
-                "credit Text Credit Mail", 
+                "Text Credit Mail", 
                 "textarea", 
                 "mailTemplatePage",
                 0,
@@ -1439,6 +1439,33 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         }
 
         /**
+         * Sends given content with wp_send
+         * 
+         * @return void
+         *
+         * @since 1.0.0
+         */
+        public function sendMailServerSide()
+        {
+            check_ajax_referer($this->_plugin_name . "_nonce");
+
+            $recipient = 'schunke30@gmail.com';//$_POST['recipient'];
+            $subject = $_POST['subject'];
+            $message = $_POST['message'];
+            $headers = $_POST['headers'];
+            $attachments = $_POST['attachments'];
+
+            //$content_type = function() { return 'text/html'; };
+            //add_filter( 'wp_mail_content_type', $content_type );
+            //add_filter( 'wp_mail_from', $headers );
+            
+            $success = wp_mail($recipient, $subject, $message, $headers, $attachments);
+
+            echo $success;
+            wp_die();
+        }
+
+        /**
          * Function fetchContactsServerSide
          * 
          * @return void
@@ -1707,15 +1734,14 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
 
                 Interface_Invoices::updateArrayInDB($_POST);
                 
-                $this->printInvoiceTemplate($_POST['invoice_id']);
                 if($reminderPDF){
                     $this->printDunningTemplate($_POST['invoice_id'], 'reminder');
-                }
-                if($dunIPDF){
+                } else if($dunIPDF){
                     $this->printDunningTemplate($_POST['invoice_id'], 'dunningI');
-                }
-                if($dunIIPDF){
+                } else if($dunIIPDF){
                     $this->printDunningTemplate($_POST['invoice_id'], 'dunningII');
+                } else{
+                    $this->printInvoiceTemplate($_POST['invoice_id']);
                 }
                 $response['success'] = true;
                 $response['data'] = $_POST;

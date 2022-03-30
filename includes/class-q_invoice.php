@@ -219,6 +219,7 @@ if (!class_exists('QI_Invoice')) {
                 'removeLogo',
                 'printInvoiceTemplate',
                 'printDunningTemplate',
+                'sendMail',
             ];
 
             foreach ($ajaxFunctionNames as $ajaxFunctionName) {
