@@ -984,7 +984,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                     id="companyLogo" 
                     name='qi_settings[companyLogo]'
                     value="<?php 
-                        echo esc_url(get_option('qi_settings')['companyLogo'] ); 
+                        echo get_option('qi_settings')['companyLogo']; 
                     ?>" 
                 />
 
