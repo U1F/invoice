@@ -983,34 +983,42 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                     type="text" 
                     id="companyLogo" 
                     name='qi_settings[companyLogo]'
+                    style=''
                     value="<?php 
                         echo get_option('qi_settings')['companyLogo']; 
                     ?>" 
                 />
+                <?php
+                $uploadInputVisibility = "none";
+                if (get_option('qi_settings')['companyLogo'] == '') {
+                    $uploadInputVisibility = "block";     
+                   
+                } else {
+                    echo wp_get_attachment_image( get_option('qi_settings')['companyLogo'], 'medium', false, array( 'id' => 'myprefix-preview-image' ) );
+                }
 
+                ?>
                 <input 
                     id="uploadLogoButton" 
                     type="button" 
                     class="button" 
+                    style="display: <?php echo $uploadInputVisibility;?>"
                     value="<?php _e( 'Upload Logo', 'ev' ); ?>" />
+               
                 
-                 
-                <?php
+                <input 
+                id="removeLogo" 
+                type="button" 
+                class="button" 
+                style=""
+                value="<?php _e( 'Remove Logo', 'ev' ); ?>" />
+                
+                
+                <?php 
+                
                 return;
 
-                echo "<input ".
-                    "id='companyLogo' ".
-                    "name='qi_settings[companyLogo]' ".
-                    "type='text' ".
-                    "style='display:none'".
-                    "value='". $logoName .           
-                "' />";
-                echo "<script>console.log('A:". json_encode(get_option('qi_settings')['companyLogo']) ."');</script>";
-                
-            return;
-            
-            //if an logog file has already been uploaded
-            
+               
             echo "<label ".
                 "id='qinv_settings_uploadLogo'".
                 "class='fileUpload'".
