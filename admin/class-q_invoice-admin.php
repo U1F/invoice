@@ -1025,11 +1025,16 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                     </span>
                 </div>
                 
-                <?php echo wp_get_attachment_image( 
-                    get_option('qi_settings')['companyLogo'], 
-                    'medium', 
-                    false, 
-                    array( 'id' => 'myprefix-preview-image' ) ); ?>
+                <?php 
+
+                    echo wp_get_attachment_image( 
+                        get_option('qi_settings')['companyLogo'], 
+                        'medium', 
+                        false, 
+                        array( 'id' => 'q1nv0-preview-image' ) 
+                    ); 
+                    
+                ?>
                 
                 <div 
                     class="qinv_settings_logo_tbBuffer" 

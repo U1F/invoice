@@ -71,7 +71,7 @@ td.invoiceItemsHeader {
                         get_option('qi_settings')['companyLogo'], 
                         'medium', 
                         false, 
-                        array( 'id' => 'myprefix-preview-image' ) );
+                        array( 'id' => 'q1nv0-preview-image' ) );
                     ?>                        
                     
                     <br>
