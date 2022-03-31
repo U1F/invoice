@@ -33,17 +33,32 @@ $settings = array('media_buttons' => false, 'wpautop' => false);
 		<fieldset id="qinv_mail-info" class="">
 
 			<div class="qinvc_mailContentRow">
-				<label for="qinv_mail-name" id="qinv_mail-name-label" class="qinvc_mailContentLabel" style="width:10%;">Name:</label>
-				<input name="mail-name" id="qinv_mail-name" class="qinvc_mailContentInput"></input>
+				<label for="qinv_mail-sender" id="qinv_mail-sender-label" class="qinvc_mailContentLabel" style="width:10%;">Sender:</label>
+				<input name="qinv_mail-sender" id="qinv_mail-sender" class="qinvc_mailContentInput"></input>
 			</div>
 
 			<div class="qinvc_mailContentRow">
-				<label for="qinv_mail-subject" id="qinv_mail-subject-label" class="qinvc_mailContentLabel" style="width:10%;">Betreff:</label>
-				<input name="mail-subject" id="qinv_mail-subject" class="qinvc_mailContentInput"></input>
+				<label for="qinv_mail-recipient" id="qinv_mail-recipient-label" class="qinvc_mailContentLabel" style="width:10%;">Recipient:</label>
+				<input name="qinv_mail-recipient" id="qinv_mail-recipient" class="qinvc_mailContentInput"></input>
+			</div>
+
+			<div class="qinvc_mailContentRow">
+				<label for="qinv_mail-subject" id="qinv_mail-subject-label" class="qinvc_mailContentLabel" style="width:10%;">Subject:</label>
+				<input name="qinv_mail-subject" id="qinv_mail-subject" class="qinvc_mailContentInput"></input>
+			</div>
+
+			<div class="qinvc_mailContentRow">
+				<label for="qinv_mail-header" id="qinv_mail-header-label" class="qinvc_mailContentLabel" style="width:10%;">Header:</label>
+				<input name="qinv_mail-header" id="qinv_mail-header" class="qinvc_mailContentInput"></input>
 			</div>
 
 			<div class="" style="margin-top:1.4em;">
 				<?php wp_editor("", $editor_id, $settings);?>
+			</div>
+
+			<div class="qinvc_mail-attachment-row" style="float:right; margin: 1em 0;">
+				<a id="qInvMailAttachmentIcon" class="dashicons dashicons-paperclip" href=""></a>
+				<a id="qInvMailAttachmentData" href="">Invoice-PDF</a>
 			</div>
 
 		</fieldset>

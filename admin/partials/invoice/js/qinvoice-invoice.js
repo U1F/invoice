@@ -365,11 +365,29 @@ jQuery(function ($) {
    */
   $(document).on('keydown', function (e) {
     if (e.keyCode === 27) {
+      if($('#qinv_mail-popup').css('display') == 'block'){
+        $('#qinv_mail-popup').hide()
+      }
       if ($('.dialogOverlay').css('display') === 'block') {
         $('.dialogOverlay').hide()
       } else {
         $('#invoiceOverlay').hide()
       }
+    }
+  })
+
+  /**
+   * Clicking outside of the form or cancel button also closes Overlay
+   * 
+   * @param {event} x We check if the user clicked outside the form 
+   * or the cancel button
+   */
+   $('#qinv_mail-popup').click(function (event) {
+    if ($(event.target).is('.overlay')) {
+      $('#qinv_mail-popup').hide()
+    }
+    if ($(event.target).is('.cancelButton')) {
+      $('#qinv_mail-popup').hide()
     }
   })
 
@@ -2079,7 +2097,7 @@ jQuery(function ($) {
     }
   });
 
-  // Editor functionality gets modified
+  // Wordpress Editor functionality gets modified (used for mail)
   function qpModifyWPEditor(id){
     document.getElementById(id+"-tmce").click();
     qpModifyWPEditorCSS(id);
@@ -2093,7 +2111,7 @@ jQuery(function ($) {
     document.getElementById("mceu_29-body").appendChild(txt); // Louis: text-to-visual button is inserted into the toolbar
   }
 
-  // Editor style gets modified
+  // Wordpress Editor style gets modified (used for mail)
 
   function qpModifyWPEditorCSS(id){
     document.getElementById(id+"-tmce").click();
@@ -2108,6 +2126,124 @@ jQuery(function ($) {
     document.getElementById(id+"-tmce").classList.add("bs-margin-mod");
     document.getElementById(id+"_ifr").style.minHeight = "16em"; //for height of WP-Editor-field
   }
+
+  /**
+   * Handles the on click action on the mail dashicon:
+   */
+   $('table#tableInvoices').on('click', '.mailInvoice', function (event) {
+    getMailPopupData($(this).attr('id'), 'Invoice');
+    $('div#qinv_mail-popup').css('display', 'block');
+  })
+
+  /**
+   * Handles the on click action on the reminder mail dashicon:
+   */
+   $('table#tableInvoices').on('click', '.mailReminder', function (event) {
+    getMailPopupData($(this).attr('id'), 'Reminder');
+    $('div#qinv_mail-popup').css('display', 'block');
+  })
+
+  /**
+   * Handles the on click action on the dunning i mail dashicon:
+   */
+   $('table#tableInvoices').on('click', '.mailDunningI', function (event) {
+    getMailPopupData($(this).attr('id'), 'DunningI');
+    $('div#qinv_mail-popup').css('display', 'block');
+  })
+
+  /**
+   * Handles the on click action on the dunning ii mail dashicon:
+   */
+   $('table#tableInvoices').on('click', '.mailDunningII', function (event) {
+    getMailPopupData($(this).attr('id'), 'DunningII');
+    $('div#qinv_mail-popup').css('display', 'block');
+  })
+
+  function getMailPopupData(id, type){
+
+    $('#qinv_mail-sender').val('');
+    $('#qinv_mail-recipient').val('');
+    $('#qinv_mail-subject').val('');
+    var wpEditorID = $('#qinv_mail-popup').find('.wp-editor-wrap').attr('id').split('-')[1];
+    tinyMCE.get(wpEditorID).execCommand('mceNewDocument');
+
+    fetchContacts();
+    
+    var name = $('#edit-' + id).find('td.columnName').text().replace(/\s+/g, ' ').slice(1,-1);
+    var nameArray = name.split(' ');
+    var salutation = '<p>Hello ' + name + ',<br></p><p>';
+    var recipientMail = '';
+    var companyName = $('#qinv_mail-name-company').text();
+    var senderMail = $('#qinv_mail-sender-onpage').text();
+    
+
+    for(i = 0; i < contactData[0].length; i++){
+      //check for each contact if the full adress and name is like the data in the form
+      if(contactData[0][i].company == name || (contactData[0][i].firstname == nameArray[0] && contactData[0][i].lastname == nameArray[1]))
+      {
+        recipientMail = contactData[0][i].email;
+      }
+    }
+    $('#qinv_mail-sender').val(senderMail);
+    $('#qinv_mail-header').val(companyName);
+    $('#qinv_mail-recipient').val(recipientMail);
+    $('#qinv_mail-subject').val(type + '_ID' + id + '_' + name.replace(' ', '-'));
+    if(type == 'Invoice'){
+      var attachmentRef = $('#edit-' + id).find('td.columnEdit a.download').attr('href');
+      var template = $('#qinv_mail-invoice-template').text();
+    }else if(type == 'Reminder'){
+      var attachmentRef = $('#edit-' + id).find('td.columnEdit div.qinv_moreOptionsDropdownBox a.downloadReminder').attr('href');
+      var template = $('#qinv_mail-dunning-template').text();
+    }else if(type == 'DunningI'){
+      var attachmentRef = $('#edit-' + id).find('td.columnEdit div.qinv_moreOptionsDropdownBox a.downloadDunningI').attr('href');
+      var template = $('#qinv_mail-dunning-template').text();
+    }else if(type == 'DunningII'){
+      var attachmentRef = $('#edit-' + id).find('td.columnEdit div.qinv_moreOptionsDropdownBox a.downloadDunningII').attr('href');
+      var template = $('#qinv_mail-dunning-template').text();
+    }
+    
+    var fullMail = salutation + template + '</p><p>Best Regards<br><br>' + companyName + '</p>';
+    tinyMCE.get(wpEditorID).execCommand('mceInsertContent', true, fullMail);
+    $('#qInvMailAttachmentIcon').attr('href', attachmentRef);
+    $('#qInvMailAttachmentData').text(type+'-PDF');
+    $('#qInvMailAttachmentData').attr('href', attachmentRef);
+    
+
+
+  }
+
+  $('#qinv_mail-popup-submit').on('click', function(e){
+    console.log('start');
+    var wpEditorID = $('#qinv_mail-popup').find('.wp-editor-wrap').attr('id').split('-')[1];
+    var messageBody = tinymce.get(wpEditorID).getContent();
+    var messageHeader = '<!doctype html><html><body>';
+    var messageFooter = '</body></html>';
+    jQuery.ajax({
+      type: 'POST',
+      url: q_invoice_ajaxObject.ajax_url,
+      data: {
+        action: 'sendMailServerSide',
+        _ajax_nonce: q_invoice_ajaxObject.nonce,
+        recipient: $('#qinv_mail-recipient').val(),
+        subject: $('#qinv_mail-subject').val(),
+        message: messageHeader + messageBody + messageFooter,
+        headers: $('#qinv_mail-header').val(),
+        attachments: $('#qInvMailAttachmentData').attr('href')
+      },
+      success: function (response) {
+        if(response){
+          $('#qinv_mail-popup').hide();
+          displaySuccess ("E-Mail has been send!");
+        }
+      },
+      error: function (errorThrown) {
+        $('#qinv_mail-popup').hide();
+        displayFail ("E-Mail has not been send!");
+        console.log(errorThrown);
+      }
+    })
+  })
+
 
 
   /**
