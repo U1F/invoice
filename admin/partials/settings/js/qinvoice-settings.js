@@ -99,19 +99,62 @@ jQuery(function ($) {
    *           __/ |      
    *          |___/  
    */
+
   //When clicking on cross to delete the logo open the confirmation alert
   $('#qinv_settings_delete_logo').on('click', function (event){
     $('div#qinv_settings_deleteLogoOverlay').css('display', 'block');
   })
+
   //When deniing the delete process close the confirmation alert
   $('#cancelRemoveLogo').on('click', function(event){
     $('div#qinv_settings_deleteLogoOverlay').css('display', 'none');
   })
+
   //On Submitting the delete process close the alert and start the delete process
   $('#confirmRemoveLogo').on('click', function(event){
     $('div#qinv_settings_deleteLogoOverlay').css('display', 'none');
+    
+    $('#companyLogo').val('')
+    $('#uploadLogoButton').show()
     qinv_settings_removeLogoFile();
   })
+
+  
+
+  $('input#uploadLogoButton').on('click', (event) => {
+    event.preventDefault()
+    //tb_show('Upload a logo', 'media-upload.php?referer=wptuts-settings&type=image&TB_iframe=true&post_id=0', false);
+    var logoFrame
+    
+    const title = 'Select Logo Image'
+    logoFrame = wp.media({
+      title: title,
+      multiple : false,
+      library : {
+           type : 'image',
+       }
+     })
+
+     logoFrame.on('close', () => {
+      
+      var selectedImage = logoFrame.state().get('selection').first().toJSON();
+      jQuery('input#companyLogo').val(selectedImage.id);
+      // would be nice to refresh images
+      $('.submit #saveSettings').click();
+   })
+
+     logoFrame.on('open',function() {
+      var selection =  logoFrame.state().get('selection')
+      var id = jQuery('input#companyLogo').val()
+      var attachment = wp.media.attachment(id)
+      attachment.fetch()
+      selection.add( attachment ? [ attachment ] : [] )
+    })
+    
+    logoFrame.open();
+
+  })
+
 
   /**
    * Function to remove the logo from server and save data by clicking the submit button
@@ -137,10 +180,7 @@ jQuery(function ($) {
     })
   }
 
-  //Whenever a logo has been uploaded with the upload function click on submit automatically
-  $('#logoFile').on('change', function(e){
-    $('.submit #saveSettings').click();
-  })
+  
 
   /**
    *   __            _   _               
@@ -175,4 +215,5 @@ jQuery(function ($) {
     }
   })
 
+  
 })

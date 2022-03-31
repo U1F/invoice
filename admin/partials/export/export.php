@@ -125,8 +125,10 @@ function exportInvoice($invoiceID, $invoiceType)
     }
 
     //prepare logo image from settings or leave it empty on default
-    if (get_option('qi_settings')['logoFileUrl']) {
-
+    if (true){
+        //get_option('qi_settings')['logoFileUrl']) {
+        $finalImageData = "<div style='height:100px'></div>";
+/*
         $logoImageURL = get_option('qi_settings')['logoFileUrl'];
         $logoImageFile = get_option('qi_settings')['logoFileFile'];
         $mimetype =  wp_get_image_mime( $logoImageFile );
@@ -139,7 +141,7 @@ function exportInvoice($invoiceID, $invoiceType)
                                 width='200'
                                 style='border:0px; margin-bottom: 10px; margin-top: 10px;'
                             >";
-
+        */
     } else {
 
         $finalImageData = "<div style='height:100px'></div>";
