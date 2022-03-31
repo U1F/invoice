@@ -140,6 +140,7 @@ jQuery(function ($) {
       var selectedImage = logoFrame.state().get('selection').first().toJSON();
       jQuery('input#companyLogo').val(selectedImage.id);
       // would be nice to refresh images
+      $('.submit #saveSettings').click();
    })
 
      logoFrame.on('open',function() {
@@ -179,10 +180,7 @@ jQuery(function ($) {
     })
   }
 
-  //Whenever a logo has been uploaded with the upload function click on submit automatically
-  $('#logoFile').on('change', function(e){
-    $('.submit #saveSettings').click();
-  })
+  
 
   /**
    *   __            _   _               
