@@ -66,8 +66,13 @@ td.invoiceItemsHeader {
                     rowspan="3" 
                     style="width: 270px; text-align: right; font-size:14px;"
                 >
-                    <?php //insert logo image
-                    echo $finalImageData; ?>                        
+                    <?php 
+                       echo wp_get_attachment_image( 
+                        get_option('qi_settings')['companyLogo'], 
+                        'medium', 
+                        false, 
+                        array( 'id' => 'myprefix-preview-image' ) );
+                    ?>                        
                     
                     <br>
 
@@ -451,6 +456,7 @@ td.invoiceItemsHeader {
                 </tr>
                 <?php 
                 $totalNet += $invoiceDetail->sum;
+                
                 $taxSums[strval($invoiceDetail->tax)] += intval($invoiceDetail->sum);
                    
             }
