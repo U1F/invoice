@@ -113,13 +113,11 @@ jQuery(function ($) {
   //On Submitting the delete process close the alert and start the delete process
   $('#confirmRemoveLogo').on('click', function(event){
     $('div#qinv_settings_deleteLogoOverlay').css('display', 'none');
-    
-    $('#companyLogo').val('')
-    $('#uploadLogoButton').show()
+    $('label#qinv_settings_uploadLogo').show()
+    $('input#companyLogo').val('')
+    $('div#showLogoDiv').hide()
     qinv_settings_removeLogoFile();
   })
-
-  
 
   $('input#uploadLogoButton').on('click', (event) => {
     event.preventDefault()
@@ -138,14 +136,18 @@ jQuery(function ($) {
      logoFrame.on('close', () => {
       
       var selectedImage = logoFrame.state().get('selection').first().toJSON();
-      jQuery('input#companyLogo').val(selectedImage.id);
-      // would be nice to refresh images
-      $('.submit #saveSettings').click();
+      $('input#companyLogo').attr('value', selectedImage.id)
+      console.log($('input#companyLogo').val())
+      //console.log(selectedImage.url)
+      $('#q1nv0-preview-image').attr('src', selectedImage.url)
+      $('label#qinv_settings_uploadLogo').hide()
+      $('div#showLogoDiv').show()
+      qinv_settings_updateLogo(selectedImage.id)
    })
 
      logoFrame.on('open',function() {
       var selection =  logoFrame.state().get('selection')
-      var id = jQuery('input#companyLogo').val()
+      var id = $('input#companyLogo').val()
       var attachment = wp.media.attachment(id)
       attachment.fetch()
       selection.add( attachment ? [ attachment ] : [] )
@@ -170,15 +172,46 @@ jQuery(function ($) {
         _ajax_nonce: q_invoice_ajaxObject.nonce
       },
       success: function (data) {
-        console.log('Removal Status: ' + data)
-        $('.submit #saveSettings').click();
+        
+        $('#uploadLogoButton').show()
+        
       },
       error: function (errorThrown) {
-        console.log('Logo not removed')
+      
         console.log(errorThrown)
+
       }
     })
   }
+
+  /**
+   * Function to remove the logo from server and save data by clicking the submit button
+   */
+   function qinv_settings_updateLogo(id){
+    jQuery.ajax({
+      type: 'POST',
+
+      url: q_invoice_ajaxObject.ajax_url,
+
+      data: {
+        id: id,
+        action: 'updateLogoServerSide',
+        _ajax_nonce: q_invoice_ajaxObject.nonce
+      },
+      success: function (data) {
+        
+        //$('#uploadLogoButton').show()
+        //console.log('Removal Status: ' + data)
+        
+      },
+      error: function (errorThrown) {
+
+        console.log(errorThrown)
+
+      }
+    })
+  }
+
 
   
 

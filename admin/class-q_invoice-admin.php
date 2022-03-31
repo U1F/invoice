@@ -1026,14 +1026,17 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 </div>
                 
                 <?php 
-
-                    echo wp_get_attachment_image( 
-                        get_option('qi_settings')['companyLogo'], 
-                        'medium', 
-                        false, 
-                        array( 'id' => 'q1nv0-preview-image' ) 
-                    ); 
-                    
+                    if ($logoIndex){
+                        echo wp_get_attachment_image( 
+                            get_option('qi_settings')['companyLogo'], 
+                            array('200', '200'), 
+                            false, 
+                            array( 'id' => 'q1nv0-preview-image' ) 
+                        ); 
+                    }
+                    else {
+                        ?> <img id='q1nv0-preview-image'></img><?php
+                    }
                 ?>
                 
                 <div 
@@ -1333,6 +1336,23 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         {
             check_ajax_referer($this->_plugin_name . "_nonce");
             $data = Interface_Settings::removeLogo();
+            echo $data;
+
+            wp_die();
+        }
+
+        /**
+         * TESTIG Register the Ajax for the admin area.
+         * 
+         * @return void
+         *
+         * @since 1.0.0
+         */
+        public function updateLogoServerSide()
+        {
+            $id=$_POST['id'];
+            check_ajax_referer($this->_plugin_name . "_nonce");
+            $data = Interface_Settings::updateLogo($id);
             echo $data;
 
             wp_die();
