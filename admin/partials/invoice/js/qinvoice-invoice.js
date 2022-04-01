@@ -1706,11 +1706,8 @@ jQuery(function ($) {
     $('table#tableInvoices tr:last').after(sumRowBackup)
     //hold contact list up to date
     fetchContacts()
-    q_invoice_RecalcSums(
-      q_invoice_cleanUpNumber(row.find('td.columnTotal').text()),
-      q_invoice_cleanUpNumber(row.find('td.columnNet').text()),
-      0.0      
-    );
+    recalcInvoiceTableSums()
+    
   }
 
   /*function getWorkingDays(startDate, endDate) {
