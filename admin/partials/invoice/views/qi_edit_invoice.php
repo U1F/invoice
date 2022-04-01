@@ -50,8 +50,10 @@ for ($iterator = 0; $iterator < get_option('qi_settings')['taxTypes']; $iterator
             name="invoiceForm"
             class=""
             autocomplete="false"
-            
             >
+
+            <input id="popupFormType" name="popupFormType" value="" style="display:none;">
+
             <div id="invoiceInputTables">
                 <div id="invoiceInputTableLeft">
                     <table id="invoiceFormInputsLeft">

@@ -617,7 +617,7 @@ function showOpenInvoices()
                                 <span style="font-size: 20px;"
                                     id="<?php echo esc_attr($invoice_header->id);?>" 
                                     title="Send Reminder as Mail"
-                                    class="mail mailReminder dashicons dashicons-email-alt <?php if(!$reminderActive){echo 'iconInactiveColor';}?>"
+                                    class="mail mailReminder dashicons dashicons-email-alt <?php if(!$reminderActive){echo 'iconInactiveColor deactivatedMail';}?>"
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                 >
                                 </span>
@@ -651,7 +651,7 @@ function showOpenInvoices()
                                 <span style="font-size: 20px;"
                                     id="<?php echo esc_attr($invoice_header->id);?>" 
                                     title="Send First Dunning as Mail"
-                                    class="mail mailDunningI dashicons dashicons-email-alt <?php if(!$dunningIActive){echo 'iconInactiveColor';}?>"
+                                    class="mail mailDunningI dashicons dashicons-email-alt <?php if(!$dunningIActive){echo 'iconInactiveColor deactivatedMail';}?>"
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                 >
                                 </span>
@@ -685,7 +685,7 @@ function showOpenInvoices()
                                 <span style="font-size: 20px;"
                                     id="<?php echo esc_attr($invoice_header->id);?>" 
                                     title="Send Second Dunning as Mail"
-                                    class="mail mailDunningII dashicons dashicons-email-alt <?php if(!$dunningIIActive){echo 'iconInactiveColor';}?>"
+                                    class="mail mailDunningII dashicons dashicons-email-alt <?php if(!$dunningIIActive){echo 'iconInactiveColor deactivatedMail';}?>"
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                 >
                                 </span>

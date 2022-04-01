@@ -34,17 +34,12 @@ $settings = array('media_buttons' => false, 'wpautop' => false);
 
 			<div class="qinvc_mailContentRow">
 				<label for="qinv_mail-recipient" id="qinv_mail-recipient-label" class="qinvc_mailContentLabel" style="width:10%;">Recipient:</label>
-				<input name="qinv_mail-recipient" id="qinv_mail-recipient" class="qinvc_mailContentInput"></input>
+				<input name="qinv_mail-recipient" id="qinv_mail-recipient" class="qinvc_mailContentInput" required></input>
 			</div>
 
 			<div class="qinvc_mailContentRow">
 				<label for="qinv_mail-subject" id="qinv_mail-subject-label" class="qinvc_mailContentLabel" style="width:10%;">Subject:</label>
-				<input name="qinv_mail-subject" id="qinv_mail-subject" class="qinvc_mailContentInput"></input>
-			</div>
-
-			<div class="qinvc_mailContentRow">
-				<label for="qinv_mail-header" id="qinv_mail-header-label" class="qinvc_mailContentLabel" style="width:10%;">Header:</label>
-				<input name="qinv_mail-header" id="qinv_mail-header" class="qinvc_mailContentInput"></input>
+				<input name="qinv_mail-subject" id="qinv_mail-subject" class="qinvc_mailContentInput" required></input>
 			</div>
 
 			<div class="" style="margin-top:1.4em;">

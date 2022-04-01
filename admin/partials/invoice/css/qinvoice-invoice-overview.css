@@ -239,7 +239,9 @@ q-invoice-page dashicons-download {
   background-color: rgba(2,31,63,.57);
 }
 
-.q-invoice-page .circle.dunning,
+.q-invoice-page .circle.dunningI,
+.q-invoice-page .circle.dunningII,
+.q-invoice-page .circle.reminder,
 .q-invoice-page .longCircle.dunningII {
     background-color: #fe667b;
 }
