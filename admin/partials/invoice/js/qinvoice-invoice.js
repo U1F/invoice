@@ -2,23 +2,31 @@
 /* eslint no-undef: "error" */
 
 jQuery(function ($) {
+  const columnNetSum = $('span#columnNetSum')
+  const columnTotalSum = $('span#columnTotalSum')
 
   const formatterDE = new Intl.NumberFormat('de-DE', {
     style: 'currency',
     currency: 'EUR',
     minimumFractionDigits: 2
   });
+
   const formatterEN = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 2
   });
+
   let currencySign = ''
+
   let lastInvoiceIDtoDelete = 0
   let currentInvoiceID = 0
+
   let nonceFieldForSaving = ''
   let nonceFieldForUpdating = ''
+
   let obj = []
+
   const inputs = document.querySelectorAll('input, select, textarea')
 
   //    .........................................................................
@@ -199,6 +207,36 @@ jQuery(function ($) {
 
   }
 
+  function moneySumToInt(moneySum){
+    return parseInt(moneySum.replace(/[^0-9-]+/g,""))
+  }
+
+
+  function recalcNetSumsOfInvoices(){
+    const nets = $('tbody tr:visible').find('.columnNet span.monetaryAmount').toArray()
+    
+    
+    let netSum = 0
+    nets.forEach(function(element) {
+      netSum = netSum + moneySumToInt($(element).html())
+    })  
+  
+    return netSum     
+  }
+
+  function recalcTotalSumsOfInvoices(){
+    const tots = $('tbody tr:visible').find('.columnTotal span.monetaryAmount').toArray()
+    
+    
+    let totSum = 0
+    tots.forEach(function(element) {
+      totSum = totSum + moneySumToInt($(element).html())
+      
+    })
+
+    return totSum     
+    
+  }
   // ............................................................................................................................
   // ............................................................................................................................
   // ......##..##...####...######..#####...........######..##..##..######..######..#####...######...####....####...######........
@@ -208,52 +246,76 @@ jQuery(function ($) {
   // .......####....####...######..##..##..........######..##..##....##....######..##..##..##......##..##...####...######........
   // ............................................................................................................................
   // ............................................................................................................................
+  //const q1nv0_invoiceTable = $("#tableInvoices")
+  //const q1nv0_invoiceTableHeader = $("#tableInvoices thead")
+  const q1nv0_invoiceTableBody = $("#tableInvoices tbody")
   
+  let q1nv0_activeInvoiceTableFilter = "all"
+  
+  let q1nv0_activeYear = new Date().getFullYear()
+  const q1nv0_activeYearButton = $('button.paginationButton#selectYearForPagination')
+  
+  function hidetableBodyContent(){
 
-  function getCellValue(row, index){ 
-    return $(row).children('td').eq(index).text() 
+    $("#tableInvoices tbody tr.q_invoice-content-row").hide()
+
   }
 
+  function recalcInvoiceTableSums() {
+
+    $(columnTotalSum).html(recalcTotalSumsOfInvoices())
+
+    $(columnNetSum).html(recalcNetSumsOfInvoices())
+
+  }
+
+  
   filterInvoicesByYear = (selectedYear) => {
-    $("#tableInvoices tbody tr").hide()
-    $("#tableInvoices tbody tr td:contains(" + selectedYear +")").closest('tr').show()
+
+    hidetableBodyContent()
+
+    q1nv0_invoiceTableBody.find("td:contains(" + selectedYear +")").closest('tr').show()
+
+    recalcInvoiceTableSums()
+
   }
 
   $('.operateOnYear').on('click', (event) => {
-    event.preventDefault()
+   
     const clickedButton = event.currentTarget
     const operateOnYear = $(clickedButton).html()
-    const activeYear = parseInt($('button.paginationButton#selectYearForPagination').html()) 
 
-    $("#tableInvoices tbody tr").hide()
-
-    if (operateOnYear === '+') { 
-      $('button.paginationButton#selectYearForPagination').html(activeYear+1)
-      filterInvoicesByYear(activeYear+1)
-    }
+    if (operateOnYear === '+') { q1nv0_activeYear += 1 }
     
-    if (operateOnYear === '-') { 
-      $('button.paginationButton#selectYearForPagination').html(activeYear-1)
-      filterInvoicesByYear(activeYear-1)
-     }
+    if (operateOnYear === '-') { q1nv0_activeYear -= 1 }
 
-    
+    q1nv0_activeYearButton.html(q1nv0_activeYear)
+
+    filterInvoices(q1nv0_activeInvoiceTableFilter)
   })
 
 
   function getRowNumber (eventsOriginalTarget) {
+
     return $(eventsOriginalTarget).closest('tr').attr('value')
+
   }
 
-  // Which of them is sucessfull?
+  
   function markInvoiceAsPaidInDB(clickedTarget){
+
     const data = { paydate: formatDate(new Date()) }
-    updateInvoiceHeaderItem(getRowNumber('tr#'+clickedTarget), data)
+
+    updateInvoiceHeaderItem( getRowNumber('tr#'+clickedTarget), data )
+
   }
 
   function markInvoiceAsOpenInDB(clickedTarget){
+
     const data = { paydate: '' }
-    updateInvoiceHeaderItem(getRowNumber('tr#'+clickedTarget), data)
+
+    updateInvoiceHeaderItem( getRowNumber('tr#'+clickedTarget), data )
+
   }
 
   /**
@@ -263,26 +325,20 @@ jQuery(function ($) {
    */
   function setInvoiceToPaid (clickedTarget){
     const invoiceRow = $('tr#'+clickedTarget)
+    const invoiceStatusIcon = invoiceRow.find('.invoiceStatusIcon')
     
     // and mark that row as paid instead of open
     invoiceRow.removeClass('open')
+    invoiceStatusIcon.removeClass('open')
+    
     invoiceRow.addClass('paid')
-    
-    invoiceRow.find('.invoiceStatusIcon').addClass('paid')
-    invoiceRow.find('.invoiceStatusIcon').removeClass('open')
-    
-    // paid invoices should not look and be editable
-    invoiceRow.find('.columnEdit').find('.delete').css('color', '#dadce1') // do this within a class?
-    invoiceRow.find('.columnEdit').find('.delete').removeClass('deleteRow')
+    invoiceStatusIcon.addClass('paid') 
 
-    
     // .. set a paydate to mark as paid in database
     markInvoiceAsPaidInDB(clickedTarget)
 
     //hide dunning circle
-    invoiceRow.find('.columnDunning').find('.longCircle').css('display', 'none')
-
-
+    invoiceRow.find('.columnDunning').find('.longCircle').fadeOut()
   }
 
   /**
@@ -292,21 +348,25 @@ jQuery(function ($) {
    */
   function setInvoiceToUnpaid (clickedTarget){
     const invoiceRow = $('tr#'+clickedTarget)
-  
+    const invoiceStatusIcon = invoiceRow.find('.invoiceStatusIcon')
+    const dunningType = invoiceRow.find('td.columnDunning').attr('value')
+    const dunningDays = invoiceRow.find('td.columnDunning span').attr('value')
+    
     invoiceRow.removeClass('paid')
-    invoiceRow.addClass('open edit')
+    invoiceStatusIcon.removeClass('paid')
     
-    invoiceRow.find('.invoiceStatusIcon').removeClass('paid')
-    invoiceRow.find('.invoiceStatusIcon').addClass('open')
-    
-    invoiceRow.find('.columnEdit').find('.delete').css('color', '#50575e') // do this within a class?
-  
-    invoiceRow.find('.columnEdit').find('.delete').addClass('deleteRow')
+    invoiceRow.addClass('open')
+    invoiceStatusIcon.addClass('open')
 
-    invoiceRow.find('.columnDunning').find('.longCircle').css('display', 'inline-block')
+    // Paid Invoices are not to be deleted    
+    //invoiceRow.find('.columnEdit').find('.delete').css('color', '#50575e') // do this within a class?
+    //invoiceRow.find('.columnEdit').find('.delete').addClass('deleteRow')
+    
     invoiceRow.find('td.columnDunning span').removeClass()
-    invoiceRow.find('td.columnDunning span').addClass('longCircle ' + invoiceRow.find('td.columnDunning').attr('value'))
-    invoiceRow.find('td.columnDunning span').text(invoiceRow.find('td.columnDunning span').attr('value'))
+    invoiceRow.find('td.columnDunning span').addClass('longCircle ' + dunningType)
+    
+    invoiceRow.find('td.columnDunning span').text(dunningDays)
+    invoiceRow.find('td.columnDunning span').fadeIn()
     
     // remove paydate, mark as open in database
     markInvoiceAsOpenInDB(clickedTarget)
@@ -321,6 +381,7 @@ jQuery(function ($) {
    * on the row that got clicked
    */
   $('#tableInvoices').on('click', '.sliderForPayment', function (event) {
+
     // We want to click the button from within the confirm dialog in a purely cosmetic sense:
     if ($("#reopenPaidInvoiceWithinForm").is(":visible")) {return}
     if ($("#reopenPaidInvoice").is(":visible")) {return}
@@ -333,16 +394,28 @@ jQuery(function ($) {
     if(invoiceRow.hasClass('cancelled')){
       return;
     }
-    // For already paid invocies a dialoge pops up to ask if the invoice should be reverted to open
+
+    // For already paid invoices a dialoge pops up to ask if the invoice should be reverted to open
     if (sliderBox.find('input').prop('checked') === false) {
+
       setInvoiceToPaid(invoiceRow.attr('id'))        
 
     } else {
+
+      // This is a workaround for using "promises"
       $("#lastClickedInvoice").val($(clickTarget).closest("tr").attr('id'))
+
+      // Oprn Dialog
       $("#reopenPaidInvoice").show()
+
+      // We want to postpone the change on the slider until user decide what they want to do in the popup
       event.preventDefault()
+
     }
-    q_invoice_RecalcSums(0,0,0);
+
+    recalcInvoiceTableSums()
+    //q_invoice_RecalcSums(0,0,0);
+
   })
   /**
    * Escape key closes Overlay
@@ -350,14 +423,23 @@ jQuery(function ($) {
    * @param {event} x We check if Escape has been pressed
    */
   $(document).on('keydown', function (e) {
+
     if (e.keyCode === 27) {
+
       if($('#qinv_mail-popup').css('display') == 'block'){
+
         $('#qinv_mail-popup').hide()
+
       }
+
       if ($('.dialogOverlay').css('display') === 'block') {
+
         $('.dialogOverlay').hide()
+
       } else {
+
         $('#invoiceOverlay').hide()
+
       }
     }
   })
@@ -369,12 +451,18 @@ jQuery(function ($) {
    * or the cancel button
    */
    $('#qinv_mail-popup').click(function (event) {
+    
     if ($(event.target).is('.overlay')) {
+
       $('#qinv_mail-popup').hide()
+
     }
     if ($(event.target).is('.cancelButton')) {
+
       $('#qinv_mail-popup').hide()
+
     }
+
   })
 
   
@@ -385,21 +473,30 @@ jQuery(function ($) {
    * or the cancel button
    */
   $('#invoiceOverlay').on('click', function (event) {
+
     if ($(event.target).is('.overlay')) {
+
       $('#invoiceOverlay').hide()
+
     }
     if ($(event.target).is('.cancelButton')) {
+
       $('#invoiceOverlay').hide()
+
     }
   })
+
   /**
    * Clicking outside of the dialog or closes it
    * 
    * @param {event} x We check if the user clicked outside the form 
    */
   $('.dialogOverlay').on('click', function (event) {
+
     if ($(event.target).is('.overlay')) {
+
       $('.dialogOverlay').hide()
+
     }
   })
 
@@ -450,7 +547,9 @@ jQuery(function ($) {
    * @param {object} x We submit the target to change 
    */
   function setFilterButtonActive (target) { 
+
     target.attr('class', 'filterButton active')
+
   }
 
 
@@ -460,7 +559,9 @@ jQuery(function ($) {
    * @param {object} x We submit the target to change 
    */
   function setFilterButtonInactive (target) { 
+
     target.attr('class', 'filterButton inactive')
+
   }
 
 
@@ -503,24 +604,29 @@ jQuery(function ($) {
     }
   }
 
+  
   /**
    * Filters invoices and changes UI to that view
    * @param {string} x We submit the target to change 
    */
   function filterInvoices(invoiceCategory){
     // First we hide everything
-    $('#tableInvoices tbody tr').hide()
-    $('#q_invoice_totalSums span').hide()
+    hidetableBodyContent()
     
+    //$('#q_invoice_totalSums span').hide()
+    showDeleteButton(false)
+    showReactivationButton(false)
+    showPayToggle(false)
+    const dunningInvoices = q1nv0_invoiceTableBody.find('tr.dunning')
+
     switch (invoiceCategory){
       case "all":
         showDeleteButton(true)
-        showReactivationButton(false)
         showPayToggle(true)
-        $('#tableInvoices tbody tr').slice(0, invoicesOnPage).show();
-        $('#qi_totalSumNetto').show()
-        $('#qi_totalSumTotal').show()
-        $('#qi_totalSumDunning').show()
+        q1nv0_invoiceTableBody.find("td:contains(" + q1nv0_activeYear +")").closest('tr').show();
+        //$('#qi_totalSumNetto').show()
+        //$('#qi_totalSumTotal').show()
+        //$('#qi_totalSumDunning').show()
         q_invoice_modify_cancelled_reactivation_icon();
         break
 
@@ -529,46 +635,57 @@ jQuery(function ($) {
         showReactivationButton(true)
         showPayToggle(true)
         // The next 2 need work:
-        $('#tableInvoices tbody tr.open').slice(0, invoicesOnPage).show()
-        $('#tableInvoices tbody tr.dunnung').slice(0, invoicesOnPage).show()
-        $('#qi_openSumNetto').show()
-        $('#qi_openSumTotal').show()
-        $('#qi_openSumDunning').show()
+        
+        
+        const openInvoices = q1nv0_invoiceTableBody.find('tr.open')
+        openInvoices.find("td:contains(" + q1nv0_activeYear +")").parent().show()
+        dunningInvoices.find("td:contains(" + q1nv0_activeYear +")").parent().show()
+        
+
+        //$('#qi_openSumNetto').show()
+        //$('#qi_openSumTotal').show()
+        //$('#qi_openSumDunning').show()
         break
 
       case "cancelled":
-        showDeleteButton(false)
         showReactivationButton(true)
         showPayToggle(true)
-        $('#tableInvoices tbody tr.cancelled').slice(0, invoicesOnPage).show()
-        $('#qi_cancelledSumNetto').show()
-        $('#qi_cancelledSumTotal').show()
-        $('#qi_cancelledSumDunning').show()
+
+        const cancelledInvoices = q1nv0_invoiceTableBody.find('tr.cancelled')
+        cancelledInvoices.find("td:contains(" + q1nv0_activeYear +")").parent().show()
+        
+        //$('#qi_cancelledSumNetto').show()
+        //$('#qi_cancelledSumTotal').show()
+        //$('#qi_cancelledSumDunning').show()
         break
 
       case "dunning":
         showDeleteButton(true)
         showReactivationButton(true)
         showPayToggle(true)
-        $('#tableInvoices tbody tr.dunning').slice(0, invoicesOnPage).show();
-        $('#qi_dunningSumNetto').show()
-        $('#qi_dunningSumDunning').show()
-        $('#qi_dunningSumTotal').show()
+
+        
+        dunningInvoices.find("td:contains(" + q1nv0_activeYear +")").parent().show()
+        
+        //$('#qi_dunningSumNetto').show()
+        //$('#qi_dunningSumDunning').show()
+        //$('#qi_dunningSumTotal').show()
         break
 
       case "paid":
-        showDeleteButton(false)
-        showReactivationButton(false)
         showPayToggle(true)
-        $('#tableInvoices tbody tr.paid').slice(0, invoicesOnPage).show();
-        $('#qi_paidSumDunning').show()
-        $('#qi_paidSumTotal').show()
-        $('#qi_paidSumNetto').show()
+
+        const paidInvoices = q1nv0_invoiceTableBody.find('tr.paid')
+        paidInvoices.find("td:contains(" + q1nv0_activeYear +")").parent().show()
+        
+        //$('#qi_paidSumDunning').show()
+        //$('#qi_paidSumTotal').show()
+        //$('#qi_paidSumNetto').show()
         break
     }
 
-    q_invoice_RecalcSums(0,0,0);
-    $('#q_invoice_totalSums').show()
+    //q_invoice_RecalcSums(0,0,0);
+    //$('#q_invoice_totalSums').show()
 
   }
   /*
@@ -581,22 +698,15 @@ jQuery(function ($) {
 
   // Manage UI visibility of filter buttons mobile version
   $('#mobileFilterButtonsDropdown').on('change', function (event) {
-    if ($('#mobileFilterButtonsDropdown option:selected').val() === 'all') {
-      filterInvoices('all')
-    }
-    if ($('#mobileFilterButtonsDropdown option:selected').val() === 'open') {
-      filterInvoices('open')
-    }
-    if ($('#mobileFilterButtonsDropdown option:selected').val() === 'paid') {
-      filterInvoices('paid')
-    }
-    if ($('#mobileFilterButtonsDropdown option:selected').val() === 'cancelled') {
-      filterInvoices('cancelled')
-    }
-    if ($('#mobileFilterButtonsDropdown option:selected').val() === 'dunning') {
-      filterInvoices('dunning')
-    }
+
+    const filterType = $('#mobileFilterButtonsDropdown option:selected').val()
+
+    filterInvoices(filterType)
+
+    q1nv0_activeInvoiceTableFilter = filterType
+
     $('#mobileFilterButtonsDropdown').blur();
+
   });
 
   // Manage UI visibility of filter buttons
@@ -604,25 +714,32 @@ jQuery(function ($) {
     if ($(event.target).parent().attr('id') === 'filterButtons') {
       return;
     }
+
     setFilterButtonInactive($('.filterButtons').find('div.active'))
     setFilterButtonActive($(event.target).parent())
+
     if ($(event.target).parent().attr('id') === 'showAllInvoices') {
+      q1nv0_activeInvoiceTableFilter = 'all'
       filterInvoices('all')
     }
 
     if ($(event.target).parent().attr('id') === 'showOpenInvoices') {
+      q1nv0_activeInvoiceTableFilter = 'open'
       filterInvoices('open')
     }
 
     if ($(event.target).parent().attr('id') === 'showCancelledInvoices') {
+      q1nv0_activeInvoiceTableFilter = 'cancelled'
       filterInvoices('cancelled')
     }
 
     if ($(event.target).parent().attr('id') === 'showInvoicesWithDunning') {
+      q1nv0_activeInvoiceTableFilter = 'dunning'
       filterInvoices('dunning')
     }
 
     if ($(event.target).parent().attr('id') === 'showInvoicesPaid') {
+      q1nv0_activeInvoiceTableFilter = 'paid'
       filterInvoices('paid')
     }
   })
@@ -992,7 +1109,7 @@ jQuery(function ($) {
     targetRow.find('td.columnDunning span').removeClass()
     targetRow.find('td.columnDunning span').addClass('longCircle ' + targetRow.find('td.columnDunning').attr('value'))
     targetRow.find('td.columnDunning span').text(targetRow.find('td.columnDunning span').attr('value'))
-    q_invoice_RecalcSums(0,0,0);
+    //q_invoice_RecalcSums(0,0,0);
   })
 
   $('div#archiveInvoice').on('click', '#cancelRemoveInvoice', function () {
@@ -1017,7 +1134,7 @@ jQuery(function ($) {
     targetRow.find('.switchForPaidStatus > *').css('opacity', '0')
     targetRow.find('.reactivateInvoice').attr('class', 'reactivateInvoice reactivate dashicons dashicons-undo')
     targetRow.find('.columnDunning').find('.longCircle').css('display', 'none')
-    q_invoice_RecalcSums(0,0,0);
+    //q_invoice_RecalcSums(0,0,0);
   })
 
   function writeInvoiceDetailstoFormField (inputName, dataName, position) {
@@ -2243,8 +2360,9 @@ jQuery(function ($) {
    * Each Number will receive 7px + 11px for the first
    */
   fireOnPageLoad = () => {
-    const thisYear = new Date().getFullYear()
-    filterInvoicesByYear(thisYear)
+    
+    filterInvoices('all')
+    
   }
 
    jQuery(document).ready(function ($) {

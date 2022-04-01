@@ -19,12 +19,7 @@
 ?>
 
  <div class="page_content">
-     <div id='paginationButtonRow'>
-         <button class='paginationButton operateOnYear' id='subYearForPagination'>-</button>
-         <button class='paginationButton' id='selectYearForPagination'>2022</button>
-         <button class='paginationButton operateOnYear' id='addYearForPagination'>+</button>
-         
-     </div>
+     
      <div class="filterButtons qInvMainSearchable">
         <div class="filterButton active" id="showAllInvoices">
             <button class="invoiceButton">
@@ -469,7 +464,7 @@ function showOpenInvoices()
                 </td>
 
                 <td class="manage-column  columnNet" >
-                    <span>
+                    <span class="monetaryAmount">
                         <?php
                         if ($paid) {
                             $paidNetto = $paidNetto + $netSum;
@@ -488,7 +483,7 @@ function showOpenInvoices()
                 </td>
 
                 <td class="manage-column  columnTotal">
-                <span>
+                <span class="monetaryAmount">
                         <?php
                         if ($paid) {
                             $paidTotal = $paidTotal + $totalSum;
@@ -727,6 +722,7 @@ function showOpenInvoices()
         <td class="manage-column  columnDate"></td>
 
         <td class="manage-column  columnNet" >
+            <span id="columnNetSum"> </span>
             <span id="qi_totalSumNetto">
                 <?php 
                 echo number_format($nettoTotalSum, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
@@ -755,6 +751,7 @@ function showOpenInvoices()
         </td>
 
         <td class="manage-column  columnTotal">
+            <span id="columnTotalSum"> </span>
             <span id="qi_totalSumTotal">
                 <?php 
                 echo number_format($totalTotalSum, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
@@ -809,5 +806,11 @@ function closeTable()
             </table>   
         </div>
     </div>
+    <div id='paginationButtonRow'>
+         <button class='paginationButton operateOnYear' id='subYearForPagination'>-</button>
+         <button class='paginationButton' id='selectYearForPagination'>2022</button>
+         <button class='paginationButton operateOnYear' id='addYearForPagination'>+</button>
+         
+     </div>
     <?php
 }
