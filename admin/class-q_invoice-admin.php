@@ -1430,17 +1430,38 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         {
             check_ajax_referer($this->_plugin_name . "_nonce");
 
-            $recipient = 'schunke30@gmail.com';//$_POST['recipient'];
+            $recipient = $_POST['recipient'];
             $subject = $_POST['subject'];
             $message = $_POST['message'];
-            $headers = $_POST['headers'];
             $attachments = $_POST['attachments'];
 
-            //$content_type = function() { return 'text/html'; };
-            //add_filter( 'wp_mail_content_type', $content_type );
-            //add_filter( 'wp_mail_from', $headers );
+            $message = '<!doctype>
+                        <html>
+                            <head></head>
+                            <body>' .
+                            $message .
+                            '</body>
+                        </html>';
+
+            $attachments = plugin_dir_path(dirname( __FILE__ )) . '/pdf/' . $attachments;
+
+            $headers = '';
+
+            $content_type = function() { return 'text/html'; };
+            add_filter( 'wp_mail_content_type', $content_type );
+            add_filter('wp_mail_from', 'new_mail_from');
+            add_filter('wp_mail_from_name', 'new_mail_from_name');
+
+            function new_mail_from($old) {
+                return get_option('qi_settings')['email'];
+            }
+            function new_mail_from_name($old) {
+                return get_option('qi_settings')['company'];
+            }
             
             $success = wp_mail($recipient, $subject, $message, $headers, $attachments);
+
+            remove_filter( 'wp_mail_content_type', $content_type );
 
             echo $success;
             wp_die();

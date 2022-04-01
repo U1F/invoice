@@ -784,6 +784,7 @@ jQuery(function ($) {
    * Open a dropdown to shwo urther options. Save the clicked invoice ID to get specific data.
    */
   $('table#tableInvoices').on('click', '.moreInvoiceOptions', function (event) {
+    $('.qinv_moreOptionsDropdownBox').css('display', 'none')
     if($(this).parent().parent().find('div.qinv_moreOptionsDropdownBox').css('display') == 'block'){
       $(this).parent().parent().find('div.qinv_moreOptionsDropdownBox').css('display', 'none')
     } else{
@@ -2099,16 +2100,18 @@ jQuery(function ($) {
 
   // Wordpress Editor functionality gets modified (used for mail)
   function qpModifyWPEditor(id){
-    document.getElementById(id+"-tmce").click();
-    qpModifyWPEditorCSS(id);
-    document.getElementById(id+"-html").click();
-    let vis = document.getElementById(id+"-tmce");
-    document.getElementById("qt_"+id+"_toolbar").appendChild(vis);
-    document.getElementById(id+"-tmce").click();
-    let txt = document.getElementById(id+"-html");
-    document.getElementById("mceu_28-body").appendChild(txt);
-    document.getElementById("mceu_27").appendChild(txt);
-    document.getElementById("mceu_29-body").appendChild(txt); // Louis: text-to-visual button is inserted into the toolbar
+    if(document.getElementById(id+"-tmce")){
+      document.getElementById(id+"-tmce").click();
+      qpModifyWPEditorCSS(id);
+      document.getElementById(id+"-html").click();
+      let vis = document.getElementById(id+"-tmce");
+      document.getElementById("qt_"+id+"_toolbar").appendChild(vis);
+      document.getElementById(id+"-tmce").click();
+      let txt = document.getElementById(id+"-html");
+      document.getElementById("mceu_28-body").appendChild(txt);
+      document.getElementById("mceu_27").appendChild(txt);
+      document.getElementById("mceu_29-body").appendChild(txt); // Louis: text-to-visual button is inserted into the toolbar
+    }
   }
 
   // Wordpress Editor style gets modified (used for mail)
@@ -2131,6 +2134,7 @@ jQuery(function ($) {
    * Handles the on click action on the mail dashicon:
    */
    $('table#tableInvoices').on('click', '.mailInvoice', function (event) {
+    qpModifyWPEditor('templateEditor');
     getMailPopupData($(this).attr('id'), 'Invoice');
     $('div#qinv_mail-popup').css('display', 'block');
   })
@@ -2159,9 +2163,15 @@ jQuery(function ($) {
     $('div#qinv_mail-popup').css('display', 'block');
   })
 
+  /**
+   * Retrievs data from page and inserts it into the popup. 
+   * @param {invocie} id 
+   * @param {dunning or invoice} type 
+   */
   function getMailPopupData(id, type){
 
-    $('#qinv_mail-sender').val('');
+    $('#edit-' + id).find('div.qinv_moreOptionsDropdownBox').css('display', 'none');
+
     $('#qinv_mail-recipient').val('');
     $('#qinv_mail-subject').val('');
     var wpEditorID = $('#qinv_mail-popup').find('.wp-editor-wrap').attr('id').split('-')[1];
@@ -2174,7 +2184,6 @@ jQuery(function ($) {
     var salutation = '<p>Hello ' + name + ',<br></p><p>';
     var recipientMail = '';
     var companyName = $('#qinv_mail-name-company').text();
-    var senderMail = $('#qinv_mail-sender-onpage').text();
     
 
     for(i = 0; i < contactData[0].length; i++){
@@ -2184,7 +2193,6 @@ jQuery(function ($) {
         recipientMail = contactData[0][i].email;
       }
     }
-    $('#qinv_mail-sender').val(senderMail);
     $('#qinv_mail-header').val(companyName);
     $('#qinv_mail-recipient').val(recipientMail);
     $('#qinv_mail-subject').val(type + '_ID' + id + '_' + name.replace(' ', '-'));
@@ -2207,17 +2215,16 @@ jQuery(function ($) {
     $('#qInvMailAttachmentIcon').attr('href', attachmentRef);
     $('#qInvMailAttachmentData').text(type+'-PDF');
     $('#qInvMailAttachmentData').attr('href', attachmentRef);
-    
-
 
   }
 
+  /**
+   * Sends E-Mail with given content on Click on Send
+   */
   $('#qinv_mail-popup-submit').on('click', function(e){
     console.log('start');
     var wpEditorID = $('#qinv_mail-popup').find('.wp-editor-wrap').attr('id').split('-')[1];
     var messageBody = tinymce.get(wpEditorID).getContent();
-    var messageHeader = '<!doctype html><html><body>';
-    var messageFooter = '</body></html>';
     jQuery.ajax({
       type: 'POST',
       url: q_invoice_ajaxObject.ajax_url,
@@ -2226,9 +2233,8 @@ jQuery(function ($) {
         _ajax_nonce: q_invoice_ajaxObject.nonce,
         recipient: $('#qinv_mail-recipient').val(),
         subject: $('#qinv_mail-subject').val(),
-        message: messageHeader + messageBody + messageFooter,
-        headers: $('#qinv_mail-header').val(),
-        attachments: $('#qInvMailAttachmentData').attr('href')
+        message: messageBody,
+        attachments: $('#qInvMailAttachmentData').attr('href').split('/pdf/')[1]
       },
       success: function (response) {
         if(response){

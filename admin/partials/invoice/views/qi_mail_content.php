@@ -33,11 +33,6 @@ $settings = array('media_buttons' => false, 'wpautop' => false);
 		<fieldset id="qinv_mail-info" class="">
 
 			<div class="qinvc_mailContentRow">
-				<label for="qinv_mail-sender" id="qinv_mail-sender-label" class="qinvc_mailContentLabel" style="width:10%;">Sender:</label>
-				<input name="qinv_mail-sender" id="qinv_mail-sender" class="qinvc_mailContentInput"></input>
-			</div>
-
-			<div class="qinvc_mailContentRow">
 				<label for="qinv_mail-recipient" id="qinv_mail-recipient-label" class="qinvc_mailContentLabel" style="width:10%;">Recipient:</label>
 				<input name="qinv_mail-recipient" id="qinv_mail-recipient" class="qinvc_mailContentInput"></input>
 			</div>
@@ -63,7 +58,7 @@ $settings = array('media_buttons' => false, 'wpautop' => false);
 
 		</fieldset>
 
-		<div id="qinv_mail-popup-controls" style="padding: 20px 20px 0 20px;">
+		<div id="qinv_mail-popup-controls">
 			<button
 				id="qinv_mail-popup-return"
 				class="qInvoiceFormButton cancelButton"
@@ -74,7 +69,6 @@ $settings = array('media_buttons' => false, 'wpautop' => false);
 			<button
 				id="qinv_mail-popup-submit"
 				class="qInvoiceFormButton submitButton"
-				style="float: right;"
 				type="button"
 				name="submit">
 				Senden
