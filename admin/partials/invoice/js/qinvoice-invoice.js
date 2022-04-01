@@ -214,20 +214,6 @@ jQuery(function ($) {
     return $(row).children('td').eq(index).text() 
   }
 
-  $('.paginationButton').on('click', (event) => {
-    event.preventDefault()
-    //right now this is deactivated
-    return
-    const clickedButton = event.currentTarget
-    const selectedYear = $(clickedButton).html()
-    
-    $(clickedButton).siblings().removeClass('active')
-    $(clickedButton).addClass('active')
-    $("#tableInvoices tbody tr").hide()
-    $("#tableInvoices tbody tr td:contains("+selectedYear+")").closest('tr').show()
-
-  })
-
   filterInvoicesByYear = (selectedYear) => {
     $("#tableInvoices tbody tr").hide()
     $("#tableInvoices tbody tr td:contains(" + selectedYear +")").closest('tr').show()
@@ -2257,7 +2243,8 @@ jQuery(function ($) {
    * Each Number will receive 7px + 11px for the first
    */
   fireOnPageLoad = () => {
-    filterInvoicesByYear('2022')
+    const thisYear = new Date().getFullYear()
+    filterInvoicesByYear(thisYear)
   }
 
    jQuery(document).ready(function ($) {
