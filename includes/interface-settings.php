@@ -40,5 +40,17 @@ class Interface_Settings
 
     }
 
+    static public function saveLastFilePathLogo($path){
+
+        $optionsArray = get_option('qi_settings');
+        
+        $optionsArray['lastFilePathLogo'] = $path;
+    
+        update_option('qi_settings', $optionsArray);
+
+        return $path;
+
+    }
+
 }
 

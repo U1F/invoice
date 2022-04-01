@@ -114,10 +114,44 @@ jQuery(function ($) {
   $('#confirmRemoveLogo').on('click', function(event){
     $('div#qinv_settings_deleteLogoOverlay').css('display', 'none');
     $('label#qinv_settings_uploadLogo').show()
-    $('input#companyLogo').val('')
     $('div#showLogoDiv').hide()
+
+    //$('#q1nv0-preview-image').attr('src', '')
+    
+    $('input#companyLogo').attr('value', '')
+    $('input#lastFilePathLogo').attr('value', '')
+
     qinv_settings_removeLogoFile();
+    
+    //console.log('Deleted URL?')
+    //console.log($('#q1nv0-preview-image').attr('src'))
   })
+
+  function handleUploadedImage (selectedImage){
+
+      const imageID = selectedImage.id
+      const imageURL = selectedImage.url   
+
+      const logoImageContainer = $('#q1nv0-preview-image-container')
+      let clone = $(logoImageContainer).find('img').clone()
+
+      $('input#companyLogo').attr('value', imageID)
+      $('input#lastFilePathLogo').attr('value', imageURL)
+      
+      clone.removeAttr("src").attr('src', imageURL)
+      clone.removeAttr("srcset")
+      
+      $('#q1nv0-preview-image-container').empty()
+      $(logoImageContainer).prepend(clone)
+      
+      $('label#qinv_settings_uploadLogo').hide()
+      $('div#showLogoDiv').show()
+      
+      //console.log("('#q1nv0-preview-image').attr('src')")
+      //console.log($('#q1nv0-preview-image').attr('src'))
+      
+      qinv_settings_updateLogo(imageID, imageURL)
+  }
 
   $('input#uploadLogoButton').on('click', (event) => {
     event.preventDefault()
@@ -133,22 +167,15 @@ jQuery(function ($) {
        }
      })
 
-     logoFrame.on('close', () => {
-      
-      var selectedImage = logoFrame.state().get('selection').first().toJSON();
-      $('input#companyLogo').attr('value', selectedImage.id)
-      console.log($('input#companyLogo').val())
-      //console.log(selectedImage.url)
-      $('#q1nv0-preview-image').attr('src', selectedImage.url)
-      $('label#qinv_settings_uploadLogo').hide()
-      $('div#showLogoDiv').show()
-      qinv_settings_updateLogo(selectedImage.id)
-   })
+     logoFrame.on('close', () => {  
+      const selectedImage = logoFrame.state().get('selection').first().toJSON()
+      handleUploadedImage(selectedImage)
+     })
 
      logoFrame.on('open',function() {
-      var selection =  logoFrame.state().get('selection')
-      var id = $('input#companyLogo').val()
-      var attachment = wp.media.attachment(id)
+      let selection =  logoFrame.state().get('selection')
+      const id = $('input#companyLogo').val()
+      const attachment = wp.media.attachment(id)
       attachment.fetch()
       selection.add( attachment ? [ attachment ] : [] )
     })
@@ -187,7 +214,7 @@ jQuery(function ($) {
   /**
    * Function to remove the logo from server and save data by clicking the submit button
    */
-   function qinv_settings_updateLogo(id){
+   function qinv_settings_updateLogo(id, logoFilepath){
     jQuery.ajax({
       type: 'POST',
 
@@ -195,13 +222,14 @@ jQuery(function ($) {
 
       data: {
         id: id,
+        logoFilepath: logoFilepath,
         action: 'updateLogoServerSide',
         _ajax_nonce: q_invoice_ajaxObject.nonce
       },
       success: function (data) {
         
         //$('#uploadLogoButton').show()
-        //console.log('Removal Status: ' + data)
+        console.log('Removal Status: ' + data)
         
       },
       error: function (errorThrown) {

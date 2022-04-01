@@ -121,7 +121,7 @@ jQuery(function ($) {
     }
   }
 
-  $('#edit-invoice').click(function (event) {
+  $('#edit-invoice').on('click', function (event) {
     if ($(event.target).parents('#contactRegister').length) {
       // ("#contactRegister").css("display", "block");
       console.log(event.target)
