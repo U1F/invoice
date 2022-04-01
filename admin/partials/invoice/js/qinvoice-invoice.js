@@ -454,7 +454,7 @@ jQuery(function ($) {
    * @param {event} x We check if the user clicked outside the form 
    * or the cancel button
    */
-   $('#qinv_mail-popup').click(function (event) {
+   $('#qinv_mail-popup').on( 'click', function (event) {
     
     if ($(event.target).is('.overlay')) {
 
