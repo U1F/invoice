@@ -722,59 +722,17 @@ function showOpenInvoices()
         <td class="manage-column  columnDate"></td>
 
         <td class="manage-column  columnNet" >
-            <span id="columnNetSum"> </span>
-            <span id="qi_totalSumNetto">
-                <?php 
+            <span id="columnNetSum"> 
+            <?php 
                 echo number_format($nettoTotalSum, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
-                 ?>
-            </span>
-            <span id="qi_openSumNetto" style="display: none;">
-                <?php 
-                echo number_format($openNetto, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
-                 ?>
-            </span>
-            <span id="qi_cancelledSumNetto" style="display: none;">
-                <?php 
-                echo number_format($cancelledNetto, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
-                 ?>
-            </span>
-            <span id="qi_dunningSumNetto" style="display: none;">
-                <?php 
-                echo number_format($dunningNetto, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
-                 ?>
-            </span>
-            <span id="qi_paidSumNetto" style="display: none;">
-                <?php 
-                echo number_format($paidNetto, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
-                 ?>
+            ?>
             </span>
         </td>
 
         <td class="manage-column  columnTotal">
-            <span id="columnTotalSum"> </span>
-            <span id="qi_totalSumTotal">
+            <span id="columnTotalSum"> 
                 <?php 
-                echo number_format($totalTotalSum, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
-                 ?>
-            </span>
-            <span id="qi_openSumTotal" style="display: none;">
-                <?php 
-                echo number_format($openTotal, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
-                 ?>
-            </span>
-            <span id="qi_cancelledSumTotal" style="display: none;">
-                <?php 
-                echo number_format($cancelledTotal, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
-                 ?>
-            </span>
-            <span id="qi_dunningSumTotal" style="display: none;">
-                <?php 
-                echo number_format($dunningTotal, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
-                 ?>
-            </span>
-            <span id="qi_paidSumTotal" style="display: none;">
-                <?php 
-                echo number_format($paidTotal, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
+                    echo number_format($totalTotalSum, 2, $decimalDot, $thousandsDot) . " " . $currencySymbol;
                  ?>
             </span>
         </td>

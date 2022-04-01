@@ -263,10 +263,15 @@ jQuery(function ($) {
 
   function recalcInvoiceTableSums() {
 
-    $(columnTotalSum).html(recalcTotalSumsOfInvoices())
-
-    $(columnNetSum).html(recalcNetSumsOfInvoices())
-
+    const totalSums = recalcTotalSumsOfInvoices()
+    const netSums = recalcNetSumsOfInvoices()
+    
+    const formattedTotalSum = removeCurrencySign( formatterDE.format( totalSums/100 ) ) + ' ' + currencySign
+    const formattedNetSum = removeCurrencySign( formatterDE.format( netSums/100 ) ) + ' ' + currencySign
+    
+    $(columnTotalSum).html( formattedTotalSum)
+    $(columnNetSum).html( formattedNetSum )
+    
   }
 
   
@@ -414,7 +419,6 @@ jQuery(function ($) {
     }
 
     recalcInvoiceTableSums()
-    //q_invoice_RecalcSums(0,0,0);
 
   })
   /**
@@ -624,9 +628,6 @@ jQuery(function ($) {
         showDeleteButton(true)
         showPayToggle(true)
         q1nv0_invoiceTableBody.find("td:contains(" + q1nv0_activeYear +")").closest('tr').show();
-        //$('#qi_totalSumNetto').show()
-        //$('#qi_totalSumTotal').show()
-        //$('#qi_totalSumDunning').show()
         q_invoice_modify_cancelled_reactivation_icon();
         break
 
@@ -636,15 +637,10 @@ jQuery(function ($) {
         showPayToggle(true)
         // The next 2 need work:
         
-        
         const openInvoices = q1nv0_invoiceTableBody.find('tr.open')
         openInvoices.find("td:contains(" + q1nv0_activeYear +")").parent().show()
         dunningInvoices.find("td:contains(" + q1nv0_activeYear +")").parent().show()
         
-
-        //$('#qi_openSumNetto').show()
-        //$('#qi_openSumTotal').show()
-        //$('#qi_openSumDunning').show()
         break
 
       case "cancelled":
@@ -654,9 +650,6 @@ jQuery(function ($) {
         const cancelledInvoices = q1nv0_invoiceTableBody.find('tr.cancelled')
         cancelledInvoices.find("td:contains(" + q1nv0_activeYear +")").parent().show()
         
-        //$('#qi_cancelledSumNetto').show()
-        //$('#qi_cancelledSumTotal').show()
-        //$('#qi_cancelledSumDunning').show()
         break
 
       case "dunning":
@@ -667,9 +660,6 @@ jQuery(function ($) {
         
         dunningInvoices.find("td:contains(" + q1nv0_activeYear +")").parent().show()
         
-        //$('#qi_dunningSumNetto').show()
-        //$('#qi_dunningSumDunning').show()
-        //$('#qi_dunningSumTotal').show()
         break
 
       case "paid":
@@ -678,14 +668,13 @@ jQuery(function ($) {
         const paidInvoices = q1nv0_invoiceTableBody.find('tr.paid')
         paidInvoices.find("td:contains(" + q1nv0_activeYear +")").parent().show()
         
-        //$('#qi_paidSumDunning').show()
-        //$('#qi_paidSumTotal').show()
-        //$('#qi_paidSumNetto').show()
         break
     }
+    
+    
+    recalcInvoiceTableSums()
+    
 
-    //q_invoice_RecalcSums(0,0,0);
-    //$('#q_invoice_totalSums').show()
 
   }
   /*
@@ -1113,7 +1102,9 @@ jQuery(function ($) {
     targetRow.find('td.columnDunning span').removeClass()
     targetRow.find('td.columnDunning span').addClass('longCircle ' + targetRow.find('td.columnDunning').attr('value'))
     targetRow.find('td.columnDunning span').text(targetRow.find('td.columnDunning span').attr('value'))
-    //q_invoice_RecalcSums(0,0,0);
+    
+    recalcInvoiceTableSums()
+    
   })
 
   $('div#archiveInvoice').on('click', '#cancelRemoveInvoice', function () {
@@ -1138,7 +1129,9 @@ jQuery(function ($) {
     targetRow.find('.switchForPaidStatus > *').css('opacity', '0')
     targetRow.find('.reactivateInvoice').attr('class', 'reactivateInvoice reactivate dashicons dashicons-undo')
     targetRow.find('.columnDunning').find('.longCircle').css('display', 'none')
-    //q_invoice_RecalcSums(0,0,0);
+    
+    recalcInvoiceTableSums()
+    
   })
 
   function writeInvoiceDetailstoFormField (inputName, dataName, position) {
@@ -1770,112 +1763,6 @@ jQuery(function ($) {
     
   }
 
-  /**
-   * Function to recalc the Sum in the last row for each of "All, Open, Dunning, Cancelled, Paid"
-   * @param {*} modifiedTotal 
-   * @param {*} modifiedNet 
-   * @param {*} modifiedDun 
-   */
-  function q_invoice_RecalcSums(modifiedTotal, modifiedNet, modifiedDun){
-    //Rows haben folgende Attribute: (paid edit active) || [(dunning edit || open edit) && (cancelled || active)]
-
-    //get all rows, that exist on current page for each class attribute
-    var openTotalRows = $(".open.active td.columnTotal span");
-    var openNetRows = $(".open.active td.columnNet span");
-    var openDunRows = $(".open.active td.columnDunning span");
-    var cancelledTotalRows = $(".cancelled td.columnTotal span");
-    var cancelledNetRows = $(".cancelled td.columnNet span");
-    var cancelledDunRows = $(".cancelled td.columnDunning span");
-    var dunningTotalRows = $(".dunning td.columnTotal span");
-    var dunningNetRows = $(".dunning td.columnNet span");
-    var dunningDunRows = $(".dunning td.columnDunning span");
-    var paidTotalRows = $(".paid td.columnTotal span");
-    var paidNetRows = $(".paid td.columnNet span");
-    var paidDunRows = $(".paid td.columnDunning span");
-
-    var allTotalRows = $(".q_invoice-content-row td.columnTotal span");
-    var allNetRows = $(".q_invoice-content-row td.columnNet span");
-    var allDunRows = $(".q_invoice-content-row td.columnDun span");
-
-    var newOpenTotalNet = modifiedNet;
-    var newOpenTotalTotal = modifiedTotal;
-    var newOpenTotalDun = modifiedDun;
-    for(var i = 0; i < openTotalRows.length; i++){
-      newOpenTotalTotal = newOpenTotalTotal + q_invoice_cleanUpNumber(openTotalRows[i].innerHTML);
-      newOpenTotalNet = newOpenTotalNet + q_invoice_cleanUpNumber(openNetRows[i].innerHTML);
-      //newOpenTotalDun = newOpenTotalDun + q_invoice_cleanUpNumber(openDunRows[i].innerHTML);
-    }
-
-    var newCancelledTotalNet = 0.00;
-    var newCancelledTotalTotal = 0.00;
-    var newCancelledTotalDun = 0.00;
-    for(var i = 0; i < cancelledTotalRows.length; i++){
-      newCancelledTotalTotal = newCancelledTotalTotal + q_invoice_cleanUpNumber(cancelledTotalRows[i].innerHTML);
-      newCancelledTotalNet = newCancelledTotalNet + q_invoice_cleanUpNumber(cancelledNetRows[i].innerHTML);
-      //newCancelledTotalDun = newCancelledTotalDun + q_invoice_cleanUpNumber(cancelledDunRows[i].innerHTML);
-    }
-
-    var newDunningTotalNet = 0.00;
-    var newDunningTotalTotal = 0.00;
-    var newDunningTotalDun = 0.00;
-    for(var i = 0; i < dunningTotalRows.length; i++){
-      newDunningTotalTotal = newDunningTotalTotal + q_invoice_cleanUpNumber(dunningTotalRows[i].innerHTML);
-      newDunningTotalNet = newDunningTotalNet + q_invoice_cleanUpNumber(dunningNetRows[i].innerHTML);
-      //newDunningTotalDun = newDunningTotalDun + q_invoice_cleanUpNumber(dunningDunRows[i].innerHTML);
-    }
-
-    var newPaidTotalNet = 0.00;
-    var newPaidTotalTotal = 0.00;
-    var newPaidTotalDun = 0.00;
-    for(var i = 0; i < paidTotalRows.length; i++){
-      newPaidTotalTotal = newPaidTotalTotal + q_invoice_cleanUpNumber(paidTotalRows[i].innerHTML);
-      newPaidTotalNet = newPaidTotalNet + q_invoice_cleanUpNumber(paidNetRows[i].innerHTML);
-      //newPaidTotalDun = newPaidTotalDun + q_invoice_cleanUpNumber(paidDunRows[i].innerHTML);
-    }
-
-    var newAllTotalNet = modifiedNet;
-    var newAllTotalDun = modifiedDun;
-    var newAllTotalTotal = modifiedTotal;
-    for(var i = 0; i < allTotalRows.length; i++){
-      newAllTotalTotal = newAllTotalTotal + q_invoice_cleanUpNumber(allTotalRows[i].innerHTML);
-      newAllTotalNet = newAllTotalNet + q_invoice_cleanUpNumber(allNetRows[i].innerHTML);
-      //newAllTotalDun = newAllTotalDun + q_invoice_cleanUpNumber(allDunRows[i].innerHTML);
-    }
-
-    if($('#q-invoice-new-dot-dummy').text() == ','){
-      $('#qi_totalSumNetto').html(removeCurrencySign(formatterDE.format(newAllTotalNet)) + ' ' + currencySign);
-      $('#qi_openSumNetto').html(removeCurrencySign(formatterDE.format(newOpenTotalNet)) + ' ' + currencySign);
-      $('#qi_cancelledSumNetto').html(removeCurrencySign(formatterDE.format(newCancelledTotalNet)) + ' ' + currencySign);
-      $('#qi_dunningSumNetto').html(removeCurrencySign(formatterDE.format(newDunningTotalNet)) + ' ' + currencySign);
-      $('#qi_paidSumNetto').html(removeCurrencySign(formatterDE.format(newPaidTotalNet)) + ' ' + currencySign);
-      $('#qi_totalSumTotal').html(removeCurrencySign(formatterDE.format(newAllTotalTotal)) + ' ' + currencySign);
-      $('#qi_openSumTotal').html(removeCurrencySign(formatterDE.format(newOpenTotalTotal)) + ' ' + currencySign);
-      $('#qi_cancelledSumTotal').html(removeCurrencySign(formatterDE.format(newCancelledTotalTotal)) + ' ' + currencySign);
-      $('#qi_dunningSumTotal').html(removeCurrencySign(formatterDE.format(newDunningTotalTotal)) + ' ' + currencySign);
-      $('#qi_paidSumTotal').html(removeCurrencySign(formatterDE.format(newPaidTotalTotal)) + ' ' + currencySign);
-      $('#qi_totalSumDunning').html(removeCurrencySign(formatterDE.format(newAllTotalDun)) + ' ' + currencySign);
-      $('#qi_openSumDunning').html(removeCurrencySign(formatterDE.format(newOpenTotalDun)) + ' ' + currencySign);
-      $('#qi_cancelledSumDunning').html(removeCurrencySign(formatterDE.format(newCancelledTotalDun)) + ' ' + currencySign);
-      $('#qi_dunningSumDunning').html(removeCurrencySign(formatterDE.format(newDunningTotalDun)) + ' ' + currencySign);
-      $('#qi_paidSumDunning').html(removeCurrencySign(formatterDE.format(newPaidTotalDun)) + ' ' + currencySign);
-    } else{
-      $('#qi_totalSumNetto').html(removeCurrencySign(formatterEN.format(newAllTotalNet)) + ' ' + currencySign);
-      $('#qi_openSumNetto').html(removeCurrencySign(formatterEN.format(newOpenTotalNet)) + ' ' + currencySign);
-      $('#qi_cancelledSumNetto').html(removeCurrencySign(formatterEN.format(newCancelledTotalNet)) + ' ' + currencySign);
-      $('#qi_dunningSumNetto').html(removeCurrencySign(formatterEN.format(newDunningTotalNet)) + ' ' + currencySign);
-      $('#qi_paidSumNetto').html(removeCurrencySign(formatterEN.format(newPaidTotalNet)) + ' ' + currencySign);
-      $('#qi_totalSumTotal').html(removeCurrencySign(formatterEN.format(newAllTotalTotal)) + ' ' + currencySign);
-      $('#qi_openSumTotal').html(removeCurrencySign(formatterEN.format(newOpenTotalTotal)) + ' ' + currencySign);
-      $('#qi_cancelledSumTotal').html(removeCurrencySign(formatterEN.format(newCancelledTotalTotal)) + ' ' + currencySign);
-      $('#qi_dunningSumTotal').html(removeCurrencySign(formatterEN.format(newDunningTotalTotal)) + ' ' + currencySign);
-      $('#qi_paidSumTotal').html(removeCurrencySign(formatterEN.format(newPaidTotalTotal)) + ' ' + currencySign);
-      $('#qi_totalSumDunning').html(removeCurrencySign(formatterEN.format(newAllTotalDun)) + ' ' + currencySign);
-      $('#qi_openSumDunning').html(removeCurrencySign(formatterEN.format(newOpenTotalDun)) + ' ' + currencySign);
-      $('#qi_cancelledSumDunning').html(removeCurrencySign(formatterEN.format(newCancelledTotalDun)) + ' ' + currencySign);
-      $('#qi_dunningSumDunning').html(removeCurrencySign(formatterEN.format(newDunningTotalDun)) + ' ' + currencySign);
-      $('#qi_paidSumDunning').html(removeCurrencySign(formatterEN.format(newPaidTotalDun)) + ' ' + currencySign);
-    }
-  }
 
   function formatDate (date) {
     const unformattedDate = new Date(date)
@@ -2007,13 +1894,8 @@ jQuery(function ($) {
       clone.find('td.columnEdit .mailDunningI').addClass('deactivatedMail');
       clone.find('td.columnEdit .mailDunningII').addClass('deactivatedMail');
 
-
-      q_invoice_RecalcSums(
-        q_invoice_cleanUpNumber(clone.find('td.columnTotal').text()),
-        q_invoice_cleanUpNumber(clone.find('td.columnNet').text()),
-        0.0
-      );
-
+      recalcInvoiceTableSums()
+      
       $('table#tableInvoices > tbody').prepend(clone)
       //keep invoice contacts up to date
       fetchContacts()
@@ -2110,7 +1992,7 @@ jQuery(function ($) {
       $(this).attr('autocomplete', 'off')
     })
 
-    invoicesOnPage =999
+    
 
     filterInvoices('all')
     
