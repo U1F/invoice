@@ -159,7 +159,7 @@ function Invoice_list()
         echo $editInv;
 
         //DEBUG TESTING
-    if (true){//get_option('wporg_setting_name')) {
+    if ( get_option('developmentMode') ){
         echo "qi_settings:";
         $options = get_option('qi_settings');
         echo '<pre>';
