@@ -814,10 +814,14 @@ jQuery(function ($) {
   })
 
   function openReminderPopup(event){
-    if ($(event.target).hasClass('listPointerEventsMod')) { return }
-    if ($(event.target).hasClass('download')) { return }
-    if ($(event.target).hasClass('mail')) { return }
-    if ($(this).find('div').hasClass('listPointerEventsMod')) { return }
+    if ($(event.target).is('.listPointerEventsMod')) { return }
+    if ($(event.target).is('.downloadReminder')) { return }
+    if ($(event.target).is('.mailReminder')) { return }
+    if ($(event.target).is('.downloadReminder > *')) { return }
+    if ($(event.target).is('.mailReminder > *')) { return }
+    if ($(this).find('div').is('.listPointerEventsMod')) { return }
+
+    $('#popupFormType').val('reminder');
 
     //close the dropdown
     $('div.qinv_moreOptionsDropdownBox').css('display', 'none');
@@ -858,10 +862,10 @@ jQuery(function ($) {
 
   function openDunningIPopup(event){
 
-    if ($(event.target).hasClass('listPointerEventsMod')) { return }
-    if ($(event.target).hasClass('download')) { return }
-    if ($(event.target).hasClass('mail')) { return }
-    if ($(this).find('div').hasClass('listPointerEventsMod')) { return }
+    if ($(event.target).is('.listPointerEventsMod')) { return }
+    if ($(event.target).is('.downloadDunningI')) { return }
+    if ($(event.target).is('.mailDunningI')) { return }
+    if ($(this).find('div').is('.listPointerEventsMod')) { return }
 
     //close the dropdown
     $('div.qinv_moreOptionsDropdownBox').css('display', 'none');
@@ -903,10 +907,10 @@ jQuery(function ($) {
 
   function openDunningIIPopup(event){
 
-    if ($(event.target).hasClass('listPointerEventsMod')) { return }
-    if ($(event.target).hasClass('download')) { return }
-    if ($(event.target).hasClass('mail')) { return }
-    if ($(this).find('div').hasClass('listPointerEventsMod')) { return }
+    if ($(event.target).is('.listPointerEventsMod')) { return }
+    if ($(event.target).is('.downloadDunningII')) { return }
+    if ($(event.target).is('.mailDunningII')) { return }
+    if ($(this).find('div').is('.listPointerEventsMod')) { return }
 
     //close the dropdown
     $('div.qinv_moreOptionsDropdownBox').css('display', 'none');
@@ -1340,6 +1344,7 @@ jQuery(function ($) {
         if($(currInvoiceID).find('#q_invc_dunningIIActiveVal').attr('value') == '1'){
           $('#editInvoiceDunningIIRow').find('.invoiceItemsPrice input').val($(currInvoiceID).find('#q_invc_dunningIIValue').attr('value'));
         }
+
         //show specific dunning rows
         $('#editInvoiceReminderRow').removeClass('wp-list-table-qInvcLine');
         $('#editInvoiceDunningIRow').removeClass('wp-list-table-qInvcLine');
@@ -1362,6 +1367,16 @@ jQuery(function ($) {
         } else if($(currInvoiceID).find('#q_invc_reminderActiveVal').attr('value') == '1' || (dunning == 'd2' || dunning == 'd1' || dunning == 'rem')){
           $('#editInvoiceReminderRow').addClass('wp-list-table-qInvcLine');
           $('#editInvoiceReminderRow').find('.insertInDatabase').attr('value', '1');
+        }
+
+        if(dunning == 'rem'){
+          $('#popupFormType').val('reminder');
+        } else if(dunning == 'd1'){
+          $('#popupFormType').val('dunningI');
+        } else if(dunning == 'd2'){
+          $('#popupFormType').val('dunningII');
+        } else{
+          $('#popupFormType').val('invoice');
         }
 
         fetchInvoiceCurrency()
@@ -1561,6 +1576,31 @@ jQuery(function ($) {
     } else {
       row.find('.downloadDunningII').addClass('iconInactiveColor');
     }
+
+    
+    //activate mail when pdf is generated
+    if(dunningData[2] == 'dunningII'){
+      row.find('td.columnEdit .mailDunningII').removeClass('deactivatedMail');
+      row.find('div.invoiceStatusIcon').addClass('dunningII')
+      row.find('div.invoiceStatusIcon').removeClass('dunningI')
+      row.find('div.invoiceStatusIcon').removeClass('reminder')
+      row.find('div.invoiceStatusIcon').removeClass('open')
+    }
+    if(dunningData[2] == 'dunningI'){
+      row.find('td.columnEdit .mailDunningI').removeClass('deactivatedMail');
+      row.find('div.invoiceStatusIcon').addClass('dunningI')
+      row.find('div.invoiceStatusIcon').removeClass('dunningII')
+      row.find('div.invoiceStatusIcon').removeClass('reminder')
+      row.find('div.invoiceStatusIcon').removeClass('open')
+    }
+    if(dunningData[2] == 'reminder'){
+      row.find('td.columnEdit .mailReminder').removeClass('deactivatedMail');
+      row.find('div.invoiceStatusIcon').addClass('reminder')
+      row.find('div.invoiceStatusIcon').removeClass('dunningI')
+      row.find('div.invoiceStatusIcon').removeClass('dunningII')
+      row.find('div.invoiceStatusIcon').removeClass('open')
+    }
+
 
     const date = invoice.dateOfInvoice
     // change to german date format
@@ -1806,7 +1846,10 @@ jQuery(function ($) {
       clone.find('a.download').attr('value', id)
       var datePieces = formattedDate.split('.');
       var datePDF = datePieces[2] + '_' + datePieces[1] + '_' + datePieces[0];
-      clone.find('a.download').attr('href', '/wp-content/plugins/q_invoice/pdf/Invoice-' + invoice.prefix + id + '-' + pdfName + '-' + datePDF + '.pdf');
+      clone.find('a.downloadInvoice').attr('href', '/wp-content/plugins/q_invoice/pdf/Invoice-' + invoice.prefix + id + '-' + pdfName + '-' + datePDF + '.pdf');
+      clone.find('a.downloadReminder').attr('href', '/wp-content/plugins/q_invoice/pdf/Invoice-' + invoice.prefix + id + '-' + pdfName + '-' + datePDF + '-reminder1.pdf');
+      clone.find('a.downloadDunningI').attr('href', '/wp-content/plugins/q_invoice/pdf/Invoice-' + invoice.prefix + id + '-' + pdfName + '-' + datePDF + '-reminder2.pdf');
+      clone.find('a.downloadDunningII').attr('href', '/wp-content/plugins/q_invoice/pdf/Invoice-' + invoice.prefix + id + '-' + pdfName + '-' + datePDF + '-reminder3.pdf');
 
       clone.find('span.deleteRow').attr('id', id)
       clone.find('span.deleteRow').attr('value', id)
@@ -1856,6 +1899,10 @@ jQuery(function ($) {
           openDunningIIPopup(event);
         });
       }
+      //deactivate Mail button
+      clone.find('td.columnEdit .mailReminder').addClass('deactivatedMail');
+      clone.find('td.columnEdit .mailDunningI').addClass('deactivatedMail');
+      clone.find('td.columnEdit .mailDunningII').addClass('deactivatedMail');
 
 
       q_invoice_RecalcSums(
@@ -1907,7 +1954,7 @@ jQuery(function ($) {
       success: function (response) {
         console.log (response)
         var serverResponse = JSON.parse(response).data
-        var dunningData = [JSON.parse(response).dunningclass, JSON.parse(response).dunningdays]
+        var dunningData = [JSON.parse(response).dunningclass, JSON.parse(response).dunningdays, JSON.parse(response).updateType]
         var invoiceID = JSON.parse(response).id
 
         if (serverResponse.action === 'updateInvoiceServerSide') {
@@ -2143,6 +2190,7 @@ jQuery(function ($) {
    * Handles the on click action on the reminder mail dashicon:
    */
    $('table#tableInvoices').on('click', '.mailReminder', function (event) {
+    if ($(event.target).is('.deactivatedMail')) { return }
     getMailPopupData($(this).attr('id'), 'Reminder');
     $('div#qinv_mail-popup').css('display', 'block');
   })
@@ -2151,6 +2199,7 @@ jQuery(function ($) {
    * Handles the on click action on the dunning i mail dashicon:
    */
    $('table#tableInvoices').on('click', '.mailDunningI', function (event) {
+    if ($(event.target).is('.deactivatedMail')) { return }
     getMailPopupData($(this).attr('id'), 'DunningI');
     $('div#qinv_mail-popup').css('display', 'block');
   })
@@ -2159,6 +2208,7 @@ jQuery(function ($) {
    * Handles the on click action on the dunning ii mail dashicon:
    */
    $('table#tableInvoices').on('click', '.mailDunningII', function (event) {
+    if ($(event.target).is('.deactivatedMail')) { return }
     getMailPopupData($(this).attr('id'), 'DunningII');
     $('div#qinv_mail-popup').css('display', 'block');
   })
@@ -2193,7 +2243,6 @@ jQuery(function ($) {
         recipientMail = contactData[0][i].email;
       }
     }
-    $('#qinv_mail-header').val(companyName);
     $('#qinv_mail-recipient').val(recipientMail);
     $('#qinv_mail-subject').val(type + '_ID' + id + '_' + name.replace(' ', '-'));
     if(type == 'Invoice'){
@@ -2222,9 +2271,9 @@ jQuery(function ($) {
    * Sends E-Mail with given content on Click on Send
    */
   $('#qinv_mail-popup-submit').on('click', function(e){
-    console.log('start');
     var wpEditorID = $('#qinv_mail-popup').find('.wp-editor-wrap').attr('id').split('-')[1];
     var messageBody = tinymce.get(wpEditorID).getContent();
+
     jQuery.ajax({
       type: 'POST',
       url: q_invoice_ajaxObject.ajax_url,

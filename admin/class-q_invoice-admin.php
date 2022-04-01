@@ -1728,6 +1728,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
         {
             $this-> dumpFile(json_encode($_POST), "updateInvoiceServerSide_POST.txt");
             $dunningData = $this->getDunningDays(strtotime($_POST['dateOfInvoice']));
+            $formType = $_POST['popupFormType'];
             $extraDunningPDFArray = $_POST['insertInDatabase'];
             $reminderPDF = $extraDunningPDFArray[sizeof($extraDunningPDFArray)-3];
             $dunIPDF = $extraDunningPDFArray[sizeof($extraDunningPDFArray)-2];
@@ -1735,6 +1736,7 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             $dunningDays = $dunningData[1];
             $dunningClass = $dunningData[0];
 
+            $response['updateType'] = $formType;
             $response['dunningclass'] = $dunningClass;
             $response['dunningdays'] = $dunningDays;
 
@@ -1742,13 +1744,13 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 $this-> dumpFile("Success", "verified.txt");
                 Interface_Invoices::updateArrayInDB($_POST);
                 
-                if($reminderPDF){
+                if($reminderPDF && $formType == 'reminder'){
                     $this->printDunningTemplate($_POST['invoice_id'], 'reminder');
-                } else if($dunIPDF){
+                } else if($dunIPDF && $formType == 'dunningI'){
                     $this->printDunningTemplate($_POST['invoice_id'], 'dunningI');
-                } else if($dunIIPDF){
+                } else if($dunIIPDF && $formType == 'dunningII'){
                     $this->printDunningTemplate($_POST['invoice_id'], 'dunningII');
-                } else{
+                } else if($formType == 'invoice'){
                     $this->printInvoiceTemplate($_POST['invoice_id']);
                 }
                 $response['success'] = true;
