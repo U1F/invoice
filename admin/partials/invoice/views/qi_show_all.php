@@ -84,13 +84,10 @@
 //Mail Infos for faster on load
 $personalName = get_option('qi_settings')['firstName'] . ' ' . get_option('qi_settings')['lastName'];
 $companyName = get_option('qi_settings')['company'];
-if($personalName != ' '){
-    $nameNCompany =  $personalName;
-    if($companyName){
-        $nameNCompany = $nameNCompany . ' from ' . $companyName;
-    }
-} else{
-    $nameNCompany = $companyName;
+if($companyName){
+    $nameNCompany =  $companyName;
+} else if ($personalName != ' '){
+    $nameNCompany = $personalName;
 }
 echo '<div id="qinv_mail-sender-onpage" style="display:none;">'.get_option('qi_settings')['email'].'</div>';
 echo '<div id="qinv_mail-name-company" style="display:none;">'.$nameNCompany.'</div>';
@@ -625,7 +622,7 @@ function showOpenInvoices()
                                 <span style="font-size: 20px;"
                                     id="<?php echo esc_attr($invoice_header->id);?>" 
                                     title="Send Reminder as Mail"
-                                    class="mail mailReminder dashicons dashicons-email-alt"
+                                    class="mail mailReminder dashicons dashicons-email-alt <?php if(!$reminderActive){echo 'iconInactiveColor';}?>"
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                 >
                                 </span>
@@ -659,7 +656,7 @@ function showOpenInvoices()
                                 <span style="font-size: 20px;"
                                     id="<?php echo esc_attr($invoice_header->id);?>" 
                                     title="Send First Dunning as Mail"
-                                    class="mail mailDunningI dashicons dashicons-email-alt"
+                                    class="mail mailDunningI dashicons dashicons-email-alt <?php if(!$dunningIActive){echo 'iconInactiveColor';}?>"
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                 >
                                 </span>
@@ -693,7 +690,7 @@ function showOpenInvoices()
                                 <span style="font-size: 20px;"
                                     id="<?php echo esc_attr($invoice_header->id);?>" 
                                     title="Send Second Dunning as Mail"
-                                    class="mail mailDunningII dashicons dashicons-email-alt"
+                                    class="mail mailDunningII dashicons dashicons-email-alt <?php if(!$dunningIIActive){echo 'iconInactiveColor';}?>"
                                     value="<?php echo esc_html($invoice_header->id);?>"
                                 >
                                 </span>

@@ -2,7 +2,6 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
     border-bottom: 1px solid #e6e6e6 !important;
     padding: 5px 0 !important;
     margin-bottom: 0 !important;
@@ -15,7 +14,7 @@
 }
 
 .q-invoice-page .qinvc_mailContentInput{
-    width: 100%;
+    width: 30%;
     border-radius: 4px;
     border: 1px solid #8c8f94;
     overflow: auto;
@@ -23,6 +22,15 @@
     margin: 1em 0 1em 0;
     height: 40px !important;
 }
+
+.q-invoice-page #qinv_mail-popup-controls{
+    padding: 20px 20px 0 20px;
+}
+
+.q-invoice-page #qinv_mail-popup-submit{
+    float: right;
+}
+
 
 /*
 Following CSS Mods modyfies the wordpress Text Editor
@@ -39,4 +47,27 @@ Following CSS Mods modyfies the wordpress Text Editor
 .q-invoice-page .bs-margin-mod{
     margin: 0 5px 0 5px!important;
     float: right!important;
+}
+
+@media only screen and (max-width:660px){
+    .q-invoice-page .qinvc_mailContentInput{
+        width: 100%;
+    }
+
+    .q-invoice-page #qinv_mail-popup-controls{
+        padding: 0;
+    }
+
+    .q-invoice-page .qinvc_mailContentRow{
+        justify-content: space-between;
+    }
+}
+
+@media only screen and (max-width:400px){
+    .q-invoice-page #qinv_mail-popup-controls{
+        text-align: center;
+    }
+    .q-invoice-page #qinv_mail-popup-submit{
+        float: unset;
+    }
 }
