@@ -2321,7 +2321,7 @@ jQuery(function ($) {
   
     $(".q-invoice-page table#tableInvoices .columnInvoiceID").css("width", id_width);
 
-    qpModifyWPEditor('templateEditor');
+    //qpModifyWPEditor('templateEditor');
 
     
     
