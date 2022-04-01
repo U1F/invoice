@@ -398,7 +398,7 @@ jQuery(function ($) {
    * @param {event} x We check if the user clickd outside the form 
    * or the cancel button
    */
-  $('#invoiceOverlay').click(function (event) {
+  $('#invoiceOverlay').on('click', function (event) {
     if ($(event.target).is('.overlay')) {
       $('#invoiceOverlay').hide()
     }
@@ -411,7 +411,7 @@ jQuery(function ($) {
    * 
    * @param {event} x We check if the user clicked outside the form 
    */
-  $('.dialogOverlay').click(function (event) {
+  $('.dialogOverlay').on('click', function (event) {
     if ($(event.target).is('.overlay')) {
       $('.dialogOverlay').hide()
     }
@@ -707,7 +707,7 @@ jQuery(function ($) {
   }
 
   // Add a new line for invoice item
-  $('#qInvc-add-line').click(function (e) {
+  $('#qInvc-add-line').on('click', function (e) {
     e.preventDefault()
 
     const Row = $('.wp-list-table-qInvcLine:first')
@@ -1050,7 +1050,7 @@ jQuery(function ($) {
    * click handler when a new invoice should be set: Clicking opens an empty form
    * 
    **/
-  $('#newInvoice').click(function () {
+  $('#newInvoice').on('click', function () {
     reopenInvoiceForm()
 
     // prepare form for Ajax Action "save"
@@ -1952,7 +1952,7 @@ jQuery(function ($) {
     })
 
     // Supress client-side error-functions on invalid form fields
-    $('input').bind('invalid', function () { return false })
+    $('input').on('invalid', function () { return false })
 
     // Prevent chrome to autofill&autocomplete
     $('#invoiceInputTables input').on('focus', function (e) {
@@ -2089,7 +2089,7 @@ jQuery(function ($) {
     }
   });
 
-  $('#qinv_saveContactCheckbox').click(function(){
+  $('#qinv_saveContactCheckbox').on('click', function(){
     if($('#qinv_saveContactCheckbox').prop("checked")){
       $('#qinv_saveContactHidden').val("true");
     } else if(!$('#qinv_saveContactCheckbox').prop("checked")){

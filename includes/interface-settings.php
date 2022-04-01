@@ -18,9 +18,37 @@ class Interface_Settings
 
     static public function removeLogo(){
 
+        $optionsArray = get_option('qi_settings');
+
+        $optionsArray['companyLogo'] = '';
+
+        update_option('qi_settings', $optionsArray);
+
+        return 1;
+
+    }
+
+    static public function updateLogo($id){
+
+        $optionsArray = get_option('qi_settings');
+
+        $optionsArray['companyLogo'] = $id;
+
+        update_option('qi_settings', $optionsArray);
+
+        return 1;
+
+    }
+
+    static public function saveLastFilePathLogo($path){
+
+        $optionsArray = get_option('qi_settings');
         
-        $option['companyLogo'] = '';
-        
+        $optionsArray['lastFilePathLogo'] = $path;
+    
+        update_option('qi_settings', $optionsArray);
+
+        return $path;
 
     }
 

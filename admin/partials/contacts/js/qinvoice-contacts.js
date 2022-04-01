@@ -57,7 +57,7 @@ jQuery(function ($) {
     saveContactDiv = $('#saveContactDIV').clone()
     updateContactDiv = $('#updateContactDIV').clone()
   })
-  $('#qiNewContact').click(function () {
+  $('#qiNewContact').on('click', function () {
     document.getElementById('contactOverlay').style.display = 'block'
 
     //reset required field error color
@@ -84,7 +84,7 @@ jQuery(function ($) {
 
   // Contacts
 
-  $('#cancelContactEdit').click(function (event) {
+  $('#cancelContactEdit').on('click', function (event) {
     document.getElementById('contactOverlay').style.display = 'none'
   })
 
@@ -190,7 +190,7 @@ jQuery(function ($) {
     }
   })
 
-  $('#contactOverlay').click(function (event) {
+  $('#contactOverlay').on('click', function (event) {
     if ($(event.target).is('.overlay')) {
       $('#contactOverlay').css('display', 'none')
     }

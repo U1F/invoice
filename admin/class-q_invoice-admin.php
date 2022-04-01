@@ -976,17 +976,19 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
          * @return void
          */
         public function showInputForLogo() {   
-
+           
             $uploadInputVisibility = "block";
 
             $logoDivVisibility = "none";  
-
+            
             $logoIndex = get_option('qi_settings')['companyLogo'];
-
+            
+            $lastFilePathLogo = get_option('qi_settings')['lastFilePathLogo'];
+            
             if ($logoIndex) { 
 
                 $uploadInputVisibility = "none";
-
+                
                 $logoDivVisibility = "block";  
                 
             } ?>
@@ -998,6 +1000,14 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                 style='display:none' 
                 value="<?php echo $logoIndex?>"/>
             
+            <input 
+                type="text" 
+                id="lastFilePathLogo" 
+                name='qi_settings[lastFilePathLogo]' 
+                style='display:none' 
+                value="<?php echo $lastFilePathLogo?>"/> 
+                
+
             <label 
                 id='qinv_settings_uploadLogo' 
                 class='fileUpload' 
@@ -1024,13 +1034,21 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
                         class="delete dashicons dashicons-no"> 
                     </span>
                 </div>
-                
-                <?php echo wp_get_attachment_image( 
-                    get_option('qi_settings')['companyLogo'], 
-                    'medium', 
-                    false, 
-                    array( 'id' => 'myprefix-preview-image' ) ); ?>
-                
+                <div id='q1nv0-preview-image-container'>
+                <?php 
+                    if ($logoIndex){
+                        echo wp_get_attachment_image( 
+                            get_option('qi_settings')['companyLogo'], 
+                            array('200', '200'), 
+                            false, 
+                            array( 'id' => 'q1nv0-preview-image' ) 
+                        ); 
+                    }
+                    else {
+                        ?> <img id='q1nv0-preview-image'></img><?php
+                    }
+                ?>
+                </div>                
                 <div 
                     class="qinv_settings_logo_tbBuffer" 
                     style="height:10px;">
@@ -1329,6 +1347,30 @@ if (!class_exists('QI_Q_Invoice_Admin')) {
             check_ajax_referer($this->_plugin_name . "_nonce");
             $data = Interface_Settings::removeLogo();
             echo $data;
+
+            wp_die();
+        }
+
+        /**
+         * TESTIG Register the Ajax for the admin area.
+         * 
+         * @return void
+         *
+         * @since 1.0.0
+         */
+        public function updateLogoServerSide()
+        {
+   
+            $id = $_POST['id'];
+            $logoFilepath = $_POST['logoFilepath'];
+            
+            check_ajax_referer($this->_plugin_name . "_nonce");
+            
+            echo Interface_Settings::updateLogo($id);
+            
+            echo Interface_Settings::saveLastFilePathLogo($logoFilepath);
+            
+            echo json_encode("ID: ". $id. " - Path" . $logoFilepath);
 
             wp_die();
         }

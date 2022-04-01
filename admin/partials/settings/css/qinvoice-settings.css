@@ -231,6 +231,10 @@
     text-align: center;
 }
 
+.q-invoice-page img#q1nv0-preview-image {
+    width: 200px;
+}
+
 .q-invoice-page #qinv_settings_delete_logo{
     color: #343a40;
     cursor: pointer;
