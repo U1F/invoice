@@ -94,16 +94,6 @@ function exportInvoice($invoiceID, $invoiceType)
         $thousandsDot = '.';
     }
 
-    //prepare tax types
-    $taxSums=array();
-    $numberOfTaxTypes = intval(get_option('qi_settings')['taxTypes']);
-    for ($i=0;$i<$numberOfTaxTypes;$i++) {
-
-        $taxSums[get_option('qi_settings')['tax'.strval($i+1)]] = 0;
-        
-
-    }
-    $taxSums['none'] = 0;
 
     //prepare invoice details row size by checking if a delivery date has been set
     //$deliveryDateIsSet has to be an int, cause its not only used as a flag
@@ -164,10 +154,15 @@ function exportInvoice($invoiceID, $invoiceType)
     $InvoiceHasAtLeastOneDiscount = 0;
     $invoiceDetailDescriptionWidthHeader = "371";  
     $InvoiceDetailDescriptionWidth = "369";
-    
+    $taxSums=array();
     foreach ($invoiceData[1] as $invoiceDetail) {
         $sumOfInvoiceDiscounts += intval($invoiceDetail->discount);
+        
+        $taxSums[intval($invoiceDetail->tax)] = 0;
+         
     }
+
+    $taxSums['none'] = 0;
     
     if ($sumOfInvoiceDiscounts > 0) {
         $InvoiceHasAtLeastOneDiscount = 1;
