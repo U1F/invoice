@@ -67,11 +67,22 @@ td.invoiceItemsHeader {
                     style="width: 270px; text-align: right; font-size:14px;"
                 >
                     <?php 
-                       echo wp_get_attachment_image( 
-                        get_option('qi_settings')['companyLogo'], 
-                        'medium', 
-                        false, 
-                        array( 'id' => 'q1nv0-preview-image' ) );
+                        if ( get_option('qi_settings')['companyLogo'] ) {
+                            echo wp_get_attachment_image( 
+                                get_option('qi_settings')['companyLogo'], 
+                                array('200', '200'),  
+                                false, 
+                                array( 'id' => 'q1nv0-companyLogo' ) );     
+                        }
+                        else 
+                        {
+                            ?>
+                            <br>|<br>|<br>|<br>|<br>|<br>|<br>
+                            
+
+                            <?php
+                        }
+                       
                     ?>                        
                     
                     <br>
