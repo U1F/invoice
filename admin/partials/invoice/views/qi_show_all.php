@@ -415,7 +415,17 @@ function showOpenInvoices()
                         if ($paid) {
                             echo ' paid active';
                         } else {
-                            echo ' open ';
+                            //insert dunning mode
+                            if($reminderActive){
+                                echo ' reminder';
+                            }else if($dunningIActive){
+                                echo ' dunningI';
+                            }else if($dunningIIActive){
+                                echo ' dunningII';
+                            }  else{
+                                echo ' open ';
+                            }
+                            
                             if ($cancelled) {
                                 echo ' cancelled ';
                             }

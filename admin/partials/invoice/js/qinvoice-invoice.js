@@ -1441,7 +1441,7 @@ jQuery(function ($) {
           $('#editInvoiceDunningIIRow').find('.invoiceItemsPrice input').val($(currInvoiceID).find('#q_invc_dunningIIValue').attr('value'));
         }
 
-        //show specific dunning rows
+        //show specific dunning rows if dunning has been activated or dunning edit button is clicked
         $('#editInvoiceReminderRow').removeClass('wp-list-table-qInvcLine');
         $('#editInvoiceDunningIRow').removeClass('wp-list-table-qInvcLine');
         $('#editInvoiceDunningIIRow').removeClass('wp-list-table-qInvcLine');
@@ -1465,25 +1465,12 @@ jQuery(function ($) {
           $('#editInvoiceReminderRow').find('.insertInDatabase').attr('value', '1');
         }
 
-        if(dunning == 'rem'){
-          $('#popupFormType').val('reminder');
-        } else if(dunning == 'd1'){
-          $('#popupFormType').val('dunningI');
-        } else if(dunning == 'd2'){
-          $('#popupFormType').val('dunningII');
-        } else{
-          $('#popupFormType').val('invoice');
-        }
-
         fetchInvoiceCurrency()
         recalcPos()
         recalcLineSum()
         recalcTotalSum()
 
-        /*$('input.itemDiscount').each(function () {
-          $(this).val(parseFloat($(this).val()).toFixed(2))
-        })*/
-
+        //set required fields
         $('#lastname').prop('required', false);
         $('#firstname').prop('required', false);
         $('#company').prop('required', false);
@@ -1530,13 +1517,38 @@ jQuery(function ($) {
           $('#qinv_saveContactRow').css('display', 'table-row');
           $('#qinv_saveContactCheckbox').val('new');
         }
-        if (obj[0][0].paydate == "0000-00-00" || duplicate){
-          $('#invoiceForm   *').prop('disabled', false )
+
+
+        //disable form if dunning has been activated or the invoice is paied
+        if(obj[0][0].paydate != "0000-00-00" || $('#edit-'+invoiceId).find('div.invoiceStatusIcon').is('.reminder') || $('#edit-'+invoiceId).find('div.invoiceStatusIcon').is('.dunningI') || $('#edit-'+invoiceId).find('div.invoiceStatusIcon').is('.dunningII')){
+          disableInvoiceForm();
+          $('#dunningWarning').show();
+        } else{
+          enableInvoiceForm();
+          $('#dunningWarning').hide();
         }
-        else {
-          $('#invoiceForm   *').prop('disabled', true )
-          $('#updateInvoice').css('display', 'none')
+        if(duplicate){
+          enableInvoiceForm();
         }
+
+        //dunning edit button has been clicked
+        if(dunning == 'rem'){
+          $('#popupFormType').val('reminder');
+          if(!$('#edit-'+invoiceId).find('div.invoiceStatusIcon').is('.dunningI') && !$('#edit-'+invoiceId).find('div.invoiceStatusIcon').is('.dunningII')){
+            enableInvoiceForm();
+          }
+        } else if(dunning == 'd1'){
+          if(!$('#edit-'+invoiceId).find('div.invoiceStatusIcon').is('.dunningII')){
+            enableInvoiceForm();
+          }
+          $('#popupFormType').val('dunningI');
+        } else if(dunning == 'd2'){
+          enableInvoiceForm();
+          $('#popupFormType').val('dunningII');
+        } else{
+          $('#popupFormType').val('invoice');
+        }
+
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
         console.log(errorThrown)
@@ -1606,7 +1618,6 @@ jQuery(function ($) {
       $('#heading-invoice').find('.switchForPaidStatus').css('display', 'inline-block')
     }
 
-    
     // Common Task for openning the invoice form
     reopenInvoiceForm()
 
@@ -1620,8 +1631,11 @@ jQuery(function ($) {
     $("input[name='action']").val('updateInvoiceServerSide')
     // Only the nonce for saving is needed
     $('div#nonceFields').prepend(nonceFieldForUpdating)
+
+    var invoiceId = jQuery(this).attr('id').split('-')[1];
+    
     // fetch id from span attribute id="edit-n", where  n = id of invoice
-    editInvoice(jQuery(this).attr('id').split('-')[1], false, '')
+    editInvoice(invoiceId, false, '')
   })
 
   function changeUpdatedInvoiceRow (invoice, dunningData) {
